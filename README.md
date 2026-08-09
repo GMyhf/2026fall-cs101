@@ -37,7 +37,7 @@ https://github.com/GMyhf/2026fall-cs101/
 
 **推荐学习顺序：**
 
-1. **课程组精选 200+ 题目**
+1. **课程组精选 200+ 题目（计算思维算法实践）**
 
    - 链接：[CS101 OpenJudge](http://cs101.openjudge.cn/)
    - 加入方式：首次登录后 → 点击“加入” → 选择小组“cs101”。
@@ -56,18 +56,18 @@ https://github.com/GMyhf/2026fall-cs101/
 
 - **零基础学习路径**
 
-  1. 搭建编程环境（1–3天）：安装 Python，配置 VS Code 或 PyCharm。[配置指南](https://github.com/GMyhf/2025fall-cs101/blob/main/Python_Development_Setup_Mac_Windows.md)
+  1. 搭建编程环境（1–3天）：安装 Python，配置 VS Code 或 PyCharm。[配置指南](https://github.com/GMyhf/2026fall-cs101/blob/main/Python_Development_Setup_Mac_Windows.md)
   2. 掌握基础语法（4–10天）：变量与数据类型、条件语句与循环结构、函数定义与使用、常用数据结构（列表、元组、字典、集合等）。建议结合动手练习，巩固理解。
   3. 持续编程训练（11–100天）：刷 OpenJudge →  LeetCode Top 100 / Codeforces / 洛谷。
 
 - **开发工具建议**
 
   - Python：推荐使用 **PyCharm**。
-  - C++：推荐使用 **VS Code**。[配置指南](https://github.com/GMyhf/2025fall-cs101/blob/main/Writing_First_C%2B%2B_Program_in_VS-Code.md)
+  - C++：推荐使用 **VS Code**。[配置指南](https://github.com/GMyhf/2026fall-cs101/blob/main/Writing_First_C%2B%2B_Program_in_VS-Code.md)
 
 - **课前准备**
 
-  - 盲打技能训练与打字测试：[练习入口](https://github.com/GMyhf/2025fall-cs101/blob/main/question1_before_class.md)
+  - 盲打技能训练与打字测试：[练习入口](https://github.com/GMyhf/2026fall-cs101/blob/main/question1_before_class.md)
   - O365（含 Teams）账号申请：[申请入口](https://www.wjx.cn/vm/Y5XwfHD.aspx#)
   - 阅读材料：《图灵与ACM图灵奖》《IEEE计算机先驱奖》
   - 推荐电影：《模仿游戏》（The Imitation Game, 2015）
@@ -94,4 +94,4 @@ https://github.com/GMyhf/2026fall-cs101/
 
 - **其他资源**
 
-  - [科学上网工具](https://wallesspku.org/blog/walless/2025/08/17/guide-zh.html)、[北京大学计算机基础科学与开发手册](https://github.com/ZangXuanyi/getting-started-handout)
+  - [科学上网](https://wallesspku.org/zh/)、[北京大学计算机基础科学与开发手册](https://github.com/ZangXuanyi/getting-started-handout)
