@@ -26,9 +26,9 @@ https://github.com/GMyhf/2026fall-cs101/
 
 - 《Book_my_flight》、《计算机科学导论（第4版）》
 - Python 学习：
-  - [Python 3 教程（菜鸟教程）](https://www.runoob.com/python3/python3-tutorial.html)、《Python编程：从入门到实践（第3版）》
+  - [Python 3 教程](https://www.runoob.com/python3/python3-tutorial.html)、[C++ 教程](https://www.runoob.com/cplusplus/cpp-tutorial.html)、《Python编程：从入门到实践（第3版）》
 - 算法类教材：
-  - 《算法笔记》（胡凡，曾磊）、《算法图解》、《算法基础与在线实践》
+  - 《算法图解》、《算法笔记》（胡凡，曾磊）、《算法基础与在线实践》
   - 《算法导论 第3版》（Cormen, Leiserson 等）
 
 
