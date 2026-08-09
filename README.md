@@ -94,4 +94,4 @@ https://github.com/GMyhf/2026fall-cs101/
 
 - **其他资源**
 
-  - [科学上网](https://wallesspku.org/zh/)、[北京大学计算机基础科学与开发手册](https://github.com/ZangXuanyi/getting-started-handout)
+  - [科学上网](https://wallesspku.org/zh/)、[北京大学计算机基础能力手册](https://github.com/ZangXuanyi/getting-started-handout)
