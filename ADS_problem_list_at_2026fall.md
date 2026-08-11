@@ -1,6 +1,6 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-08-11 10:24 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
-https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2025fall.md
+*Updated 2026-08-11 20:57 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
 
@@ -14,6 +14,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2025fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
+| 0814 | sy875: 逃离魔法塔底    | implementation  | 简单 | https://sunnywhy.com/sfbj/2/4/875         |
 | 0813 | sy1: Hello Sunny Why!  | implementation  | 入门 | https://sunnywhy.com/sfbj/2/1         |
 | 0812 | P1001 A+B Problem      | implementation  | 入门 | https://www.luogu.com.cn/problem/P1001          |
 | 0811 | 50A. Domino piling     | greedy, math | 800 | http://codeforces.com/problemset/problem/50/A          |
