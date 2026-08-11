@@ -14,6 +14,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2025fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
+| 0813 | sy1: Hello Sunny Why!  | implementation  | 入门 | https://sunnywhy.com/sfbj/2/1         |
 | 0812 | P1001 A+B Problem      | implementation  | 入门 | https://www.luogu.com.cn/problem/P1001          |
 | 0811 | 50A. Domino piling     | greedy, math | 800 | http://codeforces.com/problemset/problem/50/A          |
 | 0810 | 02750: 鸡兔同笼 | math | Easy | http://cs101.openjudge.cn/pctbook/E02750 |
