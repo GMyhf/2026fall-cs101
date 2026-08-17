@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-08-14 10:06 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-08-17 18:01 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -14,6 +14,10 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
+| 0821 | E01218: THE DRUNK JAILER  | implementation, math  | math | http://cs101.openjudge.cn/pctbook/E01218/          |
+| 0820 | E66.加一      | implementation     | Easy | https://leetcode.cn/problems/plus-one/          |
+| 0819 | 1A. Theatre Square     | math      | 1000 | http://codeforces.com/problemset/problem/1/A          |
+| 0818 | E02689: 大小写字母互换 | string      | Easy | http://cs101.openjudge.cn/pctbook/E02689/          |
 | 0817 | E02676:整数的个数      | implementation  | Easy | http://cs101.openjudge.cn/pctbook/E02676/         |
 | 0816 | 20B. Equation      | math  | 2000 | https://codeforces.com/problemset/problem/20/B          |
 | 0815 | P1100 高低位交换       | 位运算      | 普及- | https://www.luogu.com.cn/problem/P1100          |
