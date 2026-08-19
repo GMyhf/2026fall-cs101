@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-08-17 18:01 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-08-19 14:44 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -14,7 +14,14 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
-| 0821 | E01218: THE DRUNK JAILER  | implementation, math  | math | http://cs101.openjudge.cn/pctbook/E01218/          |
+| 0828 | E03143: 验证“歌德巴赫猜想”   | math      | Easy | http://cs101.openjudge.cn/pctbook/E03143/          |
+| 0827 | 34B. Sale     | greedy, sortings    | 900 | https://codeforces.com/problemset/problem/34/B          |
+| 0826 | E1331.数组序号转换      | implementation  | Easy | https://leetcode.cn/problems/rank-transform-of-an-array/         |
+| 0825 | E18223: 24点  | brute force  | Easy | http://cs101.openjudge.cn/pctbook/E18223/          |
+| 0824 | 4A. Watermelon  | brute force, math   | 800 | http://codeforces.com/problemset/problem/4/A          |
+| 0823 | E191.位1的个数  | bit manipulation, divide and conque   | Easy | bit manipulation, divide and conquer         |
+| 0822 | E23563: 多项式时间复杂度  | string      | Easy | http://cs101.openjudge.cn/pctbook/E23563/          |
+| 0821 | E01218: THE DRUNK JAILER  | implementation, math  | Easy | http://cs101.openjudge.cn/pctbook/E01218/          |
 | 0820 | E66.加一      | implementation     | Easy | https://leetcode.cn/problems/plus-one/          |
 | 0819 | 1A. Theatre Square     | math      | 1000 | http://codeforces.com/problemset/problem/1/A          |
 | 0818 | E02689: 大小写字母互换 | string      | Easy | http://cs101.openjudge.cn/pctbook/E02689/          |
