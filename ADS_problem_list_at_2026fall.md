@@ -22,7 +22,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 0827 | 34B. Sale     | greedy, sortings    | 900 | https://codeforces.com/problemset/problem/34/B          |
 | 0826 | E1331.数组序号转换      | implementation  | Easy | https://leetcode.cn/problems/rank-transform-of-an-array/         |
 | 0825 | E18223: 24点  | brute force  | Easy | http://cs101.openjudge.cn/pctbook/E18223/          |
-| 0824 | 4A. Watermelon  | brute force, math   | 800 | http://codeforces.com/problemset/problem/4/A          |
+| 0824 | 4A. Watermelon  | brute force, math   | 800 | https://codeforces.com/problemset/problem/4/A  |
 | 0823 | E191.位1的个数  | bit manipulation, divide and conque   | Easy | https://leetcode.cn/problems/number-of-1-bits/  |
 | 0822 | E23563: 多项式时间复杂度  | string      | Easy | http://cs101.openjudge.cn/pctbook/E23563/          |
 | 0821 | E01218: THE DRUNK JAILER  | implementation, math  | Easy | http://cs101.openjudge.cn/pctbook/E01218/          |
