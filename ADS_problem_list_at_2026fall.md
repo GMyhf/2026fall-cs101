@@ -15,7 +15,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 | 0904 | M2904.最短且字典序最小的美丽子字符串  | sliding window  | Medium | https://leetcode.cn/problems/shortest-and-lexicographically-smallest-beautiful-string/          |
-| 0903 |       |       | - |          |
+| 0903 | E35.搜索插入位置      | binary search  | Easy | https://leetcode.cn/problems/search-insert-position/          |
 | 0902 | E3718.缺失的最小倍数  | implementation   | Easy | https://leetcode.cn/problems/smallest-missing-multiple-of-k/          |
 | 0901 | E3622.判断整除性   | implementation  | Easy | https://leetcode.cn/problems/check-divisibility-by-digit-sum-and-product/         |
 | 0831 | E01003:Hangover    | implementation  | Easy | http://cs101.openjudge.cn/pctbook/E01003/          |
