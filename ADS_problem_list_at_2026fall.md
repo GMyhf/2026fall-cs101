@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-08-26 10:52 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-08-27 15:46 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -14,6 +14,8 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
+| 0906 | M29917:牛顿迭代      | math       | Medium | http://cs101.openjudge.cn/pctbook/M29917/          |
+| 0905 | E136.只出现一次的数字 | bit manipulation   | Easy | https://leetcode.cn/problems/single-number/          |
 | 0904 | M2904.最短且字典序最小的美丽子字符串  | sliding window  | Medium | https://leetcode.cn/problems/shortest-and-lexicographically-smallest-beautiful-string/          |
 | 0903 | E35.搜索插入位置      | binary search  | Easy | https://leetcode.cn/problems/search-insert-position/          |
 | 0902 | E3718.缺失的最小倍数  | implementation   | Easy | https://leetcode.cn/problems/smallest-missing-multiple-of-k/          |
