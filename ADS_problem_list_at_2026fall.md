@@ -14,7 +14,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
-| 0907 | M763.划分字母区间    | hash table | Medium | https://leetcode.cn/problems/partition-labels/         |
+| 0907 | M763.划分字母区间    | greedy,hash table, two pointers | Medium | https://leetcode.cn/problems/partition-labels/         |
 | 0906 | M29917:牛顿迭代      | math       | Medium | http://cs101.openjudge.cn/pctbook/M29917/          |
 | 0905 | E136.只出现一次的数字 | bit manipulation   | Easy | https://leetcode.cn/problems/single-number/          |
 | 0904 | M2904.最短且字典序最小的美丽子字符串  | sliding window  | Medium | https://leetcode.cn/problems/shortest-and-lexicographically-smallest-beautiful-string/          |
