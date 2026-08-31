@@ -40,6 +40,15 @@
 - **Q-7 判断**：保持开放。它涉及跨仓库复用的 `deck.py`，而本任务只需要把样卷数据从建议变为
   可复验的资产；在没有 cs201cq 的兼容性验证计划前，不应借 T-009 顺手改引擎。
 
+## 2026-09-01 · T-010 闸门失败路径回归
+
+- **交付**：新增 `tools/test_gate.py`，以临时仓库副本执行真实的
+  `tools/verify_courseware.py` CLI，避免变异测试触及当前工作区。
+- **覆盖与结论**：7 个变异分别触发配对、元数据、课程安排、链接、Python 语法，以及题名校验的
+  行内和表格解析分支；每项均断言非零退出码及预期检查名称。`python3 -m unittest tools/test_gate.py`
+  实跑为 7 tests、0 failures。
+- **直接修改**：`tools/test_gate.py`、`collab/PLAN.md`、`collab/HANDOFF.md`、本记录；提交号待本轮提交。
+
 ## 写这份 NOTES 时请覆盖
 
 - **T-007 的结论**：PowerPoint 版本号、实际逐页复看的页数、发现的版面问题清单；

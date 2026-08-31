@@ -21,7 +21,7 @@
 | **T-007** | **用 Microsoft PowerPoint 导出 PDF 并逐页缩略图复核 439 页课件** | **Done** | **Codex（macOS）** | `4a5d535` — PowerPoint 16.112.2 导出 16 份 PDF，逐页复看 439 / 439 页无版面缺陷；Claude 复核：逐周页数（含 W15=24 这一修正后的值）与实际 `.pptx` 及 README 三方一致、提交未触及 `courseware/`、60 张浅灰页均为有标题的 section 分隔页 |
 | T-008 | 联网逐条核实讲义引用的 OJ / LeetCode 题号、题名、链接 | Done | Codex | `b2e6e3e` — 联网核实 56 个 OpenJudge + 19 个 LeetCode 端点，编号与链接全部正确；唯一过时题名 12559「最大最小整数 v0.3」已修正，讲义 / `content/w06.py` / 重生成课件三处同改。Claude 复核：符合红线 2（课件文本与从源重建的结果逐字一致）；并据此加固闸门第 7 项 |
 | T-009 | 红队样卷：为 W16 六道题构造能让参考解答 WA / TLE 的数据 | Done | Codex | `cfc7c94` — `tools/redteam_exam.py`，每题至少一个 WA / TLE / MLE 证据，固定反例写入讲义 5.7。Claude 复核：改动符合红线 2；修掉其中 3 处**恒真或硬编码**的"证据"，并补上此前缺失的一环 —— 让 fixture 去跑**讲义自己的参考解答** |
-| T-010 | 闸门自身失败路径的回归测试（`tools/test_gate.py`） | Backlog | 未认领 | 闸门天天全绿不代表它报错时报得对；失败路径在绿跑时一行都不执行 |
+| T-010 | 闸门自身失败路径的回归测试（`tools/test_gate.py`） | Review | Codex | 本轮 — 7 个临时副本变异，覆盖配对、元数据、课程安排、本地链接、Python 语法及题名校验的行内/表格两种形态；逐个断言真实 CLI 以对应检查项失败 |
 
 ---
 
