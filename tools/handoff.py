@@ -127,6 +127,7 @@ def run_verify():
     cmds = [
         [sys.executable, "tools/verify_courseware.py"],
         [sys.executable, "tools/check_note_code.py"],
+        [sys.executable, "tools/redteam_exam.py"],
     ]
     if os.environ.get("VERIFY_RENDER") == "1":
         cmds[0].append("--render")

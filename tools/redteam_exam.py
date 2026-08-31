@@ -124,9 +124,17 @@ def test_t3():
     chain = [(i, i + 1) for i in range(20_000)]
     require(t3_oracle(chain) == 1, 'T3 oracle')
     require(t3_bad_start_before_end(chain) == 2, 'T3 endpoint mutant survived')
-    # A coordinate-array solution would need this many cells, despite n=2.
-    require(1_000_000_000 > 100_000_000, 'T3 sparse-coordinate MLE guard')
-    return 'T3: endpoint-order WA; [0, 1e9) coordinate range rejects dense-array approach'
+    # MLE 证据必须**从 fixture 推出**，不能写成恒真的常量比较。
+    sparse = [(0, 1), (10**9 - 1, 10**9)]
+    require(t3_oracle(sparse) == 1, 'T3 oracle on sparse fixture')
+    cells = max(b for _, b in sparse)            # 按坐标开数组所需的格子数
+    budget_cells = 64 * 1024 * 1024              # 64 MB 即便每格 1 字节的上限
+    require(cells > budget_cells,
+            f'T3 sparse fixture is not adversarial: {cells} cells')
+    require(len(sparse) * 1000 < cells,
+            'T3 fixture n is not tiny relative to coordinate range')
+    return (f'T3: endpoint-order WA (2 vs 1); n={len(sparse)} 却需要 '
+            f'{cells:,} 个坐标格（> {budget_cells:,} 的 64 MB 上限）-> 按坐标开数组必 MLE')
 
 
 # T4 -------------------------------------------------------------------------
@@ -262,6 +270,7 @@ def t6_bad_shortest_sum(n, edges):
         adj[u].append((weight, v))
         adj[v].append((weight, u))
     pq, distance = [(0, 1)], [10**18] * (n + 1)
+    parent, edge_to = [0] * (n + 1), [0] * (n + 1)
     distance[1] = 0
     while pq:
         total, x = heapq.heappop(pq)
@@ -270,20 +279,61 @@ def t6_bad_shortest_sum(n, edges):
         for weight, y in adj[x]:
             if total + weight < distance[y]:
                 distance[y] = total + weight
+                parent[y], edge_to[y] = x, weight
                 heapq.heappush(pq, (distance[y], y))
-    # This mutant returns the largest edge on the minimum-sum path.
-    return 6 if distance[n] == 6 else -1
+    # Faithful mutant: report the largest edge along the minimum-SUM path.
+    # (An earlier version hardcoded `return 6 if distance[n] == 6 else -1`,
+    #  which only happened to be right for one fixture.)
+    if distance[n] >= 10**18:
+        return -1
+    node, worst = n, 0
+    while node != 1:
+        worst = max(worst, edge_to[node])
+        node = parent[node]
+    return worst
 
 
 def test_t6():
     edges = [(5, 1, 2), (5, 2, 3), (6, 1, 3)]
     require(t6_oracle(3, edges) == 5, 'T6 oracle')
     require(t6_bad_shortest_sum(3, edges) == 6, 'T6 shortest-sum mutant survived')
-    # In this input order, naive parent[rv] = ru forms a chain; checking n after
-    # every edge costs 1 + ... + (n-1) parent traversals without compression.
-    n = 100_000
-    require(n * (n - 1) // 2 > 4_000_000_000, 'T6 chain is not adversarial enough')
-    return 'T6: minimum-sum-path WA; 100k chain gives >4e9 uncompressed find steps'
+    # 另一组输入：瓶颈答案 10，而"最小和路径上的最大边"是 11 —— 两者必须区分开
+    other = [(10, 1, 2), (10, 2, 3), (11, 1, 3)]
+    require(t6_oracle(3, other) == 10, 'T6 oracle on second fixture')
+    require(t6_bad_shortest_sum(3, other) == 11,
+            'T6 mutant is not a faithful minimum-sum-path implementation')
+
+    # TLE 证据：**实测**无路径压缩时的父指针遍历次数，而不是断言一个恒真的算术式。
+    # 链式输入下每加一条边就查一次 find(1)/find(n)，步数应随 n 呈平方增长。
+    def naive_find_steps(n):
+        parent = list(range(n + 1))
+        steps = 0
+
+        def find(x):
+            nonlocal steps
+            while parent[x] != x:          # 没有路径压缩，也不按秩合并
+                x = parent[x]
+                steps += 1
+            return x
+
+        for i in range(1, n):
+            ru, rv = find(i), find(i + 1)
+            if ru != rv:
+                parent[ru] = rv            # 固定方向 -> 退化成一条链
+            find(1)
+            find(n)
+        return steps
+
+    small, big = naive_find_steps(500), naive_find_steps(1000)
+    ratio = big / max(small, 1)
+    require(ratio > 3.5,
+            f'T6 naive-DSU growth is not quadratic: {ratio:.2f}x for 2x n')
+    require(big > 100_000, f'T6 naive-DSU step count too small: {big}')
+    # 实测已确认是平方增长；按此外推到题目规模 n=10^5：
+    extrapolated = big * (100_000 // 1000) ** 2
+    return (f'T6: minimum-sum-path WA (6 vs 5, 11 vs 10); '
+            f'naive DSU 实测 n=1000 时 {big:,} 次父指针遍历、n 翻倍增长 {ratio:.1f} 倍'
+            f'（平方），据此外推 n=10^5 约 {extrapolated / 1e9:.1f}e9 次')
 
 
 def main():

@@ -16,6 +16,7 @@
 
 import ast
 import bisect
+import io
 import itertools
 import random
 import sys
@@ -87,6 +88,36 @@ def load_week(week):
             # 某个块依赖前面未抽取的名字：跳过，不影响其它块
             continue
     return ns
+
+
+
+# ---------------------------------------------------------------- 读 stdin 的解答
+def run_stdin_solution(src, stdin_text):
+    """把讲义里读 stdin 的参考解答原样跑一遍，返回它打印的内容。
+
+    W16 样卷的六道参考解答都是 `def solve(): ... / solve()` 的形状，
+    `load_week()` 只保留 def、不会执行它们 —— 也就是说**学生要照抄的这六段代码，
+    此前没有任何可重复的验证**（W16 只有 min_rooms 一项语义测试）。
+    """
+    import contextlib
+    buf = io.StringIO()
+    old_stdin = sys.stdin
+    # 必须给出带 .buffer 的 stdin：T3 / T6 用的是 sys.stdin.buffer.read()
+    sys.stdin = io.TextIOWrapper(io.BytesIO(stdin_text.encode()))
+    try:
+        with contextlib.redirect_stdout(buf):
+            exec(compile(src, '<note-solution>', 'exec'), {'__name__': '__main__'})
+    finally:
+        sys.stdin = old_stdin
+    return buf.getvalue().strip()
+
+
+def stdin_solutions(week):
+    """按出现顺序取出该周所有「读 stdin 的 solve()」代码块。"""
+    path = COURSEWARE / (WEEK_FILES[week] + '.md')
+    blocks = PY_BLOCK.findall(path.read_text(encoding='utf-8'))
+    return [b for b in blocks
+            if 'def solve():' in b and re.search(r'^solve\(\)', b, re.M)]
 
 
 # ---------------------------------------------------------------- 用例注册
@@ -1375,6 +1406,44 @@ def t_rooms(ns):
         pts = sorted({a for a, _ in iv})
         peak = max(sum(1 for a, b in iv if a <= p < b) for p in pts)
         assert f(iv) == peak, iv
+
+
+@case('W16', '样卷 T1–T6 参考解答 vs 讲义样例 + 红队 fixture')
+def t_w16_reference_solutions(ns):
+    """直接执行讲义里给学生照抄的那六段代码，喂样例与红队反例，比对文档承诺的输出。
+
+    输入 / 期望输出全部取自 W16 讲义本身（第 5 节各题的样例，
+    以及第 5.7 节「红队测试数据」表里的固定反例）。
+    """
+    sols = stdin_solutions('W16')
+    assert len(sols) == 6, f'W16 读 stdin 的参考解答应有 6 段，实际 {len(sols)} 段'
+
+    cases = {
+        0: [('2\n2200002 math 85\n2200001 math 85\n',
+             '2200001 85 85.00\n2200002 85 85.00'),            # 红队：并列取学号升序
+            ('5\n2200011 math 90\n2200011 physics 80\n2200012 math 95\n'
+             '2200012 physics 75\n2200013 math 85\n',
+             '2200011 170 85.00\n2200012 170 85.00\n2200013 85 85.00')],
+        1: [('(]\n', 'NO 2'), ('a(b[c]{d})e\n', 'YES 2'),
+            ('((()\n', 'NO 5'), ('()[]{}\n', 'YES 1'), ('(([]))\n', 'YES 3')],
+        2: [('2\n0 1\n1 2\n', '1'),                            # 红队：端点相接
+            ('3\n0 30\n5 10\n15 20\n', '2')],
+        3: [('5 5 1\nS#.#.\n...#.\n#....\n.####\n#.#.T\n', '8'),   # 红队：单层 visited
+            ('3 5 2\nS#.#T\n.#.#.\n.....\n', '4'),
+            ('3 5 0\nS#.#T\n.#.#.\n.....\n', '8')],
+        4: [('1 10\n3 5\n', '5 3'),                             # 红队：正序背包重复选
+            ('2 5\n5 10\n3 10\n', '10 3'),                     # 红队：同分取最小耗时
+            ('4 10\n3 10\n4 14\n5 16\n2 5\n', '31 10')],
+        5: [('3 3\n1 2 5\n2 3 5\n1 3 6\n', '5'),              # 红队：瓶颈 != 最小和
+            ('4 4\n1 2 5\n2 3 3\n3 4 7\n1 4 6\n', '6'),
+            ('3 1\n1 2 4\n', '-1')],
+    }
+    for idx, items in cases.items():
+        for stdin_text, want in items:
+            got = run_stdin_solution(sols[idx], stdin_text)
+            assert got == want, (
+                f'样卷 T{idx + 1} 参考解答输出不符：'
+                f'输入 {stdin_text!r} -> 得到 {got!r}，讲义承诺 {want!r}')
 
 
 # ---------------------------------------------------------------- 运行器
