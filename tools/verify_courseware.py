@@ -40,9 +40,27 @@ GUIDE_ROW_FOR_WEEK = {w: w for w in WEEKS}
 GUIDE_ROW_FOR_WEEK['15'] = '15-16'
 GUIDE_ROW_FOR_WEEK['16'] = '15-16'
 
-# 有意偏离既有题名语料的引用：题号 -> {别名: 理由}
+# 有意偏离既有题名语料的引用：题号 -> {讲义里的写法: 理由}
+# 形状是「题号 + 具体别名 + 理由」，不做整号豁免 —— 整号豁免会让该号的任何错叫法蒙混过关。
 TITLE_WHITELIST = {
     # 例：'02734': {'十进制转八进制': '平台标题的另一种常见写法'},
+}
+
+# ---------------------------------------------------------------------------
+# 已联网核实过的平台题名：题号 -> (权威题名, 出处)
+#
+# ⚠️ 这张表的存在理由，是本项目踩过的一个坑：
+#     **语料本身会过时。** 第 7 项拿 `2025fall-cs101/` 当语料，
+#     而 2025 年的材料里把 12559 写成「最大最小整数 v0.3」——
+#     平台上的实际题名是「最大最小整数」。语料错了，闸门就会**祝福错误答案**，
+#     再怎么收紧匹配规则也没用（变异自检实测：改回 v0.3 时收紧后的规则依然全绿）。
+#
+# 所以：**凡在此表登记的题号，以本表为准，语料被忽略。**
+# 表里的每一条都必须来自真正的联网核实，并注明出处（任务号 / 提交号）。
+VERIFIED_TITLES = {
+    '12559': ('最大最小整数',
+              'T-008 联网核实（Codex，b2e6e3e）：平台标题无 "v0.3" 后缀，'
+              '2025 语料的写法已过时'),
 }
 
 failures = []
@@ -319,16 +337,74 @@ CORPUS_GLOBS = ['2025fall-cs101/*.md', 'ADS_problem_list_at_*.md',
 #   - 前面不能是数字或小数点：排除 3.14159 这类误匹配；
 #   - 允许前面是中文或字母：语料里有"练习01742: Coins"、"OJ02806:公共子序列"、
 #     "E02750: 鸡兔同笼"等多种写法，\b 在 CJK 与数字之间并不成立；
-#   - 后面不能再跟数字：排除长数字串的尾部。
+#   - 后面不能再跟数字：排除长数字串的尾部；
+#   - 题名在 `]`（Markdown 链接起点）处截断，但**允许括号** ——
+#     早先把 `(`/`（` 也排除掉，导致语料里「汉诺塔问题(Tower of Hanoi)」
+#     被截成「汉诺塔问题」，反过来把讲义里正确的全称判成不符。
 REF = re.compile(
-    r'(?<![0-9.])(\d{5})(?!\d)\s*[:：]\s*([^\n,，。|`*<（(]{1,30})')
+    r'(?<![0-9.])(\d{5})(?!\d)\s*[:：]\s*([^\n,，。|`*<\]]{1,30})')
+
+
+# 表格形态的引用：`| ... | 题名 | 编号 | ... |`（题名在前、题号在后，中间没有冒号）。
+# W16 的备选题库、各周的作业表都是这个形状 —— REF 那条正则**完全看不到它们**，
+# 而它们恰恰是本仓库题号引用最密集的地方（实测 71 处）。
+TABLE_ID = re.compile(r'^[ETM]?(\d{5})$')
+TITLE_HEADERS = ('题目', '题名')
+
+
+def table_refs(text):
+    r"""从 Markdown 表格里抽 (题号, 题名)。
+
+    **按表头列名定位**，不用"题号紧邻前一格"这种启发式 ——
+    本仓库里有 `| 形状 | 排序键 | 例题 |`、`| 形态 | 递归时传 | 典型题 |` 这类表，
+    题号前面一格是排序键 / 递归参数，不是题名（实测会造成 5 处误报）。
+
+    只处理**表头里含「题目」或「题名」列**的表：题名取该列，题号取同一行里
+    形如 `[ETM]?\d{5}` 的单元格。合并行（如 `LC 20 / 02694`）不匹配，自动跳过。
+    """
+    out = []
+    header_idx = None
+    for line in text.splitlines():
+        line = line.strip()
+        if not line.startswith('|'):
+            header_idx = None           # 表格结束
+            continue
+        cells = [c.strip().strip('`').strip() for c in line.strip('|').split('|')]
+        if set(''.join(cells)) <= set('-: '):
+            continue                    # 分隔行 |---|---|
+        if header_idx is None:
+            for k, c in enumerate(cells):
+                if any(h in c for h in TITLE_HEADERS):
+                    header_idx = k
+                    break
+            else:
+                header_idx = -1         # 这张表没有题名列，整表跳过
+            continue
+        if header_idx < 0 or header_idx >= len(cells):
+            continue
+        title = cells[header_idx].strip('*` ').strip()
+        if not title or title.isdigit():
+            continue
+        for c in cells:
+            m = TABLE_ID.match(c)
+            if m:
+                out.append((m.group(1), title))
+                break
+    return out
 
 
 def normalize_title(s):
+    """归一化题名，使不同书写方式可以精确比较。
+
+    语料是从既有 Markdown 里正则抽出来的，会带上链接残留（如 `最大最小整数]`），
+    必须在这里洗干净 —— 否则就只能靠"子串容差"兜，而子串容差会**放过真正的题名漂移**
+    （T-008 实测：过时的 `最大最小整数 v0.3` 与正确题名互为子串，被静默通过）。
+    """
     s = s.strip()
     s = re.sub(r'[\s　]+', '', s)
     s = s.replace('（', '(').replace('）', ')')
     s = s.replace('，', ',').replace('“', '"').replace('”', '"')
+    s = s.strip('])】》')                 # Markdown 链接残留
     s = s.rstrip('.,:;、')
     return s.lower()
 
@@ -352,13 +428,32 @@ def check_problem_titles(files):
         fail('7 题号题名', '未能从仓库既有材料中抽取到任何题号↔题名语料')
         return
     checked = unknown = 0
+    verified = sum(
+        1 for wk in WEEKS if files.get(wk, (None,))[0]
+        for num, _t in (REF.findall(read(files[wk][0]))
+                        + table_refs(read(files[wk][0])))
+        if num in VERIFIED_TITLES)
     for wk in WEEKS:
         md = files.get(wk, (None,))[0]
         if md is None:
             continue
-        for num, title in REF.findall(read(md)):
+        refs = REF.findall(read(md)) + table_refs(read(md))
+        for num, title in refs:
             t = normalize_title(title)
             if not t or t.isdigit():
+                continue
+            if num in VERIFIED_TITLES:
+                # 已联网核实过：以权威题名为准，忽略（可能过时的）语料
+                checked += 1
+                official, source = VERIFIED_TITLES[num]
+                if t == normalize_title(official):
+                    continue
+                if title.strip() in TITLE_WHITELIST.get(num, {}):
+                    continue
+                fail('7 题号题名',
+                     f'{md.name}: 题号 {num} 的题名「{title.strip()}」'
+                     f'与已联网核实的平台题名「{official}」不符\n'
+                     f'        出处：{source}')
                 continue
             known = corpus.get(num)
             if not known:
@@ -367,15 +462,19 @@ def check_problem_titles(files):
             checked += 1
             if t in known:
                 continue
-            if any(t in k or k in t for k in known):
-                continue                       # 一方是另一方的前缀 / 子串
+            # ⚠️ 这里**不做子串容差**。曾经写过 `if t in k or k in t: continue`，
+            #    结果过时题名 `最大最小整数 v0.3` 与正确题名互为子串，漂移被静默放过
+            #    （由 T-008 联网核实才发现）。归一化洗掉链接残留后，
+            #    精确匹配对当前 73 处引用零误报。
             allowed = TITLE_WHITELIST.get(num, {})
             if title.strip() in allowed:
                 continue
             fail('7 题号题名',
                  f'{md.name}: 题号 {num} 的题名「{title.strip()}」'
                  f'与仓库既有语料不符，已知：{sorted(known)}')
-    note(f'题号↔题名：逐处比对 {checked} 处；{unknown} 处题号不在既有语料中（无从判定）')
+    note(f'题号↔题名：逐处比对 {checked} 处'
+         f'（其中 {verified} 处以联网核实的权威题名为准）；'
+         f'{unknown} 处题号不在既有语料中（无从判定）')
 
 
 # ---------------------------------------------------------------- 检查 8
