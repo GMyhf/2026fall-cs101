@@ -12,7 +12,8 @@
     3  课程安排    讲义与课件声明的「主题与学习重点」与课程指南表格逐字一致
     4  链接        所有本地 .md / .pptx / .py 相对链接可达
     5  语法        讲义里所有 ```python 代码块 + courseware/*.py 能被 ast.parse
-    6  可重生成    课件能从 content/ 重新生成，页数与 README 声明一致
+    6  可重生成    课件能从 content/ 重新生成；页数与 README 一致，
+                   且重建产物与已提交的 .pptx **逐段文本相同**（防止源改了没重建）
     7  题号题名    讲义引用的 OJ 题号↔题名与仓库内既有语料一致（离线）
     8  渲染        逐页检查文字未越出版心 + 中文字体已嵌入（--render）
 
@@ -288,11 +289,30 @@ README_ROW = re.compile(
     r'^\|\s*(\d+)\s*\|\s*`([^`]+)`\s*\|\s*(\d+)\s*\|', re.M)
 
 
+def pptx_texts(path):
+    """抽出 .pptx 里全部可见文字（含表格单元格），用于比对两份课件是否同一内容。
+
+    不比对 XML 或字节：zip 时间戳、元素顺序每次生成都会变，只有可见文本是稳定的。
+    """
+    from pptx import Presentation
+    out = []
+    for slide in Presentation(str(path)).slides:
+        for shape in slide.shapes:
+            if shape.has_text_frame:
+                out.append(shape.text_frame.text)
+            if getattr(shape, 'has_table', False) and shape.has_table:
+                for row in shape.table.rows:
+                    for cell in row.cells:
+                        out.append(cell.text)
+    return out
+
+
 def check_regenerate(files):
     try:
         from pptx import Presentation  # noqa: F401
     except ImportError:
-        note('未安装 python-pptx，跳过第 6 项（可重生成）')
+        note('⚠️ 未安装 python-pptx，**跳过**第 6 项（可重生成）—— '
+             '课件与 content/ 的一致性本次未验')
         return
     sys.path.insert(0, str(COURSEWARE))
     sys.path.insert(0, str(CONTENT))
@@ -327,6 +347,23 @@ def check_regenerate(files):
             if pages != want:
                 fail('6 可重生成',
                      f'第 {wk} 周页数不一致：重新生成 {pages} 页，README 声明 {want} 页')
+
+            # ⚠️ 只比页数是不够的：改了 content/wNN.py 却忘了重建课件时，
+            #    页数往往一模一样，仓库里的 .pptx 就这样悄悄过期。
+            #    必须把重新生成的产物与已提交的课件**逐段文本**比对。
+            committed = files[wk][1]
+            if committed is None:
+                continue
+            fresh_texts, old_texts = pptx_texts(out), pptx_texts(committed)
+            if fresh_texts != old_texts:
+                diff = next((f'第 {i + 1} 段：仓库「{o[:40]}」≠ 重建「{n[:40]}」'
+                             for i, (o, n) in enumerate(zip(old_texts, fresh_texts))
+                             if o != n),
+                            f'段数不同：仓库 {len(old_texts)} vs 重建 {len(fresh_texts)}')
+                fail('6 可重生成',
+                     f'第 {wk} 周课件与 content/w{wk}.py 不一致 —— '
+                     f'源改过但 .pptx 没重建？\n        {diff}\n'
+                     f'        修法：cd courseware && python3 build_all.py {wk}')
 
 
 # ---------------------------------------------------------------- 检查 7

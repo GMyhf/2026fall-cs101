@@ -7,12 +7,26 @@ and invokes the real CLI gate there.  This keeps mutations recoverable and tests
 the same entry point used in handoff instead of private helper functions.
 """
 
+import os
 import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
 from pathlib import Path
+
+
+def gate_env():
+    """跑闸门用的干净环境。
+
+    ⚠️ 必须剔除 `VERIFY_RENDER` —— 否则调用方一旦 `VERIFY_RENDER=1`
+    （例如 `VERIFY_RENDER=1 handoff.py --verify` 顺带跑本套件），
+    每个用例都会去调 LibreOffice：慢，而且结果随本机字体/渲染器环境浮动，
+    回归测试就不再确定。失败路径的判定与渲染无关，不该被它左右。
+    """
+    env = os.environ.copy()
+    env.pop('VERIFY_RENDER', None)
+    return env
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -27,7 +41,7 @@ class GateFailureTests(unittest.TestCase):
             mutate(clone)
             proc = subprocess.run(
                 [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
-                capture_output=True, text=True, timeout=60)
+                capture_output=True, text=True, timeout=300, env=gate_env())
             self.assertNotEqual(proc.returncode, 0, proc.stdout + proc.stderr)
             self.assertIn(expected_check, proc.stdout)
 
@@ -102,7 +116,7 @@ class GateFailureTests(unittest.TestCase):
                 '.git', '__pycache__', '*.pyc', '.DS_Store'))
             proc = subprocess.run(
                 [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
-                capture_output=True, text=True, timeout=120)
+                capture_output=True, text=True, timeout=300, env=gate_env())
             self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
 
     def test_corpus_title_drift_fails(self):
@@ -131,6 +145,25 @@ class GateFailureTests(unittest.TestCase):
                 '| 1 | `202609_ADS_W01_Overview_Platform_AI_Basics` | 32 |',
                 '| 1 | `202609_ADS_W01_Overview_Platform_AI_Basics` | 31 |'),
             '6 可重生成')
+
+
+    def test_stale_pptx_fails_regeneration(self):
+        """第 6 项：改了 `content/wNN.py` 却没重建 `.pptx`，必须报错。
+
+        这是 Codex 第 7 轮审查发现的 P1：原先第 6 项只比"重建页数 == README 声明"，
+        **从不拿重建产物与已提交的课件比对** —— 于是改标题（页数不变）时
+        第 1–7 项全绿，仓库里的课件悄悄过期。
+        """
+        try:
+            import pptx  # noqa: F401
+        except ImportError:
+            self.skipTest('未安装 python-pptx，第 6 项本身会被跳过')
+        self.run_mutation(
+            lambda root: self.replace(
+                root / 'courseware/content/w01.py',
+                "('bullets', '本讲内容', [", "('bullets', '源改了没重建', ["),
+            '6 可重生成')
+
 
     def test_deck_guard_rejects_overlong_code_page(self):
         """`deck.py` 的溢出守卫：字号触底必须报错，而不是静默钳位后溢出。

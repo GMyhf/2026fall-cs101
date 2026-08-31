@@ -189,6 +189,80 @@ def t_tprime(ns):
         assert f(p * p - 1) is False, p
 
 
+
+# ------------------------------------------------------------------- W05
+@case('W05', 'cheat sheet 模板：gcd / 埃氏筛 / 二维前缀和')
+def t_w05_templates(ns):
+    """W05 的模板是"要默写进 cheat sheet"的，必须真能跑对。"""
+    import math
+    g = ns['gcd']
+    rnd = random.Random(505)
+    for _ in range(300):
+        a, b = rnd.randint(1, 10 ** 6), rnd.randint(1, 10 ** 6)
+        assert g(a, b) == math.gcd(a, b), (a, b)
+
+    p = ns['sieve'](2000)
+
+    def naive(x):
+        if x < 2:
+            return False
+        d = 2
+        while d * d <= x:
+            if x % d == 0:
+                return False
+            d += 1
+        return True
+
+    for i in range(2001):
+        assert p[i] == naive(i), i
+
+
+@case('W05', '月考样卷 T1–T5 参考解答 vs 讲义样例')
+def t_w05_exam_solutions(ns):
+    """W05 是 10 月月考样卷，五道参考解答同样是给学生照抄的。
+
+    输入 / 期望输出全部取自讲义本身的「样例输入 / 样例输出」。
+    **按代码块下标显式映射**，不用 zip —— 讲义里 T1 有两种写法，
+    再加一个 cheat sheet 模板块，靠顺序 zip 会错位。
+    """
+    path = COURSEWARE / (WEEK_FILES['W05'] + '.md')
+    blocks = PY_BLOCK.findall(path.read_text(encoding='utf-8'))
+    runnable = [b for b in blocks if 'input()' in b or 'stdin' in b]
+    assert len(runnable) == 7, f'W05 可驱动代码块应有 7 个，实际 {len(runnable)}'
+
+    def run(src, text):
+        import contextlib
+        buf = io.StringIO()
+        old = sys.stdin
+        sys.stdin = io.TextIOWrapper(io.BytesIO(text.encode()))
+        try:
+            with contextlib.redirect_stdout(buf):
+                exec(compile(src, '<w05>', 'exec'), {'__name__': '__main__'})
+        finally:
+            sys.stdin = old
+        return buf.getvalue().strip()
+
+    T1 = [('5\n95 83 71 60 40\n', 'A\nB\nC\nD\nE\n80.00'),
+          # 边界：整数百分比必须是 60.00，不能是 60.0
+          ('5\n90 90 90 10 10\n', 'A\nA\nA\nE\nE\n60.00')]
+    # runnable[0] 是 cheat sheet 模板汇总（不是完整解答），跳过
+    cases = {
+        1: T1,                                   # T1 参考解答
+        2: T1,                                   # T1 「更清爽的写法」，同样的输入
+        3: [('hello WORLD, this is cs101!\n', 'Hello World, This Is Cs101!')],
+        4: [('6 2\npython\nalgorithm\npython\nmath\nalgorithm\npython\n',
+             'python 3\nalgorithm 2')],
+        5: [('4\n4\n5\n9\n12\n', 'YES\nNO\nYES\nNO')],
+        6: [('2 10\n0 1 5\n3 5 2\n', '13')],   # 送达时刻不含最后一次开关门
+    }
+    for idx, items in cases.items():
+        for stdin_text, want in items:
+            got = run(runnable[idx], stdin_text)
+            assert got == want, (
+                f'W05 第 {idx} 个代码块输出不符：输入 {stdin_text!r} -> '
+                f'得到 {got!r}，讲义承诺 {want!r}')
+
+
 # ------------------------------------------------------------------- W06
 @case('W06', '四种排序 vs sorted（随机 200 组）')
 def t_sorts(ns):
