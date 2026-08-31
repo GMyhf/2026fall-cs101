@@ -512,6 +512,17 @@ FOOTER_TEXT_TOP_PT = 496.0
 BODY_TOL_PT = 4.0                             # 字形下伸部等的容差
 
 
+def intrudes_into_footer(y_min_pt, y_max_pt):
+    """正文文字是否越出版心底部并侵入页脚区（坐标已换算到 540pt 版面）。
+
+    抽成具名函数是为了能**脱离 LibreOffice 直接回归**这条判据 ——
+    它的阈值来自实测（页脚文本 yMin≈497.5，而文本框理论值是 498.2），
+    差 0.7pt 就会把每一页的页脚都误判成溢出。
+    """
+    return (y_min_pt < FOOTER_TEXT_TOP_PT
+            and y_max_pt > BODY_BOTTOM_PT + BODY_TOL_PT)
+
+
 def check_render(files):
     soffice = None
     for cand in ('soffice', 'libreoffice'):
@@ -572,8 +583,7 @@ def check_render(files):
                     # ⚠️ 只比对页面边界是不够的：正文压到页脚上仍然在页内。
                     #    W16 曾有 3 页代码压住页脚而这里报"0 处越界"，
                     #    直到把判据改成**版心**底部才暴露。
-                    if (y * sy < FOOTER_TEXT_TOP_PT
-                            and y2 * sy > BODY_BOTTOM_PT + BODY_TOL_PT):
+                    if intrudes_into_footer(y * sy, y2 * sy):
                         fail('8 渲染',
                              f'{pdf.name} 第 {pno} 页：正文越出版心底部并侵入页脚区'
                              f'（文字底 {y2 * sy:.1f}pt > 版心底 {BODY_BOTTOM_PT:.1f}pt）')

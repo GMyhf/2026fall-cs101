@@ -128,6 +128,7 @@ def run_verify():
         [sys.executable, "tools/verify_courseware.py"],
         [sys.executable, "tools/check_note_code.py"],
         [sys.executable, "tools/redteam_exam.py"],
+        [sys.executable, "-m", "unittest", "tools/test_gate.py"],
     ]
     if os.environ.get("VERIFY_RENDER") == "1":
         cmds[0].append("--render")

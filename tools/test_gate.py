@@ -86,5 +86,86 @@ class GateFailureTests(unittest.TestCase):
             '7 题号题名')
 
 
+    # ------------------------------------------------------------------
+    # 以下 5 条为第 6 轮补充：覆盖此前完全没有回归的失败路径
+    # ------------------------------------------------------------------
+
+    def test_clean_repo_passes(self):
+        """反向对照：未经变异的副本必须零失败。
+
+        没有这一条，上面每个用例都可能是"恒真"的 —— 只要副本本身坏了，
+        闸门对任何输入都返回非零，全部用例照样"通过"。
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            clone = Path(tmp) / 'repo'
+            shutil.copytree(ROOT, clone, ignore=shutil.ignore_patterns(
+                '.git', '__pycache__', '*.pyc', '.DS_Store'))
+            proc = subprocess.run(
+                [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
+                capture_output=True, text=True, timeout=120)
+            self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+
+    def test_corpus_title_drift_fails(self):
+        """题名漂移走的是**语料**分支（题号不在 VERIFIED_TITLES 里）。
+
+        上面两条用的都是 12559，而它在 VERIFIED_TITLES 中，走覆盖层分支 ——
+        「语料 + 精确匹配」那条路径此前一次都没被执行到。实测：把第 7 项的
+        子串容差加回去，那两条用例依然全绿，只有这一条会变红。
+        01017 的平台题名是「装箱问题」，这里改成它的子串「装箱」。
+        """
+        self.run_mutation(
+            lambda root: self.replace(
+                root / 'courseware/202610_ADS_W06_Matrices_Sorting_Greedy.md',
+                '**01017: 装箱问题**', '**01017: 装箱**'),
+            '7 题号题名')
+
+    def test_page_count_drift_fails_regeneration(self):
+        """第 6 项：README 声明的页数与从 content/ 重新生成的结果不符。"""
+        try:
+            import pptx  # noqa: F401
+        except ImportError:
+            self.skipTest('未安装 python-pptx，第 6 项本身会被跳过')
+        self.run_mutation(
+            lambda root: self.replace(
+                root / 'courseware/README.md',
+                '| 1 | `202609_ADS_W01_Overview_Platform_AI_Basics` | 32 |',
+                '| 1 | `202609_ADS_W01_Overview_Platform_AI_Basics` | 31 |'),
+            '6 可重生成')
+
+    def test_deck_guard_rejects_overlong_code_page(self):
+        """`deck.py` 的溢出守卫：字号触底必须报错，而不是静默钳位后溢出。
+
+        这是 Q-7 的修复点。守卫失效时，代码会压到页脚上，而第 8 项渲染检查
+        （比页面边界）和人工逐页复核**都看不出来** —— 所以它必须有自己的回归。
+        """
+        sys.path.insert(0, str(ROOT / 'courseware'))
+        try:
+            import deck
+            meta = {'title': 't', 'subtitle': '', 'footer': '', 'info': []}
+            slides = [('code', '超长代码页', '\n'.join(f'x = {i}' for i in range(60)), '')]
+            with tempfile.TemporaryDirectory() as tmp:
+                with self.assertRaises(deck.LayoutOverflow):
+                    deck.build(meta, slides, str(Path(tmp) / 'o.pptx'))
+        finally:
+            sys.path.remove(str(ROOT / 'courseware'))
+
+    def test_footer_intrusion_predicate(self):
+        """第 8 项的判据：阈值按实测取，差 0.7pt 就会全盘误判。"""
+        sys.path.insert(0, str(ROOT / 'tools'))
+        try:
+            import verify_courseware as V
+            # 页脚自身（实测 yMin=497.53, yMax=511.16）—— 绝不能判成溢出
+            self.assertFalse(V.intrudes_into_footer(497.53, 511.16))
+            # 正文最后一行压进页脚区 —— 必须判成溢出
+            self.assertTrue(V.intrudes_into_footer(491.0, 500.0))
+            # 正常正文 / 恰好贴着版心底部 —— 不算溢出
+            self.assertFalse(V.intrudes_into_footer(400.0, 412.0))
+            self.assertFalse(V.intrudes_into_footer(474.0, 485.3))
+            # 若阈值误用理论值 498.2，页脚就会落进"正文"侧 —— 这条锁住该校准
+            self.assertLess(V.FOOTER_TEXT_TOP_PT, 497.53)
+        finally:
+            sys.path.remove(str(ROOT / 'tools'))
+
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)
