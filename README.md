@@ -18,7 +18,26 @@ https://github.com/GMyhf/2026fall-cs101/
 
 
 
-## 1 题解 & 教材资源
+## 1 课程讲义与课件
+
+第 1–16 周的**讲义（`.md`）与课件（`.pptx`）**在 [`courseware/`](courseware/)，
+同名成对，内容依据 [《计算概论（B）》课程指南](Introduction_to_Computing_B_Course_Guide.md)
+的「课程安排」表编写。第 16 周含**期末上机考试的命题方案与建议样卷**。
+
+- 文件清单与页数：[courseware/README.md](courseware/README.md)
+- 课件由脚本生成（`courseware/content/wNN.py` → `courseware/build_all.py`），
+  **请勿手工编辑 `.pptx`**
+- 一致性检查：`python3 tools/verify_courseware.py`；
+  讲义代码的语义对拍：`python3 tools/check_note_code.py`
+
+| 阶段 | 周次 | 关键词 |
+| ---- | ---- | ---- |
+| 打基础 | 1–4 | 环境、Shell、计算机原理(1/2)、Python 与算法分析 |
+| 上强度 | 5–9 | 10 月月考、矩阵/排序/贪心、栈队列、递归、回溯、并查集 |
+| 攻核心 | 10–12 | 区间问题、动态规划、BFS |
+| 融会贯通 | 13–16 | 计算机原理(2/2)、AI 素养、知识图谱与神经网络、总复习与机考 |
+
+## 2 题解 & 教材资源
 
 题解，https://fuynaloft.github.io/sol101/
 
@@ -33,7 +52,7 @@ https://github.com/GMyhf/2026fall-cs101/
 
 
 
-## 2 暑假预习指南
+## 3 暑假预习指南
 
 1. 登录 **小北智学平台**（[https://zx.pku.edu.cn](https://zx.pku.edu.cn/)），搜索并加入课程卡片 *“高中与大学的计算机基础课程衔接”*，即可开启 **AI助教问答式自学**。
 2. 本课程配套知识库涵盖教材、课件、题解，方便有一定基础的同学自主学习。
@@ -59,7 +78,7 @@ https://github.com/GMyhf/2026fall-cs101/
 
 
 
-## 3 重要信息
+## 4 重要信息
 
 - **零基础学习路径**
 
