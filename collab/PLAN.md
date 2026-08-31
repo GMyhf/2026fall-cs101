@@ -18,14 +18,20 @@
 | T-004 | 搭建 Claude⇄Codex 协作脚手架（本目录 + `tools/handoff.py`） | Review | Claude | 本轮 |
 | T-005 | 一致性闸门 `tools/verify_courseware.py`（8 项检查，含离线题号↔题名核对） | Review | Claude | 本轮 — 73 处题号逐处比对全绿，0 处无从判定；渲染检查 16 份 PDF / 439 页 |
 | T-006 | 讲义代码语义闸门 `tools/check_note_code.py`（把讲义实现原样抽出来对拍） | Review | Claude | 本轮 — 69 项；已抓出 3 个真问题（见 NOTES-claude 第 1 轮） |
-| **T-007** | **用 Microsoft PowerPoint 导出 PDF 并逐页缩略图复核 439 页课件** | **Review** | **Codex（macOS）** | PowerPoint 16.112.2 导出 16 份 PDF；逐页缩略图复看 439 / 439 页，无缺字、方框、重叠、裁切、错位、意外空白或非预期标记泄漏 |
+| **T-007** | **用 Microsoft PowerPoint 导出 PDF 并逐页缩略图复核 439 页课件** | **Done** | **Codex（macOS）** | `4a5d535` — PowerPoint 16.112.2 导出 16 份 PDF，逐页复看 439 / 439 页无版面缺陷；Claude 复核：逐周页数（含 W15=24 这一修正后的值）与实际 `.pptx` 及 README 三方一致、提交未触及 `courseware/`、60 张浅灰页均为有标题的 section 分隔页 |
 | T-008 | 联网逐条核实讲义引用的 OJ / LeetCode 题号、题名、链接 | Backlog | Codex | 闸门第 7 项只能离线比对既有语料；**"和 2025 年叫法一致" ≠ "该题在 OJ 上存在"** |
 | T-009 | 红队样卷：为 W16 六道题构造能让参考解答 WA / TLE 的数据 | Backlog | Codex | Claude 只做了随机对拍，**没有真造卡时数据、也没用错误算法验证过它们能卡住** |
 | T-010 | 闸门自身失败路径的回归测试（`tools/test_gate.py`） | Backlog | 未认领 | 闸门天天全绿不代表它报错时报得对；失败路径在绿跑时一行都不执行 |
 
 ---
 
-## ⚠️ 给 Codex 的硬要求（T-007，本轮最高优先级）
+## ✅ 给 Codex 的硬要求（T-007）—— **已完成，原文保留备查**
+
+> **结论（2026-08-31，`4a5d535`）**：Codex 以 **Microsoft PowerPoint 16.112.2** 通过 AppleScript
+> 导出 16 份 PDF 并逐页复看 **439 / 439 页**，未发现缺字、方框、重叠、裁切、错位、意外空白
+> 或非预期标记泄漏。**Office 自动化可用，因此不存在需要保留的阻塞。**
+> 下面的原始要求保留不删，供后续学期复用同一流程。
+
 
 **Codex 在 macOS 上运行，装有 Microsoft PowerPoint。对最终交付而言，
 PowerPoint 是比 LibreOffice 更合适的渲染器 —— 学生和教师放映用的就是它。**
@@ -77,3 +83,5 @@ LibreOffice 缺少「微软雅黑 / Consolas」时会做字体替换，
 | 2026-08-31 | 语义验证做成**可重复脚本**而非一次性抽查 | 一次性结论只留在 NOTES 里，下一轮无法重跑；进闸门才有约束力 | Claude；`check_note_code.py` |
 | 2026-08-31 | **交付验收用 PowerPoint，回归检测用 LibreOffice** | 放映机器上跑的是 PowerPoint；LibreOffice 的字体替代会掩盖真实版面问题。两者定位不同，不可互相替代 | 人指示；T-007 |
 | 2026-08-31 | 闸门抓到的问题，修**内容**而不是放宽**检查** | W15 的 XOR 代码页溢出 → 拆成两页（而不是调小字号下限）；W10 的退化区间 → 在讲义里写明题目前提（而不是删掉测试） | Claude；本轮 |
+| 2026-08-31 | **T-007 验收通过：课件以 PowerPoint 成品为准已合格** | PowerPoint 16.112.2 逐页复看 439 页无缺陷。Claude 侧能独立核验的三项（逐周页数三方一致、提交未触及课件源、60 张浅灰页均为有标题的 section 页）全部成立；**视觉判断本身无法在 Linux 侧复现，这正是该任务交给 Codex 的原因** | Codex 执行 / Claude 复核；`4a5d535` |
+| 2026-08-31 | 页数一致性可作为"渲染的是当前版本"的**弱证据** | Codex 报的 W15=24 是 XOR 页拆分**之后**的值；若渲染的是旧文件会报 23。逐周 16 个数字全中，基本排除了陈旧或臆造 | Claude；本轮 |
