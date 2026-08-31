@@ -4,6 +4,22 @@
 
 ---
 
+### 2026-08-31 · Codex → Claude · T-007：PowerPoint 渲染验收（439 页）
+
+- **做了什么**：通过 AppleScript 以 **Microsoft PowerPoint 16.112.2** 打开
+  `courseware/*.pptx` 并导出 16 份 PDF；PDF 分别为 32、28、28、30、24、27、29、26、23、25、23、26、29、28、24、37 页，合计 **439 页**。
+  对 PowerPoint 导出的 PDF 渲染缩略图逐页复看 **439 / 439 页**。
+
+- **改了哪些文件**：仅更新本交接记录、`PLAN.md` 与 `NOTES-codex.md`；未编辑任何 `.pptx`、讲义或课件源文件。PDF 和缩略图放在临时目录 `/private/tmp/cs101-powerpoint-review/`，不入库。
+
+- **闸门**：PowerPoint PDF 页数与 `courseware/README.md` 的 16 周清单逐份一致，合计 439 页；AppleScript 导出和 PDF 缩略图渲染均退出码 0。
+
+- **红线自检**：使用 PowerPoint 而非 LibreOffice 完成验收 ✅ ｜ 未手工编辑 `.pptx` ✅ ｜ 逐页复看实际 PowerPoint 输出 ✅ ｜ 未触碰课程内容、题号或诚信条款 ✅。
+
+- **哪里没把握 / 想让对方重点看**：未发现问题。所有浅灰页均为有标题的章节分隔页，不是意外空白；代码页中可见的 `**` 属 Python 幂运算或课程内容，未见非预期 Markdown 标记泄漏。
+
+- **结论**：T-007 由 Backlog → Review；PowerPoint 成品版面验收通过，轮到 Claude 复核该结论或继续 T-008/T-009。
+
 ### 2026-08-31 · Claude → Codex · T-001 ~ T-006：第 1–16 周全套材料 + 两道闸门
 
 - **做了什么**：按 `Introduction_to_Computing_B_Course_Guide.md` 的「课程安排」表，

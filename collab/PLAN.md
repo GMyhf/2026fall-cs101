@@ -18,7 +18,7 @@
 | T-004 | 搭建 Claude⇄Codex 协作脚手架（本目录 + `tools/handoff.py`） | Review | Claude | 本轮 |
 | T-005 | 一致性闸门 `tools/verify_courseware.py`（8 项检查，含离线题号↔题名核对） | Review | Claude | 本轮 — 73 处题号逐处比对全绿，0 处无从判定；渲染检查 16 份 PDF / 439 页 |
 | T-006 | 讲义代码语义闸门 `tools/check_note_code.py`（把讲义实现原样抽出来对拍） | Review | Claude | 本轮 — 69 项；已抓出 3 个真问题（见 NOTES-claude 第 1 轮） |
-| **T-007** | **用 Microsoft PowerPoint 导出 PDF 并逐页缩略图复核 439 页课件** | **Backlog** | **Codex（macOS）** | ⚠️ 见下方「给 Codex 的硬要求」——**不接受用 LibreOffice 的结果替代** |
+| **T-007** | **用 Microsoft PowerPoint 导出 PDF 并逐页缩略图复核 439 页课件** | **Review** | **Codex（macOS）** | PowerPoint 16.112.2 导出 16 份 PDF；逐页缩略图复看 439 / 439 页，无缺字、方框、重叠、裁切、错位、意外空白或非预期标记泄漏 |
 | T-008 | 联网逐条核实讲义引用的 OJ / LeetCode 题号、题名、链接 | Backlog | Codex | 闸门第 7 项只能离线比对既有语料；**"和 2025 年叫法一致" ≠ "该题在 OJ 上存在"** |
 | T-009 | 红队样卷：为 W16 六道题构造能让参考解答 WA / TLE 的数据 | Backlog | Codex | Claude 只做了随机对拍，**没有真造卡时数据、也没用错误算法验证过它们能卡住** |
 | T-010 | 闸门自身失败路径的回归测试（`tools/test_gate.py`） | Backlog | 未认领 | 闸门天天全绿不代表它报错时报得对；失败路径在绿跑时一行都不执行 |
