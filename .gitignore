@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+
+# macOS（协作方在 macOS 上）
+.DS_Store
+**/.DS_Store
+
+# 交接生成物，不入库
+collab/review-input.md
