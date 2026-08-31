@@ -36,11 +36,11 @@ https://github.com/GMyhf/2026fall-cs101
 | 11 | `202611_ADS_W11_DP` | 23 | 0-1 / 完全 / 多重背包、LIS、LCS、降维 |
 | 12 | `202611_ADS_W12_DP_BFS` | 26 | BFS 三铁律、带状态 / 多源 BFS、Dijkstra、二分答案 |
 | 13 | `202611_ADS_W13_Computer_Principles_2` | 29 | 编译与解释、GIL、虚拟内存、局部性、综合练习 |
-| 14 | `202612_ADS_W14_AI_Literacy_Exam_Recap` | 28 | LLM 原理、幻觉、提示词、12 月月考讲评 |
+| 14 | `202612_ADS_W14_AI_Literacy_Exam_Recap` | 29 | LLM 原理、幻觉、提示词、12 月月考讲评 |
 | 15 | `202612_ADS_W15_Knowledge_Graph_Neural_Network` | 24 | 知识图谱、RAG、神经网络、反向传播、CNN |
-| 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 37 | 知识体系总结、期末上机考试命题方案与样卷 |
+| 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 40 | 知识体系总结、期末上机考试命题方案与样卷 |
 
-课件合计 **439 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
+课件合计 **443 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
 
 ---
 

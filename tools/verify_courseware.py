@@ -503,6 +503,15 @@ def has_cjk_font(pdffonts_output):
     return False
 
 
+# deck.py 的版面几何（pt，16:9 = 960x540）：正文区与页脚的分界
+BODY_TOP_PT = 1.42 * 72
+BODY_BOTTOM_PT = BODY_TOP_PT + 5.32 * 72      # = 485.3
+# 页脚**文本**的实测顶端（LibreOffice 渲染下 yMin≈497.5，略高于文本框的 498.2）：
+# 阈值必须按实测取，不能按理论值 —— 差 0.7pt 就会把每一页的页脚都误判成溢出。
+FOOTER_TEXT_TOP_PT = 496.0
+BODY_TOL_PT = 4.0                             # 字形下伸部等的容差
+
+
 def check_render(files):
     soffice = None
     for cand in ('soffice', 'libreoffice'):
@@ -549,14 +558,25 @@ def check_render(files):
             total_pages += len(pages)
             for pno, (pw, ph, body) in enumerate(pages, start=1):
                 pw, ph = float(pw), float(ph)
+                # pdftotext 的坐标按 PDF 点数给出，换算到 deck.py 的 720x540 版面
+                sy = 540.0 / ph
                 for x, y, x2, y2 in re.findall(
                         r'<word xMin="([\d.]+)" yMin="([\d.]+)" '
                         r'xMax="([\d.]+)" yMax="([\d.]+)"', body):
-                    if float(x2) > pw + 0.5 or float(y2) > ph + 0.5 \
-                            or float(x) < -0.5 or float(y) < -0.5:
+                    x, y, x2, y2 = float(x), float(y), float(x2), float(y2)
+                    if x2 > pw + 0.5 or y2 > ph + 0.5 or x < -0.5 or y < -0.5:
                         fail('8 渲染',
-                             f'{pdf.name} 第 {pno} 页：文字越出版心 '
+                             f'{pdf.name} 第 {pno} 页：文字越出页面 '
                              f'({x},{y})-({x2},{y2}) vs {pw}x{ph}')
+                        break
+                    # ⚠️ 只比对页面边界是不够的：正文压到页脚上仍然在页内。
+                    #    W16 曾有 3 页代码压住页脚而这里报"0 处越界"，
+                    #    直到把判据改成**版心**底部才暴露。
+                    if (y * sy < FOOTER_TEXT_TOP_PT
+                            and y2 * sy > BODY_BOTTOM_PT + BODY_TOL_PT):
+                        fail('8 渲染',
+                             f'{pdf.name} 第 {pno} 页：正文越出版心底部并侵入页脚区'
+                             f'（文字底 {y2 * sy:.1f}pt > 版心底 {BODY_BOTTOM_PT:.1f}pt）')
                         break
         note(f'渲染检查：{len(pdfs)} 份 PDF，共 {total_pages} 页')
 

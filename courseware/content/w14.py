@@ -180,7 +180,7 @@ print(min_cost_int([(1, 3), (2, 1), (3, 2)]))    # 6
         ['每次重算前缀和', 'O(n^2) -> TLE'],
     ], '多数人能想到"要排序"，但排序键靠猜。交换论证是唯一可靠的推导方法'),
 
-    ('code', 'T3 网格中的宝藏（25 分）· 带状态 BFS', '''from collections import deque
+    ('code', 'T3 网格中的宝藏（25 分）· 带状态 BFS（1/2）：定位与初始化', '''from collections import deque
 
 
 def treasure(grid):
@@ -191,7 +191,9 @@ def treasure(grid):
         for j in range(m):
             if grid[i][j] == 'S': sx, sy = i, j
             elif grid[i][j] == 'T': tx, ty = i, j
-    DIRS = ((-1, 0), (1, 0), (0, -1), (0, 1))
+''', '状态是 (x, y, 是否已拿到钥匙) —— 两层网格'),
+
+    ('code', 'T3 网格中的宝藏（2/2）：主循环', '''    DIRS = ((-1, 0), (1, 0), (0, -1), (0, 1))
     dist = [[[-1] * m for _ in range(n)] for _ in range(2)]
     start_key = 1 if grid[sx][sy] == 'K' else 0
     dist[start_key][sx][sy] = 0
@@ -213,7 +215,7 @@ def treasure(grid):
             dist[nk][nx][ny] = dist[k][x][y] + 1
             q.append((nx, ny, nk))
     return -1
-''', ''),
+''', '踩到钥匙就拿上；两层各自记距离，互不覆盖'),
 
     ('table', 'T3 错误归因', [
         ['错法', '后果'],

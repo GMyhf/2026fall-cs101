@@ -183,6 +183,34 @@ def _fit_size(items, width_pt, height_pt, hi, lo, line_spacing, gap_ratio):
     return size
 
 
+
+# ---------------------------------------------------------------- 溢出保护
+MIN_PT = 8.5          # 代码 / 示意图页的字号下限
+
+
+class LayoutOverflow(ValueError):
+    """内容多到自适应字号已触底 —— 再缩就不可读，再画就会溢出版心。"""
+
+
+def _guard_min_size(kind, title, nlines, widest, want, floor):
+    """字号触底时**直接报错**，而不是静默钳位后照常画。
+
+    历史教训：这里原先只写 `size = max(8.5, ...)`。字号被钳到下限后文字照常输出，
+    盒子却被 clamp 在版心内 —— 于是代码压到页脚上，而
+      * 前 7 项检查（配对 / 元数据 / 语法 / 可重生成 …）根本看不到版面；
+      * 渲染检查当时只比对**页面**边界，压到页脚仍在页内，也报"0 处越界"。
+    结果 W16 有 3 页长期是坏的。字号是构建期就能精确算出来的量，
+    应当在这里当场失败，而不是留给 4 分钟的渲染检查去碰运气。
+    """
+    if want >= floor:
+        return
+    raise LayoutOverflow(
+        f'{kind} 页「{title}」内容过多：{nlines} 行、最长 {widest:.0f} em，'
+        f'需要 {want:.2f}pt 才能装进版心，已低于下限 {floor}pt。\n'
+        f'        请拆成两页或精简内容 —— 不要调低下限。'
+    )
+
+
 # ---------------------------------------------------------------- 版面构件
 def _blank(prs):
     return prs.slides.add_slide(prs.slide_layouts[6])
@@ -285,7 +313,8 @@ def _add_code(prs, title, code, caption=''):
     PAD = 22.0                                    # 盒子上下内边距合计（pt）
     by_rows = (avail_h_pt - PAD) / (n * LEAD)
     by_cols = avail_w_pt / max(widest, 1) / 0.60  # 等宽字体约 0.60 em/字符
-    size = max(8.5, min(15.5, by_rows, by_cols))
+    _guard_min_size('code', title, n, widest, min(by_rows, by_cols), MIN_PT)
+    size = max(MIN_PT, min(15.5, by_rows, by_cols))
 
     box_h_pt = min(float(BODY_H) / 12700.0 - float(cap_h) / 12700.0,
                    n * size * LEAD + PAD)
@@ -318,7 +347,8 @@ def _add_ascii(prs, title, art, caption=''):
     LEAD = 1.30
     by_rows = avail_h_pt / (n * LEAD)
     by_cols = avail_w_pt / max(widest, 1) / 0.60
-    size = max(8.5, min(17.0, by_rows, by_cols))
+    _guard_min_size('ascii', title, n, widest, min(by_rows, by_cols), MIN_PT)
+    size = max(MIN_PT, min(17.0, by_rows, by_cols))
 
     art_h_pt = n * size * LEAD
     top = BODY_TOP + Emu(int(max(0.0, (avail_h_pt - art_h_pt) / 2) * 12700))

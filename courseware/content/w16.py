@@ -194,7 +194,7 @@ solve()
         '**卡点**：大量端点相接的区间；坐标 10⁹（不能开数组）；n=2×10⁵（不能 O(n²)）',
     ]),
 
-    ('code', 'T3 参考解答（事件扫描 + 堆写法）', '''import sys, heapq
+    ('code', 'T3 参考解答（1/2）：事件扫描求峰值', '''import sys, heapq
 
 
 def solve():
@@ -212,9 +212,9 @@ def solve():
         if cur > best:
             best = cur
     print(best)
+''', '(t, -1) 自动排在 (t, 1) 前面 —— 左闭右开先释放再占用'),
 
-
-def min_rooms(intervals):              # 等价的堆写法，便于理解"分组"
+    ('code', 'T3 参考解答（2/2）：等价的堆写法', '''def min_rooms(intervals):              # 等价的堆写法，便于理解"分组"
     intervals = sorted(intervals, key=lambda x: x[0])
     heap = []
     for a, b in intervals:
@@ -226,7 +226,7 @@ def min_rooms(intervals):              # 等价的堆写法，便于理解"分�
 
 
 print(min_rooms([(0, 30), (5, 10), (15, 20)]))     # 2
-''', '评分：想到"求峰值"的转化 7 分 + 实现 5 分 + 左闭右开边界 3 分'),
+''', '便于理解"分组"的含义；左闭右开取 <='),
 
     ('bullets', 'T4 穿墙迷宫（15 分）★★★☆☆', [
         '**考点**：带状态的 BFS（W12）',
@@ -236,7 +236,7 @@ print(min_rooms([(0, 30), (5, 10), (15, 20)]))     # 2
         '**样例**：`S#.#T / .#.#. / .....` 中，k=0 与 k=1 均为 8，k=2 为 4',
     ]),
 
-    ('code', 'T4 参考解答', '''import sys
+    ('code', 'T4 参考解答（1/2）：读入与定位', '''import sys
 from collections import deque
 
 
@@ -249,7 +249,9 @@ def solve():
         for j in range(m):
             if grid[i][j] == 'S': sx, sy = i, j
             elif grid[i][j] == 'T': tx, ty = i, j
-    DIRS = ((-1, 0), (1, 0), (0, -1), (0, 1))
+''', '状态是 (x, y, 已穿墙次数) —— 把网格复制成 k+1 层'),
+
+    ('code', 'T4 参考解答（2/2）：三维 BFS 主循环', '''    DIRS = ((-1, 0), (1, 0), (0, -1), (0, 1))
     dist = [[[-1] * m for _ in range(n)] for _ in range(k + 1)]
     dist[0][sx][sy] = 0
     q = deque([(sx, sy, 0)])
@@ -311,7 +313,7 @@ solve()
         '**卡点**：不连通输出 `-1`；重边；链状图（未做路径压缩会 TLE）',
     ]),
 
-    ('code', 'T6 参考解答（并查集）', '''import sys
+    ('code', 'T6 参考解答（1/2）：读入并按危险度升序', '''import sys
 
 
 def solve():
@@ -322,8 +324,9 @@ def solve():
         u, v, w = int(data[idx]), int(data[idx+1]), int(data[idx+2]); idx += 3
         edges.append((w, u, v))
     edges.sort()                              # 按危险度升序
+''', '排序是整个算法的关键一步'),
 
-    parent = list(range(n + 1))
+    ('code', 'T6 参考解答（2/2）：并查集 + 首次连通即答案', '''    parent = list(range(n + 1))
     size = [1] * (n + 1)
 
     def find(x):
@@ -347,7 +350,7 @@ def solve():
 
 
 solve()
-''', '评分：想到"升序加边首次连通" 10 分 + 并查集实现 6 分 + 边界 4 分'),
+''', '路径压缩写成迭代两趟，防止 n=10^5 时爆栈'),
 
     ('section', '第 5 节', '给学生的备考建议'),
 
