@@ -144,8 +144,8 @@ deactivate                            # 退出
     ('bullets', 'PyCharm 的两个必用功能', [
         '**调试器**：行号左侧打断点 → Debug → 单步 F8 / 步入 F7 / 看变量',
         '- 不会用调试器就只能靠 `print` 猜，效率差一个数量级',
-        '**重定向输入**：Run/Debug Configurations → 勾选 "Redirect input from"',
-        '- 这样在 IDE 里也能直接喂样例',
+        '**直接输入**：右上角选择 Current File，点击运行 ▶；程序执行到 input() 时，在下方 Run 窗口直接输入数据并按回车',
+        '- 适合课堂练习和临时测试，无需配置运行参数',
         '在线可视化 **pythontutor.com** —— 第 8 周讲递归时理解栈帧最快的工具',
     ]),
 
