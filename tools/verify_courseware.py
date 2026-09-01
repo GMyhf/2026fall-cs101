@@ -701,6 +701,97 @@ def check_exam_spec(files):
          f'{"+".join(map(str, EXAM_SCORES))} = 100 分')
 
 
+# ---------------------------------------------------------------- 检查 10
+# 版面标记：`**` 与反引号是**源里的记号**，绝不该出现在放映稿上。
+#
+# 起因（T-013 复核）：`deck.py` 的 `_SEGMENT` 把 `**...**` 整段吞掉、不再往里拆，
+# 于是 ``**负数不能用 `bin(x)`**`` 里的反引号被原样印了出来。
+# 全仓库 8 处这种写法，在 T-007（439 页）、T-011（8 页）、T-013（29 页）
+# **三轮逐页人眼复核里全部漏过** —— 一个小反引号，人眼就是不敏感。
+# 同轮还发现一条用全角空格伪造的"续行"，被渲成了一个空 bullet。
+# 两类都属于"看得见但看不出"的缺陷，只能由代码守。
+MONO_FONT_NAME = 'Consolas'
+LEAK = re.compile(r'\*\*|`')
+LEADING_BLANK = re.compile(r'^[\s\u3000]')
+
+
+def deck_slides(py_path):
+    """静态取出 content/wNN.py 的 SLIDES（不 import，避免副作用）。"""
+    tree = ast.parse(read(py_path))
+    for node in tree.body:
+        if isinstance(node, ast.Assign):
+            for t in node.targets:
+                if isinstance(t, ast.Name) and t.id == 'SLIDES':
+                    try:
+                        return ast.literal_eval(node.value)
+                    except ValueError:
+                        return None
+    return None
+
+
+def check_markup(files):
+    # --- A 层：源里的 bullet / 表格单元格不得以空白（含全角空格）开头。
+    #     用全角空格伪造"续行"会渲成一个只有项目符号、没有内容的空 bullet。
+    for wk, (_md, _pptx, py) in sorted(files.items()):
+        if py is None:
+            continue
+        slides = deck_slides(py)
+        if slides is None:
+            fail('10 版面标记', f'{py.name}: 无法静态解析 SLIDES')
+            continue
+        for i, sl in enumerate(slides):
+            kind = sl[0] if sl else '?'
+            if kind == 'bullets':
+                items = sl[2] if len(sl) > 2 else []
+                for it in items:
+                    if isinstance(it, str) and LEADING_BLANK.search(it):
+                        fail('10 版面标记',
+                             f'{py.name} 第 {i} 张「{sl[1]}」：bullet 以空白开头 '
+                             f'{it[:24]!r} —— 伪造的续行会渲成空项目符号，'
+                             f'请拆成两条完整 bullet')
+            elif kind == 'table':
+                for row in (sl[2] if len(sl) > 2 else []):
+                    for cell in row:
+                        if isinstance(cell, str) and LEADING_BLANK.search(cell):
+                            fail('10 版面标记',
+                                 f'{py.name} 第 {i} 张「{sl[1]}」：表格单元格以空白开头 '
+                                 f'{cell[:24]!r}')
+
+    # --- B 层：产物里的**非等宽** run 不得含 `**` 或反引号。
+    #     检查对象必须是渲染结果 —— 源写法千变万化，泄漏只有一种表现。
+    try:
+        from pptx import Presentation
+    except ImportError:
+        note('⚠️ 未安装 python-pptx，第 10 项**只做了源侧 A 层**；'
+             '产物侧的标记泄漏本次未验')
+        return
+    leaked = 0
+    for wk, (_md, pptx, _py) in sorted(files.items()):
+        if pptx is None:
+            continue
+        for n, slide in enumerate(Presentation(str(pptx)).slides, 1):
+            for shape in slide.shapes:
+                frames = []
+                if shape.has_text_frame:
+                    frames.append(shape.text_frame)
+                if getattr(shape, 'has_table', False) and shape.has_table:
+                    for row in shape.table.rows:
+                        for cell in row.cells:
+                            frames.append(cell.text_frame)
+                for tf in frames:
+                    for para in tf.paragraphs:
+                        for run in para.runs:
+                            if run.font.name == MONO_FONT_NAME:
+                                continue          # 代码页原样输出，** 是幂运算符
+                            if LEAK.search(run.text):
+                                leaked += 1
+                                fail('10 版面标记',
+                                     f'{pptx.name} 第 {n} 页：非等宽文字里印出了 '
+                                     f'Markdown 记号 {run.text[:40]!r}')
+    if not leaked:
+        note('版面标记：16 份课件的非等宽文字里没有 `**` / 反引号泄漏')
+
+
 # ---------------------------------------------------------------- 主流程
 def main():
     ap = argparse.ArgumentParser()
@@ -721,6 +812,7 @@ def main():
     if opts.render:
         check_render(files)
     check_exam_spec(files)
+    check_markup(files)
 
     print('=' * 68)
     for n in notes:

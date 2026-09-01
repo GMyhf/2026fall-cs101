@@ -36,12 +36,20 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class GateFailureTests(unittest.TestCase):
-    def run_mutation(self, mutate, expected_check):
+    def run_mutation(self, mutate, expected_check, rebuild=False):
         with tempfile.TemporaryDirectory() as tmp:
             clone = Path(tmp) / 'repo'
             shutil.copytree(ROOT, clone, ignore=shutil.ignore_patterns('.git',
                             '__pycache__', '*.pyc', '.DS_Store'))
             mutate(clone)
+            if rebuild:
+                # 改的是排版引擎：必须在副本里重新生成课件，
+                # 否则动的只是源、产物还是旧的，验的就不是这次改动。
+                built = subprocess.run(
+                    [sys.executable, 'build_all.py'], cwd=clone / 'courseware',
+                    capture_output=True, text=True, timeout=600, env=gate_env())
+                self.assertEqual(built.returncode, 0,
+                                 built.stdout + built.stderr)
             proc = subprocess.run(
                 [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
                 capture_output=True, text=True, timeout=300, env=gate_env())
@@ -286,6 +294,55 @@ class GateFailureTests(unittest.TestCase):
             os.close(w)
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
         self.assertIn('项通过', proc.stdout)
+
+
+    # ---------------------------------------------------------- 第 10 项：版面标记
+    # `**` 与反引号是源里的记号，绝不该印在放映稿上。这一族缺陷在
+    # T-007（439 页）、T-011（8 页）、T-013（29 页）三轮人眼复核里全部漏过。
+    HAS_PPTX = True
+    try:
+        import pptx  # noqa: F401
+    except ImportError:                     # pragma: no cover
+        HAS_PPTX = False
+
+    @unittest.skipUnless(HAS_PPTX, '需要 python-pptx 才能在副本里重建课件')
+    def test_bold_nested_backtick_leaks_fails_markup(self):
+        """撤掉「粗体里继续拆反引号」，反引号就会印出来 —— 必须红。"""
+        self.run_mutation(
+            lambda root: self.replace(
+                root / 'courseware/deck.py',
+                '            emit(seg[2:-2], True, NAVY if color is INK else color)',
+                '            run = p.add_run(); run.text = seg[2:-2]\n'
+                '            _style_run(run, size, True,\n'
+                '                       NAVY if color is INK else color, mono)'),
+            '10 版面标记', rebuild=True)
+
+    @unittest.skipUnless(HAS_PPTX, '需要 python-pptx 才能在副本里重建课件')
+    def test_narrow_bold_pattern_leaks_fails_markup(self):
+        """把 _SEGMENT 收回 `[^*]+`，含 `*` 的粗体内容会让 `**` 自己泄漏。
+
+        这条是本轮闸门**自己抓出来的**第三处（W02 第 27 页
+        ``**`[[0]*n]*m` 别名陷阱**``），不是人先看见的。
+        """
+        self.run_mutation(
+            lambda root: self.replace(
+                root / 'courseware/deck.py',
+                r"_SEGMENT = re.compile(r'(\*\*(?:[^*]|\*(?!\*))+?\*\*|`[^`]+`)')",
+                r"_SEGMENT = re.compile(r'(\*\*[^*]+\*\*|`[^`]+`)')"),
+            '10 版面标记', rebuild=True)
+
+    def test_fullwidth_space_bullet_fails_markup(self):
+        """用全角空格伪造的"续行"会渲成一个空项目符号 —— 必须红。
+
+        A 层是纯源侧检查，**不依赖 python-pptx**，在没装它的机器上照样有效。
+        """
+        self.run_mutation(
+            lambda root: self.replace(
+                root / 'courseware/content/w05.py',
+                "        '自检清单打不了勾的地方，就是本周的复习重点',",
+                "        '自检清单打不了勾的地方，就是本周的复习重点',\n"
+                "        '\u3000\u3000\u3000\u3000伪造的续行',"),
+            '10 版面标记')
 
 
 if __name__ == '__main__':

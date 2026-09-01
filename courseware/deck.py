@@ -80,7 +80,10 @@ def _textbox(slide, left, top, width, height, wrap=True):
     return box, tf
 
 
-_SEGMENT = re.compile(r'(\*\*[^*]+\*\*|`[^`]+`)')
+# 强调段内部允许**单个** `*`（`[[0]*n]*m` 这类代码片段里全是它），
+# 但不允许跨过下一个 `**` —— 否则会把两段强调粘成一段。
+# 旧写法 `\*\*[^*]+\*\*` 匹配不上含 `*` 的内容，于是 `**` 自己被原样印了出来。
+_SEGMENT = re.compile(r'(\*\*(?:[^*]|\*(?!\*))+?\*\*|`[^`]+`)')
 
 
 def _plain(text):
@@ -88,31 +91,46 @@ def _plain(text):
     return text.replace('**', '').replace('`', '')
 
 
+_INLINE_CODE = re.compile(r'(`[^`]+`)')
+
+
 def _add_runs(p, text, size, bold, color, mono):
-    """把一行文本按 **强调** / `等宽` 切成多个 run。
+    r"""把一行文本按 **强调** / `等宽` 切成多个 run。
 
     代码/示意图（mono）原样输出：Python 的 ** 幂运算符不能被当成强调标记。
+
+    ⚠️ **强调段内部必须继续拆 `等宽`**。`_SEGMENT` 的 `\*\*[^*]+\*\*`
+    会把 ``**负数不能用 `bin(x)`**`` 整段吞掉；若在这里直接 `seg[2:-2]` 输出，
+    反引号就原样印在放映稿上了。cs101 曾有 8 处这种写法，
+    在 T-007（439 页）、T-011（8 页）、T-013（29 页）三轮逐页复核里**全部漏过** ——
+    人眼对一个小小的反引号不敏感，所以这件事必须由代码保证。
     """
     if mono:
         run = p.add_run()
         run.text = text
         _style_run(run, size, bold, color, True)
         return
+
+    def emit(chunk, chunk_bold, chunk_color):
+        for part in _INLINE_CODE.split(chunk):
+            if not part:
+                continue
+            if part.startswith('`') and part.endswith('`') and len(part) > 1:
+                run = p.add_run()
+                run.text = part[1:-1]
+                _style_run(run, size * 0.94, chunk_bold, chunk_color, True)
+            else:
+                run = p.add_run()
+                run.text = part
+                _style_run(run, size, chunk_bold, chunk_color, mono)
+
     for seg in _SEGMENT.split(text):
         if not seg:
             continue
         if seg.startswith('**') and seg.endswith('**'):
-            run = p.add_run()
-            run.text = seg[2:-2]
-            _style_run(run, size, True, NAVY if color is INK else color, mono)
-        elif seg.startswith('`') and seg.endswith('`'):
-            run = p.add_run()
-            run.text = seg[1:-1]
-            _style_run(run, size * 0.94, bold, color, True)
+            emit(seg[2:-2], True, NAVY if color is INK else color)
         else:
-            run = p.add_run()
-            run.text = seg
-            _style_run(run, size, bold, color, mono)
+            emit(seg, bold, color)
 
 
 def _para(tf, text, size, bold=False, color=INK, mono=False,
