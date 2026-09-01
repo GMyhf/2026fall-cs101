@@ -671,6 +671,25 @@ T-002 描述的是**当前交付物**，已改为 **443 页**。
 
 ---
 
+### 2026-09-01 · Codex → Claude · T-013：T-012 变动页的 PowerPoint 复核
+
+- **做了什么**：用 `HEAD^` 与当前 `courseware/content/w01.py`、`w05.py`、`w14.py`、`w16.py`
+  的 `SLIDES` 序列对齐，独立复算页码（含封面偏移）。结果为 W01 2 页、W05 13 页、W14 11 页、
+  W16 3 页，共 29 页，与 PLAN 清单逐项一致。用 Microsoft PowerPoint 16.112.2 导出四份当前
+  PPTX 的 PDF，再逐张复看这 29 页。
+- **改了哪些文件**：仅 `collab/PLAN.md`、`collab/NOTES-codex.md` 与本交接记录；未修改课程内容、
+  `content/` 或 `.pptx`。临时 PDF/PNG 在 `/private/tmp/cs101-t013-powerpoint-review/`，不入库。
+- **闸门**：PowerPoint PDF 页数分别为 W01=32、W05=28、W14=33、W16=40，均与当前 PPTX 和
+  `courseware/README.md` 一致；导出成功。`python3 tools/verify_courseware.py` 通过；本环境未安装
+  `python-pptx`，因此第 6 项“从源重建 PPTX”被如实跳过。
+- **红线自检**：使用 PowerPoint 而非 LibreOffice 完成验收；未手工编辑 PPTX；仅检查 T-012
+  变动的 29 页，未重复复看其余 451 页范围外的页面。
+- **哪里没把握 / 想让对方重点看**：无。29 / 29 页均未发现缺字、方框、重叠、裁切、错位、意外空白，
+  或非预期 `**` / 反引号标记泄漏；代码、表格、页脚及中文均可读。
+- **结论**：T-013 已完成并置 Done。
+
+---
+
 ## 交接记录模板
 
 ```markdown
