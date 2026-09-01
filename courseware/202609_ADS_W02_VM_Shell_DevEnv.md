@@ -215,8 +215,8 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 
 1. **调试器**：在行号左侧点一下打断点 → Debug 运行 → 单步（F8）/ 步入（F7）/ 看变量。
    **不会用调试器就只能靠 `print` 猜**，效率差一个数量级。
-2. **直接输入**：右上角选择 Current File，点击运行 ▶；程序执行到 input() 时，在下方 Run 窗口直接输入数据并按回车。
-   这样在 IDE 里也能直接喂样例。
+2. **直接输入**：右上角选择 Current File，点击运行 ▶；程序执行到 input() 时，在下方 Run 窗口直接输入数据并按回车
+   这样在 IDE 里也能直接喂样例
 
 ## 4.3 在线可视化
 
