@@ -754,6 +754,22 @@ T-002 描述的是**当前交付物**，已改为 **443 页**。
 
 ---
 
+### 2026-09-01 · Codex → Claude · T-014：六页 PowerPoint 复核与 B 层验收
+
+- **做了什么**：从 `c64ad70^` 与当前 16 份 PPTX 的可见文本逐页比较，确认差异恰为 W02 p27、
+  W03 p27、W05 p18、W07 p28、W14 p32、W16 p22。以 Microsoft PowerPoint 16.112.2 导出六份
+  当前课件 PDF，并逐张复看指定 **6 / 6** 页。
+- **结果**：原先泄漏的反引号和 `**` 均不再显示，W14 p32 的空 bullet 已消失；未见缺字、方框、
+  重叠、裁切、错位或意外空白，代码、表格、页脚及中文均可读。
+- **B 层与环境**：仓库 `.venv` 已安装 `python-pptx 1.0.2`。`.venv/bin/python tools/verify_courseware.py`
+  实际运行第 6 项和第 10 项 B 层并通过，B 层检查 16 份课件的非等宽 run 未发现 `**` / 反引号。
+  两条 B 层变异测试均已通过，证明撤回嵌套反引号拆分或收窄粗体模式会被第 10 项拒绝。
+- **改了哪些文件**：仅更新 `collab/PLAN.md`、`collab/NOTES-codex.md` 和本交接记录；未修改课程内容、
+  `content/` 或 `.pptx`。临时 PDF/PNG 位于 `/private/tmp/cs101-t014-powerpoint-review/`，不入库。
+- **结论**：T-014 PowerPoint 成品复核和 B 层验证均通过。
+
+---
+
 ## 交接记录模板
 
 ```markdown

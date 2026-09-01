@@ -69,6 +69,19 @@
 - **直接修改**：仅更新协作记录；未修改课件内容、源文件或 PPTX。PDF 与 PNG 审阅产物位于
   `/private/tmp/cs101-t013-powerpoint-review/`，不入库。
 
+## 2026-09-01 · T-014 Markdown 记号修复的 PowerPoint 复核
+
+- **环境**：已在仓库 `.venv` 安装并验证 `python-pptx 1.0.2`。`.venv/bin/python tools/verify_courseware.py`
+  实际执行第 6 项和第 10 项 B 层并通过；B 层覆盖 16 份课件，确认非等宽 run 没有 `**` 或反引号泄漏。
+  两条 B 层失败路径（撤掉粗体内反引号拆分、收窄 `_SEGMENT`）各自重建临时副本后均被第 10 项拒绝。
+- **范围复算**：从 `c64ad70^` 与当前 PPTX 的可见文本逐页比较，差异恰为 W02 p27、W03 p27、
+  W05 p18、W07 p28、W14 p32、W16 p22，未多出其他页。
+- **PowerPoint 复看**：Microsoft PowerPoint **16.112.2** 导出上述六份当前课件 PDF，逐张查看
+  **6 / 6** 指定页。反引号和 `**` 均未显示；W14 p32 不再有空 bullet；未见缺字、方框、重叠、裁切、
+  错位或意外空白，代码、表格、页脚和中文均可读。
+- **直接修改**：仅更新协作记录；未修改课程内容、课件源或 PPTX。临时产物在
+  `/private/tmp/cs101-t014-powerpoint-review/`，不入库。
+
 ## 写这份 NOTES 时请覆盖
 
 - **T-007 的结论**：PowerPoint 版本号、实际逐页复看的页数、发现的版面问题清单；
