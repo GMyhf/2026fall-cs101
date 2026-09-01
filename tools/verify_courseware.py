@@ -628,6 +628,79 @@ def check_render(files):
         note(f'渲染检查：{len(pdfs)} 份 PDF，共 {total_pages} 页')
 
 
+# ---------------------------------------------------------------- 检查 9
+# 三次月考与期末上机考试是**同一规格**：6 题 / 112 分钟 / 100 分，
+# 分值一律 15+15+15+15+20+20。这个规格由任课教师给定（不在课程指南表里），
+# 讲义、样卷题头、分值分配行、课件四处都写了它 —— 四处任何一处漂移都是缺陷。
+# 以前只有人眼盯着：W05 写 5 题、W14 写 4 题、W16 同时写着
+# 「2025 秋为 112 分钟」和「约 120 分钟」，全程无人报警。
+EXAM_MINUTES = 112
+EXAM_SCORES = [15, 15, 15, 15, 20, 20]
+EXAM_PAPERS = {'05': '10 月月考样卷', '14': '12 月月考样卷', '16': '期末上机考试样卷'}
+
+# 被 112 分钟取代的旧写法。「8 小时」是课外学习时间，不能误伤，所以只卡 2 小时。
+STALE_DURATION = re.compile(r'约?\s*120\s*分钟|(?<![0-9])2\s*小时')
+EXAM_HEAD = re.compile(r'^##\s*T(\d+)\.\s*(.+?)（(\d+)\s*分）\s*$', re.M)
+EXAM_ALLOC = re.compile(r'\*\*分值分配\*\*：([^\n]+?)=\s*\*\*100 分\*\*')
+ALLOC_ITEM = re.compile(r'T(\d+)\s+(\d+)')
+
+
+def check_exam_spec(files):
+    for wk, (md, _pptx, py) in sorted(files.items()):
+        for path in (md, py):
+            if path is None:
+                continue
+            for m in STALE_DURATION.finditer(read(path)):
+                fail('9 机考规格',
+                     f'{path.name}: 出现过时的考试时长写法 {m.group(0)!r}；'
+                     f'机考一律 {EXAM_MINUTES} 分钟')
+
+    for wk, label in EXAM_PAPERS.items():
+        md, _pptx, py = files.get(wk, (None, None, None))
+        if md is None:
+            fail('9 机考规格', f'第 {wk} 周讲义缺失，无法校验{label}')
+            continue
+        text = read(md)
+
+        if f'{EXAM_MINUTES} 分钟' not in text:
+            fail('9 机考规格',
+                 f'{md.name}: {label}没有写明「{EXAM_MINUTES} 分钟」')
+
+        heads = EXAM_HEAD.findall(text)
+        got_ids = [int(i) for i, _t, _sc in heads]
+        got_scores = [int(sc) for _i, _t, sc in heads]
+        if got_ids != list(range(1, len(EXAM_SCORES) + 1)):
+            fail('9 机考规格',
+                 f'{md.name}: {label}的题号应为 T1..T{len(EXAM_SCORES)}，'
+                 f'实际 {got_ids}')
+        elif got_scores != EXAM_SCORES:
+            fail('9 机考规格',
+                 f'{md.name}: {label}的分值应为 {EXAM_SCORES}（合计 100），'
+                 f'实际 {got_scores}（合计 {sum(got_scores)}）')
+
+        m = EXAM_ALLOC.search(text)
+        if not m:
+            fail('9 机考规格', f'{md.name}: {label}缺少「**分值分配**：… = **100 分**」一行')
+        else:
+            alloc = [(int(i), int(sc)) for i, sc in ALLOC_ITEM.findall(m.group(1))]
+            want = list(enumerate(EXAM_SCORES, 1))
+            if alloc != want:
+                fail('9 机考规格',
+                     f'{md.name}: {label}的分值分配行与题头不符\n'
+                     f'        分配行: {alloc}\n'
+                     f'        应为  : {want}')
+            elif got_scores and alloc != list(zip(got_ids, got_scores)):
+                fail('9 机考规格',
+                     f'{md.name}: {label}的分值分配行与各题题头写的分数对不上')
+
+        if py is not None and f'{EXAM_MINUTES} 分钟' not in read(py):
+            fail('9 机考规格',
+                 f'{py.name}: 课件没有写明「{EXAM_MINUTES} 分钟」')
+
+    note(f'机考规格：3 份样卷均为 {len(EXAM_SCORES)} 题 / {EXAM_MINUTES} 分钟 / '
+         f'{"+".join(map(str, EXAM_SCORES))} = 100 分')
+
+
 # ---------------------------------------------------------------- 主流程
 def main():
     ap = argparse.ArgumentParser()
@@ -647,6 +720,7 @@ def main():
     check_problem_titles(files)
     if opts.render:
         check_render(files)
+    check_exam_spec(files)
 
     print('=' * 68)
     for n in notes:

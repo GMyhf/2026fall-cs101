@@ -16,6 +16,7 @@
 
 import ast
 import bisect
+import contextlib
 import io
 import itertools
 import random
@@ -69,6 +70,24 @@ def _keep(node):
     return False
 
 
+@contextlib.contextmanager
+def sealed_stdin():
+    """把 stdin 换成一条立即 EOF 的空流。
+
+    `_keep` 会放行 `data = sys.stdin.read().split()` 这类模块级赋值
+    （`read` / `split` 都不在 SKIP_CALLS 里），W05 的 T3 / T4 / T6 正是这个形状。
+    如果调用方的 stdin 是一条**不会关闭的管道**（在同一次 shell 调用里
+    紧跟着别的命令跑本套件时就会这样），`sys.stdin.read()` 会永久阻塞 ——
+    套件挂死，一个字都不输出。**工具的行为不该取决于谁在什么上下文里调它。**
+    """
+    old = sys.stdin
+    sys.stdin = io.TextIOWrapper(io.BytesIO(b''))
+    try:
+        yield
+    finally:
+        sys.stdin = old
+
+
 def load_week(week):
     """把某周讲义里所有 python 代码块的定义合并进一个命名空间。"""
     path = COURSEWARE / (WEEK_FILES[week] + '.md')
@@ -83,7 +102,8 @@ def load_week(week):
             continue
         mod = ast.Module(body=kept, type_ignores=[])
         try:
-            exec(compile(ast.fix_missing_locations(mod), '<note>', 'exec'), ns)
+            with sealed_stdin():
+                exec(compile(ast.fix_missing_locations(mod), '<note>', 'exec'), ns)
         except Exception:
             # 某个块依赖前面未抽取的名字：跳过，不影响其它块
             continue
@@ -217,9 +237,9 @@ def t_w05_templates(ns):
         assert p[i] == naive(i), i
 
 
-@case('W05', '月考样卷 T1–T5 参考解答 vs 讲义样例')
+@case('W05', '月考样卷 T1–T6 参考解答 vs 讲义样例')
 def t_w05_exam_solutions(ns):
-    """W05 是 10 月月考样卷，五道参考解答同样是给学生照抄的。
+    """W05 是 10 月月考样卷，六道参考解答同样是给学生照抄的。
 
     输入 / 期望输出全部取自讲义本身的「样例输入 / 样例输出」。
     **按代码块下标显式映射**，不用 zip —— 讲义里 T1 有两种写法，
@@ -228,7 +248,7 @@ def t_w05_exam_solutions(ns):
     path = COURSEWARE / (WEEK_FILES['W05'] + '.md')
     blocks = PY_BLOCK.findall(path.read_text(encoding='utf-8'))
     runnable = [b for b in blocks if 'input()' in b or 'stdin' in b]
-    assert len(runnable) == 7, f'W05 可驱动代码块应有 7 个，实际 {len(runnable)}'
+    assert len(runnable) == 8, f'W05 可驱动代码块应有 8 个，实际 {len(runnable)}'
 
     def run(src, text):
         import contextlib
@@ -254,6 +274,13 @@ def t_w05_exam_solutions(ns):
              'python 3\nalgorithm 2')],
         5: [('4\n4\n5\n9\n12\n', 'YES\nNO\nYES\nNO')],
         6: [('2 10\n0 1 5\n3 5 2\n', '13')],   # 送达时刻不含最后一次开关门
+        # T6 补码计算器：讲义样例，外加"有无符号进位但无有符号溢出"的边界
+        7: [('6\nTO 8 -5\nTO 4 8\nFROM 8 11111011\n'
+             'ADD 8 100 100\nADD 8 -100 -100\nADD 4 3 4\n',
+             '11111011\nOVERFLOW\n-5\n-56 OVERFLOW\n56 OVERFLOW\n7'),
+            # 讲义「数据构造建议」点名的四组边界，逐条兑现
+            ('5\nADD 8 -1 1\nTO 4 -8\nTO 4 8\nTO 2 1\nTO 2 -2\n',
+             '0\n1000\nOVERFLOW\n01\n10')],
     }
     for idx, items in cases.items():
         for stdin_text, want in items:
@@ -261,6 +288,103 @@ def t_w05_exam_solutions(ns):
             assert got == want, (
                 f'W05 第 {idx} 个代码块输出不符：输入 {stdin_text!r} -> '
                 f'得到 {got!r}，讲义承诺 {want!r}')
+
+
+@case('W05', '补码计算器 vs 手工除二取余 / 取反加一（讲义原文驱动）')
+def t_w05_twos_complement(ns):
+    """T6 是全卷唯一考补码的题，讲义承诺的三件事逐条对照独立模型验证：
+    `TO` 的越界判定、`FROM` 的符号位减 2^n、`ADD` 的**有符号溢出**
+    （讲义特别强调"无符号进位 ≠ 有符号溢出"）。
+
+    参照模型不用任何位运算 —— 手工除二取余、按位取反再加一，
+    与讲义解答的 `x & ((1 << n) - 1)` 走的是两条完全不同的路。
+    """
+    src = stdin_solutions('W05')[1]          # [0] 是 T5 电梯，[1] 是 T6
+
+    def to_naive(n, x):
+        lo, hi = -(2 ** (n - 1)), 2 ** (n - 1) - 1
+        if not lo <= x <= hi:
+            return 'OVERFLOW'
+        if x >= 0:
+            bits = ''
+            v = x
+            while v:
+                bits = str(v % 2) + bits
+                v //= 2
+            return bits.rjust(n, '0')
+        pos = bin(-x)[2:].rjust(n, '0')      # 原码
+        inv = ''.join('1' if c == '0' else '0' for c in pos)   # 取反
+        carry, out = 1, []
+        for c in reversed(inv):              # 加一
+            t = int(c) + carry
+            out.append(str(t % 2))
+            carry = t // 2
+        return ''.join(reversed(out))
+
+    def from_naive(n, b):
+        v = sum(int(c) * 2 ** (n - 1 - i) for i, c in enumerate(b))
+        return str(v - 2 ** n if b[0] == '1' else v)
+
+    def add_naive(n, a, b):
+        lo, hi = -(2 ** (n - 1)), 2 ** (n - 1) - 1
+        s, r = a + b, a + b
+        while r > hi:
+            r -= 2 ** n
+        while r < lo:
+            r += 2 ** n
+        return str(r) if r == s else f'{r} OVERFLOW'
+
+    rnd = random.Random(0x5C6)
+    lines, want = [], []
+    for _ in range(1200):
+        n = rnd.randint(2, 64)
+        lo, hi = -(2 ** (n - 1)), 2 ** (n - 1) - 1
+        op = rnd.choice(['TO', 'FROM', 'ADD'])
+        if op == 'TO':
+            x = rnd.randint(lo - 2, hi + 2)          # 故意覆盖恰好越界的两侧
+            lines.append(f'TO {n} {x}')
+            want.append(to_naive(n, x))
+        elif op == 'FROM':
+            b = ''.join(rnd.choice('01') for _ in range(n))
+            lines.append(f'FROM {n} {b}')
+            want.append(from_naive(n, b))
+        else:
+            a, b = rnd.randint(lo, hi), rnd.randint(lo, hi)
+            lines.append(f'ADD {n} {a} {b}')
+            want.append(add_naive(n, a, b))
+    got = run_stdin_solution(src, f'{len(lines)}\n' + '\n'.join(lines) + '\n')
+    got = got.split('\n')
+    assert len(got) == len(want), (len(got), len(want))
+    for line, g, w in zip(lines, got, want):
+        assert g == w, f'W05 T6 补码计算器：{line} -> 得到 {g!r}，参照模型 {w!r}'
+
+
+@case('W05', 'T6「常见失分」点名的两种错法，逐条给出反例')
+def t_w05_twos_complement_wrong_ways(ns):
+    """讲义写着"用 `bin(x)` 处理负数会错"、"无符号进位不是有符号溢出"。
+    这两句是**断言**，不是证据 —— 这里各给一个反例，让它们变成可复核的事实。
+
+    正确的一侧永远取自讲义原文（`run_stdin_solution`），
+    只有错误的一侧才由本用例复现。
+    """
+    src = stdin_solutions('W05')[1]
+
+    # ① 负数不能用 bin()：讲义承诺 TO 8 -5 -> 11111011
+    right = run_stdin_solution(src, '1\nTO 8 -5\n')
+    assert right == '11111011', right
+    wrong_bin = bin(-5)[2:].rjust(8, '0')
+    assert wrong_bin != right, (
+        f'bin(-5) 的写法竟然也给出 {right}：讲义"不能用 bin()"这句就站不住了')
+
+    # ② 无符号进位 ≠ 有符号溢出：-1 + 1 在 8 位下有进位，但结果 0 完全正确
+    right = run_stdin_solution(src, '1\nADD 8 -1 1\n')
+    assert right == '0', f'讲义数据构造建议点名的 ADD 8 -1 1 应输出 0，实际 {right!r}'
+    a, b, n = -1, 1, 8
+    mask = (1 << n) - 1
+    carry_out = (a & mask) + (b & mask) > mask          # 把进位当溢出的写法
+    assert carry_out, '这组 fixture 本该产生无符号进位，否则它证明不了任何事'
+    assert 'OVERFLOW' not in right, (
+        '按进位判溢出会在这里误报，而讲义解答没有 —— 两者必须不同')
 
 
 # ------------------------------------------------------------------- W06
@@ -1465,6 +1589,175 @@ def t_tfidf(ns):
     s2 = score("动态规划 算法", docs, idx)
     assert s2[2] > s2[0] and s2[2] > s2[1], s2
     assert score("不存在的词", docs, idx) == [0.0, 0.0, 0.0]
+
+
+@case('W14', '书架分层二分答案 vs 全枚举切法（讲义原文驱动）')
+def t_w14_shelves(ns):
+    """T5 的三处坑（下界必须是 max(a)、判据是 <= k、二分收缩方向）
+    只能用穷举对照来兜住 —— 任何一处写错，小数据上就会立刻分叉。
+    """
+    import itertools
+    sols = stdin_solutions('W14')
+    assert len(sols) == 2, f'W14 读 stdin 的参考解答应有 2 段（T5、T6），实际 {len(sols)}'
+    src = sols[0]
+
+    def naive(a, k):
+        n = len(a)
+        return min(max(sum(a[b[i]:b[i + 1]]) for i in range(k))
+                   for cuts in itertools.combinations(range(1, n), k - 1)
+                   for b in [(0,) + cuts + (n,)])
+
+    # 讲义样例先兑现
+    assert run_stdin_solution(src, '5 3\n1 2 3 4 5\n') == '6'
+
+    rnd = random.Random(514)
+    for _ in range(200):
+        n = rnd.randint(1, 9)
+        k = rnd.randint(1, n)
+        a = [rnd.randint(1, 20) for _ in range(n)]
+        got = int(run_stdin_solution(src, f'{n} {k}\n' + ' '.join(map(str, a)) + '\n'))
+        want = naive(a, k)
+        assert got == want, (a, k, got, want)
+
+
+@case('W14', '敌友阵营扩展域并查集 vs BFS 奇偶标号（讲义原文驱动）')
+def t_w14_camps(ns):
+    """T6 的参照模型不用并查集：在"已采纳关系"的图上做 BFS，
+    用**奇偶标号**表示朋友 / 敌人。两套实现对矛盾编号与团体数都必须一致。
+    """
+    from collections import deque
+    src = stdin_solutions('W14')[1]
+
+    def naive(n, rels):
+        adj = [[] for _ in range(n + 1)]
+        bad = 0
+
+        def parity_from(s):
+            par, dq = {s: 0}, deque([s])
+            while dq:
+                u = dq.popleft()
+                for v, w in adj[u]:
+                    if v not in par:
+                        par[v] = par[u] ^ w
+                        dq.append(v)
+            return par
+
+        for i, (op, a, b) in enumerate(rels, 1):
+            w = 0 if op == 'F' else 1
+            par = parity_from(a)
+            if b in par and par[b] != w:
+                bad = bad or i
+                continue
+            adj[a].append((b, w))
+            adj[b].append((a, w))
+        seen, groups = set(), 0
+        for s in range(1, n + 1):
+            if s in seen:
+                continue
+            par = parity_from(s)
+            seen |= set(par)
+            groups += len(set(par.values()))
+        return bad, groups
+
+    # 讲义样例先兑现
+    assert run_stdin_solution(
+        src, '5 4\nF 1 2\nE 2 3\nE 3 4\nF 4 5\n') == '0\n2'
+
+    rnd = random.Random(614)
+    for _ in range(200):
+        n = rnd.randint(1, 8)
+        rels = [(rnd.choice('FE'), rnd.randint(1, n), rnd.randint(1, n))
+                for _ in range(rnd.randint(0, 10))]
+        rels = [r for r in rels if r[1] != r[2]]
+        text = (f'{n} {len(rels)}\n'
+                + ''.join(f'{o} {a} {b}\n' for o, a, b in rels))
+        got = tuple(map(int, run_stdin_solution(src, text).split()))
+        want = naive(n, rels)
+        assert got == want, (n, rels, got, want)
+
+
+@case('W14', '错误归因表点名的错法，逐条给出反例')
+def t_w14_wrong_ways(ns):
+    """T5、T6 的「错误归因」表是本周讲评的主体。表里每一行都是一句
+    "这样写会 WA / TLE"——**没有反例的归因就只是口气重的猜测**。
+
+    本用例为两条可判定的 WA 归因各造一组反例（TLE 那几行靠计时判定不稳定，
+    不在此覆盖，讲义里也已写明是复杂度推算而非实测）。
+    正确的一侧全部取自讲义原文。
+    """
+    src5, src6 = stdin_solutions('W14')
+
+    # ---- T5：「判据写成 == k」与「二分下界写 0」
+    a, k = [3, 1, 1], 3
+    stdin = f'{len(a)} {k}\n' + ' '.join(map(str, a)) + '\n'
+    right = int(run_stdin_solution(src5, stdin))
+    assert right == 3, f'讲义解答在 {a} / k={k} 上应给 3，实际 {right}'
+
+    def shelves(cap):
+        cnt, cur = 1, 0
+        for x in a:
+            if cur + x > cap:
+                cnt += 1
+                cur = x
+            else:
+                cur += x
+        return cnt
+
+    def bisect(pred, lo, hi):
+        while lo < hi:
+            mid = (lo + hi) // 2
+            if pred(mid):
+                hi = mid
+            else:
+                lo = mid + 1
+        return lo
+
+    wrong_eq = bisect(lambda c: shelves(c) == k, max(a), sum(a))
+    assert wrong_eq != right, (
+        f'判据写成 == k 也给出 {right}：这组 fixture 证明不了讲义的归因')
+    wrong_lo = bisect(lambda c: shelves(c) <= k, 0, sum(a))
+    assert wrong_lo != right, (
+        f'下界写 0 也给出 {right}：换一组 fixture，否则归因无据')
+    assert wrong_lo < max(a), (
+        f'下界写 0 的后果应当是给出连单本书都放不下的承重 {wrong_lo} < {max(a)}')
+
+    # ---- T6：「E a b 漏写 union(a+n, b)」
+    # 敌人的敌人是朋友：E12、E23 之后 1 与 3 已是朋友，E13 必须判成矛盾
+    text = '3 3\nE 1 2\nE 2 3\nE 1 3\n'
+    bad, groups = map(int, run_stdin_solution(src6, text).split())
+    assert bad == 3, f'讲义解答应把第 3 条判成矛盾，实际 bad={bad}'
+
+    def camps_missing_symmetry(n, rels):
+        p = list(range(2 * n + 1))
+
+        def find(x):
+            while p[x] != x:
+                p[x] = p[p[x]]
+                x = p[x]
+            return x
+
+        def union(x, y):
+            rx, ry = find(x), find(y)
+            if rx != ry:
+                p[rx] = ry
+
+        first = 0
+        for i, (op, u, v) in enumerate(rels, 1):
+            clash = find(u) == (find(v + n) if op == 'F' else find(v))
+            if clash:
+                first = first or i
+                continue
+            if op == 'F':
+                union(u, v)
+                union(u + n, v + n)
+            else:
+                union(u, v + n)          # ← 少了 union(u + n, v)
+        return first
+
+    missed = camps_missing_symmetry(3, [('E', 1, 2), ('E', 2, 3), ('E', 1, 3)])
+    assert missed != bad, (
+        '漏写对称合并竟然也报出了同一个矛盾编号：这组 fixture 证明不了归因')
+    assert missed == 0, f'漏写对称合并的后果应当是漏判矛盾，实际报了第 {missed} 条'
 
 
 # ------------------------------------------------------------------- W16

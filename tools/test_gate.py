@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Failure-path regression tests for verify_courseware.py.
+"""Failure-path regression tests for the gate tools.
+
+Mostly verify_courseware.py; the last test covers check_note_code.py,
+whose failure mode was hanging rather than reporting.
 
 Every test copies the repository to a temporary directory, applies one mutation,
 and invokes the real CLI gate there.  This keeps mutations recoverable and tests
@@ -198,6 +201,91 @@ class GateFailureTests(unittest.TestCase):
             self.assertLess(V.FOOTER_TEXT_TOP_PT, 497.53)
         finally:
             sys.path.remove(str(ROOT / 'tools'))
+
+
+    # ---------------------------------------------------------- 第 9 项：机考规格
+    # 三次月考与期末机考同为 6 题 / 112 分钟 / 15+15+15+15+20+20。
+    # 这条规格此前只靠人眼守：W05 曾写 5 题、W14 曾写 4 题、
+    # W16 同时写着「2025 秋为 112 分钟」和「约 120 分钟」，闸门全程没报警。
+    W05 = 'courseware/202609_ADS_W05_October_Exam_Review.md'
+    W16 = 'courseware/202612_ADS_W16_Review_Final_Machine_Exam.md'
+
+    def test_stale_duration_fails_exam_spec(self):
+        """把时长改回「约 120 分钟」必须红。"""
+        self.run_mutation(
+            lambda root: self.replace(root / self.W16,
+                                      '| 时长 | **112 分钟** |',
+                                      '| 时长 | **约 120 分钟** |'),
+            '9 机考规格')
+
+    def test_two_hour_wording_in_deck_fails_exam_spec(self):
+        """课件里残留「2 小时」也必须红 —— 讲义与课件是成对维护的。"""
+        self.run_mutation(
+            lambda root: self.replace(
+                root / 'courseware/content/w14.py',
+                '限时模拟一整套（112 分钟 6 题）',
+                '限时模拟一整套（2 小时 6 题）'),
+            '9 机考规格')
+
+    def test_five_question_paper_fails_exam_spec(self):
+        """删掉 W05 的 T6，样卷退回 5 题 —— 必须红。"""
+        def mutate(root):
+            path = root / self.W05
+            text = path.read_text(encoding='utf-8')
+            i = text.index('## T6. 补码计算器')
+            j = text.index('# 4 备选题库')
+            path.write_text(text[:i] + text[j:], encoding='utf-8')
+        self.run_mutation(mutate, '9 机考规格')
+
+    def test_score_allocation_drift_fails_exam_spec(self):
+        """分值分配行仍合计 100，但与各题题头不符 —— 也必须红。
+
+        这条专门卡"只改了一处、忘了另一处"：总分对得上，最容易蒙混过关。
+        """
+        self.run_mutation(
+            lambda root: self.replace(
+                root / self.W05,
+                '**分值分配**：T1 15 + T2 15 + T3 15 + T4 15 + T5 20 + T6 20 = **100 分**',
+                '**分值分配**：T1 20 + T2 15 + T3 15 + T4 15 + T5 20 + T6 15 = **100 分**'),
+            '9 机考规格')
+
+    def test_eight_hours_of_homework_is_not_flagged(self):
+        r"""反向对照：「每周课外不少于 8 小时」是学习时间，不是考试时长。
+
+        第 9 项卡的是 `2 小时`；若图省事写成宽泛的 `\d+ 小时`，
+        就会把这句误判成过时的考试时长。红线之外还要有一条绿线。
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            clone = Path(tmp) / 'repo'
+            shutil.copytree(ROOT, clone, ignore=shutil.ignore_patterns(
+                '.git', '__pycache__', '*.pyc', '.DS_Store'))
+            path = clone / 'courseware/202609_ADS_W01_Overview_Platform_AI_Basics.md'
+            self.assertIn('8 小时', path.read_text(encoding='utf-8'))
+            proc = subprocess.run(
+                [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
+                capture_output=True, text=True, timeout=300, env=gate_env())
+            self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+            self.assertIn('机考规格：3 份样卷均为 6 题 / 112 分钟', proc.stdout)
+
+    def test_semantic_suite_survives_an_open_stdin(self):
+        """回归：check_note_code.py 曾在 stdin 是"不关闭的管道"时整个挂死。
+
+        `load_week()` 会真的执行讲义里 `data = sys.stdin.read().split()`
+        这类模块级赋值（W05 的 T3 / T4 / T6 就是这个形状）。
+        stdin 一旦是常开管道，`read()` 永不返回——套件零输出、零退出码，
+        看上去像"跑得慢"。**工具的行为不该取决于谁在什么上下文里调它。**
+        """
+        r, w = os.pipe()                     # 只建不写：子进程的 stdin 永不 EOF
+        try:
+            proc = subprocess.run(
+                [sys.executable, 'tools/check_note_code.py', 'W05'],
+                cwd=ROOT, stdin=r, capture_output=True, text=True,
+                timeout=120, env=gate_env())
+        finally:
+            os.close(r)
+            os.close(w)
+        self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+        self.assertIn('项通过', proc.stdout)
 
 
 if __name__ == '__main__':
