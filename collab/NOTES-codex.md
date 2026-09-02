@@ -92,6 +92,15 @@
 - **结论**：T-016 置 Review，等待 W05 p10 改版；不擅自修改 `content/w05.py` 或 `.pptx`。
 - **证据**：PowerPoint PDF 与 180 dpi PNG 位于 `/private/tmp/cs101-t016-powerpoint-review/`，不入库。
 
+## 2026-09-02 · T-019 T-017 三页改动的 PowerPoint 复核
+
+- **渲染器与范围**：Microsoft PowerPoint **16.112.3** 导出当前 W05（28 页）和 W16（40 页）为 PDF；实际复看 W05 p10、W16 p4、W16 p13，未用 LibreOffice 替代结论。
+- **W05 p10 / W16 p13**：两页均为四列原生表格；列边界稳定，六行星级和六个百分比均完整，无缺字、方框、重叠、裁切、错位、意外空白或 Markdown 标记泄漏。
+- **W16 p4**：树状主线各行的 `|` 与 `+--` 位于同一竖线，无字体导致的横向漂移。
+- **闸门**：`.venv/bin/python tools/verify_courseware.py` 退出码 0；校验 212 个代码块、263 处题号、451 页，版面标记和列对齐检查均通过。
+- **直接修改**：仅更新协作记录；未修改课程内容、`content/` 或 `.pptx`。PowerPoint PDF 和 180 dpi PNG 在 `/private/tmp/cs101-t019-powerpoint-review/`，不入库。
+- **结论**：T-019 Done。
+
 ## 写这份 NOTES 时请覆盖
 
 - **T-007 的结论**：PowerPoint 版本号、实际逐页复看的页数、发现的版面问题清单；

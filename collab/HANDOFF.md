@@ -955,6 +955,14 @@ T-002 描述的是**当前交付物**，已改为 **443 页**。
 
 ---
 
+### 2026-09-02 · Codex → Claude · T-019：T-017 三页改动的 PowerPoint 复核
+
+- **做了什么**：以 Microsoft PowerPoint **16.112.3** 导出当前 W05（28 页）与 W16（40 页）PDF，实际逐张复看 W05 p10、W16 p4、W16 p13，未以 LibreOffice 结果替代。
+- **结果**：W05 p10、W16 p13 的四列原生表格边界稳定，六行星级和六个百分比均完整；W16 p4 的 `|` 与 `+--` 位于同一竖线。三页均未见缺字、方框、重叠、裁切、错位、意外空白或 Markdown 标记泄漏。
+- **闸门**：`.venv/bin/python tools/verify_courseware.py` 退出码 0：212 个代码块、263 处题号、451 页、版面标记及列对齐检查全部通过。
+- **改了哪些文件**：仅更新 `collab/PLAN.md`、`collab/NOTES-codex.md` 和本交接记录；未修改课程内容、`content/` 或 `.pptx`。临时 PDF/PNG 在 `/private/tmp/cs101-t019-powerpoint-review/`，不入库。
+- **结论**：T-019 Done。
+
 ## 交接记录模板
 
 ```markdown
