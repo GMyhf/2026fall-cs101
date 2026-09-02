@@ -77,7 +77,7 @@ for i in range(m):
     ('section', '第 2 节', '月考样卷（6 题 / 100 分）'),
 
     ('key', '与期末机考同一规格',
-     '三次月考与期末上机考试都是 6 题 / 112 分钟 / 100 分，分值一律 15+15+15+15+20+20。'
+     '三次月考与期末上机考试都是 6 题 / 112 分钟。'
      '月考不是缩水版，是同构演练。'),
 
     # 这张表不能靠 ascii 补空格排版：中文字宽是 1 em，Consolas 约 0.55 em，
@@ -94,7 +94,7 @@ for i in range(m):
         ['T6', '★★★★☆', '20%', '补码 / 位运算，符号边界密集'],
     ], 'T1 是全班都应该拿到的签到题；预期 AC 率是命题经验估计，需按实际结果逐年校准'),
 
-    ('bullets', 'T1 成绩转换（15 分）', [
+    ('bullets', 'T1 成绩转换', [
         '**考点**：输入输出、分支、格式化（W1、W2）　**难度**：★☆☆☆☆',
         '读入 n 个百分制成绩，输出等级 A/B/C/D/E；最后输出通过率，保留两位小数',
         '**常见失分**：用 `round()` 导致 `80.0`；边界 90/80/70/60 用了 `>` 而非 `>=`',
@@ -108,7 +108,7 @@ print('\\n'.join(grade(s) for s in scores))
 print(f"{sum(1 for s in scores if s >= 60) * 100 / n:.2f}")
 ''', '格式必须是 80.00，不能是 80.0'),
 
-    ('code', 'T2 单词首字母大写（15 分）', '''import sys
+    ('code', 'T2 单词首字母大写', '''import sys
 
 s = sys.stdin.readline().rstrip('\\n')
 out = []
@@ -123,7 +123,7 @@ for ch in s:
 print(''.join(out))
 ''', "⚠️ 不能直接用 s.title()：它会把 don't 变成 Don'T。内建函数的边界行为要自己验证"),
 
-    ('code', 'T3 图书借阅排行（15 分）', '''import sys
+    ('code', 'T3 图书借阅排行', '''import sys
 from collections import Counter
 
 data = sys.stdin.read().split()
@@ -133,7 +133,7 @@ rank = sorted(cnt.items(), key=lambda kv: (-kv[1], kv[0]))
 print('\\n'.join(f"{name} {c}" for name, c in rank[:k]))
 ''', '卡 O(n^2)：n=2x10^5 只用 500 个不同书名，用 list.count() 逐个统计必 TLE'),
 
-    ('code', 'T4 区间内的 T-数（15 分）', '''import sys
+    ('code', 'T4 区间内的 T-数', '''import sys
 
 LIMIT = 10 ** 6                       # sqrt(10^12)
 
@@ -161,7 +161,7 @@ for s in data[1:1 + int(data[0])]:
 sys.stdout.write('\\n'.join(out) + '\\n')
 ''', '恰好 3 个约数 <=> 素数的平方（约数个数 = (a1+1)(a2+1)... = 3 只能是 p^2）'),
 
-    ('code', 'T5 电梯调度模拟（20 分）', '''import sys
+    ('code', 'T5 电梯调度模拟', '''import sys
 
 data = sys.stdin.read().split()
 idx = 0
@@ -179,7 +179,7 @@ for _ in range(n):
 print(ans)
 ''', '⚠️ "送达时刻"是否含最后一次开关门，命题时必须写死，否则会有大批"逻辑对但差 2"的 WA'),
 
-    ('code', 'T6 补码计算器（20 分）', '''import sys
+    ('code', 'T6 补码计算器', '''import sys
 
 data = sys.stdin.read().split()
 q = int(data[0])

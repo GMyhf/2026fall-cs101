@@ -118,13 +118,12 @@ print([f"{x:.3f}" for x in w], f"{o[0]:.3f}")
     ('section', '第 2 节', '12 月月考讲评'),
 
     ('bullets', '为什么讲"错误归因"而不是"正确解法"', [
-        '12 月月考是期末上机考试的**同构演练**：**6 题 / 112 分钟 / 100 分**',
+        '12 月月考是期末上机考试的**同构演练**：**6 题 / 112 分钟**',
         '比讲解正确解法更重要的，是搞清楚**大家为什么会错**',
-        '**分值**：T1 15 + T2 15 + T3 15 + T4 15 + T5 20 + T6 20 = 100 分',
         '**难度梯度**：★★ → ★★★ → ★★★ → ★★★★ → ★★★★ → ★★★★★',
     ]),
 
-    ('code', 'T1 课程互选统计（15 分）· 字典 + 排序', '''from collections import defaultdict
+    ('code', 'T1 课程互选统计· 字典 + 排序', '''from collections import defaultdict
 
 
 def solve(lines):
@@ -153,7 +152,7 @@ def solve(lines):
         ['用 list 存 pairs 再去重', 'O(n^4) -> TLE'],
     ], '正确做法：按课程枚举学生对，总数 <= Σ C(ci, 2)。先算复杂度再动手'),
 
-    ('code', 'T2 最优装载顺序（15 分）· 交换论证', '''import functools
+    ('code', 'T2 最优装载顺序· 交换论证', '''import functools
 
 
 def min_cost_int(boxes):
@@ -181,7 +180,7 @@ print(min_cost_int([(1, 3), (2, 1), (3, 2)]))    # 6
         ['每次重算前缀和', 'O(n^2) -> TLE'],
     ], '多数人能想到"要排序"，但排序键靠猜。交换论证是唯一可靠的推导方法'),
 
-    ('code', 'T3 网格中的宝藏（15 分）· 带状态 BFS（1/2）：定位与初始化', '''from collections import deque
+    ('code', 'T3 网格中的宝藏· 带状态 BFS（1/2）：定位与初始化', '''from collections import deque
 
 
 def treasure(grid):
@@ -226,7 +225,7 @@ def treasure(grid):
         ['忘了起点本身可能是钥匙', '边界 WA'],
     ], '⭐ "同一个格子，在不同情况下能做的事不同" -> 必须加维'),
 
-    ('code', 'T4 分组考试（15 分）· 区间划分 DP', '''def group_exam(a, k):
+    ('code', 'T4 分组考试· 区间划分 DP', '''def group_exam(a, k):
     """恰好切成 k 段，最小化各段"最大值-最小值"之和。O(n^2 k)。"""
     n = len(a)
     INF = float('inf')
@@ -262,7 +261,7 @@ print(group_exam([1, 3, 5, 5, 9], 2))       # 4
         ['用贪心"每次切最大间隙"', '这道题贪心不成立 -> WA'],
     ], '"恰好 k 段"必须用 +inf 初始化 —— 第 11 周讲过的坑，在这里再犯一次的人非常多'),
 
-    ('code', 'T5 书架分层（20 分）· 二分答案 + 贪心校验', '''def min_capacity(a, k):
+    ('code', 'T5 书架分层· 二分答案 + 贪心校验', '''def min_capacity(a, k):
     """承重上限越大，需要的层数越少 —— 单调，所以能二分答案。"""
     def shelves(cap):                    # 贪心：装不下就换下一层
         cnt, cur = 1, 0
@@ -295,7 +294,7 @@ print(min_capacity([1, 2, 3, 4, 5], 3))      # 6
         ['从 max(a) 起逐个试', 'O(Σa · n) -> TLE'],
     ], '二分答案两个固定动作：先确认单调性，再把下界取成"平凡可行的最小值"'),
 
-    ('code', 'T6 敌友阵营（20 分）· 扩展域并查集', '''def camps(n, rels):
+    ('code', 'T6 敌友阵营· 扩展域并查集', '''def camps(n, rels):
     p = list(range(2 * n + 1))           # i 与 i+n 互为对立域
 
     def find(x):
