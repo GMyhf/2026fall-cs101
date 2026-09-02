@@ -117,6 +117,14 @@
 - **直接修改**：更新配对检查、其失败路径测试及协作记录；未修改 W08 课程内容、`content/` 或 `.pptx`。PowerPoint PDF 和 180 dpi PNG 在 `/private/tmp/cs101-t023-powerpoint-review/`，不入库。
 - **结论**：T-023 Done。
 
+## 2026-09-02 · T-025 T-024 五页改动的 PowerPoint 复核
+
+- **渲染器与范围**：Microsoft PowerPoint **16.112.3** 在 macOS 图形会话中打开当前 W10 的临时副本（29 页），实际逐张复看 W10 p14-p18；未以 LibreOffice 结论替代。
+- **结果**：p14 是 3×3 原生表格，三列稳定；p15 的 key 完整；p16 左侧数字三角形与右侧 8 条路径两栏未错位，`<- 唯一的奇数` 完整显示，两栏中的 `=` 各自成列；p17 的 12 行代码完整可读、未压页脚或裁切；p18 第 2 条按 `deck.py` 既有规则显示为 `▍` 引用块，其余 5 条均为正常 `•`，没有空项目符号。五页无缺字、方框、重叠、意外空白或 Markdown 标记泄漏。
+- **闸门**：`.venv/bin/python tools/verify_courseware.py` 退出码 0，校验 218 个代码块、263 处题号、463 页；`.venv/bin/python tools/check_note_code.py` 为 81 项通过、0 项失败。
+- **直接修改**：仅更新协作记录；未修改 W10 课程内容、`content/` 或 `.pptx`。PowerPoint 图形会话截图在 `/private/tmp/cs101-t025-gui-review/`，不入库。
+- **结论**：T-025 Done。
+
 ## 写这份 NOTES 时请覆盖
 
 - **T-007 的结论**：PowerPoint 版本号、实际逐页复看的页数、发现的版面问题清单；
