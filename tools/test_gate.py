@@ -73,6 +73,25 @@ class GateFailureTests(unittest.TestCase):
             lambda root: (root / 'courseware/orphan.pptx').touch(),
             '1 配对')
 
+    def test_office_lock_file_is_not_flagged(self):
+        """反向对照：PowerPoint 打开文稿时留下的 `~$*.pptx` 锁文件不算孤儿。
+
+        上面那条卡的是"普通孤儿必须红"，它守的是**旧行为** ——
+        把豁免 `~$` 的那几行删掉，它照样绿（实测确认过）。
+        新行为得有自己的绿线，否则这次修复是没人看着的。
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            clone = Path(tmp) / 'repo'
+            shutil.copytree(ROOT, clone, ignore=shutil.ignore_patterns(
+                '.git', '__pycache__', '*.pyc', '.DS_Store'))
+            lock = clone / 'courseware/~$202610_ADS_W08_Recursion.pptx'
+            lock.touch()
+            proc = subprocess.run(
+                [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
+                capture_output=True, text=True, timeout=300, env=gate_env())
+            self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+            self.assertNotIn('孤儿课件', proc.stdout)
+
     def test_missing_updated_timestamp_fails_metadata(self):
         self.run_mutation(
             lambda root: self.replace(
