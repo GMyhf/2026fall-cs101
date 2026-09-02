@@ -258,18 +258,25 @@ class GateFailureTests(unittest.TestCase):
             '9 机考规格')
 
     def test_score_column_in_deck_ladder_fails_exam_spec(self):
-        """难度梯度表里重新列出分数列 —— 必须红。
+        """难度梯度表里重新列出分数 —— 必须红。
 
         分数的唯一出处是样卷题头与分值分配行；机考之后另有成绩核算办法，
         梯度表再列一列分数会跟真正的核算口径打架。这一列曾经真的存在过
         （W05 p10、W16 p13 的第二列 15分/20分），是人眼看出来的、闸门没管。
+
+        ⚠️ T-017 之后梯度表已从 `ascii` 改成 `table`，所以这里变异的是
+        **表格单元格**——判据若只认 ascii，表格里再写分数就会静默放过。
         """
-        self.run_mutation(
-            lambda root: self.replace(
-                root / 'courseware/content/w05.py',
-                '   T1   *          签到',
-                '   T1   15分  *          签到'),
-            '9 机考规格')
+        def mutate(root):
+            path = root / 'courseware/content/w05.py'
+            text = path.read_text(encoding='utf-8')
+            # 只改单元格内容、不加列 —— 加列会让表格行列数对不上，
+            # 第 6 项重建时就先炸了，验不到第 9 项。
+            self.assertIn("['题号', '难度', '预期 AC', '考点']", text)
+            text = text.replace("'预期 AC', '考点'", "'分值', '考点'", 1)
+            text = text.replace("'★☆☆☆☆', '95%'", "'★☆☆☆☆', '15 分'", 1)
+            path.write_text(text, encoding='utf-8')
+        self.run_mutation(mutate, '9 机考规格')
 
     def test_score_column_in_note_ladder_fails_exam_spec(self):
         """讲义侧的梯度表同样不许出现分数 —— 讲义与课件成对维护。"""
@@ -315,6 +322,61 @@ class GateFailureTests(unittest.TestCase):
                 [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
                 capture_output=True, text=True, timeout=300, env=gate_env())
             self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+
+    # ---------------------------------------------------------- 第 11 项
+    # 汉字宽 1 em、Consolas 宽约 0.55 em，两个空格补不出一个汉字。
+    # T-016 在 PowerPoint 16.112.3 下实测：W05 p10 六行的 `--` 不在同一列。
+
+    def test_ascii_column_crossing_chinese_fails_alignment(self):
+        """把难度梯度改回"靠空格对齐的 ascii 表" —— 必须红。"""
+        def mutate(root):
+            path = root / 'courseware/content/w05.py'
+            text = path.read_text(encoding='utf-8')
+            i = text.index("    ('table', '难度梯度'")
+            j = text.index("需按实际结果逐年校准'),", i) + len("需按实际结果逐年校准'),")
+            text = text[:i] + """    ('ascii', '难度梯度', r\"\"\"
+   T1   *          签到：读入与格式化输出        -- 95% AC
+   T2   **         字符串处理                    -- 75% AC
+\"\"\"),""" + text[j:]
+            path.write_text(text, encoding='utf-8')
+        self.run_mutation(mutate, '11 列对齐', rebuild=True)
+
+    def test_new_ragged_diagram_is_not_covered_by_the_known_list(self):
+        """挂账名单按（模块, 标题）记；换一张图出问题照样要红。
+
+        这条卡的是"把 KNOWN_RAGGED 当成万能豁免"：名单里已有 7 张，
+        但任何**不在名单上**的 ascii 图若也跨中文对齐，必须报出来。
+        """
+        def mutate(root):
+            path = root / 'courseware/content/w12.py'
+            text = path.read_text(encoding='utf-8')
+            i = text.index('SLIDES = [') + len('SLIDES = [')
+            text = text[:i] + """
+    ('ascii', '临时图', r\"\"\"
+   +---- 起点 ----+
+   |   队列头      |
+   +--------------+
+\"\"\"),""" + text[i:]
+            path.write_text(text, encoding='utf-8')
+        self.run_mutation(mutate, '11 列对齐', rebuild=True)
+
+    def test_pure_ascii_column_is_not_flagged(self):
+        """反向对照：前缀里没有中文的列，补空格就是准的，不许误报。
+
+        W16 p4 的流程图左侧 `|` / `+--` 列前缀全是空格，
+        本机实测 x 极差 0.0pt —— 判据若写成"只要有中文就报"，这张图会被冤枉。
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            clone = Path(tmp) / 'repo'
+            shutil.copytree(ROOT, clone, ignore=shutil.ignore_patterns(
+                '.git', '__pycache__', '*.pyc', '.DS_Store'))
+            text = (clone / 'courseware/content/w16.py').read_text(encoding='utf-8')
+            self.assertIn('+-- 排序后一遍扫 -> 贪心', text)   # 确认测的是那张图
+            proc = subprocess.run(
+                [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
+                capture_output=True, text=True, timeout=300, env=gate_env())
+            self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
+            self.assertIn('列对齐：', proc.stdout)
 
     def test_semantic_suite_survives_an_open_stdin(self):
         """回归：check_note_code.py 曾在 stdin 是"不关闭的管道"时整个挂死。

@@ -16,8 +16,14 @@
                    且重建产物与已提交的 .pptx **逐段文本相同**（防止源改了没重建）
     7  题号题名    讲义引用的 OJ 题号↔题名与仓库内既有语料一致（离线）
     8  渲染        逐页检查文字未越出版心 + 中文字体已嵌入（--render）
+    9  机考规格    三份样卷同一规格：6 题 / 112 分钟 / 15+15+15+15+20+20；
+                   难度梯度表里不写分数（分数只在题头与分值分配行）
+   10  版面标记    放映稿的非等宽文字里不得印出 `**` / 反引号；
+                   bullet 不得以空白（含全角空格）开头
+   11  列对齐      等宽图里不得有跨过不同中文字数的对齐列
+                   （汉字 1 em vs Consolas 约 0.55 em，补空格对不出来）
 
-只用标准库 + python-pptx（第 6 项）。退出码 0 表示全绿。
+只用标准库 + python-pptx（第 6、10 项）。退出码 0 表示全绿。
 """
 
 import argparse
@@ -27,6 +33,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -651,21 +658,31 @@ LADDER_MD = re.compile(r'\*\*难度梯度\*\*：\s*\n*(?:```\n(.*?)```|([^\n]*))
 LADDER_SCORE = re.compile(r'\d+\s*分(?!钟)')
 
 
+def _strings(obj):
+    """把 slide 元组里嵌套的所有字符串摊平（表格是 list of list）。"""
+    if isinstance(obj, str):
+        yield obj
+    elif isinstance(obj, (list, tuple)):
+        for x in obj:
+            yield from _strings(x)
+
+
 def exam_ladders(md_text, py_path):
-    """逐行产出讲义与课件里的难度梯度表：(是讲义吗, 行)。"""
+    """逐行产出讲义与课件里的难度梯度表：(是讲义吗, 行)。
+
+    ⚠️ 课件侧**不能只认 `ascii` 那一种**：T-017 把梯度表改成了 `table`，
+    判据若还盯着 ascii，表格单元格里再写一列分值就会静默放过。
+    这里改成"标题带'难度梯度'的整张页，所有字符串都算梯度表内容"。
+    """
     for m in LADDER_MD.finditer(md_text):
         for ln in (m.group(1) or m.group(2) or '').splitlines():
             yield True, ln
     for slide in deck_slides(py_path) if py_path else ():
-        ascii_ladder = (slide[0] == 'ascii' and len(slide) >= 3
-                        and '难度梯度' in str(slide[1]))
-        for item in slide:
-            for s in ([item] if isinstance(item, str) else
-                      [x for x in item if isinstance(x, str)]
-                      if isinstance(item, (list, tuple)) else []):
-                if ascii_ladder or '难度梯度' in s:
-                    for ln in s.splitlines():
-                        yield False, ln
+        is_ladder = len(slide) >= 2 and '难度梯度' in str(slide[1])
+        for text in _strings(slide):
+            if is_ladder or '难度梯度' in text:
+                for ln in text.splitlines():
+                    yield False, ln
 
 
 def check_exam_spec(files):
@@ -822,6 +839,89 @@ def check_markup(files):
         note('版面标记：16 份课件的非等宽文字里没有 `**` / 反引号泄漏')
 
 
+# ---------------------------------------------------------------- 检查 11
+# 等宽版面的列对齐：**汉字宽度对不上任何等宽拉丁字体**，
+# 所以"靠补空格把一列对齐"这件事，只要那一列前面隔着中文就一定做不到。
+#
+# 算一遍就清楚：汉字的字身宽是 1 em，Consolas 的字身宽约 0.55 em。
+# 两个空格 = 1.10 em ≠ 一个汉字 = 1.00 em。每多一个汉字就少 0.10 em，
+# 各行中文字数不同，同一"显示列"落到纸上就是不同的位置。
+#
+# 起因（T-016）：W05 p10 难度梯度 6 行的 `--`，
+# 在 Microsoft PowerPoint 16.112.3 下**完全不在同一列**（人眼当场判不通过）；
+# 本机 LibreOffice 复测同一页，6 个 `--` 的 x 极差 **36.85 pt**。
+# 同一页的 W16 p13 只有 2 行、前缀汉字数只差 2，极差 1.02 pt，
+# 于是**看上去是对的** —— 它不是对的，只是漂得还看不出来。
+# 判据因此不看"漂了多少"，只看"这一列是不是跨过了不同的中文字数"。
+#
+# 判据里不含"漂多少 pt"，是有意的：pt 要靠 LibreOffice 渲染才量得到，
+# 而字体替换会让它失真；而"前缀汉字数不同"是**源里就能判定的确定事实**。
+ALIGN_TOKENS = ('--', '——', '->', '→', '=>', '⇒', '<-', '←', '|')
+
+# 已知未修的 7 张图（都是"方框里写中文、右边框对不齐"这一种），见 T-018。
+# 逐页实测的 `|` 列 x 极差：W01 p17 9.2pt、W02 p5 7.8pt、W03 p6 2.4pt、
+# W03 p10 3.5pt、W08 p10 10.0pt、W13 p11 13.4pt、W15 p12 0.1pt。
+# 都远小于判不通过的那 36.85pt，但性质完全一样。挂账在这里而不是删掉判据，
+# 是为了**新写的 ascii 图立刻变红**，同时不假装这 7 张已经修好。
+# 名单按（模块, 标题）记而不按页序号记：插一张新页就会把序号全推后，
+# 那样挂账会**悄悄挪到别的图上**，而真正欠着的那张反而变红。
+KNOWN_RAGGED = {
+    ('w01', '四个概念层层包含'),
+    ('w02', '虚拟机的层次'),
+    ('w03', '图灵机模型（1936）'),
+    ('w03', '五大部件'),
+    ('w08', '进程的虚拟地址空间'),
+    ('w13', '虚拟地址空间'),
+    ('w15', 'XOR：为什么需要"深度"'),
+}
+
+
+def _display_width(text):
+    """显示宽度：中日韩全宽字算 2 格，其余算 1 格（源里排版就是按这个数的）。"""
+    return sum(2 if unicodedata.east_asian_width(c) in 'WF' else 1 for c in text)
+
+
+def _wide_count(text):
+    return sum(1 for c in text if unicodedata.east_asian_width(c) in 'WF')
+
+
+def check_alignment(files):
+    checked = ragged = 0
+    for wk, (_md, _pptx, py) in sorted(files.items()):
+        if py is None:
+            continue
+        slides = deck_slides(py)
+        if slides is None:
+            continue
+        for si, slide in enumerate(slides):
+            if slide[0] != 'ascii' or len(slide) < 3:
+                continue
+            checked += 1
+            cols = {}
+            for line in str(slide[2]).splitlines():
+                for tok in ALIGN_TOKENS:
+                    for m in re.finditer(re.escape(tok), line):
+                        if m.start() == 0:
+                            continue          # 行首，前缀是空的，天然对齐
+                        prefix = line[:m.start()]
+                        cols.setdefault((tok, _display_width(prefix)), set()).add(
+                            _wide_count(prefix))
+            worst = max((max(v) - min(v) for v in cols.values() if len(v) > 1),
+                        default=0)
+            if not worst:
+                continue
+            if (py.stem, str(slide[1])) in KNOWN_RAGGED:
+                ragged += 1
+                continue
+            fail('11 列对齐',
+                 f'{py.name} 第 {si + 2} 页「{slide[1]}」：等宽图里有一列'
+                 f'跨过了不同的中文字数（最多相差 {worst} 个汉字），'
+                 f'真实渲染必然对不齐。改用表格，或把要对齐的那一列'
+                 f'挪到中文**前面**（前缀只剩 ASCII 就能对准）')
+    note(f'列对齐：{checked} 张等宽图，'
+         f'{ragged} 张为 T-018 挂账的历史遗留，其余无跨中文的对齐列')
+
+
 # ---------------------------------------------------------------- 主流程
 def main():
     ap = argparse.ArgumentParser()
@@ -843,6 +943,7 @@ def main():
         check_render(files)
     check_exam_spec(files)
     check_markup(files)
+    check_alignment(files)
 
     print('=' * 68)
     for n in notes:
