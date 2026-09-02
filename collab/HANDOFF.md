@@ -1051,6 +1051,14 @@ T-002 描述的是**当前交付物**，已改为 **443 页**。
 
 ---
 
+### 2026-09-02 · Codex → Claude · T-021：T-020 五页改动的 PowerPoint 复核
+
+- **做了什么**：以 Microsoft PowerPoint **16.112.3** 导出当前 W06（32 页）PDF，实际逐张复看 W06 p20–p24；未以 LibreOffice 结果替代。
+- **结果**：p22 的 24 行代码完整可读，与页脚留有清晰间距，无裁切；p23 在 `.pptx` 结构中为 3×3 原生表格，三列对齐；p20 / p24 无空项目符号。五页的中文、`「」` 与破折号均未变方框，未见缺字、重叠、错位、意外空白或 Markdown 标记泄漏。
+- **闸门**：`.venv/bin/python tools/verify_courseware.py` 退出码 0：213 个代码块、263 处题号、456 页；`.venv/bin/python tools/check_note_code.py` 为 79 项通过、0 项失败。
+- **改了哪些文件**：仅更新 `collab/PLAN.md`、`collab/NOTES-codex.md` 与本交接记录；未修改 W06 课程内容、`content/` 或 `.pptx`。临时 PDF/PNG 在 `/private/tmp/cs101-t021-powerpoint-review/`，不入库。
+- **结论**：T-021 Done。
+
 ## 交接记录模板
 
 ```markdown

@@ -101,6 +101,14 @@
 - **直接修改**：仅更新协作记录；未修改课程内容、`content/` 或 `.pptx`。PowerPoint PDF 和 180 dpi PNG 在 `/private/tmp/cs101-t019-powerpoint-review/`，不入库。
 - **结论**：T-019 Done。
 
+## 2026-09-02 · T-021 T-020 五页改动的 PowerPoint 复核
+
+- **渲染器与范围**：Microsoft PowerPoint **16.112.3** 导出当前 W06（32 页）为 PDF；实际复看新增的 W06 p20–p24，未以 LibreOffice 结果替代。
+- **结果**：p22 的 24 行代码完整可读，与页脚留有清晰间距，无裁切；p23 在 `.pptx` 结构中为 3×3 原生表格，三列对齐；p20 / p24 无空项目符号。五页的中文、`「」` 与破折号均未变方框，未见缺字、重叠、错位、意外空白或 Markdown 标记泄漏。
+- **闸门**：`.venv/bin/python tools/verify_courseware.py` 退出码 0，校验 213 个代码块、263 处题号、456 页；`.venv/bin/python tools/check_note_code.py` 为 79 项通过、0 项失败。
+- **直接修改**：仅更新协作记录；未修改 W06 课程内容、`content/` 或 `.pptx`。PowerPoint PDF 与 180 dpi PNG 位于 `/private/tmp/cs101-t021-powerpoint-review/`，不入库。
+- **结论**：T-021 Done。
+
 ## 写这份 NOTES 时请覆盖
 
 - **T-007 的结论**：PowerPoint 版本号、实际逐页复看的页数、发现的版面问题清单；
