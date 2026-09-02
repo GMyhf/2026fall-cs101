@@ -257,6 +257,29 @@ class GateFailureTests(unittest.TestCase):
                 '**分值分配**：T1 20 + T2 15 + T3 15 + T4 15 + T5 20 + T6 15 = **100 分**'),
             '9 机考规格')
 
+    def test_score_column_in_deck_ladder_fails_exam_spec(self):
+        """难度梯度表里重新列出分数列 —— 必须红。
+
+        分数的唯一出处是样卷题头与分值分配行；机考之后另有成绩核算办法，
+        梯度表再列一列分数会跟真正的核算口径打架。这一列曾经真的存在过
+        （W05 p10、W16 p13 的第二列 15分/20分），是人眼看出来的、闸门没管。
+        """
+        self.run_mutation(
+            lambda root: self.replace(
+                root / 'courseware/content/w05.py',
+                '   T1   *          签到',
+                '   T1   15分  *          签到'),
+            '9 机考规格')
+
+    def test_score_column_in_note_ladder_fails_exam_spec(self):
+        """讲义侧的梯度表同样不许出现分数 —— 讲义与课件成对维护。"""
+        self.run_mutation(
+            lambda root: self.replace(
+                root / self.W16,
+                'T5  ★★★★☆   DP，状态设计有难度，30% AC',
+                'T5  ★★★★☆  20 分  DP，状态设计有难度，30% AC'),
+            '9 机考规格')
+
     def test_eight_hours_of_homework_is_not_flagged(self):
         r"""反向对照：「每周课外不少于 8 小时」是学习时间，不是考试时长。
 
@@ -274,6 +297,24 @@ class GateFailureTests(unittest.TestCase):
                 capture_output=True, text=True, timeout=300, env=gate_env())
             self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
             self.assertIn('机考规格：3 份样卷均为 6 题 / 112 分钟', proc.stdout)
+
+    def test_minutes_in_a_ladder_heading_is_not_flagged(self):
+        """反向对照：梯度表附近的「112 分钟」是时长，不是分数。
+
+        第 9 项的分数列判据是 `\\d+\\s*分`；若不排除「分钟」，
+        就会把这行误判成分数列。红线之外还要有一条绿线。
+        """
+        with tempfile.TemporaryDirectory() as tmp:
+            clone = Path(tmp) / 'repo'
+            shutil.copytree(ROOT, clone, ignore=shutil.ignore_patterns(
+                '.git', '__pycache__', '*.pyc', '.DS_Store'))
+            path = clone / 'courseware/202612_ADS_W14_AI_Literacy_Exam_Recap.md'
+            self.replace(path, '**难度梯度**：★★ → ★★★',
+                         '**难度梯度**（112 分钟内）：★★ → ★★★')
+            proc = subprocess.run(
+                [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
+                capture_output=True, text=True, timeout=300, env=gate_env())
+            self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
 
     def test_semantic_suite_survives_an_open_stdin(self):
         """回归：check_note_code.py 曾在 stdin 是"不关闭的管道"时整个挂死。

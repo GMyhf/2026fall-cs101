@@ -644,6 +644,29 @@ EXAM_HEAD = re.compile(r'^##\s*T(\d+)\.\s*(.+?)（(\d+)\s*分）\s*$', re.M)
 EXAM_ALLOC = re.compile(r'\*\*分值分配\*\*：([^\n]+?)=\s*\*\*100 分\*\*')
 ALLOC_ITEM = re.compile(r'T(\d+)\s+(\d+)')
 
+# 难度梯度只回答"多难"，不回答"几分"：分数的唯一出处是样卷题头与分值分配行。
+# 梯度表里再列一列 15分/20分，就成了同一事实的第五个写法；而且机考之后
+# **另有成绩核算办法**，这一列会跟真正的核算口径打架。所以梯度表里禁止出现分数。
+LADDER_MD = re.compile(r'\*\*难度梯度\*\*：\s*\n*(?:```\n(.*?)```|([^\n]*))', re.S)
+LADDER_SCORE = re.compile(r'\d+\s*分(?!钟)')
+
+
+def exam_ladders(md_text, py_path):
+    """逐行产出讲义与课件里的难度梯度表：(是讲义吗, 行)。"""
+    for m in LADDER_MD.finditer(md_text):
+        for ln in (m.group(1) or m.group(2) or '').splitlines():
+            yield True, ln
+    for slide in deck_slides(py_path) if py_path else ():
+        ascii_ladder = (slide[0] == 'ascii' and len(slide) >= 3
+                        and '难度梯度' in str(slide[1]))
+        for item in slide:
+            for s in ([item] if isinstance(item, str) else
+                      [x for x in item if isinstance(x, str)]
+                      if isinstance(item, (list, tuple)) else []):
+                if ascii_ladder or '难度梯度' in s:
+                    for ln in s.splitlines():
+                        yield False, ln
+
 
 def check_exam_spec(files):
     for wk, (md, _pptx, py) in sorted(files.items()):
@@ -696,6 +719,13 @@ def check_exam_spec(files):
         if py is not None and f'{EXAM_MINUTES} 分钟' not in read(py):
             fail('9 机考规格',
                  f'{py.name}: 课件没有写明「{EXAM_MINUTES} 分钟」')
+
+        for is_md, ln in exam_ladders(text, py):
+            if LADDER_SCORE.search(ln):
+                fail('9 机考规格',
+                     f'{(md if is_md else py).name}: {label}的难度梯度里出现分数'
+                     f'{ln.strip()!r}；分数只写在样卷题头与分值分配行，'
+                     f'机考成绩另有核算办法')
 
     note(f'机考规格：3 份样卷均为 {len(EXAM_SCORES)} 题 / {EXAM_MINUTES} 分钟 / '
          f'{"+".join(map(str, EXAM_SCORES))} = 100 分')
