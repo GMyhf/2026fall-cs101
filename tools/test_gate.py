@@ -212,7 +212,7 @@ class GateFailureTests(unittest.TestCase):
 
 
     # ---------------------------------------------------------- 第 9 项：机考规格
-    # 三次月考与期末机考同为 6 题 / 112 分钟 / 15+15+15+15+20+20。
+    # 三次月考与期末机考同为 6 题 / 112 分钟；固定分值另有核算办法。
     # 这条规格此前只靠人眼守：W05 曾写 5 题、W14 曾写 4 题、
     # W16 同时写着「2025 秋为 112 分钟」和「约 120 分钟」，闸门全程没报警。
     W05 = 'courseware/202609_ADS_W05_October_Exam_Review.md'
@@ -245,22 +245,28 @@ class GateFailureTests(unittest.TestCase):
             path.write_text(text[:i] + text[j:], encoding='utf-8')
         self.run_mutation(mutate, '9 机考规格')
 
-    def test_score_allocation_drift_fails_exam_spec(self):
-        """分值分配行仍合计 100，但与各题题头不符 —— 也必须红。
-
-        这条专门卡"只改了一处、忘了另一处"：总分对得上，最容易蒙混过关。
-        """
+    def test_score_allocation_line_fails_exam_spec(self):
+        """讲义不得重新写入固定分值分配。"""
         self.run_mutation(
             lambda root: self.replace(
                 root / self.W05,
-                '**分值分配**：T1 15 + T2 15 + T3 15 + T4 15 + T5 20 + T6 20 = **100 分**',
-                '**分值分配**：T1 20 + T2 15 + T3 15 + T4 15 + T5 20 + T6 15 = **100 分**'),
+                '# 3 月考样卷',
+                '# 3 月考样卷\n\n**分值分配**：T1 15 + T2 15 + T3 15 + T4 15 + T5 20 + T6 20 = **100 分**'),
+            '9 机考规格')
+
+    def test_score_in_question_heading_fails_exam_spec(self):
+        """分数不能重新散落到样卷题目标题。"""
+        self.run_mutation(
+            lambda root: self.replace(
+                root / self.W05,
+                '## T1. 成绩转换',
+                '## T1. 成绩转换（15 分）'),
             '9 机考规格')
 
     def test_score_column_in_deck_ladder_fails_exam_spec(self):
         """难度梯度表里重新列出分数 —— 必须红。
 
-        分数的唯一出处是样卷题头与分值分配行；机考之后另有成绩核算办法，
+        机考之后另有成绩核算办法，
         梯度表再列一列分数会跟真正的核算口径打架。这一列曾经真的存在过
         （W05 p10、W16 p13 的第二列 15分/20分），是人眼看出来的、闸门没管。
 

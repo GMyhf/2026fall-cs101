@@ -16,8 +16,8 @@
                    且重建产物与已提交的 .pptx **逐段文本相同**（防止源改了没重建）
     7  题号题名    讲义引用的 OJ 题号↔题名与仓库内既有语料一致（离线）
     8  渲染        逐页检查文字未越出版心 + 中文字体已嵌入（--render）
-    9  机考规格    三份样卷同一规格：6 题 / 112 分钟 / 15+15+15+15+20+20；
-                   难度梯度表里不写分数（分数只在题头与分值分配行）
+    9  机考规格    三份样卷同一规格：6 题 / 112 分钟；
+                   题目标题、难度梯度和讲义正文不写固定分值分配
    10  版面标记    放映稿的非等宽文字里不得印出 `**` / 反引号；
                    bullet 不得以空白（含全角空格）开头
    11  列对齐      等宽图里不得有跨过不同中文字数的对齐列
@@ -636,22 +636,21 @@ def check_render(files):
 
 
 # ---------------------------------------------------------------- 检查 9
-# 三次月考与期末上机考试是**同一规格**：6 题 / 112 分钟 / 100 分，
-# 分值一律 15+15+15+15+20+20。这个规格由任课教师给定（不在课程指南表里），
-# 讲义、样卷题头、分值分配行、课件四处都写了它 —— 四处任何一处漂移都是缺陷。
+# 三次月考与期末上机考试是**同一规格**：6 题 / 112 分钟。这个规格由任课教师给定
+# （不在课程指南表里）；固定分值分配另有核算办法，课件与讲义均不得自行写死。
 # 以前只有人眼盯着：W05 写 5 题、W14 写 4 题、W16 同时写着
 # 「2025 秋为 112 分钟」和「约 120 分钟」，全程无人报警。
 EXAM_MINUTES = 112
-EXAM_SCORES = [15, 15, 15, 15, 20, 20]
+EXAM_QUESTION_COUNT = 6
 EXAM_PAPERS = {'05': '10 月月考样卷', '14': '12 月月考样卷', '16': '期末上机考试样卷'}
 
 # 被 112 分钟取代的旧写法。「8 小时」是课外学习时间，不能误伤，所以只卡 2 小时。
 STALE_DURATION = re.compile(r'约?\s*120\s*分钟|(?<![0-9])2\s*小时')
-EXAM_HEAD = re.compile(r'^##\s*T(\d+)\.\s*(.+?)（(\d+)\s*分）\s*$', re.M)
-EXAM_ALLOC = re.compile(r'\*\*分值分配\*\*：([^\n]+?)=\s*\*\*100 分\*\*')
-ALLOC_ITEM = re.compile(r'T(\d+)\s+(\d+)')
+EXAM_HEAD = re.compile(r'^##\s*T(\d+)\.\s*(.+?)\s*$', re.M)
+EXAM_HEAD_SCORE = re.compile(r'^##\s*T\d+\..*?（\d+\s*分）\s*$', re.M)
+SCORE_ALLOCATION = re.compile(r'分值分配')
 
-# 难度梯度只回答"多难"，不回答"几分"：分数的唯一出处是样卷题头与分值分配行。
+# 难度梯度与题目标题只回答"多难"和"考什么"，不回答"几分"。
 # 梯度表里再列一列 15分/20分，就成了同一事实的第五个写法；而且机考之后
 # **另有成绩核算办法**，这一列会跟真正的核算口径打架。所以梯度表里禁止出现分数。
 LADDER_MD = re.compile(r'\*\*难度梯度\*\*：\s*\n*(?:```\n(.*?)```|([^\n]*))', re.S)
@@ -707,32 +706,21 @@ def check_exam_spec(files):
                  f'{md.name}: {label}没有写明「{EXAM_MINUTES} 分钟」')
 
         heads = EXAM_HEAD.findall(text)
-        got_ids = [int(i) for i, _t, _sc in heads]
-        got_scores = [int(sc) for _i, _t, sc in heads]
-        if got_ids != list(range(1, len(EXAM_SCORES) + 1)):
+        got_ids = [int(i) for i, _t in heads]
+        if got_ids != list(range(1, EXAM_QUESTION_COUNT + 1)):
             fail('9 机考规格',
-                 f'{md.name}: {label}的题号应为 T1..T{len(EXAM_SCORES)}，'
+                 f'{md.name}: {label}的题号应为 T1..T{EXAM_QUESTION_COUNT}，'
                  f'实际 {got_ids}')
-        elif got_scores != EXAM_SCORES:
+
+        scored_heads = EXAM_HEAD_SCORE.findall(text)
+        if scored_heads:
             fail('9 机考规格',
-                 f'{md.name}: {label}的分值应为 {EXAM_SCORES}（合计 100），'
-                 f'实际 {got_scores}（合计 {sum(got_scores)}）')
+                 f'{md.name}: {label}的题目标题不应写分数；'
+                 '固定分值另有核算办法')
 
-        m = EXAM_ALLOC.search(text)
-        if not m:
-            fail('9 机考规格', f'{md.name}: {label}缺少「**分值分配**：… = **100 分**」一行')
-        else:
-            alloc = [(int(i), int(sc)) for i, sc in ALLOC_ITEM.findall(m.group(1))]
-            want = list(enumerate(EXAM_SCORES, 1))
-            if alloc != want:
-                fail('9 机考规格',
-                     f'{md.name}: {label}的分值分配行与题头不符\n'
-                     f'        分配行: {alloc}\n'
-                     f'        应为  : {want}')
-            elif got_scores and alloc != list(zip(got_ids, got_scores)):
-                fail('9 机考规格',
-                     f'{md.name}: {label}的分值分配行与各题题头写的分数对不上')
-
+        if SCORE_ALLOCATION.search(text):
+            fail('9 机考规格',
+                 f'{md.name}: {label}不应出现「分值分配」；固定分值另有核算办法')
         if py is not None and f'{EXAM_MINUTES} 分钟' not in read(py):
             fail('9 机考规格',
                  f'{py.name}: 课件没有写明「{EXAM_MINUTES} 分钟」')
@@ -741,11 +729,10 @@ def check_exam_spec(files):
             if LADDER_SCORE.search(ln):
                 fail('9 机考规格',
                      f'{(md if is_md else py).name}: {label}的难度梯度里出现分数'
-                     f'{ln.strip()!r}；分数只写在样卷题头与分值分配行，'
+                     f'{ln.strip()!r}；固定分值另有核算办法，'
                      f'机考成绩另有核算办法')
 
-    note(f'机考规格：3 份样卷均为 {len(EXAM_SCORES)} 题 / {EXAM_MINUTES} 分钟 / '
-         f'{"+".join(map(str, EXAM_SCORES))} = 100 分')
+    note(f'机考规格：3 份样卷均为 {EXAM_QUESTION_COUNT} 题 / {EXAM_MINUTES} 分钟')
 
 
 # ---------------------------------------------------------------- 检查 10
