@@ -453,6 +453,31 @@ def t_concat(ns):
         assert small(strs) == min(perms, key=lambda s: (len(s), s))
 
 
+@case('W06', '交换论证：把逆序的相邻两项换过来，结果确实不会变差')
+def t_exchange(ns):
+    """直接验 §3.4 论证骨架的第 2 步，而不只是验最终答案。
+
+    第 2 步声称：若相邻两项 a、b 与规则相反（a+b < b+a），交换后不变差。
+    这里逐个逆序对实测，并断言**严格更大** —— 因为 a+b 与 b+a 等长，
+    整串比较退化成这两段比较，所以不可能只是"打平"。
+    """
+    rule, brute = ns['by_rule'], ns['by_brute']
+    rnd = random.Random(2026)
+    swaps = 0
+    for _ in range(300):
+        strs = [str(rnd.randint(0, 99)) for _ in range(rnd.randint(2, 6))]
+        assert rule(strs) == brute(strs), strs
+        for i in range(len(strs) - 1):
+            a, b = strs[i], strs[i + 1]
+            if a + b >= b + a:                     # 顺序已符合规则，不是逆序对
+                continue
+            swapped = strs[:i] + [b, a] + strs[i + 2:]
+            assert ''.join(swapped) > ''.join(strs), (strs, i)
+            swaps += 1
+    # 反向对照：若上面一个逆序对都没碰到，那这条用例其实什么都没测
+    assert swaps > 200, f'只测到 {swaps} 次交换，样本没覆盖到逆序对'
+
+
 @case('W06', '找零：贪心确实劣于 DP（反例成立）')
 def t_coins(ns):
     g, d = ns['greedy_coins'], ns['dp_coins']
