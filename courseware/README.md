@@ -32,7 +32,7 @@ https://github.com/GMyhf/2026fall-cs101
 | 7 | `202610_ADS_W07_Matrix_Queue_Stack_Greedy` | 29 | 栈与四类应用、单调栈、队列、单调队列 |
 | 8 | `202610_ADS_W08_Recursion` | 29 | 递归三法则、栈帧、递归三部曲、分治 |
 | 9 | `202610_ADS_W09_Recursion_Backtracking_DSU` | 23 | 回溯模板与三形态、剪枝、八皇后、并查集 |
-| 10 | `202611_ADS_W10_Intervals_DP_Intro` | 25 | 五类区间问题、差分、DP 三要素 |
+| 10 | `202611_ADS_W10_Intervals_DP_Intro` | 29 | 五类区间问题、差分、DP 三要素 |
 | 11 | `202611_ADS_W11_DP` | 23 | 0-1 / 完全 / 多重背包、LIS、LCS、降维 |
 | 12 | `202611_ADS_W12_DP_BFS` | 26 | BFS 三铁律、带状态 / 多源 BFS、Dijkstra、二分答案 |
 | 13 | `202611_ADS_W13_Computer_Principles_2` | 29 | 编译与解释、GIL、虚拟内存、局部性、综合练习 |
@@ -40,7 +40,7 @@ https://github.com/GMyhf/2026fall-cs101
 | 15 | `202612_ADS_W15_Knowledge_Graph_Neural_Network` | 24 | 知识图谱、RAG、神经网络、反向传播、CNN |
 | 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 40 | 知识体系总结、期末上机考试命题方案与样卷 |
 
-课件合计 **459 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
+课件合计 **463 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
 
 ---
 

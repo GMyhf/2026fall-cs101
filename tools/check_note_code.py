@@ -1024,6 +1024,33 @@ def t_diff(ns):
         assert f(L, rs) == sum(alive), (L, rs)
 
 
+@case('W10', '最优子结构：朴素状态确实算错，补一维确实算对')
+def t_optimal_substructure(ns):
+    """§2.2 的反例必须真的是反例 —— 否则整节的论点就是空话。
+
+    两条都要断言，缺一条都不够：
+      · 朴素状态在讲义那个三角形上**必须给出错的答案**（否则例子选错了）；
+      · 补一维之后**必须与暴力枚举逐组一致**（否则修法是错的）。
+    """
+    brute, naive, fixed = ns['brute_odd'], ns['naive_odd'], ns['fixed_odd']
+    tri = ns['TRI']
+    assert brute(tri) == 17, brute(tri)
+    assert naive(tri) == -1, f'朴素状态没算错，这个反例不成立：{naive(tri)}'
+    assert fixed(tri) == 17, fixed(tri)
+
+    rnd = random.Random(1011)
+    wrong = 0
+    for _ in range(2000):
+        n = rnd.randint(2, 7)
+        t = [[rnd.randint(0, 9) for _ in range(i + 1)] for i in range(n)]
+        want = brute(t)
+        assert fixed(t) == want, (t, fixed(t), want)
+        if naive(t) != want:
+            wrong += 1
+    # 反向对照：朴素状态若在随机数据上也几乎不出错，讲义那句"它错了"就站不住
+    assert wrong > 100, f'2000 组里朴素状态只错了 {wrong} 次，反例的说服力不够'
+
+
 @case('W10', 'DP 四种写法一致 / 爬楼梯 / 数字三角形 / Kadane')
 def t_dp_intro(ns):
     f1, f2, f3, f4 = ns['f1'], ns['f2'], ns['f3'], ns['f4']

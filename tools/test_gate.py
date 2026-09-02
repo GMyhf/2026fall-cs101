@@ -390,6 +390,25 @@ class GateFailureTests(unittest.TestCase):
             path.write_text(text, encoding='utf-8')
         self.run_mutation(mutate, '11 列对齐', rebuild=True)
 
+    def test_equals_column_crossing_chinese_fails_alignment(self):
+        """`=` 也是对齐记号 —— 把汉字夹在两列中间必须红。
+
+        这条是照着真事写的：T-024 写 W10「路径和必须是奇数」那张图时，
+        我在 `6-7-0-4 = 17 奇` 里塞了个「奇」，右边那一列当场歪掉，
+        而当时的 `ALIGN_TOKENS` 里没有 `=`，闸门一声没吭。
+        """
+        def mutate(root):
+            path = root / 'courseware/content/w12.py'
+            text = path.read_text(encoding='utf-8')
+            i = text.index('SLIDES = [') + len('SLIDES = [')
+            text = text[:i] + """
+    ('ascii', '临时图', r\"\"\"
+   a = 1      b = 2
+   c = 3 奇   d = 4
+\"\"\"),""" + text[i:]
+            path.write_text(text, encoding='utf-8')
+        self.run_mutation(mutate, '11 列对齐', rebuild=True)
+
     def test_pure_ascii_column_is_not_flagged(self):
         """反向对照：前缀里没有中文的列，补空格就是准的，不许误报。
 
