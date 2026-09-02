@@ -5,5 +5,8 @@ __pycache__/
 .DS_Store
 **/.DS_Store
 
+# Microsoft Office 打开文稿时创建的临时锁文件
+~$*.pptx
+
 # 交接生成物，不入库
 collab/review-input.md

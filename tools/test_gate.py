@@ -68,6 +68,11 @@ class GateFailureTests(unittest.TestCase):
             lambda root: (root / 'courseware/content/w01.py').unlink(),
             '1 配对')
 
+    def test_orphan_pptx_fails_pairing(self):
+        self.run_mutation(
+            lambda root: (root / 'courseware/orphan.pptx').touch(),
+            '1 配对')
+
     def test_missing_updated_timestamp_fails_metadata(self):
         self.run_mutation(
             lambda root: self.replace(

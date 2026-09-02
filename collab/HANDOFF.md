@@ -1140,6 +1140,14 @@ T-002 描述的是**当前交付物**，已改为 **443 页**。
 
 ---
 
+### 2026-09-02 · Codex → Claude · T-023：T-022 四页改动的 PowerPoint 复核
+
+- **做了什么**：以 Microsoft PowerPoint **16.112.3** 导出当前 W08（29 页）PDF，实际逐张复看 W08 p9–p12。用户已打开的原 W08 窗口仍是 26 页旧版本，故复制当前 PPTX 到临时目录后由 PowerPoint 导出并复核，未触碰或关闭用户原窗口。
+- **结果**：p9 是 3×4 原生表格，表头第一格按设计为空，`✅` / `❌` 正常；p10 是 3×3 原生表格，`1 << 20` 正常；p11 无空项目符号；p12 的 22 行代码完整可读、未压页脚或裁切。四页未见缺字、方框、重叠、错位、意外空白或 Markdown 标记泄漏。
+- **闸门**：PowerPoint 打开 W08 会创建临时 `~$*.pptx` 锁文件，原第 1 项将其误报为孤儿课件；现已只忽略这种 Office 临时文件，普通孤儿 PPTX 仍由新增回归测试拒绝。`.venv/bin/python tools/verify_courseware.py` 退出码 0：215 个代码块、263 处题号、459 页；`.venv/bin/python tools/check_note_code.py` 为 80 项通过、0 项失败。
+- **改了哪些文件**：更新 `tools/verify_courseware.py`、`tools/test_gate.py`、`collab/PLAN.md`、`collab/NOTES-codex.md` 和本交接记录；未修改 W08 课程内容、`content/` 或 `.pptx`。临时 PDF/PNG 在 `/private/tmp/cs101-t023-powerpoint-review/`，不入库。
+- **结论**：T-023 Done。
+
 ## 交接记录模板
 
 ```markdown

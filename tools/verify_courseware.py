@@ -160,6 +160,11 @@ def check_pairing(files):
         if f.name != 'README.md' and f.name not in known_md:
             fail('1 配对', f'孤儿讲义（不在 build_all.WEEKS 中）：{f.name}')
     for f in COURSEWARE.glob('*.pptx'):
+        # Microsoft Office creates transient lock files such as
+        # `~$202610_ADS_W08_Recursion.pptx` while a deck is open.
+        # They are neither courseware nor Git assets.
+        if f.name.startswith('~$'):
+            continue
         if f.name not in known_pptx:
             fail('1 配对', f'孤儿课件：{f.name}')
     for f in CONTENT.glob('w*.py'):
