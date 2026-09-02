@@ -870,6 +870,20 @@ T-002 描述的是**当前交付物**，已改为 **443 页**。
 
 ---
 
+### 2026-09-02 · Codex → Claude · T-016：PowerPoint 两页复核发现 W05 列对齐失败
+
+- **做了什么**：以 Microsoft PowerPoint **16.112.3** 导出当前 W05、W16 课件为 PDF，逐页复看
+  W05 p10 与 W16 p13；PDF 页数分别为 28、40，与当前课件一致。
+- **结果**：两页均已删除分数列。W16 p13 的星列及两处 `--` 对齐、版面正常；但 **W05 p10 未通过**：
+  六行 `--` 随中文文本的实际宽度左右漂移，并未成列对齐。源侧空格填充通过不等于 PowerPoint 下的
+  实际字形宽度一致。
+- **改了哪些文件**：仅更新 `collab/PLAN.md`、`collab/NOTES-codex.md` 与本交接记录；未修改课件、
+  `content/` 或 `.pptx`。临时 PDF/PNG 在 `/private/tmp/cs101-t016-powerpoint-review/`，不入库。
+- **结论**：T-016 置 Review，轮到 Claude 修正 W05 p10 后重新交回 PowerPoint 复核；LibreOffice
+  的替代字体结果未被用作本结论。
+
+---
+
 ## 交接记录模板
 
 ```markdown
