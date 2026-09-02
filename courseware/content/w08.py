@@ -74,23 +74,50 @@ print(to_base_rec(233, 16), to_base_iter(233, 16))   # E9 E9
    每次调用压入一个栈帧（参数、局部变量、返回地址），返回时弹出
 """, '递归 = 在用系统栈。栈空间有限，递归太深就溢出'),
 
-    ('code', 'Python 的递归深度限制与兜底', '''import sys
-import threading
+    ('table', '递归深度限制：其实有两道墙', [
+        ['', '是什么', '撞上去会怎样', '`setrecursionlimit` 管得到吗'],
+        ['**墙一**', '解释器自己数的嵌套层数', '抛 `RecursionError`，**看得懂**', '✅ 管得到'],
+        ['**墙二**', '**C 调用栈**（主线程通常 8 MB）', '**段错误**，进程直接死', '❌ 管不到'],
+    ], '墙一本是设在墙二前面的护栏。把护栏挪远、墙二没动 —— 于是「能看懂的异常」变成了「没有 traceback 的 RE」'),
 
-print(sys.getrecursionlimit())      # 默认 1000
-sys.setrecursionlimit(1 << 20)      # OJ 上深递归的标准写法
+    ('table', '3.11 之后两道墙的位置变了（本机实测）', [
+        ['递归形状', '最深能到', '线程栈加到 64 MB 有用吗'],
+        ['纯 Python 递归', '**30 万层照跑**（32 KB 栈也够）', '没有区别'],
+        ['递归**穿过 C 代码**（`@lru_cache`）', '**3331 层封顶**，抛 `RecursionError`', '**没用**，还是 3331'],
+    ], 'CPython 3.12.3 / Linux，已 setrecursionlimit(1<<20)。请当成某个环境下的实测值，不是语言规范 —— 这恰恰是不该依赖它的理由'),
+
+    ('bullets', '什么叫「递归穿过 C 代码」', [
+        '调用链中间夹了一层 C 实现的东西，就会掉进墙二：',
+        '**`@lru_cache` / `@cache` 的记忆化搜索** —— 本周就在教，也是最常踩的',
+        '`repr()` / `print()` 一个深度嵌套的列表；`sorted(key=...)` 里调用递归函数',
+        '`re` 的回溯匹配、`copy.deepcopy`、`json.dumps`、`pickle.dumps`',
+        '**`threading.stack_size` 加大的是新线程的 C 栈**，也就是往后推墙二：'
+        '≤3.10 确实有效；3.11+ 对纯递归没必要；对穿过 C 的递归**没用**',
+        '**别把它当护身符** —— 它能不能救你，取决于评测机的版本和你的递归形状，两件事你都控制不了',
+    ]),
+
+    ('code', '唯一与版本、评测机都无关的做法：显式栈', '''import sys
 
 
-def main():
-    sys.setrecursionlimit(1 << 20)
-    # ... 深递归代码 ...
-    print("done")
+def depth_rec(n):
+    return 0 if n == 0 else 1 + depth_rec(n - 1)
 
 
-threading.stack_size(1 << 26)       # 64 MB
-t = threading.Thread(target=main)
-t.start(); t.join()
-''', '⚠️ 调大限制只解除了 Python 层的检查，C 栈仍有限。稳妥做法是改写成迭代'),
+def depth_iter(n):
+    """同一件事的显式栈版本：深度只受内存限制"""
+    total, stack = 0, [n]
+    while stack:
+        k = stack.pop()
+        if k:
+            total += 1
+            stack.append(k - 1)
+    return total
+
+
+sys.setrecursionlimit(1 << 20)
+print(depth_rec(3000), depth_iter(3000))     # 3000 3000  小深度上两者一致
+print(depth_iter(10 ** 6))                   # 1000000    递归版到不了这里
+''', '深递归题的可靠解法只有一个：显式栈。另外两招都是「看运气」的补丁，而且失败方式恰恰最难诊断'),
 
     ('ascii', '进程的虚拟地址空间', r"""
    高地址
@@ -263,7 +290,7 @@ fib_trace(4)
         ['结果全一样', '收集答案时忘了 path[:] 拷贝'],
         ['结果多了 / 少了', '忘了回溯（pop / 状态还原）'],
         ['TLE', '有重叠子问题却没记忆化'],
-        ['RE（评测机上）', '递归太深，C 栈溢出'],
+        ['RE（且没有 traceback）', '递归太深撞穿 C 栈（墙二）；新版 CPython 上更常见的表现是 `RecursionError`'],
     ]),
 
     ('table', '本周作业', [
@@ -279,7 +306,8 @@ fib_trace(4)
 
     ('bullets', '小结', [
         '递归三法则：**有基例、向基例逼近、调用自身**。写的时候只想两层',
-        '递归就是在用**系统栈**；深递归要么改迭代，要么开线程加大栈',
+        '递归深度有**两道墙**：Python 层计数器（`setrecursionlimit` 管得到）与 **C 调用栈**（管不到）',
+        '**深递归唯一可靠的解法是显式栈**；另外两招都要看版本和评测机的脸色',
         '三部曲：**斐波那契**（→记忆化）、**汉诺塔**（2ⁿ−1）、**全排列**（回溯模板）',
         '分治 = 分 + 治 + 合：归并、快排、二分、快速幂',
         '回溯的两个必犯错误：**忘拷贝** `path[:]`、**忘还原** `pop`',

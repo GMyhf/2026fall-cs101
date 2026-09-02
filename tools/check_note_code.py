@@ -652,6 +652,32 @@ def t_drop(ns):
 
 
 # ------------------------------------------------------------------- W08
+@case('W08', '递归的两道墙：C 层上限不受 setrecursionlimit 控制')
+def t_recursion_walls(ns):
+    """守住 §2.2 那张实测表 —— 否则换台机器就没人知道它还成不成立。
+
+    断言的是**相对关系**，不是具体数字（3331 是本机 CPython 3.12.3 的值，
+    换版本必然不同）：3.11 起纯 Python 递归不再吃 C 栈，
+    而"穿过 C 的递归"另有一道 `setrecursionlimit` 管不到的上限。
+    3.10 及以前两者由同一个限制管、比值为 1，那时这条断言不适用，故按版本跳过。
+    """
+    # 显式栈那一条与两道墙都无关：10^6 深度在默认限制（1000）下也照跑
+    assert ns['depth_iter'](10 ** 6) == 10 ** 6
+
+    keep = sys.getrecursionlimit()
+    sys.setrecursionlimit(1 << 20)      # 讲义里这行是裸调用，_keep() 会滤掉
+    try:
+        assert ns['depth_iter'](3000) == ns['depth_rec'](3000) == 3000
+        if sys.version_info < (3, 11):
+            return
+        pure = ns['probe'](ns['plain'])
+        thru_c = ns['probe'](ns['cached'])
+    finally:
+        sys.setrecursionlimit(keep)
+    # 纯 Python 那一路根本没撞墙（probe 上界 100000），穿过 C 的差一个数量级
+    assert pure >= 10 * thru_c, f'纯 Python {pure} 层 vs 经 C {thru_c} 层，两道墙没拉开'
+
+
 @case('W08', '斐波那契四种写法一致')
 def t_fib(ns):
     fs = [ns['fib_memo'], ns['fib_iter'], ns['fib_dp']]

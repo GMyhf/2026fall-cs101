@@ -114,18 +114,96 @@ print(to_base_rec(233, 16), to_base_iter(233, 16))   # E9 E9
 
 **递归 = 在用系统栈**。栈的空间有限，递归太深就会溢出。
 
-## 2.2 Python 的递归深度限制
+## 2.2 递归深度限制：其实有两道墙
 
 ```python
 import sys
 
 print(sys.getrecursionlimit())      # 默认 1000
-sys.setrecursionlimit(1 << 20)      # OJ 上深递归的标准写法
+sys.setrecursionlimit(1 << 20)      # OJ 上深递归的常见写法
 ```
 
-> ⚠️ 把限制调大只是解除了 Python 层面的检查，**C 栈本身仍然有限**。
-> 递归深度到 10⁵ 以上时，某些评测环境会直接段错误（RE）。
-> 稳妥的做法是**改写成迭代**，或者用线程指定更大的栈：
+这一行几乎人人都会抄，但它到底解除了什么，值得说清楚 —— 因为**限制有两道**：
+
+| | 是什么 | 撞上去会怎样 | `setrecursionlimit` 管得到吗 |
+| ---- | ---- | ---- | ---- |
+| **墙一** | 解释器自己数的嵌套层数 | 抛 `RecursionError`，**看得懂** | ✅ 管得到 |
+| **墙二** | **C 调用栈**（解释器本身是 C 程序，主线程通常 8 MB） | **段错误**，进程直接死 | ❌ 管不到 |
+
+墙一本来是设在墙二前面的**软件护栏**：让你在真正撞墙之前，先收到一个能看懂的异常。
+`setrecursionlimit(1 << 20)` 把护栏挪远了，**墙二一动没动** ——
+于是原本"提前抛出 `RecursionError`"变成了"直接崩"，
+在 OJ 上表现为 **RE，而且没有 traceback，看不出错在哪**。
+
+这就是那句提醒的意思：**调大限制只解除了 Python 层的检查，C 栈仍然有限。**
+
+### CPython 3.11 之后，两道墙的位置变了
+
+**3.11 起，"Python 函数调 Python 函数"在解释器主循环内部展开，不再占用 C 栈**；
+**3.12 又给"确实要走 C 的递归"单设了一道上限，而这道上限 `setrecursionlimit` 管不到。**
+
+本机实测（**CPython 3.12.3 / Linux**，`sys.setrecursionlimit(1 << 20)` 之后）：
+
+| 递归形状 | 最深能到 | 加大线程栈到 64 MB 有用吗 |
+| ---- | ---- | ---- |
+| 纯 Python 递归 | **30 万层照跑**（连 32 KB 的线程栈都够） | 没有区别 |
+| 递归**穿过 C 代码**（如 `@lru_cache`） | **3331 层封顶**，抛 `RecursionError` | **没用，还是 3331** |
+
+> 这两行数字请当成**某个环境下的实测值**，不是语言规范。
+> 换 Python 版本、换评测机都可能不同 —— **这恰恰是不该依赖它的理由。**
+
+### 什么叫"递归穿过 C 代码"
+
+只要递归的调用链中间夹了一层 C 实现的东西，就会掉进墙二。常见的有：
+
+- **`@lru_cache` / `@cache` 的记忆化搜索**（§3.1 本周就在教，也是最常踩的）；
+- `repr()` / `print()` 一个深度嵌套的列表；
+- `sorted(key=...)`、`min/max(key=...)` 里调用递归函数；
+- `re` 的回溯匹配、`copy.deepcopy`、`json.dumps`、`pickle.dumps`。
+
+想自己量一量，可以二分探一下：
+
+```python
+import functools
+import sys
+
+sys.setrecursionlimit(1 << 20)
+
+
+def probe(make):
+    """二分出 make() 造出来的递归函数最深能跑到几层。"""
+    lo, hi = 1, 100000
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        f = make()
+        try:
+            f(mid)
+            lo = mid
+        except RecursionError:
+            hi = mid - 1
+    return lo
+
+
+def plain():
+    def f(n):
+        return 0 if n == 0 else 1 + f(n - 1)
+    return f
+
+
+def cached():
+    @functools.lru_cache(maxsize=None)
+    def f(n):
+        return 0 if n == 0 else 1 + f(n - 1)
+    return f
+
+
+print('纯 Python 递归 :', probe(plain))     # 100000 —— 就是探测上界，说明根本没撞墙
+print('经 lru_cache   :', probe(cached))    # 3331   —— 撞的是墙二，调多大限制都没用
+```
+
+### 那段线程写法还要不要写
+
+要，但要知道它治的是哪种病 —— 它加大的是**新线程的 C 栈**，也就是往后推**墙二**：
 
 ```python
 import sys
@@ -138,11 +216,52 @@ def main():
     print("done")
 
 
-threading.stack_size(1 << 26)       # 64 MB
+threading.stack_size(1 << 26)       # 64 MB：只对"吃 C 栈"的递归有意义
 t = threading.Thread(target=main)
 t.start()
 t.join()
 ```
+
+- 在 **CPython ≤ 3.10** 上，每一层 Python 调用都真的压 C 栈，这招**确实有效**；
+- 在 **3.11+** 上，纯 Python 递归本来就不吃 C 栈，这招**没有必要**；
+- 对**穿过 C 的递归**（`lru_cache` 那类），这招**没用** —— 上表实测加到 64 MB 仍是 3331 层。
+
+**别把它当护身符。** 它能不能救你，取决于评测机装的是哪个版本、你的递归是哪种形状 ——
+这两件事你都控制不了。
+
+### 唯一与版本、评测机都无关的做法：改写成迭代
+
+用显式栈把递归摊平（§1.3 的模式），深度就只受**堆内存**限制，
+既绕开墙一，也绕开墙二：
+
+```python
+import sys
+
+
+def depth_rec(n):
+    return 0 if n == 0 else 1 + depth_rec(n - 1)
+
+
+def depth_iter(n):
+    """同一件事的显式栈版本：深度只受内存限制。"""
+    total = 0
+    stack = [n]
+    while stack:
+        k = stack.pop()
+        if k:
+            total += 1
+            stack.append(k - 1)
+    return total
+
+
+sys.setrecursionlimit(1 << 20)
+print(depth_rec(3000), depth_iter(3000))     # 3000 3000  小深度上两者一致
+print(depth_iter(10 ** 6))                   # 1000000    递归版到不了这里
+```
+
+> **深递归题的可靠解法只有一个：显式栈。**
+> `setrecursionlimit` 和 `threading.stack_size` 都是"看运气"的补丁，
+> 而且失败的方式（段错误 / RE）恰恰是最难在考场上诊断的那一种。
 
 ## 2.3 进程的虚拟地址空间
 
@@ -479,7 +598,7 @@ fib_trace(4)
 | 结果全一样 | 收集答案时忘了 `path[:]` 拷贝 |
 | 结果多了 / 少了 | 忘了回溯（`pop` / 状态还原） |
 | TLE | 有重叠子问题却没记忆化 |
-| RE（评测机上） | 递归太深，C 栈溢出 |
+| RE（评测机上，且没有 traceback） | 递归太深撞穿 C 栈（§2.2 的墙二）—— 新版 CPython 上更常见的表现是 `RecursionError`，但同样调不动 |
 
 ---
 
@@ -511,7 +630,8 @@ fib_trace(4)
 # 7 小结
 
 1. 递归三法则：**有基例、向基例逼近、调用自身**。写的时候只想两层，不要在脑子里展开。
-2. 递归就是在用**系统栈**；栈空间有限，深递归要么改迭代，要么开线程加大栈。
+2. 递归深度有**两道墙**：Python 层的计数器（`setrecursionlimit` 管得到）和 **C 调用栈**（管不到）。3.11 起纯 Python 递归不再吃 C 栈，但**穿过 C 的递归**（`lru_cache` 那类）另有一道调不动的上限。
+   **深递归唯一可靠的解法是显式栈**；`setrecursionlimit` 与 `threading.stack_size` 都要看版本和评测机的脸色（§2.2）。
 3. 三部曲：**斐波那契**（重叠子问题 → 记忆化）、**汉诺塔**（2ⁿ−1，指数的实感）、
    **全排列**（回溯模板：选择 → 递归 → 撤销）。
 4. 分治 = 分 + 治 + 合：归并、快排、二分、快速幂。
