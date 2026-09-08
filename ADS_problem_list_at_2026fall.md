@@ -14,6 +14,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
+| 0909 | E02733: 判断闰年     | implementation  | easy | http://cs101.openjudge.cn/pctbook/E02733/         |
 | 0908 | E04138:质数的和与积  | implementation  | easy | http://cs101.openjudge.cn/pctbook/E04138/          |
 | 0907 | M763.划分字母区间    | greedy,hash table, two pointers | Medium | https://leetcode.cn/problems/partition-labels/         |
 | 0906 | M29917:牛顿迭代      | math       | Medium | http://cs101.openjudge.cn/pctbook/M29917/          |
