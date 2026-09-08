@@ -1,0 +1,329 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "20:09",
+  "source_pptx_sha256": "b09f78e0fb4025e1c30d5195f8121d661d9f7c665090077dbeb40517ec3f1123",
+  "source_script_sha256": "06af49df19a1ff68c4984281b923b80c511d71bc3f8605e706b863b945fc2352",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:29",
+      "seconds": 28.8,
+      "chars": 143
+    },
+    {
+      "page": 2,
+      "title": "第 1 节　课程知识体系总结",
+      "start": "00:29",
+      "end": "00:34",
+      "seconds": 5.1,
+      "chars": 17
+    },
+    {
+      "page": 3,
+      "title": "一张图看完 16 周",
+      "start": "00:34",
+      "end": "00:44",
+      "seconds": 9.7,
+      "chars": 39
+    },
+    {
+      "page": 4,
+      "title": "算法主线：一条演化路径",
+      "start": "00:44",
+      "end": "01:34",
+      "seconds": 50.4,
+      "chars": 250
+    },
+    {
+      "page": 5,
+      "title": "每周一句话，上半",
+      "start": "01:34",
+      "end": "02:19",
+      "seconds": 44.8,
+      "chars": 216
+    },
+    {
+      "page": 6,
+      "title": "每周一句话，下半",
+      "start": "02:19",
+      "end": "03:04",
+      "seconds": 44.8,
+      "chars": 224
+    },
+    {
+      "page": 7,
+      "title": "第 2 节　期末上机考试须知",
+      "start": "03:04",
+      "end": "03:08",
+      "seconds": 4.4,
+      "chars": 13
+    },
+    {
+      "page": 8,
+      "title": "考试须知",
+      "start": "03:08",
+      "end": "03:50",
+      "seconds": 42.0,
+      "chars": 227
+    },
+    {
+      "page": 9,
+      "title": "成绩参考",
+      "start": "03:50",
+      "end": "04:10",
+      "seconds": 20.0,
+      "chars": 95
+    },
+    {
+      "page": 10,
+      "title": "考查的五项能力",
+      "start": "04:10",
+      "end": "04:16",
+      "seconds": 5.6,
+      "chars": 22
+    },
+    {
+      "page": 11,
+      "title": "第 3 节　知识点覆盖矩阵与难度梯度",
+      "start": "04:16",
+      "end": "04:24",
+      "seconds": 8.0,
+      "chars": 29
+    },
+    {
+      "page": 12,
+      "title": "知识点覆盖矩阵",
+      "start": "04:24",
+      "end": "05:20",
+      "seconds": 56.6,
+      "chars": 268
+    },
+    {
+      "page": 13,
+      "title": "难度梯度",
+      "start": "05:20",
+      "end": "05:59",
+      "seconds": 39.0,
+      "chars": 185
+    },
+    {
+      "page": 14,
+      "title": "第 4 节　建议样卷",
+      "start": "05:59",
+      "end": "06:09",
+      "seconds": 10.1,
+      "chars": 40
+    },
+    {
+      "page": 15,
+      "title": "T1 成绩单核对",
+      "start": "06:09",
+      "end": "06:49",
+      "seconds": 39.8,
+      "chars": 198
+    },
+    {
+      "page": 16,
+      "title": "T1 参考解答",
+      "start": "06:49",
+      "end": "07:18",
+      "seconds": 29.3,
+      "chars": 145
+    },
+    {
+      "page": 17,
+      "title": "T2 括号嵌套深度",
+      "start": "07:18",
+      "end": "08:01",
+      "seconds": 42.3,
+      "chars": 211
+    },
+    {
+      "page": 18,
+      "title": "T2 参考解答",
+      "start": "08:01",
+      "end": "08:29",
+      "seconds": 28.7,
+      "chars": 136
+    },
+    {
+      "page": 19,
+      "title": "T3 会议室数量",
+      "start": "08:29",
+      "end": "09:13",
+      "seconds": 43.1,
+      "chars": 205
+    },
+    {
+      "page": 20,
+      "title": "T3 参考解答，上半",
+      "start": "09:13",
+      "end": "09:39",
+      "seconds": 26.8,
+      "chars": 132
+    },
+    {
+      "page": 21,
+      "title": "T3 参考解答，下半",
+      "start": "09:39",
+      "end": "10:05",
+      "seconds": 25.7,
+      "chars": 126
+    },
+    {
+      "page": 22,
+      "title": "T4 穿墙迷宫",
+      "start": "10:05",
+      "end": "10:47",
+      "seconds": 41.9,
+      "chars": 204
+    },
+    {
+      "page": 23,
+      "title": "T4 参考解答，上半",
+      "start": "10:47",
+      "end": "10:53",
+      "seconds": 6.4,
+      "chars": 24
+    },
+    {
+      "page": 24,
+      "title": "T4 参考解答，下半",
+      "start": "10:53",
+      "end": "11:24",
+      "seconds": 31.0,
+      "chars": 153
+    },
+    {
+      "page": 25,
+      "title": "T5 作业时间分配",
+      "start": "11:24",
+      "end": "11:58",
+      "seconds": 33.4,
+      "chars": 161
+    },
+    {
+      "page": 26,
+      "title": "T5 参考解答",
+      "start": "11:58",
+      "end": "12:29",
+      "seconds": 31.6,
+      "chars": 160
+    },
+    {
+      "page": 27,
+      "title": "T6 电网巡检",
+      "start": "12:29",
+      "end": "13:18",
+      "seconds": 48.9,
+      "chars": 240
+    },
+    {
+      "page": 28,
+      "title": "T6 参考解答，上半",
+      "start": "13:18",
+      "end": "13:34",
+      "seconds": 15.2,
+      "chars": 69
+    },
+    {
+      "page": 29,
+      "title": "T6 参考解答，下半",
+      "start": "13:34",
+      "end": "14:10",
+      "seconds": 36.7,
+      "chars": 189
+    },
+    {
+      "page": 30,
+      "title": "第 5 节　给学生的备考建议",
+      "start": "14:10",
+      "end": "14:18",
+      "seconds": 7.4,
+      "chars": 29
+    },
+    {
+      "page": 31,
+      "title": "必须能默写的 12 个模板",
+      "start": "14:18",
+      "end": "14:54",
+      "seconds": 35.9,
+      "chars": 164
+    },
+    {
+      "page": 32,
+      "title": "一页 A4 cheat sheet 的建议内容",
+      "start": "14:54",
+      "end": "15:34",
+      "seconds": 40.5,
+      "chars": 202
+    },
+    {
+      "page": 33,
+      "title": "考场流程",
+      "start": "15:34",
+      "end": "16:18",
+      "seconds": 44.3,
+      "chars": 218
+    },
+    {
+      "page": 34,
+      "title": "高频陷阱清单",
+      "start": "16:18",
+      "end": "17:06",
+      "seconds": 47.7,
+      "chars": 233
+    },
+    {
+      "page": 35,
+      "title": "三条硬性提醒",
+      "start": "17:06",
+      "end": "17:25",
+      "seconds": 18.7,
+      "chars": 81
+    },
+    {
+      "page": 36,
+      "title": "第 6 节　命题与阅卷检查清单",
+      "start": "17:25",
+      "end": "17:36",
+      "seconds": 10.8,
+      "chars": 49
+    },
+    {
+      "page": 37,
+      "title": "命题前与参考解答",
+      "start": "17:36",
+      "end": "18:19",
+      "seconds": 43.4,
+      "chars": 212
+    },
+    {
+      "page": 38,
+      "title": "测试数据与阅卷",
+      "start": "18:19",
+      "end": "19:01",
+      "seconds": 41.7,
+      "chars": 207
+    },
+    {
+      "page": 39,
+      "title": "小结",
+      "start": "19:01",
+      "end": "19:38",
+      "seconds": 37.1,
+      "chars": 180
+    },
+    {
+      "page": 40,
+      "title": "课程到此结束",
+      "start": "19:38",
+      "end": "20:09",
+      "seconds": 31.2,
+      "chars": 158
+    }
+  ]
+}

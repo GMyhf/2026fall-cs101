@@ -1,0 +1,233 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "14:27",
+  "source_pptx_sha256": "86fbdbc10f330805d4dd78c688e088752c704fb142d75a412b22c00cf82eaa84",
+  "source_script_sha256": "68879f2d15cc6aa00a3c5717a32e76d88eef64bd6a585c3e0b75c75439488014",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:18",
+      "seconds": 18.3,
+      "chars": 89
+    },
+    {
+      "page": 2,
+      "title": "月考不是筛人，是体检",
+      "start": "00:18",
+      "end": "00:42",
+      "seconds": 24.1,
+      "chars": 115
+    },
+    {
+      "page": 3,
+      "title": "考试形式",
+      "start": "00:42",
+      "end": "01:20",
+      "seconds": 37.7,
+      "chars": 207
+    },
+    {
+      "page": 4,
+      "title": "第 1 节　第 1–4 周知识清单",
+      "start": "01:20",
+      "end": "01:30",
+      "seconds": 9.9,
+      "chars": 43
+    },
+    {
+      "page": 5,
+      "title": "语法与容器",
+      "start": "01:30",
+      "end": "02:11",
+      "seconds": 41.2,
+      "chars": 232
+    },
+    {
+      "page": 6,
+      "title": "计算机基础与复杂度",
+      "start": "02:11",
+      "end": "02:52",
+      "seconds": 40.9,
+      "chars": 200
+    },
+    {
+      "page": 7,
+      "title": "应写进 cheat sheet 的六个模板",
+      "start": "02:52",
+      "end": "03:32",
+      "seconds": 39.9,
+      "chars": 210
+    },
+    {
+      "page": 8,
+      "title": "第 2 节　月考样卷",
+      "start": "03:32",
+      "end": "03:37",
+      "seconds": 4.8,
+      "chars": 15
+    },
+    {
+      "page": 9,
+      "title": "与期末机考同一规格",
+      "start": "03:37",
+      "end": "03:51",
+      "seconds": 14.6,
+      "chars": 66
+    },
+    {
+      "page": 10,
+      "title": "难度梯度",
+      "start": "03:51",
+      "end": "04:36",
+      "seconds": 44.8,
+      "chars": 214
+    },
+    {
+      "page": 11,
+      "title": "T1 成绩转换",
+      "start": "04:36",
+      "end": "05:11",
+      "seconds": 34.7,
+      "chars": 165
+    },
+    {
+      "page": 12,
+      "title": "T1 参考解答",
+      "start": "05:11",
+      "end": "05:39",
+      "seconds": 27.9,
+      "chars": 138
+    },
+    {
+      "page": 13,
+      "title": "T2 单词首字母大写",
+      "start": "05:39",
+      "end": "06:15",
+      "seconds": 36.0,
+      "chars": 193
+    },
+    {
+      "page": 14,
+      "title": "T3 图书借阅排行",
+      "start": "06:15",
+      "end": "06:52",
+      "seconds": 36.7,
+      "chars": 202
+    },
+    {
+      "page": 15,
+      "title": "T4 区间内的 T-数",
+      "start": "06:52",
+      "end": "07:33",
+      "seconds": 41.6,
+      "chars": 224
+    },
+    {
+      "page": 16,
+      "title": "T5 电梯调度模拟",
+      "start": "07:33",
+      "end": "08:12",
+      "seconds": 39.1,
+      "chars": 196
+    },
+    {
+      "page": 17,
+      "title": "T6 补码计算器",
+      "start": "08:12",
+      "end": "08:57",
+      "seconds": 44.8,
+      "chars": 240
+    },
+    {
+      "page": 18,
+      "title": "T6 的三个考点与最常见的错法",
+      "start": "08:57",
+      "end": "09:38",
+      "seconds": 41.2,
+      "chars": 206
+    },
+    {
+      "page": 19,
+      "title": "第 3 节　考后订正",
+      "start": "09:38",
+      "end": "09:44",
+      "seconds": 6.0,
+      "chars": 19
+    },
+    {
+      "page": 20,
+      "title": "把每道没 AC 的题分三类",
+      "start": "09:44",
+      "end": "10:22",
+      "seconds": 37.6,
+      "chars": 200
+    },
+    {
+      "page": 21,
+      "title": "重写规则",
+      "start": "10:22",
+      "end": "10:38",
+      "seconds": 16.1,
+      "chars": 74
+    },
+    {
+      "page": 22,
+      "title": "建立自己的错题类型表",
+      "start": "10:38",
+      "end": "11:23",
+      "seconds": 45.5,
+      "chars": 232
+    },
+    {
+      "page": 23,
+      "title": "112 分钟 / 6 题的时间预算",
+      "start": "11:23",
+      "end": "12:02",
+      "seconds": 38.6,
+      "chars": 199
+    },
+    {
+      "page": 24,
+      "title": "考场策略六条",
+      "start": "12:02",
+      "end": "12:34",
+      "seconds": 31.8,
+      "chars": 143
+    },
+    {
+      "page": 25,
+      "title": "备选题库",
+      "start": "12:34",
+      "end": "13:09",
+      "seconds": 34.8,
+      "chars": 159
+    },
+    {
+      "page": 26,
+      "title": "本周作业",
+      "start": "13:09",
+      "end": "13:35",
+      "seconds": 26.2,
+      "chars": 126
+    },
+    {
+      "page": 27,
+      "title": "小结",
+      "start": "13:35",
+      "end": "14:10",
+      "seconds": 34.8,
+      "chars": 158
+    },
+    {
+      "page": 28,
+      "title": "下周预告",
+      "start": "14:10",
+      "end": "14:27",
+      "seconds": 17.0,
+      "chars": 80
+    }
+  ]
+}

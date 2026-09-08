@@ -1,0 +1,233 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "15:25",
+  "source_pptx_sha256": "b74d91498da2e2c6489e6cdc1920ba26bc7038a0287e3727c49ebae8def4bb86",
+  "source_script_sha256": "939a9c87082014fc9e428c4145fdeb4217d41ebde246a7e53c57d97c7c60c276",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:31",
+      "seconds": 30.7,
+      "chars": 151
+    },
+    {
+      "page": 2,
+      "title": "一个常见的误解",
+      "start": "00:31",
+      "end": "00:56",
+      "seconds": 25.4,
+      "chars": 125
+    },
+    {
+      "page": 3,
+      "title": "学科体系",
+      "start": "00:56",
+      "end": "01:36",
+      "seconds": 39.8,
+      "chars": 185
+    },
+    {
+      "page": 4,
+      "title": "抽象：计算机科学最核心的工具",
+      "start": "01:36",
+      "end": "02:17",
+      "seconds": 41.3,
+      "chars": 219
+    },
+    {
+      "page": 5,
+      "title": "第 1 节　图灵机与可计算性",
+      "start": "02:17",
+      "end": "02:22",
+      "seconds": 4.4,
+      "chars": 13
+    },
+    {
+      "page": 6,
+      "title": "图灵机模型",
+      "start": "02:22",
+      "end": "02:56",
+      "seconds": 34.1,
+      "chars": 158
+    },
+    {
+      "page": 7,
+      "title": "为什么图灵机重要",
+      "start": "02:56",
+      "end": "03:36",
+      "seconds": 40.4,
+      "chars": 208
+    },
+    {
+      "page": 8,
+      "title": "用 Python 实现一台图灵机",
+      "start": "03:36",
+      "end": "04:26",
+      "seconds": 50.4,
+      "chars": 241
+    },
+    {
+      "page": 9,
+      "title": "第 2 节　冯·诺依曼结构",
+      "start": "04:26",
+      "end": "04:34",
+      "seconds": 7.4,
+      "chars": 25
+    },
+    {
+      "page": 10,
+      "title": "五大部件",
+      "start": "04:34",
+      "end": "05:10",
+      "seconds": 35.8,
+      "chars": 172
+    },
+    {
+      "page": 11,
+      "title": "指令周期与瓶颈",
+      "start": "05:10",
+      "end": "05:45",
+      "seconds": 35.6,
+      "chars": 171
+    },
+    {
+      "page": 12,
+      "title": "存储层次",
+      "start": "05:45",
+      "end": "06:36",
+      "seconds": 51.2,
+      "chars": 254
+    },
+    {
+      "page": 13,
+      "title": "第 3 节　数据的二进制表示",
+      "start": "06:36",
+      "end": "06:41",
+      "seconds": 4.2,
+      "chars": 13
+    },
+    {
+      "page": 14,
+      "title": "进制转换",
+      "start": "06:41",
+      "end": "07:32",
+      "seconds": 51.0,
+      "chars": 265
+    },
+    {
+      "page": 15,
+      "title": "有符号整数：以 8 位表示负五",
+      "start": "07:32",
+      "end": "08:28",
+      "seconds": 56.1,
+      "chars": 266
+    },
+    {
+      "page": 16,
+      "title": "位运算的三个常用技巧",
+      "start": "08:28",
+      "end": "09:22",
+      "seconds": 53.7,
+      "chars": 273
+    },
+    {
+      "page": 17,
+      "title": "IEEE 754 双精度",
+      "start": "09:22",
+      "end": "09:54",
+      "seconds": 32.6,
+      "chars": 159
+    },
+    {
+      "page": 18,
+      "title": "浮点数陷阱与正确比较",
+      "start": "09:54",
+      "end": "10:48",
+      "seconds": 54.2,
+      "chars": 297
+    },
+    {
+      "page": 19,
+      "title": "本课的硬规则",
+      "start": "10:48",
+      "end": "11:02",
+      "seconds": 13.4,
+      "chars": 59
+    },
+    {
+      "page": 20,
+      "title": "第 4 节　字符编码",
+      "start": "11:02",
+      "end": "11:05",
+      "seconds": 3.8,
+      "chars": 9
+    },
+    {
+      "page": 21,
+      "title": "ASCII：必须记住的几个",
+      "start": "11:05",
+      "end": "11:33",
+      "seconds": 27.7,
+      "chars": 126
+    },
+    {
+      "page": 22,
+      "title": "ord 与 chr，Unicode 与 UTF-8",
+      "start": "11:33",
+      "end": "12:27",
+      "seconds": 53.6,
+      "chars": 277
+    },
+    {
+      "page": 23,
+      "title": "第 5 节　计算机文化",
+      "start": "12:27",
+      "end": "12:33",
+      "seconds": 6.4,
+      "chars": 22
+    },
+    {
+      "page": 24,
+      "title": "几位必须知道的人",
+      "start": "12:33",
+      "end": "13:12",
+      "seconds": 39.3,
+      "chars": 202
+    },
+    {
+      "page": 25,
+      "title": "摩尔定律与它的放缓",
+      "start": "13:12",
+      "end": "13:49",
+      "seconds": 36.4,
+      "chars": 189
+    },
+    {
+      "page": 26,
+      "title": "本周作业",
+      "start": "13:49",
+      "end": "14:29",
+      "seconds": 40.3,
+      "chars": 197
+    },
+    {
+      "page": 27,
+      "title": "小结",
+      "start": "14:29",
+      "end": "15:07",
+      "seconds": 38.3,
+      "chars": 188
+    },
+    {
+      "page": 28,
+      "title": "下周预告",
+      "start": "15:07",
+      "end": "15:25",
+      "seconds": 17.9,
+      "chars": 94
+    }
+  ]
+}

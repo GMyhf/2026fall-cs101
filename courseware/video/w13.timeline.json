@@ -1,0 +1,241 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "13:42",
+  "source_pptx_sha256": "2cc87f4a987ea681ef20546462c8c8095d108bc0957073e07afb0993f9dfbabc",
+  "source_script_sha256": "15d1d76473269e99d5302a9e6724500cf98d35fc912a19cdd93ee8487d06c17e",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:30",
+      "seconds": 30.1,
+      "chars": 159
+    },
+    {
+      "page": 2,
+      "title": "第 1 节　程序是怎么跑起来的",
+      "start": "00:30",
+      "end": "00:34",
+      "seconds": 4.3,
+      "chars": 14
+    },
+    {
+      "page": 3,
+      "title": "编译型与解释型",
+      "start": "00:34",
+      "end": "01:09",
+      "seconds": 35.0,
+      "chars": 180
+    },
+    {
+      "page": 4,
+      "title": "两者的差别与本课影响",
+      "start": "01:09",
+      "end": "01:52",
+      "seconds": 42.1,
+      "chars": 224
+    },
+    {
+      "page": 5,
+      "title": "Python 的对策",
+      "start": "01:52",
+      "end": "02:12",
+      "seconds": 20.6,
+      "chars": 105
+    },
+    {
+      "page": 6,
+      "title": "看看字节码",
+      "start": "02:12",
+      "end": "02:40",
+      "seconds": 27.6,
+      "chars": 137
+    },
+    {
+      "page": 7,
+      "title": "实测：Python 循环与内建函数",
+      "start": "02:40",
+      "end": "03:04",
+      "seconds": 24.2,
+      "chars": 132
+    },
+    {
+      "page": 8,
+      "title": "CPython 的 GIL",
+      "start": "03:04",
+      "end": "03:34",
+      "seconds": 29.5,
+      "chars": 168
+    },
+    {
+      "page": 9,
+      "title": "第 2 节　进程与内存",
+      "start": "03:34",
+      "end": "03:37",
+      "seconds": 4.0,
+      "chars": 10
+    },
+    {
+      "page": 10,
+      "title": "进程与线程",
+      "start": "03:37",
+      "end": "04:10",
+      "seconds": 32.1,
+      "chars": 150
+    },
+    {
+      "page": 11,
+      "title": "虚拟地址空间",
+      "start": "04:10",
+      "end": "04:48",
+      "seconds": 38.7,
+      "chars": 200
+    },
+    {
+      "page": 12,
+      "title": "「虚拟」的三个好处",
+      "start": "04:48",
+      "end": "05:06",
+      "seconds": 17.6,
+      "chars": 85
+    },
+    {
+      "page": 13,
+      "title": "能申请 10 的 18 次方字节吗",
+      "start": "05:06",
+      "end": "05:44",
+      "seconds": 38.3,
+      "chars": 193
+    },
+    {
+      "page": 14,
+      "title": "做题时的内存估算",
+      "start": "05:44",
+      "end": "06:23",
+      "seconds": 38.3,
+      "chars": 217
+    },
+    {
+      "page": 15,
+      "title": "Python 的内存管理",
+      "start": "06:23",
+      "end": "06:51",
+      "seconds": 28.2,
+      "chars": 151
+    },
+    {
+      "page": 16,
+      "title": "第 3 节　缓存与局部性",
+      "start": "06:51",
+      "end": "06:55",
+      "seconds": 4.1,
+      "chars": 11
+    },
+    {
+      "page": 17,
+      "title": "局部性原理",
+      "start": "06:55",
+      "end": "07:24",
+      "seconds": 29.3,
+      "chars": 149
+    },
+    {
+      "page": 18,
+      "title": "时间层次的实感",
+      "start": "07:24",
+      "end": "07:57",
+      "seconds": 33.1,
+      "chars": 155
+    },
+    {
+      "page": 19,
+      "title": "文件 I/O 与缓冲",
+      "start": "07:57",
+      "end": "08:29",
+      "seconds": 32.2,
+      "chars": 173
+    },
+    {
+      "page": 20,
+      "title": "第 4 节　阶段综合练习",
+      "start": "08:29",
+      "end": "08:37",
+      "seconds": 7.2,
+      "chars": 26
+    },
+    {
+      "page": 21,
+      "title": "题型识别速查表（上）",
+      "start": "08:37",
+      "end": "09:22",
+      "seconds": 45.8,
+      "chars": 231
+    },
+    {
+      "page": 22,
+      "title": "题型识别速查表（下）",
+      "start": "09:22",
+      "end": "09:57",
+      "seconds": 34.9,
+      "chars": 189
+    },
+    {
+      "page": 23,
+      "title": "综合练习题单",
+      "start": "09:57",
+      "end": "10:40",
+      "seconds": 43.0,
+      "chars": 208
+    },
+    {
+      "page": 24,
+      "title": "一道综合例题的完整拆解",
+      "start": "10:40",
+      "end": "11:27",
+      "seconds": 46.3,
+      "chars": 228
+    },
+    {
+      "page": 25,
+      "title": "综合例题的实现与对拍",
+      "start": "11:27",
+      "end": "12:01",
+      "seconds": 34.5,
+      "chars": 172
+    },
+    {
+      "page": 26,
+      "title": "这就是考场上应有的流程",
+      "start": "12:01",
+      "end": "12:17",
+      "seconds": 15.9,
+      "chars": 68
+    },
+    {
+      "page": 27,
+      "title": "本周作业",
+      "start": "12:17",
+      "end": "12:45",
+      "seconds": 27.5,
+      "chars": 132
+    },
+    {
+      "page": 28,
+      "title": "小结",
+      "start": "12:45",
+      "end": "13:27",
+      "seconds": 42.1,
+      "chars": 228
+    },
+    {
+      "page": 29,
+      "title": "下周预告",
+      "start": "13:27",
+      "end": "13:42",
+      "seconds": 15.2,
+      "chars": 72
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "15:07",
+  "source_pptx_sha256": "19cdd93022b6a3db09808ab119a0947d9e2f9222cc0831af159ba5d6db7f6e92",
+  "source_script_sha256": "6580e51502c366f140a0d83fdb8c2f4f4c17333860e7f527ed05d9545beaccf5",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:26",
+      "seconds": 25.5,
+      "chars": 125
+    },
+    {
+      "page": 2,
+      "title": "第 1 节　区间问题",
+      "start": "00:26",
+      "end": "00:29",
+      "seconds": 3.6,
+      "chars": 9
+    },
+    {
+      "page": 3,
+      "title": "五类区间问题",
+      "start": "00:29",
+      "end": "01:13",
+      "seconds": 43.9,
+      "chars": 216
+    },
+    {
+      "page": 4,
+      "title": "一句话记法",
+      "start": "01:13",
+      "end": "01:32",
+      "seconds": 18.8,
+      "chars": 96
+    },
+    {
+      "page": 5,
+      "title": "合并区间",
+      "start": "01:32",
+      "end": "02:00",
+      "seconds": 28.1,
+      "chars": 133
+    },
+    {
+      "page": 6,
+      "title": "无重叠区间与引爆气球",
+      "start": "02:00",
+      "end": "02:37",
+      "seconds": 37.2,
+      "chars": 178
+    },
+    {
+      "page": 7,
+      "title": "为什么按右端点排是对的",
+      "start": "02:37",
+      "end": "03:16",
+      "seconds": 39.3,
+      "chars": 203
+    },
+    {
+      "page": 8,
+      "title": "Radar Installation：先建模再选点",
+      "start": "03:16",
+      "end": "04:00",
+      "seconds": 43.6,
+      "chars": 221
+    },
+    {
+      "page": 9,
+      "title": "视频拼接：区间覆盖",
+      "start": "04:00",
+      "end": "04:27",
+      "seconds": 26.6,
+      "chars": 131
+    },
+    {
+      "page": 10,
+      "title": "区间分组：堆与差分两种写法",
+      "start": "04:27",
+      "end": "05:09",
+      "seconds": 42.0,
+      "chars": 204
+    },
+    {
+      "page": 11,
+      "title": "校门外的树：差分数组",
+      "start": "05:09",
+      "end": "05:49",
+      "seconds": 40.4,
+      "chars": 201
+    },
+    {
+      "page": 12,
+      "title": "第 2 节　动态规划入门",
+      "start": "05:49",
+      "end": "05:53",
+      "seconds": 4.1,
+      "chars": 11
+    },
+    {
+      "page": 13,
+      "title": "从一个反例说起",
+      "start": "05:53",
+      "end": "06:22",
+      "seconds": 29.1,
+      "chars": 121
+    },
+    {
+      "page": 14,
+      "title": "DP 的两个前提",
+      "start": "06:22",
+      "end": "07:00",
+      "seconds": 37.7,
+      "chars": 185
+    },
+    {
+      "page": 15,
+      "title": "最优子结构是状态定义的性质",
+      "start": "07:00",
+      "end": "07:20",
+      "seconds": 20.2,
+      "chars": 101
+    },
+    {
+      "page": 16,
+      "title": "一个能手算的反例",
+      "start": "07:20",
+      "end": "07:54",
+      "seconds": 34.3,
+      "chars": 160
+    },
+    {
+      "page": 17,
+      "title": "最自然的状态，会告诉你「无解」",
+      "start": "07:54",
+      "end": "08:34",
+      "seconds": 39.0,
+      "chars": 200
+    },
+    {
+      "page": 18,
+      "title": "补一维，最优子结构就回来了",
+      "start": "08:34",
+      "end": "09:35",
+      "seconds": 61.2,
+      "chars": 321
+    },
+    {
+      "page": 19,
+      "title": "从递归到 DP：四步演化",
+      "start": "09:35",
+      "end": "10:11",
+      "seconds": 35.8,
+      "chars": 163
+    },
+    {
+      "page": 20,
+      "title": "四种写法的取舍",
+      "start": "10:11",
+      "end": "10:58",
+      "seconds": 47.3,
+      "chars": 228
+    },
+    {
+      "page": 21,
+      "title": "DP 三要素",
+      "start": "10:58",
+      "end": "11:05",
+      "seconds": 7.0,
+      "chars": 25
+    },
+    {
+      "page": 22,
+      "title": "爬楼梯",
+      "start": "11:05",
+      "end": "11:36",
+      "seconds": 31.5,
+      "chars": 162
+    },
+    {
+      "page": 23,
+      "title": "数字三角形",
+      "start": "11:36",
+      "end": "12:11",
+      "seconds": 35.1,
+      "chars": 167
+    },
+    {
+      "page": 24,
+      "title": "数字三角形：二维与滚动一维",
+      "start": "12:11",
+      "end": "12:44",
+      "seconds": 33.0,
+      "chars": 161
+    },
+    {
+      "page": 25,
+      "title": "Kadane 的 DP 视角",
+      "start": "12:44",
+      "end": "13:20",
+      "seconds": 35.9,
+      "chars": 182
+    },
+    {
+      "page": 26,
+      "title": "DP 最核心的技巧",
+      "start": "13:20",
+      "end": "13:42",
+      "seconds": 22.1,
+      "chars": 118
+    },
+    {
+      "page": 27,
+      "title": "本周作业",
+      "start": "13:42",
+      "end": "14:15",
+      "seconds": 32.4,
+      "chars": 161
+    },
+    {
+      "page": 28,
+      "title": "小结",
+      "start": "14:15",
+      "end": "14:47",
+      "seconds": 31.8,
+      "chars": 146
+    },
+    {
+      "page": 29,
+      "title": "下周预告",
+      "start": "14:47",
+      "end": "15:07",
+      "seconds": 20.8,
+      "chars": 97
+    }
+  ]
+}

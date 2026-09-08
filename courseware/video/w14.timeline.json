@@ -1,0 +1,273 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "15:19",
+  "source_pptx_sha256": "a95969455bd70349b09dc342d3f61e22bf4ea7d54a005df3b696786afbabd46c",
+  "source_script_sha256": "ac0fa41f25bd1c570f0a4a2121dda399ee95512a340b58708421c23e55e71e80",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:24",
+      "seconds": 24.4,
+      "chars": 119
+    },
+    {
+      "page": 2,
+      "title": "第 1 节　AI 素养",
+      "start": "00:24",
+      "end": "00:28",
+      "seconds": 3.6,
+      "chars": 10
+    },
+    {
+      "page": 3,
+      "title": "大语言模型在做什么",
+      "start": "00:28",
+      "end": "00:58",
+      "seconds": 29.8,
+      "chars": 161
+    },
+    {
+      "page": 4,
+      "title": "四个关键部件",
+      "start": "00:58",
+      "end": "01:01",
+      "seconds": 2.9,
+      "chars": 5
+    },
+    {
+      "page": 5,
+      "title": "词向量：语义就是几何关系",
+      "start": "01:01",
+      "end": "01:36",
+      "seconds": 35.0,
+      "chars": 187
+    },
+    {
+      "page": 6,
+      "title": "注意力：最简形式",
+      "start": "01:36",
+      "end": "02:14",
+      "seconds": 37.9,
+      "chars": 240
+    },
+    {
+      "page": 7,
+      "title": "幻觉的成因",
+      "start": "02:14",
+      "end": "02:32",
+      "seconds": 18.2,
+      "chars": 100
+    },
+    {
+      "page": 8,
+      "title": "最容易出错的四类",
+      "start": "02:32",
+      "end": "02:44",
+      "seconds": 12.4,
+      "chars": 61
+    },
+    {
+      "page": 9,
+      "title": "自检方法",
+      "start": "02:44",
+      "end": "02:48",
+      "seconds": 3.8,
+      "chars": 9
+    },
+    {
+      "page": 10,
+      "title": "提示词的有效结构",
+      "start": "02:48",
+      "end": "03:27",
+      "seconds": 38.7,
+      "chars": 200
+    },
+    {
+      "page": 11,
+      "title": "AI 辅助编程：能与不能",
+      "start": "03:27",
+      "end": "04:03",
+      "seconds": 36.2,
+      "chars": 188
+    },
+    {
+      "page": 12,
+      "title": "学术诚信",
+      "start": "04:03",
+      "end": "04:20",
+      "seconds": 17.4,
+      "chars": 81
+    },
+    {
+      "page": 13,
+      "title": "第 2 节　12 月月考讲评",
+      "start": "04:20",
+      "end": "04:24",
+      "seconds": 4.3,
+      "chars": 12
+    },
+    {
+      "page": 14,
+      "title": "为什么讲「错误归因」而不是「正确解法」",
+      "start": "04:24",
+      "end": "04:52",
+      "seconds": 27.9,
+      "chars": 128
+    },
+    {
+      "page": 15,
+      "title": "T1 课程互选统计",
+      "start": "04:52",
+      "end": "05:23",
+      "seconds": 30.7,
+      "chars": 162
+    },
+    {
+      "page": 16,
+      "title": "T1 错误归因",
+      "start": "05:23",
+      "end": "05:55",
+      "seconds": 32.4,
+      "chars": 160
+    },
+    {
+      "page": 17,
+      "title": "T2 最优装载顺序",
+      "start": "05:55",
+      "end": "06:40",
+      "seconds": 44.4,
+      "chars": 232
+    },
+    {
+      "page": 18,
+      "title": "T2 错误归因",
+      "start": "06:40",
+      "end": "07:06",
+      "seconds": 26.6,
+      "chars": 133
+    },
+    {
+      "page": 19,
+      "title": "T3 网格中的宝藏，上半",
+      "start": "07:06",
+      "end": "07:32",
+      "seconds": 25.3,
+      "chars": 126
+    },
+    {
+      "page": 20,
+      "title": "T3 网格中的宝藏，下半",
+      "start": "07:32",
+      "end": "07:57",
+      "seconds": 24.8,
+      "chars": 118
+    },
+    {
+      "page": 21,
+      "title": "T3 错误归因",
+      "start": "07:57",
+      "end": "08:29",
+      "seconds": 32.7,
+      "chars": 171
+    },
+    {
+      "page": 22,
+      "title": "T4 分组考试",
+      "start": "08:29",
+      "end": "09:04",
+      "seconds": 34.9,
+      "chars": 179
+    },
+    {
+      "page": 23,
+      "title": "T4 错误归因",
+      "start": "09:04",
+      "end": "09:41",
+      "seconds": 36.8,
+      "chars": 194
+    },
+    {
+      "page": 24,
+      "title": "T5 书架分层",
+      "start": "09:41",
+      "end": "10:14",
+      "seconds": 33.5,
+      "chars": 174
+    },
+    {
+      "page": 25,
+      "title": "T5 错误归因",
+      "start": "10:14",
+      "end": "10:56",
+      "seconds": 41.7,
+      "chars": 231
+    },
+    {
+      "page": 26,
+      "title": "T6 敌友阵营",
+      "start": "10:56",
+      "end": "11:37",
+      "seconds": 40.8,
+      "chars": 206
+    },
+    {
+      "page": 27,
+      "title": "T6 错误归因",
+      "start": "11:37",
+      "end": "12:12",
+      "seconds": 34.5,
+      "chars": 195
+    },
+    {
+      "page": 28,
+      "title": "第 3 节　综合复习清单",
+      "start": "12:12",
+      "end": "12:20",
+      "seconds": 8.4,
+      "chars": 33
+    },
+    {
+      "page": 29,
+      "title": "必须能默写的 12 个模板",
+      "start": "12:20",
+      "end": "12:57",
+      "seconds": 37.4,
+      "chars": 185
+    },
+    {
+      "page": 30,
+      "title": "高频陷阱清单",
+      "start": "12:57",
+      "end": "13:41",
+      "seconds": 43.5,
+      "chars": 209
+    },
+    {
+      "page": 31,
+      "title": "复习节奏建议",
+      "start": "13:41",
+      "end": "14:17",
+      "seconds": 36.0,
+      "chars": 184
+    },
+    {
+      "page": 32,
+      "title": "小结",
+      "start": "14:17",
+      "end": "15:02",
+      "seconds": 45.6,
+      "chars": 222
+    },
+    {
+      "page": 33,
+      "title": "下周预告",
+      "start": "15:02",
+      "end": "15:19",
+      "seconds": 16.6,
+      "chars": 83
+    }
+  ]
+}

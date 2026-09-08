@@ -1,0 +1,193 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "12:10",
+  "source_pptx_sha256": "e1fab8f0581c6d0ff18032fb744bbad8fcdbe852447112c3b564e88d1d562384",
+  "source_script_sha256": "afd0e5fdcfee02dfa0e7968e28e2532f1976a5af561c80e16510fed5a12dcb78",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:24",
+      "seconds": 23.5,
+      "chars": 109
+    },
+    {
+      "page": 2,
+      "title": "第 1 节　背包问题",
+      "start": "00:24",
+      "end": "00:31",
+      "seconds": 7.8,
+      "chars": 29
+    },
+    {
+      "page": 3,
+      "title": "三种背包的全部区别就在遍历方向",
+      "start": "00:31",
+      "end": "01:01",
+      "seconds": 30.1,
+      "chars": 143
+    },
+    {
+      "page": 4,
+      "title": "零一背包：二维写法",
+      "start": "01:01",
+      "end": "01:35",
+      "seconds": 33.5,
+      "chars": 185
+    },
+    {
+      "page": 5,
+      "title": "零一背包：一维滚动",
+      "start": "01:35",
+      "end": "02:05",
+      "seconds": 29.7,
+      "chars": 145
+    },
+    {
+      "page": 6,
+      "title": "为什么零一背包必须倒序",
+      "start": "02:05",
+      "end": "02:45",
+      "seconds": 40.1,
+      "chars": 212
+    },
+    {
+      "page": 7,
+      "title": "方案数：循环顺序决定语义",
+      "start": "02:45",
+      "end": "03:20",
+      "seconds": 35.2,
+      "chars": 174
+    },
+    {
+      "page": 8,
+      "title": "多重背包：二进制拆分",
+      "start": "03:20",
+      "end": "04:06",
+      "seconds": 46.4,
+      "chars": 231
+    },
+    {
+      "page": 9,
+      "title": "「恰好装满」型：初始化的区别",
+      "start": "04:06",
+      "end": "04:52",
+      "seconds": 45.3,
+      "chars": 251
+    },
+    {
+      "page": 10,
+      "title": "「恰好装满」的写法",
+      "start": "04:52",
+      "end": "05:29",
+      "seconds": 37.1,
+      "chars": 191
+    },
+    {
+      "page": 11,
+      "title": "圣诞老人的礼物：分数背包用贪心",
+      "start": "05:29",
+      "end": "06:03",
+      "seconds": 33.9,
+      "chars": 167
+    },
+    {
+      "page": 12,
+      "title": "第 2 节　序列型 DP",
+      "start": "06:03",
+      "end": "06:07",
+      "seconds": 4.2,
+      "chars": 12
+    },
+    {
+      "page": 13,
+      "title": "最长上升子序列的两种复杂度",
+      "start": "06:07",
+      "end": "07:01",
+      "seconds": 54.2,
+      "chars": 300
+    },
+    {
+      "page": 14,
+      "title": "最长上升子序列的两个变形",
+      "start": "07:01",
+      "end": "07:47",
+      "seconds": 45.7,
+      "chars": 238
+    },
+    {
+      "page": 15,
+      "title": "最长公共子序列与编辑距离",
+      "start": "07:47",
+      "end": "08:28",
+      "seconds": 41.3,
+      "chars": 204
+    },
+    {
+      "page": 16,
+      "title": "打家劫舍",
+      "start": "08:28",
+      "end": "08:55",
+      "seconds": 26.6,
+      "chars": 133
+    },
+    {
+      "page": 17,
+      "title": "最大子矩阵：降维加 Kadane",
+      "start": "08:55",
+      "end": "09:32",
+      "seconds": 37.1,
+      "chars": 190
+    },
+    {
+      "page": 18,
+      "title": "第 3 节　DP 的调试",
+      "start": "09:32",
+      "end": "09:39",
+      "seconds": 7.3,
+      "chars": 27
+    },
+    {
+      "page": 19,
+      "title": "三个检查点",
+      "start": "09:39",
+      "end": "10:14",
+      "seconds": 34.7,
+      "chars": 169
+    },
+    {
+      "page": 20,
+      "title": "与暴力对拍",
+      "start": "10:14",
+      "end": "10:49",
+      "seconds": 35.1,
+      "chars": 171
+    },
+    {
+      "page": 21,
+      "title": "本周作业",
+      "start": "10:49",
+      "end": "11:26",
+      "seconds": 36.8,
+      "chars": 168
+    },
+    {
+      "page": 22,
+      "title": "小结",
+      "start": "11:26",
+      "end": "11:51",
+      "seconds": 25.2,
+      "chars": 110
+    },
+    {
+      "page": 23,
+      "title": "下周预告",
+      "start": "11:51",
+      "end": "12:10",
+      "seconds": 18.8,
+      "chars": 89
+    }
+  ]
+}

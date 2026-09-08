@@ -1,0 +1,241 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "15:28",
+  "source_pptx_sha256": "44e5675affbe2f035c97dc588b0d8d899c31bb9208df145c5df907c344f053c0",
+  "source_script_sha256": "fc4d512e6e2ba4d82b74e390436d95a38d545ef38ecb5433724e168f6017c63a",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:19",
+      "seconds": 18.8,
+      "chars": 91
+    },
+    {
+      "page": 2,
+      "title": "什么是递归",
+      "start": "00:19",
+      "end": "00:44",
+      "seconds": 25.3,
+      "chars": 127
+    },
+    {
+      "page": 3,
+      "title": "递归三法则",
+      "start": "00:44",
+      "end": "01:09",
+      "seconds": 25.1,
+      "chars": 113
+    },
+    {
+      "page": 4,
+      "title": "递归的思维方式：相信它",
+      "start": "01:09",
+      "end": "01:40",
+      "seconds": 30.7,
+      "chars": 155
+    },
+    {
+      "page": 5,
+      "title": "例：求数组之和",
+      "start": "01:40",
+      "end": "02:19",
+      "seconds": 38.9,
+      "chars": 185
+    },
+    {
+      "page": 6,
+      "title": "递归与迭代可以互相改写",
+      "start": "02:19",
+      "end": "02:52",
+      "seconds": 32.8,
+      "chars": 158
+    },
+    {
+      "page": 7,
+      "title": "第 1 节　栈帧：递归为什么会爆栈",
+      "start": "02:52",
+      "end": "02:59",
+      "seconds": 7.3,
+      "chars": 29
+    },
+    {
+      "page": 8,
+      "title": "系统调用栈",
+      "start": "02:59",
+      "end": "03:36",
+      "seconds": 36.9,
+      "chars": 176
+    },
+    {
+      "page": 9,
+      "title": "递归深度限制：其实有两道墙",
+      "start": "03:36",
+      "end": "04:22",
+      "seconds": 45.7,
+      "chars": 283
+    },
+    {
+      "page": 10,
+      "title": "3.11 之后两道墙的位置变了",
+      "start": "04:22",
+      "end": "05:14",
+      "seconds": 52.9,
+      "chars": 324
+    },
+    {
+      "page": 11,
+      "title": "什么叫「递归穿过 C 代码」",
+      "start": "05:14",
+      "end": "06:06",
+      "seconds": 51.9,
+      "chars": 295
+    },
+    {
+      "page": 12,
+      "title": "唯一与版本、评测机都无关的做法：显式栈",
+      "start": "06:06",
+      "end": "06:46",
+      "seconds": 39.2,
+      "chars": 195
+    },
+    {
+      "page": 13,
+      "title": "进程的虚拟地址空间",
+      "start": "06:46",
+      "end": "07:25",
+      "seconds": 39.1,
+      "chars": 188
+    },
+    {
+      "page": 14,
+      "title": "第 2 节　递归三部曲",
+      "start": "07:25",
+      "end": "07:32",
+      "seconds": 7.4,
+      "chars": 27
+    },
+    {
+      "page": 15,
+      "title": "序曲：朴素斐波那契是指数级",
+      "start": "07:32",
+      "end": "08:00",
+      "seconds": 27.9,
+      "chars": 131
+    },
+    {
+      "page": 16,
+      "title": "三种修法",
+      "start": "08:00",
+      "end": "08:42",
+      "seconds": 42.1,
+      "chars": 207
+    },
+    {
+      "page": 17,
+      "title": "第一部：汉诺塔",
+      "start": "08:42",
+      "end": "09:17",
+      "seconds": 34.7,
+      "chars": 188
+    },
+    {
+      "page": 18,
+      "title": "汉诺塔实现",
+      "start": "09:17",
+      "end": "09:55",
+      "seconds": 37.9,
+      "chars": 183
+    },
+    {
+      "page": 19,
+      "title": "第二部：全排列",
+      "start": "09:55",
+      "end": "10:45",
+      "seconds": 49.8,
+      "chars": 246
+    },
+    {
+      "page": 20,
+      "title": "第 3 节　分治",
+      "start": "10:45",
+      "end": "10:48",
+      "seconds": 3.3,
+      "chars": 7
+    },
+    {
+      "page": 21,
+      "title": "分治：分、治、合",
+      "start": "10:48",
+      "end": "11:22",
+      "seconds": 33.9,
+      "chars": 161
+    },
+    {
+      "page": 22,
+      "title": "快速幂与二分查找",
+      "start": "11:22",
+      "end": "12:08",
+      "seconds": 46.3,
+      "chars": 229
+    },
+    {
+      "page": 23,
+      "title": "最大公约数",
+      "start": "12:08",
+      "end": "12:38",
+      "seconds": 29.7,
+      "chars": 156
+    },
+    {
+      "page": 24,
+      "title": "第 4 节　递归的调试",
+      "start": "12:38",
+      "end": "12:48",
+      "seconds": 10.2,
+      "chars": 43
+    },
+    {
+      "page": 25,
+      "title": "打印调用树",
+      "start": "12:48",
+      "end": "13:22",
+      "seconds": 34.1,
+      "chars": 178
+    },
+    {
+      "page": 26,
+      "title": "递归的常见错误",
+      "start": "13:22",
+      "end": "13:56",
+      "seconds": 34.1,
+      "chars": 192
+    },
+    {
+      "page": 27,
+      "title": "本周作业",
+      "start": "13:56",
+      "end": "14:31",
+      "seconds": 34.5,
+      "chars": 165
+    },
+    {
+      "page": 28,
+      "title": "小结",
+      "start": "14:31",
+      "end": "15:11",
+      "seconds": 39.8,
+      "chars": 200
+    },
+    {
+      "page": 29,
+      "title": "下周预告",
+      "start": "15:11",
+      "end": "15:28",
+      "seconds": 17.3,
+      "chars": 79
+    }
+  ]
+}

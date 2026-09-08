@@ -27,23 +27,23 @@ https://github.com/GMyhf/2026fall-cs101
 | ---- | ---- | ---- | ---- | ---- |
 | 1 | `202609_ADS_W01_Overview_Platform_AI_Basics` | 32 | 16:46 | 课程概述、学习平台、AI 基础、第一个 Python 程序 |
 | 2 | `202609_ADS_W02_VM_Shell_DevEnv` | 28 | 18:31 | 虚拟机、Linux Shell、开发环境、语法练习 |
-| 3 | `202609_ADS_W03_Computer_Principles_1` | 28 | — | 图灵机、冯·诺依曼结构、补码、浮点、ASCII |
-| 4 | `202609_ADS_W04_Python_Basics_Algorithm_Analysis` | 30 | — | 容器与代价、大 O、从数据范围倒推算法、埃氏筛 |
-| 5 | `202609_ADS_W05_October_Exam_Review` | 28 | — | 10 月月考样卷（6 题 / 112 分钟）、订正方法、考场策略 |
-| 6 | `202610_ADS_W06_Matrices_Sorting_Greedy` | 32 | — | 保护圈、矩阵乘法、二维前缀和、排序、贪心与交换论证 |
-| 7 | `202610_ADS_W07_Matrix_Queue_Stack_Greedy` | 29 | — | 栈与四类应用、单调栈、队列、单调队列 |
-| 8 | `202610_ADS_W08_Recursion` | 29 | — | 递归三法则、栈帧、递归三部曲、分治 |
-| 9 | `202610_ADS_W09_Recursion_Backtracking_DSU` | 23 | — | 回溯模板与三形态、剪枝、八皇后、并查集 |
-| 10 | `202611_ADS_W10_Intervals_DP_Intro` | 29 | — | 五类区间问题、差分、DP 三要素 |
-| 11 | `202611_ADS_W11_DP` | 23 | — | 0-1 / 完全 / 多重背包、LIS、LCS、降维 |
-| 12 | `202611_ADS_W12_DP_BFS` | 26 | — | BFS 三铁律、带状态 / 多源 BFS、Dijkstra、二分答案 |
-| 13 | `202611_ADS_W13_Computer_Principles_2` | 29 | — | 编译与解释、GIL、虚拟内存、局部性、综合练习 |
-| 14 | `202612_ADS_W14_AI_Literacy_Exam_Recap` | 33 | — | LLM 原理、幻觉、提示词、12 月月考讲评（6 题） |
-| 15 | `202612_ADS_W15_Knowledge_Graph_Neural_Network` | 24 | — | 知识图谱、RAG、神经网络、反向传播、CNN |
-| 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 40 | — | 知识体系总结、期末上机考试命题方案与样卷 |
+| 3 | `202609_ADS_W03_Computer_Principles_1` | 28 | 15:25 | 图灵机、冯·诺依曼结构、补码、浮点、ASCII |
+| 4 | `202609_ADS_W04_Python_Basics_Algorithm_Analysis` | 30 | 15:20 | 容器与代价、大 O、从数据范围倒推算法、埃氏筛 |
+| 5 | `202609_ADS_W05_October_Exam_Review` | 28 | 14:27 | 10 月月考样卷（6 题 / 112 分钟）、订正方法、考场策略 |
+| 6 | `202610_ADS_W06_Matrices_Sorting_Greedy` | 32 | 17:31 | 保护圈、矩阵乘法、二维前缀和、排序、贪心与交换论证 |
+| 7 | `202610_ADS_W07_Matrix_Queue_Stack_Greedy` | 29 | 14:22 | 栈与四类应用、单调栈、队列、单调队列 |
+| 8 | `202610_ADS_W08_Recursion` | 29 | 15:28 | 递归三法则、栈帧、递归三部曲、分治 |
+| 9 | `202610_ADS_W09_Recursion_Backtracking_DSU` | 23 | 12:06 | 回溯模板与三形态、剪枝、八皇后、并查集 |
+| 10 | `202611_ADS_W10_Intervals_DP_Intro` | 29 | 15:07 | 五类区间问题、差分、DP 三要素 |
+| 11 | `202611_ADS_W11_DP` | 23 | 12:10 | 0-1 / 完全 / 多重背包、LIS、LCS、降维 |
+| 12 | `202611_ADS_W12_DP_BFS` | 26 | 12:20 | BFS 三铁律、带状态 / 多源 BFS、Dijkstra、二分答案 |
+| 13 | `202611_ADS_W13_Computer_Principles_2` | 29 | 13:42 | 编译与解释、GIL、虚拟内存、局部性、综合练习 |
+| 14 | `202612_ADS_W14_AI_Literacy_Exam_Recap` | 33 | 15:19 | LLM 原理、幻觉、提示词、12 月月考讲评（6 题） |
+| 15 | `202612_ADS_W15_Knowledge_Graph_Neural_Network` | 24 | 11:44 | 知识图谱、RAG、神经网络、反向传播、CNN |
+| 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 40 | 20:09 | 知识体系总结、期末上机考试命题方案与样卷 |
 
 课件合计 **463 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
-视频先做第 1–2 周（旁白讲稿在 `content/wNN_narration.md`），其余周次讲稿写好即可合成。
+**16 周视频已全部合成**，合计 **4 小时 0 分 27 秒**；旁白讲稿在 `content/wNN_narration.md`，共 463 节（一节对应一页）。
 
 ---
 
@@ -60,14 +60,12 @@ courseware/
 ├── build_all.py           # 课件生成入口
 ├── make_video.py          # 视频合成入口
 ├── content/
-│   ├── w01.py             # 第 1 周课件的内容（META + SLIDES）
-│   ├── w01_narration.md   # 第 1 周的逐页旁白讲稿（手写维护）
-│   ├── ...
-│   └── w16.py
+│   ├── w01.py .. w16.py             # 各周课件的内容（META + SLIDES）
+│   └── w01_narration.md .. w16_narration.md   # 各周的逐页旁白讲稿（手写维护）
 └── video/
-    ├── w01.srt            # 字幕（每页一条）
-    ├── w01.timeline.json  # 时间轴 + 课件与讲稿的 sha256
-    └── w01-preview.mp4    # 720p 轻量版
+    ├── wNN.srt            # 字幕（每页一条）
+    ├── wNN.timeline.json  # 时间轴 + 课件与讲稿的 sha256
+    └── wNN-preview.mp4    # 720p 轻量版
 ```
 
 ⚠️ **不要直接编辑 `.pptx`** —— 它会被下次生成覆盖。改课件请改 `content/wNN.py`。
@@ -141,7 +139,7 @@ sha256，任何一边改了而没重新合成，`--check` 就会报「视频过�
 | --- | --- | --- |
 | 讲稿 / 字幕 / 时间轴 | ✅ | 视频的源。有它们谁都能重建出同一份 |
 | `video/wNN-preview.mp4`（720p） | ✅ | 换一台机器就能直接看，不用先装 edge-tts / ffmpeg 重建一遍 |
-| `2026NN_ADS_WNN_*.mp4`（1080p 成品） | ❌ | 一周约 25 MB，每次重建整个文件都变 |
+| `2026NN_ADS_WNN_*.mp4`（1080p 成品） | ❌ | 一周 18–32 MB、16 周合计约 330 MB，每次重建整个文件都变 |
 
 ⚠️ **旁白是 TTS 合成的，`--check` 验不了「念得对不对」。**
 它只验讲稿与课件同版、页数与字幕条数一致 —— 检查的是**结构**，不是**听感**。

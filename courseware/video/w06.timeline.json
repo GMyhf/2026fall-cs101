@@ -1,0 +1,265 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "17:31",
+  "source_pptx_sha256": "9d8f66fdc261cf152373b36cf931cc3d6561a00995f51b41d232965727b9939d",
+  "source_script_sha256": "99f4643bf33b6fe723d7bf10e9e22dbad254f98caa1413b911226d282cd4216e",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:28",
+      "seconds": 27.8,
+      "chars": 141
+    },
+    {
+      "page": 2,
+      "title": "本讲内容",
+      "start": "00:28",
+      "end": "00:58",
+      "seconds": 30.6,
+      "chars": 151
+    },
+    {
+      "page": 3,
+      "title": "第 1 节　矩阵",
+      "start": "00:58",
+      "end": "01:02",
+      "seconds": 3.2,
+      "chars": 7
+    },
+    {
+      "page": 4,
+      "title": "表示与读入",
+      "start": "01:02",
+      "end": "01:37",
+      "seconds": 35.5,
+      "chars": 185
+    },
+    {
+      "page": 5,
+      "title": "保护圈：省掉边界判断",
+      "start": "01:37",
+      "end": "02:16",
+      "seconds": 39.1,
+      "chars": 209
+    },
+    {
+      "page": 6,
+      "title": "方向数组与转置旋转",
+      "start": "02:16",
+      "end": "02:56",
+      "seconds": 39.5,
+      "chars": 190
+    },
+    {
+      "page": 7,
+      "title": "矩阵乘法",
+      "start": "02:56",
+      "end": "03:40",
+      "seconds": 44.1,
+      "chars": 232
+    },
+    {
+      "page": 8,
+      "title": "二维前缀和",
+      "start": "03:40",
+      "end": "04:18",
+      "seconds": 38.0,
+      "chars": 192
+    },
+    {
+      "page": 9,
+      "title": "第 2 节　排序",
+      "start": "04:18",
+      "end": "04:21",
+      "seconds": 3.3,
+      "chars": 7
+    },
+    {
+      "page": 10,
+      "title": "会用 sorted 就够应付大多数题",
+      "start": "04:21",
+      "end": "05:08",
+      "seconds": 46.3,
+      "chars": 248
+    },
+    {
+      "page": 11,
+      "title": "五种基础排序",
+      "start": "05:08",
+      "end": "05:51",
+      "seconds": 43.0,
+      "chars": 200
+    },
+    {
+      "page": 12,
+      "title": "归并排序求逆序对",
+      "start": "05:51",
+      "end": "06:28",
+      "seconds": 37.6,
+      "chars": 191
+    },
+    {
+      "page": 13,
+      "title": "第 3 节　贪心",
+      "start": "06:28",
+      "end": "06:34",
+      "seconds": 5.6,
+      "chars": 17
+    },
+    {
+      "page": 14,
+      "title": "贪心的三个要素",
+      "start": "06:34",
+      "end": "07:03",
+      "seconds": 29.3,
+      "chars": 137
+    },
+    {
+      "page": 15,
+      "title": "标准反例：找零问题",
+      "start": "07:03",
+      "end": "07:35",
+      "seconds": 32.0,
+      "chars": 150
+    },
+    {
+      "page": 16,
+      "title": "排序型贪心：最常见的套路",
+      "start": "07:35",
+      "end": "07:51",
+      "seconds": 16.1,
+      "chars": 78
+    },
+    {
+      "page": 17,
+      "title": "装箱问题：从大到小放加打表",
+      "start": "07:51",
+      "end": "08:34",
+      "seconds": 42.5,
+      "chars": 205
+    },
+    {
+      "page": 18,
+      "title": "最大最小整数：交换论证",
+      "start": "08:34",
+      "end": "09:14",
+      "seconds": 40.5,
+      "chars": 206
+    },
+    {
+      "page": 19,
+      "title": "交换论证",
+      "start": "09:14",
+      "end": "09:37",
+      "seconds": 22.6,
+      "chars": 110
+    },
+    {
+      "page": 20,
+      "title": "交换论证的三步骨架",
+      "start": "09:37",
+      "end": "10:36",
+      "seconds": 59.7,
+      "chars": 300
+    },
+    {
+      "page": 21,
+      "title": "反过来用：这才是它在考场上的价值",
+      "start": "10:36",
+      "end": "11:04",
+      "seconds": 27.3,
+      "chars": 143
+    },
+    {
+      "page": 22,
+      "title": "最大最小整数的排序键是这么推出来的",
+      "start": "11:04",
+      "end": "11:56",
+      "seconds": 52.3,
+      "chars": 282
+    },
+    {
+      "page": 23,
+      "title": "两种形态，别混",
+      "start": "11:56",
+      "end": "12:30",
+      "seconds": 34.0,
+      "chars": 170
+    },
+    {
+      "page": 24,
+      "title": "两个必须自己检查的前提",
+      "start": "12:30",
+      "end": "13:27",
+      "seconds": 57.0,
+      "chars": 303
+    },
+    {
+      "page": 25,
+      "title": "因材施教与军备竞赛",
+      "start": "13:27",
+      "end": "14:14",
+      "seconds": 47.3,
+      "chars": 234
+    },
+    {
+      "page": 26,
+      "title": "贪心的常见形状速查",
+      "start": "14:14",
+      "end": "14:45",
+      "seconds": 30.5,
+      "chars": 143
+    },
+    {
+      "page": 27,
+      "title": "第 4 节　复杂度实战",
+      "start": "14:45",
+      "end": "14:51",
+      "seconds": 6.5,
+      "chars": 23
+    },
+    {
+      "page": 28,
+      "title": "同一道题的三种写法",
+      "start": "14:51",
+      "end": "15:30",
+      "seconds": 38.3,
+      "chars": 179
+    },
+    {
+      "page": 29,
+      "title": "三种复杂度对应三个可解规模",
+      "start": "15:30",
+      "end": "15:58",
+      "seconds": 28.2,
+      "chars": 139
+    },
+    {
+      "page": 30,
+      "title": "本周作业",
+      "start": "15:58",
+      "end": "16:45",
+      "seconds": 46.9,
+      "chars": 218
+    },
+    {
+      "page": 31,
+      "title": "小结",
+      "start": "16:45",
+      "end": "17:16",
+      "seconds": 31.3,
+      "chars": 146
+    },
+    {
+      "page": 32,
+      "title": "下周预告",
+      "start": "17:16",
+      "end": "17:31",
+      "seconds": 14.9,
+      "chars": 67
+    }
+  ]
+}

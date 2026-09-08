@@ -1,0 +1,201 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "11:44",
+  "source_pptx_sha256": "d0d528a773105c05ab1360f0ca9ddbd66031b5c11cd9982fb4d1fcc0be266c43",
+  "source_script_sha256": "b6713d82e638d6e658e523f95e6bb36313d963497e15453906c246cade036d4a",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:25",
+      "seconds": 24.6,
+      "chars": 130
+    },
+    {
+      "page": 2,
+      "title": "第 1 节　知识图谱",
+      "start": "00:25",
+      "end": "00:28",
+      "seconds": 3.7,
+      "chars": 9
+    },
+    {
+      "page": 3,
+      "title": "三元组：知识的最小单位",
+      "start": "00:28",
+      "end": "00:59",
+      "seconds": 30.8,
+      "chars": 151
+    },
+    {
+      "page": 4,
+      "title": "用 Python 建一个小知识图谱",
+      "start": "00:59",
+      "end": "01:33",
+      "seconds": 34.2,
+      "chars": 193
+    },
+    {
+      "page": 5,
+      "title": "多跳推理就是 BFS",
+      "start": "01:33",
+      "end": "02:08",
+      "seconds": 34.4,
+      "chars": 181
+    },
+    {
+      "page": 6,
+      "title": "RAG：检索增强生成",
+      "start": "02:08",
+      "end": "02:41",
+      "seconds": 33.3,
+      "chars": 160
+    },
+    {
+      "page": 7,
+      "title": "最简单的检索：TF-IDF",
+      "start": "02:41",
+      "end": "03:21",
+      "seconds": 39.7,
+      "chars": 212
+    },
+    {
+      "page": 8,
+      "title": "第 2 节　神经网络",
+      "start": "03:21",
+      "end": "03:24",
+      "seconds": 3.6,
+      "chars": 9
+    },
+    {
+      "page": 9,
+      "title": "感知机：一个神经元",
+      "start": "03:24",
+      "end": "03:38",
+      "seconds": 13.9,
+      "chars": 59
+    },
+    {
+      "page": 10,
+      "title": "一个神经元实现逻辑与",
+      "start": "03:38",
+      "end": "04:13",
+      "seconds": 35.2,
+      "chars": 169
+    },
+    {
+      "page": 11,
+      "title": "激活函数：为什么必须非线性",
+      "start": "04:13",
+      "end": "04:54",
+      "seconds": 41.0,
+      "chars": 201
+    },
+    {
+      "page": 12,
+      "title": "XOR：为什么需要「深度」",
+      "start": "04:54",
+      "end": "05:25",
+      "seconds": 30.5,
+      "chars": 147
+    },
+    {
+      "page": 13,
+      "title": "前向、损失、梯度下降",
+      "start": "05:25",
+      "end": "05:53",
+      "seconds": 28.0,
+      "chars": 134
+    },
+    {
+      "page": 14,
+      "title": "反向传播：链式法则",
+      "start": "05:53",
+      "end": "06:33",
+      "seconds": 39.9,
+      "chars": 204
+    },
+    {
+      "page": 15,
+      "title": "手写 XOR 网络，上半",
+      "start": "06:33",
+      "end": "06:59",
+      "seconds": 25.7,
+      "chars": 127
+    },
+    {
+      "page": 16,
+      "title": "手写 XOR 网络，下半",
+      "start": "06:59",
+      "end": "07:43",
+      "seconds": 44.8,
+      "chars": 237
+    },
+    {
+      "page": 17,
+      "title": "CNN：卷积与池化",
+      "start": "07:43",
+      "end": "07:58",
+      "seconds": 14.7,
+      "chars": 64
+    },
+    {
+      "page": 18,
+      "title": "CNN 的三个想法",
+      "start": "07:58",
+      "end": "08:04",
+      "seconds": 5.9,
+      "chars": 19
+    },
+    {
+      "page": 19,
+      "title": "从本课到大模型",
+      "start": "08:04",
+      "end": "08:49",
+      "seconds": 45.2,
+      "chars": 231
+    },
+    {
+      "page": 20,
+      "title": "AI 与算法的关系：不要走偏",
+      "start": "08:49",
+      "end": "09:21",
+      "seconds": 32.2,
+      "chars": 172
+    },
+    {
+      "page": 21,
+      "title": "上机实践任务",
+      "start": "09:21",
+      "end": "10:05",
+      "seconds": 44.0,
+      "chars": 217
+    },
+    {
+      "page": 22,
+      "title": "本周作业",
+      "start": "10:05",
+      "end": "10:47",
+      "seconds": 42.1,
+      "chars": 214
+    },
+    {
+      "page": 23,
+      "title": "小结",
+      "start": "10:47",
+      "end": "11:26",
+      "seconds": 38.7,
+      "chars": 188
+    },
+    {
+      "page": 24,
+      "title": "下周预告",
+      "start": "11:26",
+      "end": "11:44",
+      "seconds": 17.5,
+      "chars": 83
+    }
+  ]
+}
