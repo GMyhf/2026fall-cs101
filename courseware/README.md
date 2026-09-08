@@ -1,46 +1,49 @@
 # 讲义与课件（第 1–16 周）
 
-*Updated 2026-08-31 GMT+8*
+*Updated 2026-09-07 GMT+8*
  *Compiled by Hongfei Yan (2026 Fall)*
 https://github.com/GMyhf/2026fall-cs101
 
-本目录存放《计算概论（B）》第 1–16 周的**讲义（`.md`）与课件（`.pptx`）**，
-二者**同名成对**，内容依据 [`Introduction_to_Computing_B_Course_Guide.md`](../Introduction_to_Computing_B_Course_Guide.md)
+本目录存放《计算概论（B）》第 1–16 周的**讲义（`.md`）、课件（`.pptx`）与视频（`.mp4`）**，
+三者**同名成对**，内容依据 [`Introduction_to_Computing_B_Course_Guide.md`](../Introduction_to_Computing_B_Course_Guide.md)
 的「课程安排」表编写。
 
 | | 用途 | 特点 |
 | ---- | ---- | ---- |
 | `*.md` 讲义 | 课后阅读、作业参考 | 完整题解、可运行代码、习题与思考题 |
 | `*.pptx` 课件 | 课堂放映 | 只保留主干与关键代码，16:9 版面 |
+| `*.mp4` 视频 | 课前预习、补课、异步学习 | 课件画面 + 逐页旁白，1920×1080，带字幕文件 |
 
-> 讲义与课件是一套东西，因此放在同一目录、成对维护：改讲义时顺手核对同名课件。
+> 三者是一套东西，因此放在同一目录、同名维护：改讲义时顺手核对同名课件，
+> 课件或讲稿改了就重新合成视频（`make_video.py --check` 盯着这件事）。
 
 ---
 
 ## 1 文件清单
 
-每周一行，`.md` 与 `.pptx` 同名。
+每周一行，`.md` / `.pptx` / `.mp4` 同名。
 
-| 周次 | 文件名（`.md` / `.pptx` 同名） | 课件页数 | 主题 |
-| ---- | ---- | ---- | ---- |
-| 1 | `202609_ADS_W01_Overview_Platform_AI_Basics` | 32 | 课程概述、学习平台、AI 基础、第一个 Python 程序 |
-| 2 | `202609_ADS_W02_VM_Shell_DevEnv` | 28 | 虚拟机、Linux Shell、开发环境、语法练习 |
-| 3 | `202609_ADS_W03_Computer_Principles_1` | 28 | 图灵机、冯·诺依曼结构、补码、浮点、ASCII |
-| 4 | `202609_ADS_W04_Python_Basics_Algorithm_Analysis` | 30 | 容器与代价、大 O、从数据范围倒推算法、埃氏筛 |
-| 5 | `202609_ADS_W05_October_Exam_Review` | 28 | 10 月月考样卷（6 题 / 112 分钟）、订正方法、考场策略 |
-| 6 | `202610_ADS_W06_Matrices_Sorting_Greedy` | 32 | 保护圈、矩阵乘法、二维前缀和、排序、贪心与交换论证 |
-| 7 | `202610_ADS_W07_Matrix_Queue_Stack_Greedy` | 29 | 栈与四类应用、单调栈、队列、单调队列 |
-| 8 | `202610_ADS_W08_Recursion` | 29 | 递归三法则、栈帧、递归三部曲、分治 |
-| 9 | `202610_ADS_W09_Recursion_Backtracking_DSU` | 23 | 回溯模板与三形态、剪枝、八皇后、并查集 |
-| 10 | `202611_ADS_W10_Intervals_DP_Intro` | 29 | 五类区间问题、差分、DP 三要素 |
-| 11 | `202611_ADS_W11_DP` | 23 | 0-1 / 完全 / 多重背包、LIS、LCS、降维 |
-| 12 | `202611_ADS_W12_DP_BFS` | 26 | BFS 三铁律、带状态 / 多源 BFS、Dijkstra、二分答案 |
-| 13 | `202611_ADS_W13_Computer_Principles_2` | 29 | 编译与解释、GIL、虚拟内存、局部性、综合练习 |
-| 14 | `202612_ADS_W14_AI_Literacy_Exam_Recap` | 33 | LLM 原理、幻觉、提示词、12 月月考讲评（6 题） |
-| 15 | `202612_ADS_W15_Knowledge_Graph_Neural_Network` | 24 | 知识图谱、RAG、神经网络、反向传播、CNN |
-| 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 40 | 知识体系总结、期末上机考试命题方案与样卷 |
+| 周次 | 文件名（`.md` / `.pptx` / `.mp4` 同名） | 课件页数 | 视频时长 | 主题 |
+| ---- | ---- | ---- | ---- | ---- |
+| 1 | `202609_ADS_W01_Overview_Platform_AI_Basics` | 32 | 16:46 | 课程概述、学习平台、AI 基础、第一个 Python 程序 |
+| 2 | `202609_ADS_W02_VM_Shell_DevEnv` | 28 | 18:31 | 虚拟机、Linux Shell、开发环境、语法练习 |
+| 3 | `202609_ADS_W03_Computer_Principles_1` | 28 | — | 图灵机、冯·诺依曼结构、补码、浮点、ASCII |
+| 4 | `202609_ADS_W04_Python_Basics_Algorithm_Analysis` | 30 | — | 容器与代价、大 O、从数据范围倒推算法、埃氏筛 |
+| 5 | `202609_ADS_W05_October_Exam_Review` | 28 | — | 10 月月考样卷（6 题 / 112 分钟）、订正方法、考场策略 |
+| 6 | `202610_ADS_W06_Matrices_Sorting_Greedy` | 32 | — | 保护圈、矩阵乘法、二维前缀和、排序、贪心与交换论证 |
+| 7 | `202610_ADS_W07_Matrix_Queue_Stack_Greedy` | 29 | — | 栈与四类应用、单调栈、队列、单调队列 |
+| 8 | `202610_ADS_W08_Recursion` | 29 | — | 递归三法则、栈帧、递归三部曲、分治 |
+| 9 | `202610_ADS_W09_Recursion_Backtracking_DSU` | 23 | — | 回溯模板与三形态、剪枝、八皇后、并查集 |
+| 10 | `202611_ADS_W10_Intervals_DP_Intro` | 29 | — | 五类区间问题、差分、DP 三要素 |
+| 11 | `202611_ADS_W11_DP` | 23 | — | 0-1 / 完全 / 多重背包、LIS、LCS、降维 |
+| 12 | `202611_ADS_W12_DP_BFS` | 26 | — | BFS 三铁律、带状态 / 多源 BFS、Dijkstra、二分答案 |
+| 13 | `202611_ADS_W13_Computer_Principles_2` | 29 | — | 编译与解释、GIL、虚拟内存、局部性、综合练习 |
+| 14 | `202612_ADS_W14_AI_Literacy_Exam_Recap` | 33 | — | LLM 原理、幻觉、提示词、12 月月考讲评（6 题） |
+| 15 | `202612_ADS_W15_Knowledge_Graph_Neural_Network` | 24 | — | 知识图谱、RAG、神经网络、反向传播、CNN |
+| 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 40 | — | 知识体系总结、期末上机考试命题方案与样卷 |
 
 课件合计 **463 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
+视频先做第 1–2 周（旁白讲稿在 `content/wNN_narration.md`），其余周次讲稿写好即可合成。
 
 ---
 
@@ -51,22 +54,30 @@ https://github.com/GMyhf/2026fall-cs101
 ```
 courseware/
 ├── 2026NN_ADS_WNN_*.md    # 讲义（手写维护）
-├── 2026NN_ADS_WNN_*.pptx  # 课件（由下面的脚本生成）
+├── 2026NN_ADS_WNN_*.pptx  # 课件（由 build_all.py 生成）
+├── 2026NN_ADS_WNN_*.mp4   # 视频（由 make_video.py 合成，**不入库**）
 ├── deck.py                # 排版引擎：主题配色、版面构件、自适应字号
-├── build_all.py           # 生成入口
-└── content/
-    ├── w01.py             # 第 1 周课件的内容（META + SLIDES）
-    ├── ...
-    └── w16.py
+├── build_all.py           # 课件生成入口
+├── make_video.py          # 视频合成入口
+├── content/
+│   ├── w01.py             # 第 1 周课件的内容（META + SLIDES）
+│   ├── w01_narration.md   # 第 1 周的逐页旁白讲稿（手写维护）
+│   ├── ...
+│   └── w16.py
+└── video/
+    ├── w01.srt            # 字幕（每页一条）
+    ├── w01.timeline.json  # 时间轴 + 课件与讲稿的 sha256
+    └── w01-preview.mp4    # 720p 轻量版
 ```
 
 ⚠️ **不要直接编辑 `.pptx`** —— 它会被下次生成覆盖。改课件请改 `content/wNN.py`。
 讲义 `.md` 则是手写维护的，与 `content/` 无生成关系；两者内容需人工保持一致。
 
-**环境**：
+**环境**：课件只需 `python-pptx`；合成视频另需 `edge-tts`、`ffmpeg`、
+`libreoffice`、`poppler-utils`。
 
 ```bash
-pip install python-pptx
+pip install python-pptx edge-tts
 ```
 
 **生成**：
@@ -101,7 +112,43 @@ python3 build_all.py 07 12     # 只重新生成第 7、12 周
 
 ---
 
-## 4 质量检查
+## 4 视频
+
+```bash
+python3 make_video.py 01                # 合成第 1 周
+python3 make_video.py 01 --audio-only   # 只跑 TTS，先看总时长够不够一节课
+python3 make_video.py 01 --check        # 只校验产物是否最新
+python3 make_video.py 01 --preview      # 从成品转一份 720p 轻量版，便于传阅
+```
+
+流程：`content/wNN_narration.md` 逐页送进 edge-tts 得到旁白 → 从**当前**
+`.pptx` 现导逐页 PNG（LibreOffice → PDF → `pdftoppm`）→ ffmpeg 把「一张静帧 +
+一段旁白」合成一个片段 → 拼接并做响度归一化（`loudnorm I=-16`）。
+
+因为画面是现导的，视频永远和课件同版；`video/wNN.timeline.json` 记下课件与讲稿的
+sha256，任何一边改了而没重新合成，`--check` 就会报「视频过期」。
+
+⚠️ **讲稿一节对应课件一页**，节标题里的页码就是幻灯片页码，页数对不上直接报错。
+讲稿按**朗读稿**写：题号、符号、公式一律写成中文读法（「E 零二七五零」而不是
+`E02750`），因为是逐字送进 TTS 的。
+
+**讲稿是手写的，时间控制表是机器写的。** 讲稿文末的「附：时间控制表」由
+`make_video.py` 按实测时长重写，不要手改。
+
+**入库口径**：
+
+| | 入不入库 | 为什么 |
+| --- | --- | --- |
+| 讲稿 / 字幕 / 时间轴 | ✅ | 视频的源。有它们谁都能重建出同一份 |
+| `video/wNN-preview.mp4`（720p） | ✅ | 换一台机器就能直接看，不用先装 edge-tts / ffmpeg 重建一遍 |
+| `2026NN_ADS_WNN_*.mp4`（1080p 成品） | ❌ | 一周约 25 MB，每次重建整个文件都变 |
+
+⚠️ **旁白是 TTS 合成的，`--check` 验不了「念得对不对」。**
+它只验讲稿与课件同版、页数与字幕条数一致 —— 检查的是**结构**，不是**听感**。
+
+---
+
+## 5 质量检查
 
 ```bash
 python3 tools/verify_courseware.py            # 第 1–7 项
@@ -110,6 +157,7 @@ python3 tools/check_note_code.py              # 讲义代码的语义对拍
 ```
 
 检查项见 [`../tools/verify_courseware.py`](../tools/verify_courseware.py) 的模块文档。
+视频另有 `python3 make_video.py NN --check`，验的是「视频与课件、讲稿同版」。
 
 > ⚠️ 字体以放映机器为准：Windows / macOS + Microsoft PowerPoint 下
 > "微软雅黑 + Consolas"可直接使用；LibreOffice 若缺少中文字体会渲染成方框，

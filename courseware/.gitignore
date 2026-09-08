@@ -1,2 +1,8 @@
 __pycache__/
 *.pyc
+.videowork/
+# 1080p 成品不入库：一周约 25MB，每次重建整个文件都变。
+# 讲稿、字幕、时间轴都在库里，`python3 make_video.py NN` 可以随时重建。
+*.mp4
+# 但 720p 轻量版入库：换台机器就能直接看，不用先装 edge-tts / ffmpeg 重建一遍。
+!video/*-preview.mp4

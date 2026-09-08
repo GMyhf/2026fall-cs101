@@ -1,0 +1,233 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "18:31",
+  "source_pptx_sha256": "fe6741b44654206eae78d51d444d72909a17a93d6f8ac20d73e2849e6559f923",
+  "source_script_sha256": "ade08d9b69473c5045d185817d3d052658f564c52671e3b526e8faa49263b296",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:26",
+      "seconds": 26.1,
+      "chars": 138
+    },
+    {
+      "page": 2,
+      "title": "为什么计概课要讲操作系统和 Shell",
+      "start": "00:26",
+      "end": "01:12",
+      "seconds": 45.5,
+      "chars": 229
+    },
+    {
+      "page": 3,
+      "title": "第 1 节　操作系统与虚拟化",
+      "start": "01:12",
+      "end": "01:16",
+      "seconds": 4.4,
+      "chars": 13
+    },
+    {
+      "page": 4,
+      "title": "三大操作系统",
+      "start": "01:16",
+      "end": "02:19",
+      "seconds": 62.8,
+      "chars": 407
+    },
+    {
+      "page": 5,
+      "title": "虚拟机的层次",
+      "start": "02:19",
+      "end": "03:00",
+      "seconds": 40.7,
+      "chars": 218
+    },
+    {
+      "page": 6,
+      "title": "虚拟机与容器的区别",
+      "start": "03:00",
+      "end": "03:31",
+      "seconds": 31.9,
+      "chars": 161
+    },
+    {
+      "page": 7,
+      "title": "云主机：连接与首次配置",
+      "start": "03:31",
+      "end": "04:31",
+      "seconds": 59.8,
+      "chars": 322
+    },
+    {
+      "page": 8,
+      "title": "交换分区：内存不够时的救命稻草",
+      "start": "04:31",
+      "end": "05:18",
+      "seconds": 46.8,
+      "chars": 259
+    },
+    {
+      "page": 9,
+      "title": "第 2 节　Linux Shell",
+      "start": "05:18",
+      "end": "05:26",
+      "seconds": 8.5,
+      "chars": 39
+    },
+    {
+      "page": 10,
+      "title": "目录树与路径",
+      "start": "05:26",
+      "end": "06:09",
+      "seconds": 42.9,
+      "chars": 235
+    },
+    {
+      "page": 11,
+      "title": "必会命令（上）",
+      "start": "06:09",
+      "end": "07:09",
+      "seconds": 59.1,
+      "chars": 315
+    },
+    {
+      "page": 12,
+      "title": "必会命令（下）",
+      "start": "07:09",
+      "end": "07:58",
+      "seconds": 49.7,
+      "chars": 265
+    },
+    {
+      "page": 13,
+      "title": "文件权限",
+      "start": "07:58",
+      "end": "08:41",
+      "seconds": 43.1,
+      "chars": 208
+    },
+    {
+      "page": 14,
+      "title": "重定向与管道",
+      "start": "08:41",
+      "end": "09:39",
+      "seconds": 57.6,
+      "chars": 287
+    },
+    {
+      "page": 15,
+      "title": "快捷键",
+      "start": "09:39",
+      "end": "10:16",
+      "seconds": 36.9,
+      "chars": 199
+    },
+    {
+      "page": 16,
+      "title": "第 3 节　开发环境",
+      "start": "10:16",
+      "end": "10:19",
+      "seconds": 3.7,
+      "chars": 9
+    },
+    {
+      "page": 17,
+      "title": "Python 虚拟环境",
+      "start": "10:19",
+      "end": "11:06",
+      "seconds": 46.9,
+      "chars": 335
+    },
+    {
+      "page": 18,
+      "title": "PyCharm 的两个必用功能",
+      "start": "11:06",
+      "end": "11:56",
+      "seconds": 50.1,
+      "chars": 278
+    },
+    {
+      "page": 19,
+      "title": "第 4 节　编程语法练习",
+      "start": "11:56",
+      "end": "12:05",
+      "seconds": 8.2,
+      "chars": 30
+    },
+    {
+      "page": 20,
+      "title": "变量与基本类型",
+      "start": "12:05",
+      "end": "12:45",
+      "seconds": 40.3,
+      "chars": 224
+    },
+    {
+      "page": 21,
+      "title": "分支与循环",
+      "start": "12:45",
+      "end": "13:34",
+      "seconds": 49.3,
+      "chars": 266
+    },
+    {
+      "page": 22,
+      "title": "字符串常用操作",
+      "start": "13:34",
+      "end": "14:05",
+      "seconds": 30.9,
+      "chars": 163
+    },
+    {
+      "page": 23,
+      "title": "列表与二维列表",
+      "start": "14:05",
+      "end": "14:51",
+      "seconds": 45.9,
+      "chars": 237
+    },
+    {
+      "page": 24,
+      "title": "两道语法练习",
+      "start": "14:51",
+      "end": "15:53",
+      "seconds": 62.5,
+      "chars": 331
+    },
+    {
+      "page": 25,
+      "title": "上机实践任务",
+      "start": "15:53",
+      "end": "16:37",
+      "seconds": 43.2,
+      "chars": 256
+    },
+    {
+      "page": 26,
+      "title": "本周作业",
+      "start": "16:37",
+      "end": "17:26",
+      "seconds": 49.1,
+      "chars": 254
+    },
+    {
+      "page": 27,
+      "title": "小结",
+      "start": "17:26",
+      "end": "18:04",
+      "seconds": 38.6,
+      "chars": 201
+    },
+    {
+      "page": 28,
+      "title": "下周预告",
+      "start": "18:04",
+      "end": "18:31",
+      "seconds": 26.4,
+      "chars": 132
+    }
+  ]
+}

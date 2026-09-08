@@ -1,0 +1,265 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "16:46",
+  "source_pptx_sha256": "9a2bd30b2df6058abec1d54d9f95914163fb65802d0ccb475dedaa71e0c61d54",
+  "source_script_sha256": "4b898eb8b7398ccd1d104930474d34ee5193724c540865a1aca201620f6b4398",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:31",
+      "seconds": 31.2,
+      "chars": 167
+    },
+    {
+      "page": 2,
+      "title": "本讲内容",
+      "start": "00:31",
+      "end": "01:13",
+      "seconds": 41.8,
+      "chars": 215
+    },
+    {
+      "page": 3,
+      "title": "第 1 节　课程概述",
+      "start": "01:13",
+      "end": "01:17",
+      "seconds": 4.4,
+      "chars": 14
+    },
+    {
+      "page": 4,
+      "title": "这门课教什么",
+      "start": "01:17",
+      "end": "01:53",
+      "seconds": 36.1,
+      "chars": 176
+    },
+    {
+      "page": 5,
+      "title": "完成课程后你应当能够",
+      "start": "01:53",
+      "end": "02:38",
+      "seconds": 44.7,
+      "chars": 233
+    },
+    {
+      "page": 6,
+      "title": "十六周的节奏",
+      "start": "02:38",
+      "end": "03:23",
+      "seconds": 45.2,
+      "chars": 222
+    },
+    {
+      "page": 7,
+      "title": "时间投入是硬约束",
+      "start": "03:23",
+      "end": "03:44",
+      "seconds": 21.2,
+      "chars": 103
+    },
+    {
+      "page": 8,
+      "title": "这门课唯一的失败模式",
+      "start": "03:44",
+      "end": "04:39",
+      "seconds": 54.5,
+      "chars": 268
+    },
+    {
+      "page": 9,
+      "title": "第 2 节　三个学习平台",
+      "start": "04:39",
+      "end": "04:43",
+      "seconds": 4.0,
+      "chars": 11
+    },
+    {
+      "page": 10,
+      "title": "各司其职",
+      "start": "04:43",
+      "end": "05:18",
+      "seconds": 35.4,
+      "chars": 201
+    },
+    {
+      "page": 11,
+      "title": "OpenJudge 使用要点",
+      "start": "05:18",
+      "end": "05:58",
+      "seconds": 39.4,
+      "chars": 226
+    },
+    {
+      "page": 12,
+      "title": "第 3 节　课前准备",
+      "start": "05:58",
+      "end": "06:06",
+      "seconds": 8.5,
+      "chars": 35
+    },
+    {
+      "page": 13,
+      "title": "开发环境",
+      "start": "06:06",
+      "end": "06:34",
+      "seconds": 27.8,
+      "chars": 158
+    },
+    {
+      "page": 14,
+      "title": "新电脑的两件事",
+      "start": "06:34",
+      "end": "07:20",
+      "seconds": 46.3,
+      "chars": 220
+    },
+    {
+      "page": 15,
+      "title": "准备清单",
+      "start": "07:20",
+      "end": "07:56",
+      "seconds": 35.9,
+      "chars": 212
+    },
+    {
+      "page": 16,
+      "title": "第 4 节　AI 基础：把 AI 当工具，不当替身",
+      "start": "07:56",
+      "end": "08:05",
+      "seconds": 8.6,
+      "chars": 37
+    },
+    {
+      "page": 17,
+      "title": "四个概念层层包含",
+      "start": "08:05",
+      "end": "08:47",
+      "seconds": 42.6,
+      "chars": 201
+    },
+    {
+      "page": 18,
+      "title": "大模型：擅长什么，不可靠在哪",
+      "start": "08:47",
+      "end": "09:22",
+      "seconds": 35.0,
+      "chars": 172
+    },
+    {
+      "page": 19,
+      "title": "LLM 的训练目标",
+      "start": "09:22",
+      "end": "09:49",
+      "seconds": 26.2,
+      "chars": 129
+    },
+    {
+      "page": 20,
+      "title": "AI 的三个可以、三个不可以",
+      "start": "09:49",
+      "end": "10:25",
+      "seconds": 36.2,
+      "chars": 190
+    },
+    {
+      "page": 21,
+      "title": "红线（第 1 周就生效）",
+      "start": "10:25",
+      "end": "10:48",
+      "seconds": 23.1,
+      "chars": 112
+    },
+    {
+      "page": 22,
+      "title": "一个自检问题",
+      "start": "10:48",
+      "end": "11:12",
+      "seconds": 24.1,
+      "chars": 119
+    },
+    {
+      "page": 23,
+      "title": "第 5 节　第一个 Python 程序",
+      "start": "11:12",
+      "end": "11:20",
+      "seconds": 7.5,
+      "chars": 34
+    },
+    {
+      "page": 24,
+      "title": "输入的三种基本形态",
+      "start": "11:20",
+      "end": "12:01",
+      "seconds": 41.9,
+      "chars": 236
+    },
+    {
+      "page": 25,
+      "title": "初学者第一大坑：忘了 int",
+      "start": "12:01",
+      "end": "12:36",
+      "seconds": 35.0,
+      "chars": 180
+    },
+    {
+      "page": 26,
+      "title": "输出的格式控制",
+      "start": "12:36",
+      "end": "13:13",
+      "seconds": 36.7,
+      "chars": 193
+    },
+    {
+      "page": 27,
+      "title": "E 零二七五零：鸡兔同笼",
+      "start": "13:13",
+      "end": "14:05",
+      "seconds": 52.3,
+      "chars": 252
+    },
+    {
+      "page": 28,
+      "title": "E 零二七三三：判断闰年",
+      "start": "14:05",
+      "end": "14:41",
+      "seconds": 36.1,
+      "chars": 186
+    },
+    {
+      "page": 29,
+      "title": "本周最重要的一课",
+      "start": "14:41",
+      "end": "14:57",
+      "seconds": 15.6,
+      "chars": 70
+    },
+    {
+      "page": 30,
+      "title": "本周作业",
+      "start": "14:57",
+      "end": "15:50",
+      "seconds": 52.7,
+      "chars": 271
+    },
+    {
+      "page": 31,
+      "title": "小结",
+      "start": "15:50",
+      "end": "16:27",
+      "seconds": 36.8,
+      "chars": 181
+    },
+    {
+      "page": 32,
+      "title": "下周预告",
+      "start": "16:27",
+      "end": "16:46",
+      "seconds": 19.9,
+      "chars": 109
+    }
+  ]
+}
