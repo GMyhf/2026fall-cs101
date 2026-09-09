@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-09-05 23:25 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-09-10 00:19 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -14,6 +14,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
+| 0910 | M2126.摧毁小行星     | greedy      | Medium | https://leetcode.cn/problems/destroying-asteroids/          |
 | 0909 | E02733: 判断闰年     | implementation  | easy | http://cs101.openjudge.cn/pctbook/E02733/         |
 | 0908 | E04138:质数的和与积  | implementation  | easy | http://cs101.openjudge.cn/pctbook/E04138/          |
 | 0907 | M763.划分字母区间    | greedy,hash table, two pointers | Medium | https://leetcode.cn/problems/partition-labels/         |
