@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-09-10 00:19 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-09-11 22:40 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -14,6 +14,11 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
+|  |       |       | - |          |
+| 0915 | 231A. Team          | bruteforce, greedy     | 800  | http://codeforces.com/problemset/problem/231/A   |
+| 0914 | 112A. Petya and Strings        | implementation, strings              | 800  | http://codeforces.com/problemset/problem/112/A   |
+| 0913 | 158A. Next Round    | *special problem, implementation  | 800 | http://codeforces.com/problemset/problem/158/A          |
+| 0912 | 200B. Drinks    | implementation, math | 800 | https://codeforces.com/problemset/problem/200/B                                        |
 | 0911 | E07618: 病人排队     | sortings    | Easy | http://cs101.openjudge.cn/pctbook/E07618         |
 | 0910 | M2126.摧毁小行星     | greedy      | Medium | https://leetcode.cn/problems/destroying-asteroids/          |
 | 0909 | E02733: 判断闰年     | implementation  | easy | http://cs101.openjudge.cn/pctbook/E02733/         |
