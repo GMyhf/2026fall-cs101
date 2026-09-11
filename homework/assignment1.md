@@ -149,7 +149,7 @@ bruteforce, greedy, 800, http://codeforces.com/problemset/problem/231/A
 
 ## 2. 学习总结和收获
 
-<mark>如果作业题目简单，有否额外练习题目，比如：OJ“计概2025fall每日选做”、CF、LeetCode、洛谷等网站题目。</mark>
+<mark>如果作业题目简单，有否额外练习题目，比如：OJ“计概2026fall每日选做”、CF、LeetCode、洛谷等网站题目。</mark>
 
 
 
