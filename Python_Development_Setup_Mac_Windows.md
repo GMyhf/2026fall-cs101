@@ -279,6 +279,12 @@ where.exe python
 
 > 注意：在 PowerShell 里要写 `where.exe`，只写 `where` 会被当成别的命令。
 
+输出可能有多行，**第一行**才是实际使用的 `python`，应该是上面 Python 官方安装的路径。
+
+> 如果为了写 C++ 装过 MSYS2，它的 `C:\msys64\ucrt64\bin` 目录里也有一个 `python.exe`。如果第一行显示的是这个路径，就要在“环境变量”的 `Path` 编辑窗口里，把 Python 的两条路径**上移**到 MSYS2 路径之前。
+>
+> 如果还有一行 `...\Microsoft\WindowsApps\python.exe`，那是应用执行别名，只要不是第一行就不影响。
+
 
 
 ## 3. 创建虚拟环境

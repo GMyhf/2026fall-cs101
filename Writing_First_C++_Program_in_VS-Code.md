@@ -321,7 +321,7 @@ Current executable set to '/Users/你的用户名/MyCpp/leap' (arm64).
      (lldb) step
      ```
 
-     > 初学时建议只用 `next`。`step` 在调用你自己写的函数时才有用。macOS 自带的标准库没有调试信息，在 `cout` 行上 `step` 通常和 `next` 效果一样；Windows 的 gdb 则可能进入标准库头文件的源码，看起来很乱，这时用 `finish` 跳出来。
+     > 初学时建议只用 `next`。`step` 在调用你自己写的函数时才有用：它会进入函数内部，看完用 `finish` 跳出来。在 `cout`、`cin` 这样的行上，`step` 通常和 `next` 效果一样（实测 macOS 的 lldb 和 Windows MSYS2 的 gdb 都是如此）。
 
    - 跳出当前函数：
 
@@ -453,6 +453,8 @@ lldb ./leap
    > 在上半部分的 **用户变量** 里找到 `Path` -> 编辑 -> 新建 -> 粘贴上面的路径 -> 确定保存。（改“用户变量”不需要管理员权限）
    >
    > 关闭 VS Code，重新打开，让新 PATH 生效。
+   >
+   > ⚠️ 安装 gdb 时，MSYS2 会把它依赖的 Python 一起装进这个目录（`C:\msys64\ucrt64\bin\python.exe`）。如果你也装了官方 Python，请在 PowerShell 执行 `where.exe python`，确认**第一行**是 Python 官方安装的路径；如果第一行是 MSYS2 的路径，就在 `Path` 编辑窗口里把 Python 的路径上移到 MSYS2 路径之前。
 
 6. 检查是否安装成功
 
@@ -551,7 +553,9 @@ g++ -std=c++17 hello_world.cpp -o hello_world.exe
 > PS D:\MyCpp>
 > ```
 >
-> **用户名、临时目录或项目路径包含中文、空格、特殊符号，都可能导致这类 `g++` 编译错误。**
+> **用户名、临时目录或项目路径包含中文（非 ASCII 字符）时，会导致这类 `g++` 编译错误。**
+>
+> 实测（MSYS2 GCC 15.2）：临时目录含中文时，报上面的 `Fatal error: can't create ...`；用含中文的完整路径编译时，报 `ld.exe: cannot open output file ...: No such file or directory`。含空格的路径可以正常编译。
 >
 > 虽然现代操作系统和许多软件已经对 Unicode（包括中文）有了较好的支持，但部分 MinGW-w64 / GCC 工具链在处理包含非 ASCII 字符（如中文、空格、特殊符号）的路径时，仍然可能遇到兼容性问题。
 >
@@ -669,6 +673,8 @@ bye
 ```
 
 > 如果 MSYS2 没有装在默认的 `C:\msys64`，要把 `miDebuggerPath` 改成实际的 `gdb.exe` 路径（JSON 里的反斜杠要写成两个 `\\`）。
+>
+> 一键编译会把源文件的**完整路径**传给 `g++`，所以只要项目文件夹的路径里有中文，一键编译就会失败（报 `cannot open output file`）。请把项目放在纯英文路径下。
 
 4. 在编辑器中打开 `hello_world.cpp`，按：
 
@@ -709,7 +715,7 @@ Ctrl + Shift + B
 
 > Mac 笔记本上 `F5`、`F10` 等键可能需要同时按住 `fn`。
 >
-> 和命令行调试一样，初学时建议用 `F10`。在 `cout` 行上按 `F11` 可能进入标准库源码（Windows 上较常见），按 `Shift + F11` 可以跳出来。
+> 和命令行调试一样，初学时建议用 `F10`。`F11` 用于进入你自己写的函数，进去后按 `Shift + F11` 跳出来。
 
 
 
