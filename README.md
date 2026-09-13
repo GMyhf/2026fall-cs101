@@ -94,7 +94,7 @@ https://github.com/GMyhf/2026fall-cs101/
 - **零基础学习路径**
 
   1. 搭建编程环境（1–3天）：安装 Python，配置 VS Code 或 PyCharm。[配置指南](https://github.com/GMyhf/2026fall-cs101/blob/main/Python_Development_Setup_Mac_Windows.md)
-  2. 掌握基础语法（4–10天）：变量与数据类型、条件语句与循环结构、函数定义与使用、常用数据结构（列表、元组、字典、集合等）。建议结合动手练习，巩固理解。
+  2. 掌握基础语法（4–10天）：变量与数据类型、条件语句与循环结构、函数定义与使用、常用数据结构（列表、元组、字典、集合等）。建议结合动手练习，巩固理解。[零基础 30 道练手题](https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_30_easy_problems_for_beginners.md)
   3. 持续编程训练（11–100天）：刷 OpenJudge →  LeetCode Top 100 / Codeforces / 洛谷。
 
 - **开发工具建议**
