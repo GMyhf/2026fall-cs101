@@ -4,6 +4,8 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 题解，https://fuynaloft.github.io/sol101/ ✅
 
+零基础 30 道练手题，https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_30_easy_problems_for_beginners.md
+
 <!--
 |  |       |       | - |          |
 -->
