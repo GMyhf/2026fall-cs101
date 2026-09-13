@@ -119,11 +119,13 @@ python -m pip install -U pip ruff
 >
 > 如果不激活虚拟环境就直接 `pip3 install`，Homebrew 的 Python 会报 `externally-managed-environment` 错误。这是正常的保护机制，请在虚拟环境里安装包。
 
-**（可选）国内网络下载慢**：把 pip 默认源换成清华镜像（在已激活的虚拟环境中执行）：
+**（可选）国内网络下载慢**：把 pip 默认源换成清华镜像：
 
 ```bash
 python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+
+> 这条命令写入的是**当前用户**的 pip 配置文件 `~/.config/pip/pip.conf`，只需执行一次，之后新建的所有虚拟环境都会使用这个镜像。
 
 
 
@@ -309,6 +311,8 @@ python -m pip install --upgrade pip ruff
 ```powershell
 python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+
+> 这条命令写入的是**当前用户**的 pip 配置文件 `%APPDATA%\pip\pip.ini`，只需执行一次，之后新建的所有虚拟环境都会使用这个镜像。
 
 
 

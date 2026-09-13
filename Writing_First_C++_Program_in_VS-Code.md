@@ -273,6 +273,16 @@ Current executable set to '/Users/你的用户名/MyCpp/leap' (arm64).
 
 > Apple Silicon Mac 显示 `arm64`，Intel Mac 显示 `x86_64`。
 
+> **调试权限**：第一次调试时，macOS 会弹窗要求输入开机密码，允许“开发者工具”控制其他进程，点允许即可。
+>
+> 如果是通过 ssh 远程登录到 Mac 上调试，没有弹窗，运行时会报：
+>
+> ```
+> error: process exited with status -1 (this is a non-interactive debug session, cannot get permission to debug processes.)
+> ```
+>
+> 这时需要先在 Mac 本机的终端执行一次 `sudo DevToolsSecurity -enable`（需要输入密码）。
+
 ③ 常用调试命令
 
 1. **设置断点**（例如在 `main` 函数入口）：
@@ -280,6 +290,8 @@ Current executable set to '/Users/你的用户名/MyCpp/leap' (arm64).
    ```bash
    (lldb) break set -n main
    ```
+
+   > 输出 `Breakpoint 1: 46 locations.` 这类提示是正常的：系统库里也有很多名叫 `main` 的方法，都被算进去了，但程序只会停在你自己写的 `main` 里。想只匹配自己的程序，可以写成 `break set -n main -s leap`。
 
    或者指定行号（第 8 行是 `if` 判断）：
 
@@ -309,7 +321,7 @@ Current executable set to '/Users/你的用户名/MyCpp/leap' (arm64).
      (lldb) step
      ```
 
-     > 初学时建议只用 `next`。在 `cout`、`cin` 这样的行上用 `step`，会进入 C++ 标准库的源码，看起来很乱。如果不小心进去了，用 `finish` 跳出来。
+     > 初学时建议只用 `next`。`step` 在调用你自己写的函数时才有用。macOS 自带的标准库没有调试信息，在 `cout` 行上 `step` 通常和 `next` 效果一样；Windows 的 gdb 则可能进入标准库头文件的源码，看起来很乱，这时用 `finish` 跳出来。
 
    - 跳出当前函数：
 
@@ -359,9 +371,9 @@ lldb ./leap
 接下来：
 
 1. 输入 `next`，执行 `cin >> a;`。程序开始等待输入，直接在这个终端里输入 `2000` 并回车。
-2. 程序停在第 8 行 `if`。输入 `p a`，应该显示 `(int) 2000`。
+2. 程序停在第 8 行 `if`。输入 `p a`，应该显示 `(int) $0 = 2000`（`$0` 是 lldb 给结果编的序号，也可能是 `$1` 等）。
 3. 再输入 `next`，停在第 9 行 `cout << "Y" << endl;`，说明条件成立，进入了 `if` 分支。
-4. 再输入 `next`，终端输出 `Y`。
+4. 再输入 `next`，终端输出 `Y`，程序停在第 10 行 `} else {`。这里并不是进入了 `else`，只是 `if` 分支结束的位置，不用担心。
 5. 输入 `continue` 让程序运行结束，最后输入 `quit` 退出 lldb。
 
 你就能一步步看到程序的执行流程。可以换成 `1900` 再调试一次，观察程序走进 `else` 分支。
@@ -697,7 +709,7 @@ Ctrl + Shift + B
 
 > Mac 笔记本上 `F5`、`F10` 等键可能需要同时按住 `fn`。
 >
-> 和 lldb 一样，初学时建议用 `F10`；在 `cout` 行上按 `F11` 会进入标准库源码，按 `Shift + F11` 可以跳出来。
+> 和命令行调试一样，初学时建议用 `F10`。在 `cout` 行上按 `F11` 可能进入标准库源码（Windows 上较常见），按 `Shift + F11` 可以跳出来。
 
 
 
@@ -765,6 +777,8 @@ fatal error: 'bits/stdc++.h' file not found
 ```
 
 Windows 上的 MSYS2 g++ 可以直接使用 `bits/stdc++.h`。
+
+> 有些 Mac 上能编译通过，是因为之前有人手动把 `bits/stdc++.h` 复制进了系统头文件目录，并不是 clang 自带的。写代码时不要依赖它。
 
 ## 6. Windows 上输出中文是乱码
 
