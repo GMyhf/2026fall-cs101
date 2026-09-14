@@ -15,9 +15,11 @@
   ("two",     标题, 左标题, [左条目...], 右标题, [右条目...])
   ("key",     标题, 要点正文)               整页强调一句话
   ("ascii",   标题, 等宽示意图, 说明)
+  ("image",   标题, 图片路径, [步骤...], 说明)  路径相对 courseware/；有步骤时图左文右
 """
 
 import math
+import os
 import re
 
 from pptx import Presentation
@@ -470,6 +472,47 @@ def _add_two(prs, title, lhead, litems, rhead, ritems):
     return slide
 
 
+def _add_image(prs, title, image, steps=(), caption=''):
+    """截图页：图片等比缩放进版心；有步骤时图占左半，右侧是编号步骤。"""
+    slide = _blank(prs)
+    _slide_header(slide, title)
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), image)
+    cap_h = Inches(0.46) if caption else Inches(0)
+    avail_h = BODY_H - cap_h - Inches(0.1)
+    gap = Inches(0.5)
+    col_w = int(BODY_W * 0.5) if steps else BODY_W
+
+    pic = slide.shapes.add_picture(path, MARGIN, BODY_TOP)
+    ratio = min(col_w / pic.width, avail_h / pic.height)
+    pic.width, pic.height = int(pic.width * ratio), int(pic.height * ratio)
+    pic.left = MARGIN + (col_w - pic.width) // 2
+    pic.top = BODY_TOP + (avail_h - pic.height) // 2
+    pic.line.color.rgb = RULE
+    pic.line.width = Pt(0.75)
+
+    if steps:
+        left = MARGIN + col_w + gap
+        width = BODY_W - col_w - gap
+        size = _fit_size([('00 ' + s, 1.0) for s in steps], width / 12700.0,
+                         avail_h / 12700.0 * 0.85, hi=19, lo=12,
+                         line_spacing=1.3, gap_ratio=1.4)
+        _, tf = _textbox(slide, left, BODY_TOP, width, avail_h)
+        tf.vertical_anchor = MSO_ANCHOR.MIDDLE
+        for i, text in enumerate(steps, start=1):
+            p = tf.paragraphs[0] if i == 1 else tf.add_paragraph()
+            p.space_after = Pt(size * 1.4)
+            p.line_spacing = 1.3
+            num = p.add_run()
+            num.text = f'{i}  '
+            _style_run(num, size, bold=True, color=ACCENT)
+            _add_runs(p, text, size, False, INK, False)
+    if caption:
+        _, tf2 = _textbox(slide, MARGIN, BODY_TOP + BODY_H - Inches(0.36),
+                          BODY_W, Inches(0.36))
+        _para(tf2, caption, 13, color=MUTED, first=True, space_after=0)
+    return slide
+
+
 def _add_key(prs, title, text):
     slide = _blank(prs)
     _slide_header(slide, title)
@@ -496,6 +539,9 @@ _BUILDERS = {
                                        s[3] if len(s) > 3 else ''),
     'two': lambda prs, s: _add_two(prs, s[1], s[2], s[3], s[4], s[5]),
     'key': lambda prs, s: _add_key(prs, s[1], s[2]),
+    'image': lambda prs, s: _add_image(prs, s[1], s[2],
+                                       s[3] if len(s) > 3 else (),
+                                       s[4] if len(s) > 4 else ''),
 }
 
 

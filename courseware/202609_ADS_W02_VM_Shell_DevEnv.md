@@ -1,13 +1,13 @@
 # 第2周 虚拟机、Shell 与开发环境
 
-*Updated 2026-08-31 GMT+8*
+*Updated 2026-09-14 GMT+8*
  *Compiled by Hongfei Yan (2026 Fall)*
 https://github.com/GMyhf/2026fall-cs101
 
 > **课程安排对应**：第 2 周
 > **主题与学习重点**：虚拟机、Shell 与开发环境；开始编程语法练习。
 
-**知识点**：三大操作系统对比、虚拟化与虚拟机、云主机的创建与 SSH 连接、交换分区、Linux 目录树、Shell 常用命令、文件权限、重定向与管道、Python 虚拟环境、变量与数据类型、分支与循环、字符串与列表的基本操作。
+**知识点**：三大操作系统对比、虚拟化与虚拟机、云主机的创建与 SSH 连接、交换分区、xLab 课程实验环境（SSH 公钥、节点、VS Code Remote-SSH）、Linux 目录树、Shell 常用命令、文件权限、重定向与管道、Python 虚拟环境（uv）、变量与数据类型、分支与循环、字符串与列表的基本操作、零基础 30 道练手题。
 
 ---
 
@@ -104,6 +104,125 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ```
 
 > swap 在磁盘上，比内存慢几个数量级。它防的是"崩溃"，不是"变慢"。
+
+## 2.5 xLab：本地连接课程实验环境
+
+课程在 [xLab](https://xlab.pku.edu.cn/) 上为每位同学提供 Linux 节点，本机通过 SSH 连接、用本地 VS Code 编辑远程代码。
+
+| 工具 | 在哪里打开 | 用来做什么 |
+| ---- | ---- | ---- |
+| 本机终端 | Windows：PowerShell；macOS：终端 Terminal | 输入命令、查看输出 |
+| SSH 客户端 | 在本机终端执行 `ssh` | 验证身份，连接远程节点 |
+| VS Code + Remote-SSH 扩展 | 在自己的电脑上打开 | 通过 SSH 编辑远程项目 |
+
+> 连接前：命令在本机执行。连接后：命令在远程节点执行，代码也保存在节点上。
+> 课前安装：VS Code、Remote-SSH 扩展、SSH 客户端。
+
+### 2.5.1 在本机生成 SSH 密钥
+
+```bash
+ssh -V                       # 确认本机有 SSH 客户端
+ssh-keygen -t ed25519        # 默认路径按 Enter；若提示 Overwrite 输入 n；口令直接回车两次
+cat ~/.ssh/id_ed25519.pub    # 读取公钥，复制输出的一整行
+```
+
+| 文件 | 放在哪里 | 作用 |
+| ---- | ---- | ---- |
+| `~/.ssh/id_ed25519` | 留在自己的电脑 | 私钥，用于证明身份，**不要上传或发给别人** |
+| `~/.ssh/id_ed25519.pub` | 公钥内容添加到 xLab | 节点用它验证登录者 |
+
+校园统一认证登录 xLab 网站；SSH 公钥认证登录 Linux 节点。
+
+### 2.5.2 登录 xLab、添加公钥、新建节点
+
+1. 打开 xlab.pku.edu.cn，北京大学统一身份认证登录，在「我的节点」找到「计算概论B」。
+   看不到课程请向助教确认名单；xLab 和 autolab 都在校园网内，校外需先连北大 VPN。
+2. 右上角账户 → SSH 公钥：填写名称，粘贴 `cat` 输出的整行公钥，点击「添加公钥」。
+3. 新建节点：名称默认 `ic-b-yan-lab`，镜像选 `cs101-rc0-ubuntu`，规格保留默认、数据盘留空，勾选「立即启动」，等待「运行中」。账户里已添加的公钥会用于节点登录；已有节点的同学直接继续连接。
+
+![登录 xLab](assets/w02/xlab-login.png)
+![添加公钥](assets/w02/xlab-pubkey.png)
+![新建节点](assets/w02/xlab-new-node.png)
+
+节点卡片是本地连接的入口：复制卡片上的 SSH 命令粘贴到本机终端；装好 Remote-SSH 后可以点「打开 VS Code」。
+
+![节点卡片](assets/w02/xlab-node-card.png)
+
+### 2.5.3 从本机终端 SSH 登录
+
+```bash
+ssh -p <你的端口> <你的用户名>@<课程IP>   # 尖括号是说明字段，直接复制自己卡片中的命令
+```
+
+| 首次连接时可能看到 | 如何处理 |
+| ---- | ---- |
+| `Are you sure ...?` | 输入 `yes`，按 Enter 继续 |
+| `Enter passphrase ...` | 输入自己给私钥设置的口令（默认没有设置） |
+| 出现远程命令提示符 | 连接成功，可以开始输入 Linux 命令 |
+
+```bash
+whoami                                 # 当前用户
+pwd                                    # 当前目录
+uname -m                               # CPU 架构
+mkdir -p ~/ic-b-2026/xlab-intro-demo
+cd ~/ic-b-2026/xlab-intro-demo
+ls
+exit                                   # 退出 SSH，回到本机终端
+```
+
+### 2.5.4 本地 VS Code 连接同一个节点
+
+1. 本机安装 VS Code 和 Microsoft 的 **Remote-SSH** 扩展。
+2. F1 → `Remote-SSH: Add New SSH Host...`，粘贴刚才成功的完整 ssh 命令，保存到自己的 SSH 配置文件。
+3. F1 → `Remote-SSH: Connect to Host...`，选择刚添加的主机；询问远端系统时选 Linux。
+4. `File > Open Folder` 打开远程练习目录 `/home/<你的用户名>/ic-b-2026/xlab-intro-demo`。
+5. 以后可在节点卡片直接点「打开 VS Code」；卡片「目录」→「更改…」→ 进入练习目录 →「在此打开」，节点会记住选定的目录。
+
+> 网页终端、「在浏览器打开 VS Code」可作临时替代，与本地连接访问同一节点、同一项目。
+
+在 Explorer 中新建 `hello.c` 并保存（Ctrl+S / Cmd+S）：
+
+```c
+#include <stdio.h>
+
+int main(void) {
+    printf("Hello, cs101!\n");
+    return 0;
+}
+```
+
+菜单 Terminal > New Terminal，在远程终端编译运行，预期输出 `Hello, cs101!`：
+
+```bash
+gcc -Wall -Wextra hello.c -o hello
+./hello
+```
+
+修改问候语后保存、重新编译、再运行一次，观察输出变化。
+
+### 2.5.5 保存与排错
+
+| 位置 / 操作 | 记住什么 |
+| ---- | ---- |
+| `~/ic-b-2026` | 保存个人代码，重置节点后保留 |
+| `/lec` 与 `/lec/submit` | 课程资料与个人收集目录，提交按课程要求 |
+| `exit` / 关闭远程连接 | 结束连接，已保存的文件仍在 |
+| 停止 / 重置节点 | 停止会终止进程，重置会恢复系统盘 |
+
+> ⚠️ 平台没有用户备份和快照，重要代码自己另存副本。
+
+先排 SSH，再排 VS Code：
+
+| 现象 | 优先检查 |
+| ---- | ---- |
+| 找不到 ssh 命令 | 本机是否安装 SSH 客户端 |
+| `Connection timed out` | 校园网络 / VPN、自己的 IP / 端口、节点状态 |
+| `Permission denied (publickey)` | 用户名、公钥是否同步、是否使用对应私钥 |
+| 主机密钥变化警告 | 先向助教核实，不直接关闭主机校验 |
+| SSH 成功，VS Code 失败 | Remote-SSH 扩展、输出日志、Server 安装 |
+
+使用非默认密钥时，在连接命令中指定实际私钥路径：`ssh -i <私钥路径> -p <端口> <用户名>@<课程IP>`。
+求助时提供：完整命令、错误文本、当前处于本机还是远程。
 
 ---
 
@@ -369,17 +488,58 @@ print(nums.count(10))
 > 注意 `list.count()` 是 O(n)，这里调用三次共 O(3n)，n 很小无所谓。
 > **但如果要统计的值有很多种，就该用字典一次扫完**——第 4 周讲复杂度时会回到这一点。
 
+## 5.8 零基础入门：30 道练手题
+
+完整题单与选题原则见 [零基础 Python 入门：30 道练手题](../ADS_30_easy_problems_for_beginners.md)，题解：https://fuynaloft.github.io/sol101/
+
+**入门方案**：
+
+1. **先学语法（几个小时）**：[菜鸟教程 Python3](https://www.runoob.com/python3/python3-tutorial.html)，按目录学到「函数」为止。重点：基础语法、数据类型、运算符、字符串、列表、条件控制、循环、函数。
+2. **再做 30 道题（边做边查）**：碰到不会的语法回教程查。**做题是为了补语法，不是为了学算法**。
+
+**选题原则**：只考语法不考算法；难度最低档（Codeforces 800~1000、OpenJudge / LeetCode Easy、洛谷入门）；题意短、数据小；一题对应一个语法点；OpenJudge、Codeforces 读标准输入，LeetCode 补全函数，两种写法都练到。
+
+| 关卡 | 语法点 | 题目 |
+| ---- | ---- | ---- |
+| 第 0 关 输入与输出 | `print`、`input().split()`、`map`、f-string | sy1 Hello Sunny Why!、P1001 A+B Problem、31183 一道题搞懂输入、31184 一道题搞懂输出 |
+| 第 1 关 运算与分支 | `if/else`、`%`、`//`、向上取整 | E02733 判断闰年、E02750 鸡兔同笼、4A Watermelon、50A Domino piling、1A Theatre Square、200B Drinks |
+| 第 2 关 循环 | `for/while`、`range`、计数、`is_prime` 函数 | sy875 逃离魔法塔底、E02676 整数的个数、231A Team、158A Next Round、E01003 Hangover、E04138 质数的和与积、E03143 验证“歌德巴赫猜想” |
+| 第 3 关 字符串与模拟 | `lower()`、`swapcase()`、双重循环、`bin()` | 112A Petya and Strings、E02689 大小写字母互换、E01218 THE DRUNK JAILER、E191 位1的个数 |
+| 第 4 关 列表 | 下标、倒序遍历、拆数位、`in` 判断 | 263A Beautiful Matrix、E66 加一、E3622 判断整除性、E3718 缺失的最小倍数、1 两数之和、E35 搜索插入位置 |
+| 第 5 关 排序 | `sort()`、`sorted(key=...)`、字典映射 | 34B Sale、E07618 病人排队、E1331 数组序号转换 |
+
+做完 30 题后可以挑战：31185 一道题搞懂内置排序函数、31180 学生数据统计分析、E18161 矩阵运算。
+
+**先把输入模板写熟**——零基础同学最常见的错误是读错输入，不是算法写错：
+
+```python
+n = int(input())                       # 一行一个整数
+a, b = map(int, input().split())       # 一行两个整数
+nums = list(map(int, input().split())) # 一行多个整数
+s = input().strip()                    # 一行字符串
+```
+
+**做题建议**：
+
+1. **分清两种题型**：OpenJudge / Codeforces 自己 `input()` 和 `print()`；LeetCode 只补全 `class Solution` 里的函数，用 `return` 返回，**不要写 `input()`**。
+2. **看懂评测结果**：`WA` 检查边界和输出格式；`RE` 多半是下标越界或类型没转换；`TLE` 在这 30 题里基本不会碰到，碰到了说明循环写错了。
+3. **卡住 20~30 分钟再看题解**，看懂后**关掉题解自己重写一遍**，直到 AC。
+4. **把 AI 当老师，不当代笔**：让它解释报错、讲语法点、帮你找 bug，别让它直接写完整代码。机考时没有 AI。
+5. **先写能跑的代码**，AC 后再学更简洁的写法；每题记一行笔记，30 题下来就是自己的语法速查表。
+6. **节奏**：每天 3~5 题，一到两周做完。
+
 ---
 
 # 6 上机实践
 
-**任务**：在云主机（或本地虚拟机）上完成以下流程，截图提交。
+**任务**：在 xLab 节点与本机上完成以下流程，截图提交。
 
-1. 创建 / 连接一台 Linux 主机，`uname -a` 查看内核版本；
-2. 建立目录 `~/cs101/week02`，在其中写一个 `sum.py`，从标准输入读两个整数并输出和；
-3. 用 `echo "3 4" > in.txt` 造数据，用 `python3 sum.py < in.txt > out.txt` 运行，`cat out.txt` 查看结果；
-4. `chmod +x` 一个 shell 脚本并运行它；
-5. 创建 Python 虚拟环境并安装一个包。
+1. 在 xLab 添加公钥、新建节点，本机 `ssh` 登录后 `uname -a` 查看内核版本；
+2. 用本地 VS Code Remote-SSH 打开 `~/ic-b-2026/xlab-intro-demo`，编译运行 `hello.c`；
+3. 建立目录 `~/ic-b-2026/week02`，在其中写一个 `sum.py`，从标准输入读两个整数并输出和；
+4. 用 `echo "3 4" > in.txt` 造数据，用 `python3 sum.py < in.txt > out.txt` 运行，`cat out.txt` 查看结果；
+5. `chmod +x` 一个 shell 脚本并运行它；
+6. 在本机用 uv 新建项目，`uv add` 一个包并 `uv run` 运行。
 
 ---
 
@@ -407,9 +567,10 @@ print(nums.count(10))
 # 8 小结
 
 1. 虚拟机 = 完整的模拟计算机；容器 = 共享内核的轻量隔离。评测机是 Linux，所以要懂一点。
-2. Shell 的核心是**路径、权限、重定向、管道**四件事；`python3 a.py < in.txt` 是本课最常用的一条命令。
-3. `rm -rf` 不可恢复；虚拟环境把项目依赖隔离开。
-4. Python 语法三大坑：**忘 `int()`**、**Tab/空格混用**、**`[[0]*n]*m` 的别名陷阱**。
-5. 读输入一律 `.strip()`。
+2. xLab：私钥留本机、公钥加到平台；`ssh` 与 VS Code Remote-SSH 连的是同一个节点，重要代码自己备份。
+3. Shell 的核心是**路径、权限、重定向、管道**四件事；`python3 a.py < in.txt` 是本课最常用的一条命令。
+4. `rm -rf` 不可恢复；虚拟环境把项目依赖隔离开，用 uv 管理。
+5. Python 语法三大坑：**忘 `int()`**、**Tab/空格混用**、**`[[0]*n]*m` 的别名陷阱**。
+6. 读输入一律 `.strip()`；零基础先按 30 道练手题的顺序补语法。
 
 **下周预告**：往下再挖一层——**计算机原理（1/2）**：从图灵机、冯·诺依曼结构到二进制与 ASCII，回答"计算机到底在算什么"。

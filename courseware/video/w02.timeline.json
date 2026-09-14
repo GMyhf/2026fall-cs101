@@ -1,233 +1,369 @@
 {
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
-  "total": "18:31",
-  "source_pptx_sha256": "fe6741b44654206eae78d51d444d72909a17a93d6f8ac20d73e2849e6559f923",
-  "source_script_sha256": "ade08d9b69473c5045d185817d3d052658f564c52671e3b526e8faa49263b296",
+  "total": "32:41",
+  "source_pptx_sha256": "dc8db30a3c40169eb4d4bf048dc70163ceac5f0ffe4226b4cfaac33f3421e366",
+  "source_script_sha256": "191b07ece8f482f14a0f1d5e3b26620f1bdd4fb17297fc53ac528363a6dd42b7",
   "sections": [
     {
       "page": 1,
       "title": "封面",
       "start": "00:00",
-      "end": "00:26",
-      "seconds": 26.1,
-      "chars": 138
+      "end": "00:32",
+      "seconds": 31.8,
+      "chars": 172
     },
     {
       "page": 2,
       "title": "为什么计概课要讲操作系统和 Shell",
-      "start": "00:26",
-      "end": "01:12",
+      "start": "00:32",
+      "end": "01:17",
       "seconds": 45.5,
       "chars": 229
     },
     {
       "page": 3,
       "title": "第 1 节　操作系统与虚拟化",
-      "start": "01:12",
-      "end": "01:16",
+      "start": "01:17",
+      "end": "01:22",
       "seconds": 4.4,
       "chars": 13
     },
     {
       "page": 4,
       "title": "三大操作系统",
-      "start": "01:16",
-      "end": "02:19",
+      "start": "01:22",
+      "end": "02:25",
       "seconds": 62.8,
       "chars": 407
     },
     {
       "page": 5,
       "title": "虚拟机的层次",
-      "start": "02:19",
-      "end": "03:00",
+      "start": "02:25",
+      "end": "03:05",
       "seconds": 40.7,
       "chars": 218
     },
     {
       "page": 6,
       "title": "虚拟机与容器的区别",
-      "start": "03:00",
-      "end": "03:31",
+      "start": "03:05",
+      "end": "03:37",
       "seconds": 31.9,
       "chars": 161
     },
     {
       "page": 7,
       "title": "云主机：连接与首次配置",
-      "start": "03:31",
-      "end": "04:31",
-      "seconds": 59.8,
-      "chars": 322
+      "start": "03:37",
+      "end": "04:42",
+      "seconds": 64.4,
+      "chars": 346
     },
     {
       "page": 8,
       "title": "交换分区：内存不够时的救命稻草",
-      "start": "04:31",
-      "end": "05:18",
+      "start": "04:42",
+      "end": "05:28",
       "seconds": 46.8,
       "chars": 259
     },
     {
       "page": 9,
-      "title": "第 2 节　Linux Shell",
-      "start": "05:18",
-      "end": "05:26",
-      "seconds": 8.5,
-      "chars": 39
+      "title": "第 2 节　xLab：本地连接课程实验环境",
+      "start": "05:28",
+      "end": "05:46",
+      "seconds": 18.1,
+      "chars": 83
     },
     {
       "page": 10,
+      "title": "xLab：本机、终端、SSH 与 VS Code",
+      "start": "05:46",
+      "end": "06:30",
+      "seconds": 43.4,
+      "chars": 246
+    },
+    {
+      "page": 11,
+      "title": "公钥登录：在本机生成并读取 SSH 密钥",
+      "start": "06:30",
+      "end": "07:31",
+      "seconds": 61.3,
+      "chars": 326
+    },
+    {
+      "page": 12,
+      "title": "登录 xLab，找到课程",
+      "start": "07:31",
+      "end": "07:55",
+      "seconds": 24.1,
+      "chars": 131
+    },
+    {
+      "page": 13,
+      "title": "把本机公钥添加到 xLab",
+      "start": "07:55",
+      "end": "08:21",
+      "seconds": 25.5,
+      "chars": 131
+    },
+    {
+      "page": 14,
+      "title": "新建课程节点",
+      "start": "08:21",
+      "end": "08:49",
+      "seconds": 28.0,
+      "chars": 139
+    },
+    {
+      "page": 15,
+      "title": "节点卡片：本地连接入口",
+      "start": "08:49",
+      "end": "09:16",
+      "seconds": 27.4,
+      "chars": 147
+    },
+    {
+      "page": 16,
+      "title": "从本机终端 SSH 登录节点",
+      "start": "09:16",
+      "end": "10:06",
+      "seconds": 49.8,
+      "chars": 277
+    },
+    {
+      "page": 17,
+      "title": "本地 VS Code：Remote-SSH 连接同一个节点",
+      "start": "10:06",
+      "end": "11:07",
+      "seconds": 61.4,
+      "chars": 363
+    },
+    {
+      "page": 18,
+      "title": "在远程节点编辑并运行 hello.c",
+      "start": "11:07",
+      "end": "11:58",
+      "seconds": 50.3,
+      "chars": 300
+    },
+    {
+      "page": 19,
+      "title": "保存文件，下次继续连接",
+      "start": "11:58",
+      "end": "12:41",
+      "seconds": 43.5,
+      "chars": 231
+    },
+    {
+      "page": 20,
+      "title": "排错：先排 SSH，再排 VS Code",
+      "start": "12:41",
+      "end": "13:37",
+      "seconds": 56.0,
+      "chars": 295
+    },
+    {
+      "page": 21,
+      "title": "第 3 节　Linux Shell",
+      "start": "13:37",
+      "end": "13:47",
+      "seconds": 9.8,
+      "chars": 49
+    },
+    {
+      "page": 22,
       "title": "目录树与路径",
-      "start": "05:26",
-      "end": "06:09",
+      "start": "13:47",
+      "end": "14:30",
       "seconds": 42.9,
       "chars": 235
     },
     {
-      "page": 11,
+      "page": 23,
       "title": "必会命令（上）",
-      "start": "06:09",
-      "end": "07:09",
+      "start": "14:30",
+      "end": "15:29",
       "seconds": 59.1,
       "chars": 315
     },
     {
-      "page": 12,
+      "page": 24,
       "title": "必会命令（下）",
-      "start": "07:09",
-      "end": "07:58",
+      "start": "15:29",
+      "end": "16:19",
       "seconds": 49.7,
       "chars": 265
     },
     {
-      "page": 13,
+      "page": 25,
       "title": "文件权限",
-      "start": "07:58",
-      "end": "08:41",
+      "start": "16:19",
+      "end": "17:02",
       "seconds": 43.1,
       "chars": 208
     },
     {
-      "page": 14,
+      "page": 26,
       "title": "重定向与管道",
-      "start": "08:41",
-      "end": "09:39",
+      "start": "17:02",
+      "end": "17:59",
       "seconds": 57.6,
       "chars": 287
     },
     {
-      "page": 15,
+      "page": 27,
       "title": "快捷键",
-      "start": "09:39",
-      "end": "10:16",
+      "start": "17:59",
+      "end": "18:36",
       "seconds": 36.9,
       "chars": 199
     },
     {
-      "page": 16,
-      "title": "第 3 节　开发环境",
-      "start": "10:16",
-      "end": "10:19",
+      "page": 28,
+      "title": "第 4 节　开发环境",
+      "start": "18:36",
+      "end": "18:40",
       "seconds": 3.7,
       "chars": 9
     },
     {
-      "page": 17,
-      "title": "Python 虚拟环境",
-      "start": "10:19",
-      "end": "11:06",
-      "seconds": 46.9,
-      "chars": 335
+      "page": 29,
+      "title": "Python 虚拟环境（uv）",
+      "start": "18:40",
+      "end": "19:49",
+      "seconds": 68.6,
+      "chars": 470
     },
     {
-      "page": 18,
+      "page": 30,
       "title": "PyCharm 的两个必用功能",
-      "start": "11:06",
-      "end": "11:56",
+      "start": "19:49",
+      "end": "20:39",
       "seconds": 50.1,
       "chars": 278
     },
     {
-      "page": 19,
-      "title": "第 4 节　编程语法练习",
-      "start": "11:56",
-      "end": "12:05",
-      "seconds": 8.2,
+      "page": 31,
+      "title": "第 5 节　编程语法练习",
+      "start": "20:39",
+      "end": "20:47",
+      "seconds": 8.0,
       "chars": 30
     },
     {
-      "page": 20,
+      "page": 32,
       "title": "变量与基本类型",
-      "start": "12:05",
-      "end": "12:45",
+      "start": "20:47",
+      "end": "21:27",
       "seconds": 40.3,
       "chars": 224
     },
     {
-      "page": 21,
+      "page": 33,
       "title": "分支与循环",
-      "start": "12:45",
-      "end": "13:34",
+      "start": "21:27",
+      "end": "22:16",
       "seconds": 49.3,
       "chars": 266
     },
     {
-      "page": 22,
+      "page": 34,
       "title": "字符串常用操作",
-      "start": "13:34",
-      "end": "14:05",
+      "start": "22:16",
+      "end": "22:47",
       "seconds": 30.9,
       "chars": 163
     },
     {
-      "page": 23,
+      "page": 35,
       "title": "列表与二维列表",
-      "start": "14:05",
-      "end": "14:51",
+      "start": "22:47",
+      "end": "23:33",
       "seconds": 45.9,
       "chars": 237
     },
     {
-      "page": 24,
+      "page": 36,
       "title": "两道语法练习",
-      "start": "14:51",
-      "end": "15:53",
+      "start": "23:33",
+      "end": "24:35",
       "seconds": 62.5,
       "chars": 331
     },
     {
-      "page": 25,
+      "page": 37,
+      "title": "零基础入门：先学语法，再做 30 道练手题",
+      "start": "24:35",
+      "end": "25:45",
+      "seconds": 69.3,
+      "chars": 361
+    },
+    {
+      "page": 38,
+      "title": "30 道练手题（上）：第 0–2 关",
+      "start": "25:45",
+      "end": "26:44",
+      "seconds": 59.1,
+      "chars": 384
+    },
+    {
+      "page": 39,
+      "title": "30 道练手题（下）：第 3–5 关",
+      "start": "26:44",
+      "end": "27:46",
+      "seconds": 62.0,
+      "chars": 362
+    },
+    {
+      "page": 40,
+      "title": "做题前：先把输入模板写熟",
+      "start": "27:46",
+      "end": "28:26",
+      "seconds": 39.6,
+      "chars": 248
+    },
+    {
+      "page": 41,
+      "title": "给零基础同学的做题建议",
+      "start": "28:26",
+      "end": "29:33",
+      "seconds": 68.0,
+      "chars": 325
+    },
+    {
+      "page": 42,
       "title": "上机实践任务",
-      "start": "15:53",
-      "end": "16:37",
-      "seconds": 43.2,
-      "chars": 256
+      "start": "29:33",
+      "end": "30:29",
+      "seconds": 55.7,
+      "chars": 339
     },
     {
-      "page": 26,
+      "page": 43,
       "title": "本周作业",
-      "start": "16:37",
-      "end": "17:26",
-      "seconds": 49.1,
-      "chars": 254
+      "start": "30:29",
+      "end": "31:25",
+      "seconds": 55.7,
+      "chars": 289
     },
     {
-      "page": 27,
+      "page": 44,
       "title": "小结",
-      "start": "17:26",
-      "end": "18:04",
-      "seconds": 38.6,
-      "chars": 201
+      "start": "31:25",
+      "end": "32:13",
+      "seconds": 48.5,
+      "chars": 264
     },
     {
-      "page": 28,
+      "page": 45,
       "title": "下周预告",
-      "start": "18:04",
-      "end": "18:31",
-      "seconds": 26.4,
-      "chars": 132
+      "start": "32:13",
+      "end": "32:41",
+      "seconds": 27.7,
+      "chars": 141
     }
   ]
 }
