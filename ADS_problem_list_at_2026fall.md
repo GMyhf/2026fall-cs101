@@ -19,9 +19,9 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 |  |       |       | - |          |
 | 09 | 231A. Team          | bruteforce, greedy     | 800  | http://codeforces.com/problemset/problem/231/A   |
 | 09 | 112A. Petya and Strings        | implementation, strings              | 800  | http://codeforces.com/problemset/problem/112/A   |
-| 09 | 158A. Next Round    | *special problem, implementation  | 800 | http://codeforces.com/problemset/problem/158/A          |
 | 09 | 31180:学生数据统计分析  | implementation     | Medium | http://cs101.openjudge.cn/practice/31180/          |
 | 09 | 31185:一道题搞懂内置排序函数      | implementation   | Medium | http://cs101.openjudge.cn/practice/31185/          |
+| 0915 | 158A. Next Round    | *special problem, implementation  | 800 | http://codeforces.com/problemset/problem/158/A          |
 | 0914 | 31184:一道题搞懂输出      | implementation   | Easy | http://cs101.openjudge.cn/practice/31184/          |
 | 0913 | 31183:一道题搞懂输入     | implementation   | Easy | http://cs101.openjudge.cn/practice/31183/          |
 | 0912 | 200B. Drinks    | implementation, math | 800 | https://codeforces.com/problemset/problem/200/B                                        |
