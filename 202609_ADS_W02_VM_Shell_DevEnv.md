@@ -192,23 +192,24 @@ python3 solution.py < in.txt
 
 # 4 开发环境
 
-## 4.1 Python 虚拟环境
+## 4.1 Python 虚拟环境（uv）
 
-不同项目依赖不同版本的包，虚拟环境把它们隔离开：
+不同项目依赖不同版本的包，虚拟环境把它们隔离开。本课程用 [uv](https://docs.astral.sh/uv/) 一个工具管好 Python 版本、`.venv` 和第三方包，详见 [Python 开发环境配置指南](Python_Development_Setup_Mac_Windows.md)：
 
 ```bash
-python3 -m venv .venv                 # 创建
-source .venv/bin/activate             # 启用（macOS / Linux）
-.venv\Scripts\activate                # 启用（Windows PowerShell）
-pip install numpy matplotlib          # 装包，只影响这个环境
-pip freeze > requirements.txt         # 导出依赖
-deactivate                            # 退出
+uv python install 3.14 --default     # 安装 Python（由 uv 管理）
+uv init --no-package MyPython        # 新建项目（--no-package 不能省）
+cd MyPython
+uv add numpy matplotlib              # 装包，写入 pyproject.toml / uv.lock
+uv run main.py                       # 运行，自动使用 .venv，无需 activate
+uv remove numpy                      # 卸载包
 ```
 
-Windows PowerShell 若提示无法运行脚本：
+环境坏了 / 换了电脑，删掉 `.venv` 重建：
 
-```powershell
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```bash
+rm -rf .venv && uv sync                         # macOS / Linux
+Remove-Item -Recurse -Force .venv; uv sync      # Windows PowerShell
 ```
 
 ## 4.2 PyCharm 的两个必用功能
