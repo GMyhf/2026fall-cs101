@@ -454,7 +454,7 @@ lldb ./leap
    >
    > 关闭 VS Code，重新打开，让新 PATH 生效。
    >
-   > ⚠️ 安装 gdb 时，MSYS2 会把它依赖的 Python 一起装进这个目录（`C:\msys64\ucrt64\bin\python.exe`）。如果你也装了官方 Python，请在 PowerShell 执行 `where.exe python`，确认**第一行**是 Python 官方安装的路径；如果第一行是 MSYS2 的路径，就在 `Path` 编辑窗口里把 Python 的路径上移到 MSYS2 路径之前。
+   > ⚠️ 安装 gdb 时，MSYS2 会把它依赖的 Python 一起装进这个目录（`C:\msys64\ucrt64\bin\python.exe`）。如果你也按 [Python 开发环境配置指南](https://github.com/GMyhf/2026fall-cs101/blob/main/Python_Development_Setup_Mac_Windows.md) 用 uv 装了 Python，请在 PowerShell 执行 `where.exe python`，确认**第一行**是 `C:\Users\<你的用户名>\.local\bin\python.exe`；如果第一行是 MSYS2 的路径，就在 `Path` 编辑窗口里把 `C:\Users\<你的用户名>\.local\bin` 上移到 MSYS2 路径之前。（在 Python 项目里用 `uv run` 运行程序不受这个顺序影响。）
 
 6. 检查是否安装成功
 
