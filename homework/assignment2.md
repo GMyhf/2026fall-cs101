@@ -15,9 +15,9 @@
 
 ## 1. 题目
 
-### 427A. Police Recruits
+### 31197: Police Recruits
 
-implementation, 800, https://codeforces.com/problemset/problem/427/A
+implementation, 800, http://cs101.openjudge.cn/practice/31197/
 
 思路：
 
@@ -81,9 +81,9 @@ http://cs101.openjudge.cn/practice/31184/
 
 
 
-### 263A. Beautiful Matrix
+### 31198: Beautiful Matrix
 
-implementation, 800, https://codeforces.com/problemset/problem/263/A
+implementation, 800, http://cs101.openjudge.cn/practice/31198/
 
 思路：
 
