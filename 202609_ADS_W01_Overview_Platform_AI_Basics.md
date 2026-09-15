@@ -1,6 +1,6 @@
 # 第1周 课程概述、学习平台与 AI 基础
 
-*Updated 2026-09-13 GMT+8*
+*Updated 2026-09-15 GMT+8*
  *Compiled by Hongfei Yan (2026 Fall)*
 https://github.com/GMyhf/2026fall-cs101
 
@@ -265,7 +265,7 @@ OpenCode、Claude Code 和 Codex 都属于智能体工具。它们并不是 LLM 
 
 OpenCode 是智能体客户端，不是一个固定的免费 LLM。它可以连接不同的模型服务。[OpenCode Zen](https://opencode.ai/docs/zen/) 当前提供部分限时免费模型，也提供按量付费模型。免费模型和使用政策可能调整，部分免费服务可能保留数据用于改进模型，因此不要提交个人信息、密钥或保密材料。
 
-#### 4.2.2。2 使用 Claude Code 和付费 API
+#### 4.2.2.2 使用 Claude Code 和付费 API
 
 复杂任务通常需要能力更强的模型，但价格、速度和效果需要综合考虑。排行榜只能作为参考，因为排名会随测试集、智能体框架、模型版本和评测时间而变化。
 
@@ -273,10 +273,29 @@ OpenCode 是智能体客户端，不是一个固定的免费 LLM。它可以连�
 
 ##### 安装 Claude Code
 
-Claude Code 官方当前推荐使用原生安装程序。macOS、Linux 或 WSL 执行：
+laude Code 官方当前推荐使用原生安装程序，安装后会在后台自动更新。macOS、Linux 或 WSL 执行：
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
+```
+
+Windows PowerShell 执行（Windows CMD 的命令见官方文档）：
+
+```powershell
+irm https://claude.ai/install.ps1 | iex
+```
+
+也可以用 npm 全局安装（需要 Node.js 22 或更高版本，不要加 `sudo`）：
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+npm 安装不会像原生安装那样可靠地自动更新，升级时执行 `npm install -g @anthropic-ai/claude-code@latest`。
+
+安装完成后验证：
+
+```bash
 claude --version
 claude doctor
 ```
@@ -298,12 +317,13 @@ claude doctor
   "env": {
     "ANTHROPIC_BASE_URL": "https://api.deepseek.com/anthropic",
     "ANTHROPIC_AUTH_TOKEN": "YOUR_DEEPSEEK_API_KEY",
-    "ANTHROPIC_MODEL": "deepseek-v4-pro[1m]",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-pro[1m]",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-pro[1m]",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "deepseek-v4-flash",
-    "CLAUDE_CODE_EFFORT_LEVEL": "max"
+    "ANTHROPIC_MODEL": "deepseek-flash[1m]",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-flash[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-flash[1m]",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-flash",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "deepseek-flash",
+    "CLAUDE_CODE_EFFORT_LEVEL": "max",
+    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "786432"
   }
 }
 ```
@@ -322,13 +342,15 @@ claude
 
 启动后可以先布置一个简单任务进行验证，或输入 `/status` 查看当前模型与连接状态。
 
-DeepSeek 当前会将以 `claude-opus` 开头的模型名映射到 `deepseek-v4-pro`，将以 `claude-sonnet` 或 `claude-haiku` 开头的模型名映射到 `deepseek-v4-flash`。这些名称和规则可能变化，使用前应重新核对官方集成指南。
+以上是官方指南当前的推荐配置，默认全部使用 `deepseek-flash`（DeepSeek-V4.1-Flash，1M 上下文）。旧名 `deepseek-v4-flash` 仍可调用，但会被转到 V4.1-Flash。复杂任务如果需要更强的模型，可以把前三项改为 `deepseek-v4-pro[1m]`，费用按 Pro 计。
+
+DeepSeek 当前会将以 `claude-opus` 开头的模型名映射到 `deepseek-v4-pro`，将以 `claude-sonnet` 或 `claude-haiku` 开头的模型名映射到 `deepseek-flash`。这些名称和规则可能变化，使用前应重新核对官方集成指南。
 
 ### 4.2.3 对比并使用高性能智能体
 
 第三阶段不是简单地“购买排名前三的模型”，而是根据任务选择合适的智能体系统。
 
-排行榜中的 `Claude Fable 5`、`GPT-5.6 (xHigh)` 等名称可能同时包含模型版本、推理强度和智能体配置，不一定是可以直接填写的 API 模型 ID。应通过官方订阅、官方 API 或相应服务获得访问权限。
+排行榜中的 `Claude Fable 5.1 (Max)`、`GPT 6 Astra (Max)` 等名称可能同时包含模型版本、推理强度和智能体配置，不一定是可以直接填写的 API 模型 ID。应通过官方订阅、官方 API 或相应服务获得访问权限。
 
 可以让两到三个候选智能体完成同一个真实任务，然后比较：
 
