@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-09-18 22:30 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-09-20 00:52 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -18,6 +18,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 |  |       |       | - |          |
 | 09 | 31180:学生数据统计分析  | implementation     | Medium | http://cs101.openjudge.cn/practice/31180/          |
+| 0923 | 3498. 字符串的反转度  | implementation     | Easy | https://leetcode.cn/problems/reverse-degree-of-a-string/          |
 | 0922 | 1401. 圆和矩形是否有重叠      | math       | Medium | https://leetcode.cn/problems/circle-and-rectangle-overlapping/         |
 | 0921 | 303. 区域和检索 - 数组不可变      | prefix sum      | Easy | https://leetcode.cn/problems/range-sum-query-immutable/          |
 | 0920 | 31185:一道题搞懂内置排序函数      | implementation   | Medium | http://cs101.openjudge.cn/practice/31185/          |
