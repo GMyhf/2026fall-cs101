@@ -1,6 +1,6 @@
 # 第3周 计算机原理（1/2）：计算机文化与基本概念
 
-*Updated 2026-08-31 GMT+8*
+*Updated 2026-09-21 GMT+8*
  *Compiled by Hongfei Yan (2026 Fall)*
 https://github.com/GMyhf/2026fall-cs101
 
@@ -375,7 +375,7 @@ with open('data.txt', encoding='utf-8') as f:
 
 ---
 
-# 7 本周作业
+# 7 本周练习
 
 | # | 题目 | 平台 / 编号 | 考点 |
 | - | ---- | ---- | ---- |

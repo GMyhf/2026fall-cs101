@@ -1,0 +1,12 @@
+{
+  "name": "ads-pptx-builder",
+  "private": true,
+  "description": "把计算概论（B）讲义 Markdown 整理成讲课 PPTX（pptxgenjs）",
+  "scripts": {
+    "w03": "node decks/w03_computer_principles_1.js ../202609_ADS_W03_Computer_Principles_1.pptx"
+  },
+  "dependencies": {
+    "jszip": "3.10.2",
+    "pptxgenjs": "4.0.1"
+  }
+}

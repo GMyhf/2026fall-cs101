@@ -27,7 +27,7 @@ https://github.com/GMyhf/2026fall-cs101
 | ---- | ---- | ---- | ---- | ---- |
 | 1 | `202609_ADS_W01_Overview_Platform_AI_Basics` | 32 | 16:46 | 课程概述、学习平台、AI 基础、第一个 Python 程序 |
 | 2 | `202609_ADS_W02_VM_Shell_DevEnv` | 45 | 32:41 | 虚拟机、xLab 实验环境、Linux Shell、uv 开发环境、语法练习与 30 道入门题 |
-| 3 | `202609_ADS_W03_Computer_Principles_1` | 28 | 15:25 | 图灵机、冯·诺依曼结构、补码、浮点、ASCII |
+| 3 | `202609_ADS_W03_Computer_Principles_1` | 56 | 15:25（旧 28 页版，待重合成） | 图灵机与停机问题、冯·诺依曼结构、进制与补码、位运算、浮点、ASCII / UTF-8 |
 | 4 | `202609_ADS_W04_Python_Basics_Algorithm_Analysis` | 30 | 15:20 | 容器与代价、大 O、从数据范围倒推算法、埃氏筛 |
 | 5 | `202609_ADS_W05_October_Exam_Review` | 28 | 14:27 | 10 月月考样卷（6 题 / 112 分钟）、订正方法、考场策略 |
 | 6 | `202610_ADS_W06_Matrices_Sorting_Greedy` | 32 | 17:31 | 保护圈、矩阵乘法、二维前缀和、排序、贪心与交换论证 |
@@ -42,7 +42,7 @@ https://github.com/GMyhf/2026fall-cs101
 | 15 | `202612_ADS_W15_Knowledge_Graph_Neural_Network` | 24 | 11:44 | 知识图谱、RAG、神经网络、反向传播、CNN |
 | 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 40 | 20:09 | 知识体系总结、期末上机考试命题方案与样卷 |
 
-课件合计 **480 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
+课件合计 **508 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
 **16 周视频已全部合成**，合计 **4 小时 14 分 37 秒**；旁白讲稿在 `content/wNN_narration.md`，共 480 节（一节对应一页）。
 
 ---
@@ -69,6 +69,11 @@ courseware/
 ```
 
 ⚠️ **不要直接编辑 `.pptx`** —— 它会被下次生成覆盖。改课件请改 `content/wNN.py`。
+
+**例外：第 3 周**改用 `pptx_builder/`（node + pptxgenjs，照 2026fall-cs201 的讲课 PPT 生成器）生成，
+源是 `pptx_builder/decks/w03_computer_principles_1.js`，在 `build_all.JS_DECKS` 登记；
+`content/w03.py` 只保留 `META`。首次使用先 `cd pptx_builder && npm install`（需要 node）。
+逐页目检：`cd pptx_builder && ./qa.sh ../202609_ADS_W03_Computer_Principles_1.pptx`。
 讲义 `.md` 则是手写维护的，与 `content/` 无生成关系；两者内容需人工保持一致。
 
 **环境**：课件只需 `python-pptx`；合成视频另需 `edge-tts`、`ffmpeg`、

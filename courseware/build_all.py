@@ -8,6 +8,7 @@
 
 import importlib
 import pathlib
+import subprocess
 import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -36,13 +37,31 @@ WEEKS = {
     '16': '202612_ADS_W16_Review_Final_Machine_Exam',
 }
 
+# 改用 pptx_builder（pptxgenjs，node）生成的周次 -> deck 脚本（相对本目录）。
+# 这些周的 content/wNN.py 只保留 META（供闸门第 3 项核对课程安排），SLIDES 为空。
+JS_DECKS = {
+    '03': 'pptx_builder/decks/w03_computer_principles_1.js',
+}
+
+
+def build_js(wk, out):
+    """用 node 跑 pptx_builder 的 deck 脚本，返回页数。"""
+    script = HERE / JS_DECKS[wk]
+    subprocess.run(['node', str(script), str(out)], check=True,
+                   cwd=script.parent.parent, stdout=subprocess.DEVNULL)
+    from pptx import Presentation
+    return len(Presentation(str(out)).slides)
+
 
 def main(argv):
     wanted = argv or sorted(WEEKS)
     for wk in wanted:
-        mod = importlib.import_module(f'w{wk}')
         out = HERE / (WEEKS[wk] + '.pptx')
-        pages = deck.build(mod.META, mod.SLIDES, str(out))
+        if wk in JS_DECKS:
+            pages = build_js(wk, out)
+        else:
+            mod = importlib.import_module(f'w{wk}')
+            pages = deck.build(mod.META, mod.SLIDES, str(out))
         print(f"{out.name}  ({pages} slides)")
 
 
