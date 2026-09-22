@@ -40,9 +40,26 @@ def test_t3():
 
 
 def test_t4():
-    # 7 split into 3 unordered positive parts has 4 ways; ordered compositions have 15.
-    require(15 != 4, 'T4 ordered-composition mutant survived')
-    return 'T4: counting permutations of a partition WA (15 vs 4)'
+    from functools import lru_cache
+
+    @lru_cache(None)
+    def good(rem, left, low):
+        if left == 1:
+            return int(rem >= low)
+        return sum(good(rem - x, left - 1, x) for x in range(low, rem // left + 1))
+
+    def bad(rem, left):
+        # Forgets the 'low' floor -> counts ordered compositions, not partitions.
+        if left == 1:
+            return int(rem >= 1)
+        return sum(bad(rem - x, left - 1) for x in range(1, rem - left + 2))
+
+    n, k = 7, 3
+    want = good(n, k, 1)
+    require(want == 4, 'T4 oracle')
+    got_bad = bad(n, k)
+    require(got_bad != want, 'T4 ordered-composition mutant survived')
+    return f'T4: counting ordered compositions instead of partitions WA ({got_bad} vs {want})'
 
 
 def test_t5():

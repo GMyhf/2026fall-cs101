@@ -4,6 +4,38 @@
 
 ---
 
+### 2026-09-22 · Claude → （无） · 复核 `2b7bc30`，接受 T-030，修了一处恒真断言
+
+- **结论**：**接受，T-030 完成，但顺手修了一个问题。** `tools/redteam_exam.py` 六道题的
+  oracle/错法对照全部换成了当前真题，W16 讲义新增可见的"5.7 当前样卷红队反例"一节，
+  措辞也很克制（明确说明"不是评分点，也不替代平台数据"）。协作记录这次都写了
+  （`HANDOFF.md`/`NOTES-codex.md`）。独立重跑 `verify_courseware.py`、
+  `check_note_code.py`（75/75）都通过。
+
+- **没有只信"6/6 通过"这个数字**：逐条读了每道题的判据代码，发现
+  `test_t4()` 是 `require(15 != 4, 'T4 ordered-composition mutant survived')`——
+  两个硬编码常量比大小，跟任何代码、任何输入都没关系，**恒为真**。这正是
+  T-009 原版明确要避免的"恒真断言"反模式（Claude 当年复核 T-009 时就修过
+  3 处这类问题，见 `collab/PLAN.md` T-009 那一行），这次重写时又长回来了。
+
+- **直接补了一个真正的 oracle/mutant 对照**：`good(rem, left, low)` 按参考解答的
+  `low` 参数递归求划分数，`bad(rem, left)` 去掉 `low` 下界后递归求有序组合数——
+  两个函数结构几乎一样，只差"是否限制下界"这一个参数，正好对应参考解答
+  `dfs` 函数里 `low` 参数存在的意义。本地验证 `good(7,3,1)=4`、`bad(7,3)=15`，
+  跟讲义 5.7 表里写的数字一致，改完 `redteam_exam.py`/`verify_courseware.py`/
+  `check_note_code.py` 重跑全绿。
+
+- **其余 5 题看过没有同类问题**：T1/T2/T3/T5/T6 的判据虽然不像 T-009 原版那样
+  直接跑 `.md` 里的参考解答代码（是独立写的等价 oracle），但每条都有真实计算、
+  `good`/`bad` 两侧确实会算出不同结果，不是硬编码比较，接受。
+
+- **改了哪些文件**：`tools/redteam_exam.py`（补 T4 的真实判据），`collab/PLAN.md`
+  （T-030 标 Done + 复核记录）。**没有改 `.md`**（5.7 节内容本身没问题）。
+
+- **结论**：T-030 完成。下一步无需处理。
+
+---
+
 ### 2026-09-22 · Claude → （无，本轮未经 Codex） · T-028 第四轮完成：三份 pptx 逐题详解页已换成真题
 
 - **做了什么**：人直接指定"你来完成 T-028"，本轮由 Claude 直接改 `courseware/pptx_builder/decks/{w05_october_exam_review,w14_ai_literacy_exam_recap,w16_review_final_machine_exam}.js`，把上一条 HANDOFF 里列的 18 道题的旧标题/题面/代码全部换成对应 `.md` 里已验证过的真题内容（题意复述 + 参考解答 + 真实样例，样例全部用 Python 本地实跑核对过，不是抄的）。W05/W14 从"多页（concept + code / 错误归因）"精简成"每题一页"，不再编造评分点值、数据构造建议或红队断言——这些内容在 `.md` 里同样没有，编出来会重犯这个任务本来要修的错（呈现未经验证的内容）。
