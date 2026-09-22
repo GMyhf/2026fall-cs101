@@ -62,13 +62,30 @@ pres.addSlide = (...args) => {
 
 
 // ---------- rich text: **bold**, `code` ----------
+// `**粗体**` 里可以嵌 `代码`；字符串里的 "\n" 拆成「行末 run + breakLine」，
+// 否则 pptxgenjs 会把 \n 之后的格式 run 另起一段
 function runs(str, base = {}) {
-  const parts = str.split(/(\*\*[^*]+\*\*|`[^`]+`)/).filter((s) => s.length);
-  return parts.map((p) => {
-    if (p.startsWith("**")) return { text: p.slice(2, -2), options: { ...base, bold: true, color: base.boldColor || base.color || C.dark } };
-    if (p.startsWith("`")) return { text: p.slice(1, -1), options: { ...base, fontFace: MONO, color: base.codeColor || C.green, bold: true } };
-    return { text: p, options: { ...base } };
-  }).map((r) => { delete r.options.boldColor; delete r.options.codeColor; return r; });
+  const code = (t) => ({ text: t, options: { ...base, fontFace: MONO, color: base.codeColor || C.green, bold: true } });
+  const out = [];
+  str.split(/(\*\*(?:[^*]|\*(?!\*))+?\*\*|`[^`]+`)/).filter((s) => s.length).forEach((p) => {
+    if (p.startsWith("**")) {
+      p.slice(2, -2).split(/(`[^`]+`)/).filter((s) => s.length).forEach((q) => {
+        out.push(q.startsWith("`") ? code(q.slice(1, -1)) : { text: q, options: { ...base, bold: true, color: base.boldColor || base.color || C.dark } });
+      });
+    } else if (p.startsWith("`")) out.push(code(p.slice(1, -1)));
+    else out.push({ text: p, options: { ...base } });
+  });
+  const lines = [];
+  out.forEach((r) => {
+    delete r.options.boldColor; delete r.options.codeColor;
+    const pieces = r.text.split("\n");
+    pieces.forEach((t, i) => {
+      const o = { ...r.options };
+      if (i < pieces.length - 1) o.breakLine = true;
+      if (t.length || i < pieces.length - 1) lines.push({ text: t, options: o });
+    });
+  });
+  return lines;
 }
 
 function para(items, base = {}) {
@@ -93,10 +110,13 @@ function para(items, base = {}) {
   return out;
 }
 
+// Consolas 缺 ⌈⌉⌊⌋、上下标（ᵢ ₁ ⁽ᵏ⁾ …）、⋯ 等字形，混排会东拼西凑；这类公式退回正文字体
+const NO_MONO = /[⌈⌉⌊⌋⋯√ᴀ-ᶿ⁰⁴-₟]/;
 function text(slide, content, x, y, w, h, opts = {}) {
+  const face = opts.fontFace === MONO && typeof content === "string" && NO_MONO.test(content) ? FONT : (opts.fontFace || FONT);
   const arr = typeof content === "string" ? runs(content, { color: opts.color || C.text }) : content;
   slide.addText(arr, {
-    x, y, w, h, fontFace: FONT, fontSize: opts.fontSize || 14, color: opts.color || C.text,
+    x, y, w, h, fontFace: face, fontSize: opts.fontSize || 14, color: opts.color || C.text,
     valign: opts.valign || "top", align: opts.align || "left", margin: opts.margin ?? 0.05,
     bold: opts.bold, italic: opts.italic, isTextBox: true, lineSpacingMultiple: opts.lsm,
   });
@@ -198,6 +218,7 @@ function table(slide, rows, x, y, w, colW, opts = {}) {
   const data = rows.map((r, i) => r.map((cell) => {
     const isHead = i === 0;
     const c = typeof cell === "object" ? cell : { t: String(cell) };
+    if (c.t === "") c.t = " "; // 空单元格按默认字号撑高行，用一个空格占位
     const o = {
       fontFace: c.mono ? MONO : FONT, fontSize: fs, color: isHead ? C.white : (c.color || C.text), bold: isHead || c.bold,
       fill: { color: isHead ? C.dark : (c.fill || (i % 2 === 0 ? "F7F9F8" : C.white)) }, valign: "middle", align: c.align || opts.align || "left",
@@ -267,6 +288,12 @@ function summarySlide(heading, items) {
 async function fetchImages(map) {
   fs.mkdirSync(imgDir, { recursive: true });
   for (const [name, url] of Object.entries(map)) {
+    // 本地路径直接引用，不下载
+    if (!/^https?:\/\//.test(url)) {
+      if (!fs.existsSync(url)) throw new Error(`图片不存在: ${url}`);
+      imageFiles[name] = url;
+      continue;
+    }
     const ext = path.extname(new URL(url).pathname) || ".png";
     const file = path.join(imgDir, name + ext);
     imageFiles[name] = file;

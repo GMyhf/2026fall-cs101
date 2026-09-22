@@ -41,6 +41,19 @@ WEEKS = {
 # 这些周的 content/wNN.py 只保留 META（供闸门第 3 项核对课程安排），SLIDES 为空。
 JS_DECKS = {
     '03': 'pptx_builder/decks/w03_computer_principles_1.js',
+    '04': 'pptx_builder/decks/w04_python_basics_algorithm_analysis.js',
+    '05': 'pptx_builder/decks/w05_october_exam_review.js',
+    '06': 'pptx_builder/decks/w06_matrices_sorting_greedy.js',
+    '07': 'pptx_builder/decks/w07_matrix_queue_stack_greedy.js',
+    '08': 'pptx_builder/decks/w08_recursion.js',
+    '09': 'pptx_builder/decks/w09_recursion_backtracking_dsu.js',
+    '10': 'pptx_builder/decks/w10_intervals_dp_intro.js',
+    '11': 'pptx_builder/decks/w11_dp.js',
+    '12': 'pptx_builder/decks/w12_dp_bfs.js',
+    '13': 'pptx_builder/decks/w13_computer_principles_2.js',
+    '14': 'pptx_builder/decks/w14_ai_literacy_exam_recap.js',
+    '15': 'pptx_builder/decks/w15_knowledge_graph_neural_network.js',
+    '16': 'pptx_builder/decks/w16_review_final_machine_exam.js',
 }
 
 
