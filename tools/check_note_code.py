@@ -248,7 +248,7 @@ def t_w05_exam_solutions(ns):
     path = COURSEWARE / (WEEK_FILES['W05'] + '.md')
     blocks = PY_BLOCK.findall(path.read_text(encoding='utf-8'))
     runnable = [b for b in blocks if 'input()' in b or 'stdin' in b]
-    assert len(runnable) == 8, f'W05 可驱动代码块应有 8 个，实际 {len(runnable)}'
+    assert len(runnable) == 14, f'W05 可驱动代码块应有 14 个，实际 {len(runnable)}'
 
     def run(src, text):
         import contextlib
@@ -262,25 +262,14 @@ def t_w05_exam_solutions(ns):
             sys.stdin = old
         return buf.getvalue().strip()
 
-    T1 = [('5\n95 83 71 60 40\n', 'A\nB\nC\nD\nE\n80.00'),
-          # 边界：整数百分比必须是 60.00，不能是 60.0
-          ('5\n90 90 90 10 10\n', 'A\nA\nA\nE\nE\n60.00')]
-    # runnable[0] 是 cheat sheet 模板汇总（不是完整解答），跳过
+    # runnable[0] 是 W05 前置模板；runnable[1:7] 是当前真实样卷六题。
     cases = {
-        1: T1,                                   # T1 参考解答
-        2: T1,                                   # T1 「更清爽的写法」，同样的输入
-        3: [('hello WORLD, this is cs101!\n', 'Hello World, This Is Cs101!')],
-        4: [('6 2\npython\nalgorithm\npython\nmath\nalgorithm\npython\n',
-             'python 3\nalgorithm 2')],
-        5: [('4\n4\n5\n9\n12\n', 'YES\nNO\nYES\nNO')],
-        6: [('2 10\n0 1 5\n3 5 2\n', '13')],   # 送达时刻不含最后一次开关门
-        # T6 补码计算器：讲义样例，外加"有无符号进位但无有符号溢出"的边界
-        7: [('6\nTO 8 -5\nTO 4 8\nFROM 8 11111011\n'
-             'ADD 8 100 100\nADD 8 -100 -100\nADD 4 3 4\n',
-             '11111011\nOVERFLOW\n-5\n-56 OVERFLOW\n56 OVERFLOW\n7'),
-            # 讲义「数据构造建议」点名的四组边界，逐条兑现
-            ('5\nADD 8 -1 1\nTO 4 -8\nTO 4 8\nTO 2 1\nTO 2 -2\n',
-             '0\n1000\nOVERFLOW\n01\n10')],
+        1: [('21\n', '7')],
+        2: [('5\n-200 -300 1000 -100 -100\n', '501')],
+        3: [('12\n25\n144\n', '6 3.46\n7 5.00\n8 12.00')],
+        4: [('1500\n', '220 284\n1184 1210')],
+        5: [('3 50\n60 10\n100 20\n120 30\n', '240.00')],
+        6: [('500 3\n150 300\n100 200\n470 471\n', '298')],
     }
     for idx, items in cases.items():
         for stdin_text, want in items:

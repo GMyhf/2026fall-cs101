@@ -141,7 +141,121 @@ T6  ★★★★☆   补码 / 位运算，符号边界密集 —— 20% AC
 
 ---
 
-## T1.（旧草稿，已废弃）：成绩转换
+## T1. E29895 分解因数
+
+**题意复述**：给定合数 `n (1 <= n <= 10^10)`，求两个不同正因数分解中最大的真因数。算法是枚举到 `sqrt(n)` 的最小因数 `p`，输出 `n // p`。
+
+```python
+n = int(input())
+p = 2
+while n % p:
+    p += 1
+print(n // p)
+```
+
+题目：[E29895 分解因数](http://cs101.openjudge.cn/practice/29895/)。
+
+## T2. E29940 机器猫斗恶龙
+
+**题意复述**：依次经过 `n` 个关卡，正数回血、负数扣血，任何时刻血量必须为正；求最小正整数初始血量（`n <= 10^5`）。扫描前缀和，答案为 `1 - 最小前缀和`。
+
+```python
+import sys
+a = list(map(int, sys.stdin.buffer.read().split()))
+cur = mn = 0
+for x in a[1:1 + a[0]]:
+    cur += x
+    mn = min(mn, cur)
+print(1 - mn)
+```
+
+题目：[E29940 机器猫斗恶龙](http://cs101.openjudge.cn/practice/29940/)。
+
+## T3. M29917 牛顿迭代法
+
+**题意复述**：对 EOF 输入的每个正数，用初值 `1` 和 `x_next=(x+a/x)/2` 求平方根；相邻近似值差不超过 `1e-6` 时停止，输出迭代次数和两位小数结果。
+
+```python
+import sys
+for token in sys.stdin.read().split():
+    a, x, cnt = float(token), 1.0, 0
+    while True:
+        y = (x + a / x) / 2
+        cnt += 1
+        if abs(y - x) <= 1e-6:
+            print(cnt, f'{y:.2f}')
+            break
+        x = y
+```
+
+题目：[M29917 牛顿迭代法](http://cs101.openjudge.cn/practice/29917/)。
+
+## T4. M29918 求亲和数
+
+**题意复述**：若两个数的真因数和互相等于对方，则称为亲和数。给定 `n <= 100000`，按较小数递增输出所有不超过 `n` 的亲和数对。用倍数筛累计真因数和。
+
+```python
+import sys
+n = int(sys.stdin.buffer.read())
+s = [0] * (n + 1)
+for d in range(1, n // 2 + 1):
+    for x in range(2 * d, n + 1, d):
+        s[x] += d
+for a in range(2, n + 1):
+    b = s[a]
+    if a < b <= n and s[b] == a:
+        print(a, b)
+```
+
+题目：[M29918 求亲和数](http://cs101.openjudge.cn/practice/29918/)。
+
+## T5. M29949 贪婪的哥布林
+
+**题意复述**：矿石可任意分割，每堆有价值 `v` 和重量 `w`，背包承重为 `M`；求最大价值。按单位重量价值 `v/w` 降序取，最后一堆可取部分。
+
+```python
+import sys
+d = list(map(int, sys.stdin.buffer.read().split()))
+n, cap = d[:2]
+items = sorted([(d[i] / d[i + 1], d[i], d[i + 1])
+                for i in range(2, 2 * n + 2, 2)], reverse=True)
+ans = 0.0
+for ratio, value, weight in items:
+    take = min(cap, weight)
+    ans += ratio * take
+    cap -= take
+    if cap == 0:
+        break
+print(f'{ans:.2f}')
+```
+
+题目：[M29949 贪婪的哥布林](http://cs101.openjudge.cn/practice/29949/)。
+
+## T6. T29947 校门外的树又来了
+
+**题意复述**：`0..L` 共 `L+1` 棵树，给出 `M` 个闭区间并移除区间内树，求剩余数量。排序并合并重叠区间，区间长度按 `r-l+1` 计算。
+
+```python
+import sys
+d = list(map(int, sys.stdin.buffer.read().split()))
+L, m = d[:2]
+seg = sorted(tuple(sorted(d[i:i + 2])) for i in range(2, 2 * m + 2, 2))
+removed = 0
+left = right = None
+for l, r in seg + [(10**18, 10**18)]:
+    if left is None:
+        left, right = l, r
+    elif l <= right + 1:
+        right = max(right, r)
+    else:
+        removed += right - left + 1
+        left, right = l, r
+print(L + 1 - removed)
+```
+
+题目：[T29947 校门外的树又来了](http://cs101.openjudge.cn/practice/29947/)。
+
+<!-- 历史草稿原文保留在本文件此处，仅供审计，不属于当前样卷正文。
 
 **考点**：输入输出、分支、格式化（W1、W2）　　**难度**：★☆☆☆☆
 
@@ -212,7 +326,7 @@ print(f"{sum(1 for s in scores if s >= 60) * 100 / n:.2f}")
 
 ---
 
-## T2.（旧草稿，已废弃）：单词首字母大写
+### 历史草稿 T2：单词首字母大写
 
 **考点**：字符串处理、ASCII（W2、W3）　　**难度**：★★☆☆☆
 
@@ -263,7 +377,7 @@ print(''.join(out))
 
 ---
 
-## T3.（旧草稿，已废弃）：图书借阅排行
+### 历史草稿 T3：图书借阅排行
 
 **考点**：字典计数、多关键字排序（W4）　　**难度**：★★★☆☆
 
@@ -318,7 +432,7 @@ print('\n'.join(f"{name} {c}" for name, c in rank[:k]))
 
 ---
 
-## T4.（旧草稿，已废弃）：区间内的 T-数
+### 历史草稿 T4：区间内的 T-数
 
 **考点**：素数筛、复杂度意识、浮点陷阱（W3、W4）　　**难度**：★★★☆☆
 
@@ -397,7 +511,7 @@ sys.stdout.write('\n'.join(out) + '\n')
 
 ---
 
-## T5.（旧草稿，已废弃）：电梯调度模拟
+### 历史草稿 T5：电梯调度模拟
 
 **考点**：模拟、边界处理、排序（W1–W4 综合）　　**难度**：★★★★☆
 
@@ -480,7 +594,7 @@ solve()
 
 ---
 
-## T6.（旧草稿，已废弃）：补码计算器
+### 历史草稿 T6：补码计算器
 
 **考点**：进制转换、补码、位运算、边界判定（W3）　　**难度**：★★★★☆
 
@@ -583,6 +697,8 @@ solve()
 - 常见失分：用 `bin(x)` 处理负数；`FROM` 忘了减 2ⁿ；只判"最高位变了"。
 
 ---
+
+-->
 
 # 4 备选题库（可替换样卷中的任意一题）
 

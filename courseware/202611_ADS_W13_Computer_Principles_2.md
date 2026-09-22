@@ -167,7 +167,7 @@ print(sys.getsizeof([]), sys.getsizeof([0] * 1000))  # 56 8056
 | `set` / `dict` | ~70 MB 以上 |
 
 > **OJ 内存限制常见 64–256 MB**。n = 10⁷ 的一维 list 就已经危险，
-> 这时用 `bytearray` 或 `array` 代替（第 5 周月考样卷 T4 的筛法就是这么写的）。
+> 这时用 `bytearray` 或 `array` 代替；筛法的内层切片写法可回看 W04 的埃氏筛实现。
 
 ## 2.4 Python 的内存管理
 

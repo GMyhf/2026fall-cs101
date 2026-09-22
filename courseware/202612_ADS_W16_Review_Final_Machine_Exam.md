@@ -171,7 +171,103 @@ T6  ★★★★★   综合建模，15% AC             —— 区分优秀
 
 以下旧 T1–T6 内容仅保留作历史审计，不再作为真题讲解。
 
-## T1.（旧草稿，已废弃）：成绩单核对
+## T1. E29982 一种等价类划分问题
+
+**题意复述**：在 `(m,n)` 内筛出各位数字和是 `k` 的倍数的整数，再按“各位数字和”分组；每组升序、逗号分隔，组按数字和递增输出。输入格式为 `m,n,k`。
+
+```python
+m, n, k = map(int, input().split(','))
+groups = {}
+for x in range(m + 1, n):
+    s = sum(map(int, str(x)))
+    if s % k == 0:
+        groups.setdefault(s, []).append(str(x))
+for s in sorted(groups):
+    print(','.join(groups[s]))
+```
+
+题目：[E29982 一种等价类划分问题](http://cs101.openjudge.cn/practice/29982/)。
+
+## T2. E30086 dance
+
+**题意复述**：有 `2N` 名学生，要求两两配对且每对身高差不超过 `D`。将身高排序后只能相邻配对；所有相邻差均不超过 `D` 时输出 `Yes`，否则 `No`。
+
+```python
+n, d = map(int, input().split())
+a = sorted(map(int, input().split()))
+print('Yes' if all(a[i + 1] - a[i] <= d for i in range(0, 2 * n, 2)) else 'No')
+```
+
+题目：[E30086 dance](http://cs101.openjudge.cn/practice/30086/)。
+
+## T3. M25570 洋葱
+
+**题意复述**：给定 `n*n` 非负矩阵，逐层剥去外圈，求所有层元素和的最大值。每层是方框边界；奇数阶中心元素单独成层。
+
+```python
+n = int(input())
+a = [list(map(int, input().split())) for _ in range(n)]
+best = 0
+for layer in range((n + 1) // 2):
+    lo, hi = layer, n - 1 - layer
+    total = sum(a[lo][j] for j in range(lo, hi + 1))
+    if hi > lo:
+        total += sum(a[hi][j] for j in range(lo, hi + 1))
+        total += sum(a[i][lo] + a[i][hi] for i in range(lo + 1, hi))
+    best = max(best, total)
+print(best)
+```
+
+题目：[M25570 洋葱](http://cs101.openjudge.cn/practice/25570/)。
+
+## T4. M28906 数的划分
+
+**题意复述**：把 `n` 分成 `k` 个非空正整数，顺序不计，求方案数（`n <= 200, 2 <= k <= 6`）。令下一份不小于上一份即可避免排列重复。
+
+```python
+from functools import lru_cache
+n, k = map(int, input().split())
+@lru_cache(None)
+def dfs(rem, left, low):
+    if left == 1:
+        return int(rem >= low)
+    return sum(dfs(rem - x, left - 1, x)
+               for x in range(low, rem // left + 1))
+print(dfs(n, k, 1))
+```
+
+`low` 保证后续各份不小于当前份，因此同一划分不会因排列重复计数。
+
+题目：[M28906 数的划分](http://cs101.openjudge.cn/practice/28906/)。
+
+## T5. M29896 购物
+
+**题意复述**：有无限枚不同面值硬币，求最少带多少枚硬币，使 `1..X` 每个金额都能组合出来；不能覆盖时输出 `-1`。维护当前连续可覆盖区间 `[1, reach]`，每次选不超过 `reach+1` 的最大面值。
+
+```python
+X, n = map(int, input().split())
+coins = sorted(map(int, input().split()))
+reach = count = 0
+while reach < X:
+    usable = [c for c in coins if c <= reach + 1]
+    if not usable:
+        print(-1); break
+    reach += max(usable); count += 1
+else:
+    print(count)
+```
+
+题目：[M29896 购物](http://cs101.openjudge.cn/practice/29896/)。
+
+## T6. T25353 排队
+
+**题意复述**：相邻两人身高差不超过 `D` 才能交换，任意次交换后求字典序最小的身高序列。关键是每次只能把当前可交换的较小元素向左推进；用小根堆维护可到达当前位置的候选，推进时更新相邻可交换边，整体 `O(N log N)`。
+
+参考实现应按题目给出的交换规则维护“可达候选堆”，不能直接对全体身高排序；样例 `7 7 3 6 2, D=3` 的结果是 `6 7 7 2 3`，可作为实现的边界回归。
+
+题目：[T25353 排队](http://cs101.openjudge.cn/practice/25353/)。
+
+<!-- 历史草稿原文保留在本文件此处，仅供审计，不属于当前样卷正文。
 
 **考点**：字典计数、多关键字排序、格式化输出（W2、W4）　　**难度**：★☆☆☆☆
 
@@ -251,7 +347,7 @@ solve()
 
 ---
 
-## T2.（旧草稿，已废弃）：括号嵌套深度
+### 历史草稿 T2：括号嵌套深度
 
 **考点**：栈、边界判断（W7）　　**难度**：★★☆☆☆
 
@@ -338,7 +434,7 @@ solve()
 
 ---
 
-## T3.（旧草稿，已废弃）：会议室数量
+### 历史草稿 T3：会议室数量
 
 **考点**：区间分组、差分 / 排序（W10）　　**难度**：★★★☆☆
 
@@ -440,7 +536,7 @@ print(min_rooms([(1, 4), (2, 5), (6, 8), (3, 7)])) # 3
 
 ---
 
-## T4.（旧草稿，已废弃）：穿墙迷宫
+### 历史草稿 T4：穿墙迷宫
 
 **考点**：带状态的 BFS（W12）　　**难度**：★★★☆☆
 
@@ -540,7 +636,7 @@ solve()
 
 ---
 
-## T5.（旧草稿，已废弃）：作业时间分配
+### 历史草稿 T5：作业时间分配
 
 **考点**：0-1 背包 + 次要目标（W11）　　**难度**：★★★★☆
 
@@ -633,7 +729,7 @@ solve()
 
 ---
 
-## T6.（旧草稿，已废弃）：电网巡检
+### 历史草稿 T6：电网巡检
 
 **考点**：最小瓶颈路 = 排序 + 并查集（W6、W9）；亦可二分 + BFS（W12）　　**难度**：★★★★★
 
@@ -794,6 +890,8 @@ python3 tools/redteam_exam.py
 ```
 
 ---
+
+-->
 
 # 6 备选题库（按知识点分类）
 

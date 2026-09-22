@@ -214,7 +214,118 @@ print([f"{x:.3f}" for x in w], f"{o[0]:.3f}")
 
 ---
 
-## T1.（旧草稿，已废弃）：课程互选统计
+## T1. E29945 神秘数字的宇宙旅行
+
+**题意复述**：从正整数 `n <= 2,000,000` 开始，偶数变为 `n/2`，奇数变为 `3n+1`，逐步输出到 `1` 的每次跳跃表达式，最后输出 `End`。
+
+```python
+n = int(input())
+while n != 1:
+    if n % 2:
+        print(f'{n}*3+1={3*n+1}')
+        n = 3 * n + 1
+    else:
+        print(f'{n}/2={n//2}')
+        n //= 2
+print('End')
+```
+
+题目：[E29945 神秘数字的宇宙旅行](http://cs101.openjudge.cn/practice/29945/)。
+
+## T2. E29946 删数问题
+
+**题意复述**：给定最多 250 位的正整数，删除恰好 `k` 位并保持剩余数字顺序，使所得非负整数最小。使用单调栈：当前数字小于栈顶时删除栈顶。
+
+```python
+n = input().strip()
+k = int(input())
+stack = []
+for ch in n:
+    while k and stack and stack[-1] > ch:
+        stack.pop(); k -= 1
+    stack.append(ch)
+if k:
+    stack = stack[:-k]
+print(("".join(stack)).lstrip('0') or '0')
+```
+
+题目：[E29946 删数问题](http://cs101.openjudge.cn/practice/29946/)。
+
+## T3. E30091 缺德的图书馆管理员
+
+**题意复述**：走廊坐标为 `1..L`，学生以速度 1 行走，相向相遇就同时转身；输入初始位置，求在未知初始方向下全部离开的最短和最长可能时间。相遇可视为交换身份，故最短取各位置到最近出口的最大值，最长取到最远出口的最大值。
+
+```python
+L = int(input())
+n = int(input())
+pos = list(map(int, input().split())) if n else []
+print(max(min(x, L + 1 - x) for x in pos) if pos else 0,
+      max(max(x, L + 1 - x) for x in pos) if pos else 0)
+```
+
+题目：[E30091 缺德的图书馆管理员](http://cs101.openjudge.cn/practice/30091/)。
+
+## T4. M27371 Playfair密码
+
+**题意复述**：用去重后的密钥和去掉 `j` 的字母表构造 5×5 矩阵；明文按字母对分组，重复字母间插入 `x`（首字母为 `x` 时插入 `q`），奇数长度末尾补同样字符，再按同行右移、同列下移、矩形换列加密。
+
+```python
+import string
+key = input().strip(); q = int(input())
+seq = []
+for ch in key + string.ascii_lowercase.replace('j', ''):
+    ch = 'i' if ch == 'j' else ch
+    if ch not in seq: seq.append(ch)
+at = {ch: divmod(i, 5) for i, ch in enumerate(seq)}
+def enc_pair(a, b):
+    ra, ca = at[a]; rb, cb = at[b]
+    if ra == rb: return seq[ra*5+(ca+1)%5] + seq[rb*5+(cb+1)%5]
+    if ca == cb: return seq[((ra+1)%5)*5+ca] + seq[((rb+1)%5)*5+cb]
+    return seq[ra*5+cb] + seq[rb*5+ca]
+for _ in range(q):
+    s = input().strip().replace('j', 'i'); out = []
+    i = 0
+    while i < len(s):
+        a = s[i]; b = s[i+1] if i+1 < len(s) else ('q' if a == 'x' else 'x')
+        if a == b: b = 'q' if a == 'x' else 'x'
+        else: i += 1
+        out.append(enc_pair(a, b)); i += 1
+    print(''.join(out))
+```
+
+题目：[M27371 Playfair密码](http://cs101.openjudge.cn/practice/27371/)。
+
+## T5. T30201 旅行售货商问题
+
+**题意复述**：`3 <= n <= 18` 个城市完全连通，从任意城市出发访问每城恰好一次并回到起点，求最小总费用。用集合状态压缩 DP。
+
+```python
+n = int(input()); c = [list(map(int, input().split())) for _ in range(n)]
+INF = 10**18
+dp = [[INF] * n for _ in range(1 << n)]
+dp[1][0] = 0
+for mask in range(1 << n):
+    for u in range(n):
+        if dp[mask][u] == INF: continue
+        for v in range(n):
+            if not mask >> v & 1:
+                nm = mask | (1 << v)
+                dp[nm][v] = min(dp[nm][v], dp[mask][u] + c[u][v])
+full = (1 << n) - 1
+print(min(dp[full][u] + c[u][0] for u in range(1, n)))
+```
+
+题目：[T30201 旅行售货商问题](http://cs101.openjudge.cn/practice/30201/)。
+
+## T6. T30204 小P的LLM推理加速
+
+**题意复述**：第 `i` 个核的能耗按 `x_i,y_i,x_i,y_i,...` 交替；总预算为 `m`，任意分配任务，求最多完成周期数。每个核完成奇数个周期的边际成本为 `x_i`，之后每增加两周期成本为 `x_i+y_i`，按边际单位成本贪心取。
+
+参考实现可用“二分完成总周期数 + 对每核计算完成该数量所需的最小能耗”判定，避免逐周期模拟；本题数据范围到 `m <= 10^18`，实现时必须使用整数除法和 64 位整数。
+
+题目：[T30204 小P的LLM推理加速](http://cs101.openjudge.cn/practice/30204/)。
+
+<!-- 历史草稿原文保留在本文件此处，仅供审计，不属于当前样卷正文。
 
 **考点**：字典、集合、排序（W4）　　**难度**：★★☆☆☆
 
@@ -294,7 +405,7 @@ print(solve(["3", "2 math physics", "2 math chemistry", "1 physics"]))
 
 ---
 
-## T2.（旧草稿，已废弃）：最优装载顺序
+### 历史草稿 T2：最优装载顺序
 
 **考点**：贪心 + 交换论证（W6、W10）　　**难度**：★★★☆☆
 
@@ -384,7 +495,7 @@ print(min_cost_int([(1, 3), (2, 1), (3, 2)]))    # 6
 
 ---
 
-## T3.（旧草稿，已废弃）：网格中的宝藏
+### 历史草稿 T3：网格中的宝藏
 
 **考点**：带状态 BFS（W12）　　**难度**：★★★☆☆
 
@@ -476,7 +587,7 @@ print(treasure(["S#T"]))    # -1
 
 ---
 
-## T4.（旧草稿，已废弃）：分组考试
+### 历史草稿 T4：分组考试
 
 **考点**：DP + 前缀和（W10、W11）　　**难度**：★★★★☆
 
@@ -559,7 +670,7 @@ n = 300、k ≤ 300 时约 2.7×10⁷，可以过。
 
 ---
 
-## T5.（旧草稿，已废弃）：书架分层
+### 历史草稿 T5：书架分层
 
 **考点**：二分答案 + 贪心校验（W12、W13）　　**难度**：★★★★☆
 
@@ -639,7 +750,7 @@ solve()
 
 ---
 
-## T6.（旧草稿，已废弃）：敌友阵营
+### 历史草稿 T6：敌友阵营
 
 **考点**：扩展域并查集（W09）　　**难度**：★★★★★
 
@@ -739,6 +850,8 @@ solve()
 > **信息装不进现有的状态，就扩状态**。
 
 ---
+
+-->
 
 # 3 综合复习清单
 
