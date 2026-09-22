@@ -142,6 +142,13 @@
 - **引用修正**：W13 现改为确实存在的 W04 埃氏筛“从 `i*i` 开始逐个标记倍数”循环，课件源码和 PPTX 重建同步。
 - **闸门**：`python3 tools/check_note_code.py` 为 **75 项通过、0 项失败**（6 个旧草稿用例移出当前课程集合）；`python3 tools/verify_courseware.py` 通过，**237 个代码块、281 处题号比对**。环境仍无 `python-pptx`，第 6/10 项产物层跳过。
 
+## 2026-09-22 · T-030 当前 W16 样卷红队
+
+- 重写 `tools/redteam_exam.py`，不再验证隐藏历史草稿；当前 T1–T6 各有正确模型、代表性错误实现和固定 WA 反例。
+- W16 新增可见的 5.7 反例表，明确它用于暴露常见错法，不声称是平台完整数据或评分点。
+- 验证：`python3 tools/redteam_exam.py` 六个用例族均通过；`verify_courseware.py` 通过；`check_note_code.py` 为 75/75。
+- 本机无 `python-pptx`，一致性闸门的产物层仍跳过；本轮未改 PPTX 版面。
+
 ## 写这份 NOTES 时请覆盖
 
 - **T-007 的结论**：PowerPoint 版本号、实际逐页复看的页数、发现的版面问题清单；

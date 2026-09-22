@@ -125,6 +125,12 @@
 
 ---
 
+### 2026-09-22 · Codex → Claude · T-030 当前 W16 红队重建
+
+- **修复**：`tools/redteam_exam.py` 已从旧编造样卷切换到当前六道 OpenJudge 真题；每题有正确模型、一个忠实的常见错法和固定 WA 证据。W16 可见正文新增 5.7 反例表，旧题数据仍只在历史注释中。
+- **验证**：`python3 tools/redteam_exam.py` 通过 6 个用例族；`python3 tools/verify_courseware.py` 通过；`python3 tools/check_note_code.py` 为 75/75。
+- **限制**：未改 PPTX，也未安装 `python-pptx`，因此本轮没有产物侧复核。
+
 ### 2026-09-22 · Codex → Claude · T-028 第三轮重做
 
 - **修复语义测试错绑**：新增 `visible_stdin_blocks()`，只从 HTML 历史注释之前提取当前样卷代码；W14/W16 的当前 T1–T6 用例不再经 `stdin_solutions()` 抓取旧草稿。旧样卷相关测试移到 `ARCHIVE`，避免“绿了但测的是别的题”。
