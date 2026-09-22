@@ -140,6 +140,14 @@ def stdin_solutions(week):
             if 'def solve():' in b and re.search(r'^solve\(\)', b, re.M)]
 
 
+def visible_stdin_blocks(week):
+    """只取当前样卷正文，绝不让 HTML 注释里的历史草稿混入语义测试。"""
+    path = COURSEWARE / (WEEK_FILES[week] + '.md')
+    visible = path.read_text(encoding='utf-8').split('<!-- 历史草稿', 1)[0]
+    return [b for b in PY_BLOCK.findall(visible)
+            if 'input(' in b or 'stdin' in b]
+
+
 # ---------------------------------------------------------------- 用例注册
 CASES = []
 
@@ -1500,7 +1508,7 @@ def t_max_tasks(ns):
 
 
 # ------------------------------------------------------------------- W14
-@case('W14', '装载顺序贪心 vs 全排列暴力')
+@case('ARCHIVE', '历史草稿：装载顺序贪心 vs 全排列暴力')
 def t_load_order(ns):
     f = ns['min_cost_int']
     g = ns['min_cost']
@@ -1519,7 +1527,7 @@ def t_load_order(ns):
         assert g(boxes) == best, boxes
 
 
-@case('W14', '钥匙迷宫 BFS vs 双层图 Dijkstra')
+@case('ARCHIVE', '历史草稿：钥匙迷宫 BFS vs 双层图 Dijkstra')
 def t_treasure(ns):
     import heapq
     f = ns['treasure']
@@ -1561,7 +1569,7 @@ def t_treasure(ns):
         assert got == ans, (grid, got, ans)
 
 
-@case('W14', '分组考试 DP vs 枚举所有切法')
+@case('ARCHIVE', '历史草稿：分组考试 DP vs 枚举所有切法')
 def t_group_exam(ns):
     f = ns['group_exam']
     rnd = random.Random(50)
@@ -1658,7 +1666,7 @@ def t_tfidf(ns):
     assert score("不存在的词", docs, idx) == [0.0, 0.0, 0.0]
 
 
-@case('W14', '书架分层二分答案 vs 全枚举切法（讲义原文驱动）')
+@case('ARCHIVE', '历史草稿：书架分层二分答案 vs 全枚举切法')
 def t_w14_shelves(ns):
     """T5 的三处坑（下界必须是 max(a)、判据是 <= k、二分收缩方向）
     只能用穷举对照来兜住 —— 任何一处写错，小数据上就会立刻分叉。
@@ -1687,7 +1695,7 @@ def t_w14_shelves(ns):
         assert got == want, (a, k, got, want)
 
 
-@case('W14', '敌友阵营扩展域并查集 vs BFS 奇偶标号（讲义原文驱动）')
+@case('ARCHIVE', '历史草稿：敌友阵营扩展域并查集 vs BFS 奇偶标号')
 def t_w14_camps(ns):
     """T6 的参照模型不用并查集：在"已采纳关系"的图上做 BFS，
     用**奇偶标号**表示朋友 / 敌人。两套实现对矛盾编号与团体数都必须一致。
@@ -1743,7 +1751,7 @@ def t_w14_camps(ns):
         assert got == want, (n, rels, got, want)
 
 
-@case('W14', '错误归因表点名的错法，逐条给出反例')
+@case('ARCHIVE', '历史草稿：错误归因表点名的错法')
 def t_w14_wrong_ways(ns):
     """T5、T6 的「错误归因」表是本周讲评的主体。表里每一行都是一句
     "这样写会 WA / TLE"——**没有反例的归因就只是口气重的猜测**。
@@ -1828,7 +1836,7 @@ def t_w14_wrong_ways(ns):
 
 
 # ------------------------------------------------------------------- W16
-@case('W16', '会议室：堆写法 vs 逐点峰值')
+@case('ARCHIVE', '历史草稿：会议室：堆写法 vs 逐点峰值')
 def t_rooms(ns):
     f = ns['min_rooms']
     rnd = random.Random(53)
@@ -1842,7 +1850,7 @@ def t_rooms(ns):
         assert f(iv) == peak, iv
 
 
-@case('W16', '样卷 T1–T6 参考解答 vs 讲义样例 + 红队 fixture')
+@case('ARCHIVE', '历史草稿：样卷 T1–T6 参考解答')
 def t_w16_reference_solutions(ns):
     """直接执行讲义里给学生照抄的那六段代码，喂样例与红队反例，比对文档承诺的输出。
 
@@ -1878,6 +1886,89 @@ def t_w16_reference_solutions(ns):
             assert got == want, (
                 f'样卷 T{idx + 1} 参考解答输出不符：'
                 f'输入 {stdin_text!r} -> 得到 {got!r}，讲义承诺 {want!r}')
+
+
+@case('W14', '当前月考真题 T1–T6：样例与 T6 小规模暴力对拍')
+def t_w14_real_exam_solutions(ns):
+    sols = visible_stdin_blocks('W14')
+    assert len(sols) == 6, f'W14 当前样卷应有 6 段可运行解答，实际 {len(sols)}'
+    cases = {
+        0: [('1\n', 'End')],
+        1: [('175438\n4\n', '13')],
+        2: [('4\n2\n1 3\n', '2 4')],
+        3: [('keyword\n1\nballoon\n', 'cbizsces')],
+        4: [('4\n0 4 1 3\n4 0 2 1\n1 2 0 5\n3 1 5 0\n', '7')],
+        5: [('2 10\n4 1\n3 3\n', '4')],
+    }
+    for i, items in cases.items():
+        for stdin_text, want in items:
+            got = run_stdin_solution(sols[i], stdin_text)
+            assert got == want, (i + 1, stdin_text, got, want)
+
+    # T6 与穷举分配任务数对拍；覆盖 x<y 与 x>y 两种交替能耗。
+    def brute(items, budget):
+        best = 0
+        def dfs(i, used, done):
+            nonlocal best
+            if used > budget:
+                return
+            best = max(best, done)
+            if i == len(items):
+                return
+            x, y = items[i]
+            cost = 0
+            for cnt in range(budget + 1):
+                dfs(i + 1, used + cost, done + cnt)
+                cost += x if cnt % 2 == 0 else y
+        dfs(0, 0, 0)
+        return best
+
+    rnd = random.Random(30204)
+    for _ in range(80):
+        items = [(rnd.randint(1, 7), rnd.randint(1, 7))
+                 for _ in range(rnd.randint(1, 3))]
+        budget = rnd.randint(1, 25)
+        text = f'{len(items)} {budget}\n' + ''.join(f'{x} {y}\n' for x, y in items)
+        got = int(run_stdin_solution(sols[5], text))
+        want = brute(items, budget)
+        assert got == want, (items, budget, got, want)
+
+
+@case('W16', '当前月考真题 T1–T6：样例与 T6 可达排列暴力对拍')
+def t_w16_real_exam_solutions(ns):
+    sols = visible_stdin_blocks('W16')
+    assert len(sols) == 6, f'W16 当前样卷应有 6 段可运行解答，实际 {len(sols)}'
+    cases = {
+        0: [('11,35,3\n', '12,21,30\n15,24,33\n18,27')],
+        1: [('6 4\n22 15 32 36 16 30 42 30 39 23 17 18\n', 'Yes')],
+        2: [('5\n1 0 1 0 1\n0 1 1 1 0\n0 1 7 1 0\n0 1 1 1 0\n1 0 1 0 1\n', '8')],
+        3: [('7 3\n', '4')],
+        4: [('20 4\n1 2 5 10\n', '5')],
+        5: [('5 3\n7\n7\n3\n6\n2\n', '6\n7\n7\n2\n3')],
+    }
+    for i, items in cases.items():
+        for stdin_text, want in items:
+            got = run_stdin_solution(sols[i], stdin_text)
+            assert got == want, (i + 1, stdin_text, got, want)
+
+    from collections import deque
+    rnd = random.Random(25353)
+    for _ in range(80):
+        n = rnd.randint(1, 7)
+        d = rnd.randint(1, 5)
+        start = tuple(rnd.randint(1, 9) for _ in range(n))
+        seen, q = {start}, deque([start])
+        while q:
+            cur = q.popleft()
+            for i in range(n - 1):
+                if abs(cur[i] - cur[i + 1]) <= d:
+                    nxt = cur[:i] + (cur[i + 1], cur[i]) + cur[i + 2:]
+                    if nxt not in seen:
+                        seen.add(nxt); q.append(nxt)
+        want = min(seen)
+        text = f'{n} {d}\n' + '\n'.join(map(str, start)) + '\n'
+        got = tuple(map(int, run_stdin_solution(sols[5], text).split()))
+        assert got == want, (start, d, got, want)
 
 
 # ---------------------------------------------------------------- 运行器

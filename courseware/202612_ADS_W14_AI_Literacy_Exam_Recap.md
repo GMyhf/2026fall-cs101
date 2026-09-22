@@ -319,9 +319,37 @@ print(min(dp[full][u] + c[u][0] for u in range(1, n)))
 
 ## T6. T30204 小P的LLM推理加速
 
-**题意复述**：第 `i` 个核的能耗按 `x_i,y_i,x_i,y_i,...` 交替；总预算为 `m`，任意分配任务，求最多完成周期数。每个核完成奇数个周期的边际成本为 `x_i`，之后每增加两周期成本为 `x_i+y_i`，按边际单位成本贪心取。
+**题意复述**：第 `i` 个核的能耗按 `x_i,y_i,x_i,y_i,...` 交替；总预算为 `m`，任意分配任务，求最多完成周期数。完成 `2q+1` 个周期的成本是 `q(x_i+y_i)+x_i`。
 
-参考实现可用“二分完成总周期数 + 对每核计算完成该数量所需的最小能耗”判定，避免逐周期模拟；本题数据范围到 `m <= 10^18`，实现时必须使用整数除法和 64 位整数。
+**参考解答**：设 `pair=min(x_i+y_i)`。固定总周期数 `k` 时，若选择 `odd` 个核完成奇数个周期（`odd` 与 `k` 同奇偶），其余周期以最便宜的二周期组完成，成本为 `(k-odd)//2*pair + 最小 odd 个 x 的和`。枚举 `odd` 的前缀最优值即可判定 `k` 是否可行，再二分答案。
+
+```python
+import sys
+
+data = list(map(int, sys.stdin.buffer.read().split()))
+n, budget = data[:2]
+x = sorted(data[i] for i in range(2, 2 * n + 2, 2))
+pair = min(data[i] + data[i + 1] for i in range(2, 2 * n + 2, 2))
+prefix = [0]
+for v in x:
+    prefix.append(prefix[-1] + v)
+
+def feasible(k):
+    start = k & 1
+    best = 10**30
+    for odd in range(start, min(n, k) + 1, 2):
+        best = min(best, (k - odd) // 2 * pair + prefix[odd])
+    return best <= budget
+
+lo, hi = 0, 2 * budget // pair + n + 1
+while lo + 1 < hi:
+    mid = (lo + hi) // 2
+    if feasible(mid):
+        lo = mid
+    else:
+        hi = mid
+print(lo)
+```
 
 题目：[T30204 小P的LLM推理加速](http://cs101.openjudge.cn/practice/30204/)。
 

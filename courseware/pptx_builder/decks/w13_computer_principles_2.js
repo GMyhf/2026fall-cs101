@@ -227,7 +227,7 @@ print(2 ** 63 - 1 == sys.maxsize)`, 0.5, 1.05, 5.8, 1.15, { fontSize: 10.5, lang
     [{ t: "bytearray", mono: true }, "~1 MB"],
     [{ t: "set / dict", mono: true }, "~70 MB 以上"],
   ], 0.5, 3.6, 9.0, [2.6, 6.4], { fontSize: 10.5, rowH: 0.23, tight: true });
-  text(s, "OJ 内存限制常见 64–256 MB：n=10⁷ 的一维 list 就已经危险，改用 bytearray / array；筛法的内层切片写法可回看 W04 的埃氏筛实现。", 0.5, 4.78, 9, 0.25, { fontSize: 9.5, color: C.muted, margin: 0 });
+  text(s, "OJ 内存限制常见 64–256 MB：n=10⁷ 的一维 list 就已经危险，改用 bytearray / array；可回看 W04 埃氏筛从 i*i 开始逐个标记倍数的循环。", 0.5, 4.78, 9, 0.25, { fontSize: 9.5, color: C.muted, margin: 0 });
 }
 
 // 2.4 memory management

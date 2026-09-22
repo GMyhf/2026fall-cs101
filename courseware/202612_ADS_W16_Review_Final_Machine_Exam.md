@@ -261,9 +261,49 @@ else:
 
 ## T6. T25353 排队
 
-**题意复述**：相邻两人身高差不超过 `D` 才能交换，任意次交换后求字典序最小的身高序列。关键是每次只能把当前可交换的较小元素向左推进；用小根堆维护可到达当前位置的候选，推进时更新相邻可交换边，整体 `O(N log N)`。
+**题意复述**：相邻两人身高差不超过 `D` 才能交换，任意次交换后求字典序最小的身高序列。两人身高差大于 `D` 时相对顺序永远不能改变，可把它们看成前驱约束；每个元素的层数是此前所有“不可交换的大山”的最大层数加一，同层元素可任意交换，故逐层排序输出。
 
-参考实现应按题目给出的交换规则维护“可达候选堆”，不能直接对全体身高排序；样例 `7 7 3 6 2, D=3` 的结果是 `6 7 7 2 3`，可作为实现的边界回归。
+**参考解答**：离散化身高后，用两棵树状数组维护“比当前值小 `D` 以上”和“比当前值大 `D` 以上”的最大层数，单点更新、前缀最大查询均为 `O(log N)`。
+
+```python
+import bisect
+import sys
+
+data = list(map(int, sys.stdin.buffer.read().split()))
+n, d = data[:2]
+h = data[2:2 + n]
+vals = sorted(set(h))
+m = len(vals)
+lo_bit = [0] * (m + 1)
+hi_bit = [0] * (m + 1)
+
+def update(bit, i, value):
+    while i <= m:
+        bit[i] = max(bit[i], value)
+        i += i & -i
+
+def query(bit, i):
+    ans = 0
+    while i:
+        ans = max(ans, bit[i])
+        i -= i & -i
+    return ans
+
+layers = {}
+for height in h:
+    small = query(lo_bit, bisect.bisect_left(vals, height - d))
+    large = query(hi_bit, m - bisect.bisect_right(vals, height + d))
+    level = max(small, large) + 1
+    layers.setdefault(level, []).append(height)
+    pos = bisect.bisect_left(vals, height) + 1
+    update(lo_bit, pos, level)
+    update(hi_bit, m - pos + 1, level)
+for level in sorted(layers):
+    for height in sorted(layers[level]):
+        print(height)
+```
+
+样例 `7 7 3 6 2, D=3` 的结果为 `6 7 7 2 3`；不能直接排序成 `2 3 6 7 7`，因为 `2` 无法越过身高差超过 `D` 的人。
 
 题目：[T25353 排队](http://cs101.openjudge.cn/practice/25353/)。
 
