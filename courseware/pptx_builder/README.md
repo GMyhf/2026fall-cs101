@@ -18,7 +18,7 @@ node lib.js check ../202611_ADS_W10_Intervals_DP_Intro.pptx           # 负尺�
 | -- | ---- | ---- |
 | 03 | `decks/w03_computer_principles_1.js` | 56 |
 | 04 | `decks/w04_python_basics_algorithm_analysis.js` | 42 |
-| 05 | `decks/w05_october_exam_review.js` | 31 |
+| 05 | `decks/w05_october_exam_review.js` | 28 |
 | 06 | `decks/w06_matrices_sorting_greedy.js` | 45 |
 | 07 | `decks/w07_matrix_queue_stack_greedy.js` | 39 |
 | 08 | `decks/w08_recursion.js` | 36 |
@@ -27,9 +27,9 @@ node lib.js check ../202611_ADS_W10_Intervals_DP_Intro.pptx           # 负尺�
 | 11 | `decks/w11_dp.js` | 31 |
 | 12 | `decks/w12_dp_bfs.js` | 32 |
 | 13 | `decks/w13_computer_principles_2.js` | 32 |
-| 14 | `decks/w14_ai_literacy_exam_recap.js` | 40 |
+| 14 | `decks/w14_ai_literacy_exam_recap.js` | 32 |
 | 15 | `decks/w15_knowledge_graph_neural_network.js` | 30 |
-| 16 | `decks/w16_review_final_machine_exam.js` | 39 |
+| 16 | `decks/w16_review_final_machine_exam.js` | 38 |
 
 页上的运行结果、逐步 trace 都在 Python 3.12 下实跑核对过；改代码时连同结果一起改。
 第 1–2 周仍用旧的 `content/w01.py` / `w02.py`（META + SLIDES）经 `../deck.py` 生成，不在这里。

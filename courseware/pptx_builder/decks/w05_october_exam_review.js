@@ -182,8 +182,7 @@ for i in range(m):
 // ============================ PART 3 ============================
 sectionSlide("Part 3", "月考样卷", "三次月考与期末上机考试同一规格：6 题 / 112 分钟\n难度梯度 T1 → T6");
 
-// T-028: verified 2025-10-09 OpenJudge contest. The legacy synthetic walkthrough
-// below is retained only for audit; the authoritative problem list is in the MD.
+// T-028: 2025-10-09 真实 OpenJudge 比赛，六题均已联网核实，题号登记进 VERIFIED_TITLES。
 // 3.0 difficulty ladder
 {
   const s = content("3.0", "3 月考样卷", "难度梯度：从签到到综合");
@@ -207,177 +206,114 @@ sectionSlide("Part 3", "月考样卷", "三次月考与期末上机考试同一�
 
 // T1
 {
-  const s = content("T1", "3 月考样卷 · T1 成绩转换", "签到题：输入输出、分支、格式化");
-  text(s, "读入 n 个百分制成绩，输出等级：≥90→A，≥80→B，≥70→C，≥60→D，否则 E；最后一行输出通过（≥60）人数占比，保留两位小数。", 0.5, 1.05, 9, 0.55, { fontSize: 12, lsm: 1.15 });
+  const s = content("T1", "3 月考样卷 · T1 E29895 分解因数", "签到题：试除找最小因子");
+  text(s, "给定合数 n（1 ≤ n ≤ 10¹⁰），求它的最大真因数（除 1、n 本身外的最大因数）。", 0.5, 1.05, 9, 0.35, { fontSize: 12.5 });
   codeBlock(s, `n = int(input())
-scores = list(map(int, input().split()))
-grade = lambda s: 'A' if s >= 90 else 'B' if s >= 80 else 'C' if s >= 70 else 'D' if s >= 60 else 'E'
-print('\\n'.join(grade(s) for s in scores))
-print(f"{sum(1 for s in scores if s >= 60) * 100 / n:.2f}")`, 0.5, 1.7, 9.0, 1.4, { fontSize: 11, lang: "py" });
-  text(s, "样例输入：`5` / `95 83 71 60 40`", 0.5, 3.15, 4.35, 0.3, { fontSize: 10.5, color: C.muted });
-  consoleBlock(s, "A\nB\nC\nD\nE\n80.00", 0.5, 3.48, 4.35, 1.42, 10.5);
-  callout(s, "评分要点 / 常见失分", [
-    "等级全对 10 分；百分比格式正确（`80.00` 而非 `80.0`）5 分。",
-    "常见失分：用 `round()` 导致 `80.0`；边界 90/80/70/60 用 `>` 而非 `>=`。",
-  ], 5.15, 3.25, 4.35, 1.5, { fontSize: 10.5, gap: 6 });
+p = 2
+while n % p:
+    p += 1
+print(n // p)`, 0.5, 1.55, 5.6, 1.5, { fontSize: 13, lang: "py" });
+  consoleBlock(s, "输入: 21\n输出: 7", 0.5, 3.2, 5.6, 0.85, 11);
+  callout(s, "为什么 n // p 就是最大因子", "p 从 2 开始逐个试除，第一个整除 n 的 p 就是 n 的最小因子；因数成对出现，最小因子对应的另一半就是最大真因子 n/p。", 6.3, 1.55, 3.2, 2.5, { fontSize: 10.5 });
+  text(s, "题目：cs101.openjudge.cn/practice/29895/", 0.5, 4.25, 9, 0.3, { fontSize: 10, color: C.muted });
 }
 
 // T2
 {
-  const s = content("T2", "3 月考样卷 · T2 单词首字母大写", "字符串处理、ASCII");
-  text(s, "把每个单词（连续英文字母）首字母改大写、其余小写；其他字符原样保留。", 0.5, 1.05, 9, 0.35, { fontSize: 12 });
-  codeBlock(s, `s = sys.stdin.readline().rstrip('\\n')
-out, start_of_word = [], True
-for ch in s:
-    if ch.isalpha():
-        out.append(ch.upper() if start_of_word else ch.lower())
-        start_of_word = False
-    else:
-        out.append(ch)
-        start_of_word = True
-print(''.join(out))`, 0.5, 1.5, 5.6, 2.15, { fontSize: 10.5, lang: "py" });
-  consoleBlock(s, "输入: hello WORLD, this is cs101!\nHello World, This Is Cs101!", 0.5, 3.8, 5.6, 0.85, 10);
-  callout(s, "不能用 s.title()", "`'don\\'t'.title()` 会变成 `\"Don'T\"`——内建函数的边界行为要自己验证过再用。", 6.3, 1.5, 3.2, 1.15, { fontSize: 10.5, fill: "FDF0EE", tcolor: C.bad });
-  callout(s, "评分要点", [
-    "状态机写法正确 12 分；用 `''.join()` 而非循环拼接 3 分。",
-    "常见失分：`+=` 拼接字符串 O(n²) TLE；把数字也当单词起点。",
-  ], 6.3, 2.8, 3.2, 1.85, { fontSize: 10, gap: 5 });
+  const s = content("T2", "3 月考样卷 · T2 E29940 机器猫斗恶龙", "前缀和：血量全程为正");
+  text(s, "依次经过 n 个关卡，正数回血、负数扣血；任何时刻血量必须为正数。求最小的正整数初始血量（n ≤ 10⁵）。", 0.5, 1.05, 9, 0.5, { fontSize: 12, lsm: 1.1 });
+  codeBlock(s, `import sys
+a = list(map(int, sys.stdin.buffer.read().split()))
+cur = mn = 0
+for x in a[1:1 + a[0]]:
+    cur += x
+    mn = min(mn, cur)
+print(1 - mn)`, 0.5, 1.7, 5.6, 1.9, { fontSize: 11, lang: "py" });
+  consoleBlock(s, "输入: 5 / -200 -300 1000 -100 -100\n输出: 501", 0.5, 3.75, 5.6, 0.85, 10.5);
+  callout(s, "前缀和的最小值就是最大跌幅", "cur 是相对初始血量的累计变化，mn 是过程中最深的一次跌幅（负数）。初始血量只要 ≥ 1 - mn，全程血量就能保持 > 0。", 6.3, 1.7, 3.2, 2.9, { fontSize: 10.5 });
 }
 
 // T3
 {
-  const s = content("T3", "3 月考样卷 · T3 图书借阅排行", "字典计数、多关键字排序");
-  text(s, "n 条借阅记录，按借阅次数从多到少输出；次数相同按书名字典序升序，只输出前 k 名。", 0.5, 1.05, 9, 0.35, { fontSize: 12 });
-  codeBlock(s, `from collections import Counter
-data = sys.stdin.read().split()
-n, k = int(data[0]), int(data[1])
-cnt = Counter(data[2:2 + n])
-rank = sorted(cnt.items(), key=lambda kv: (-kv[1], kv[0]))
-print('\\n'.join(f"{name} {c}" for name, c in rank[:k]))`, 0.5, 1.5, 9.0, 1.55, { fontSize: 11, lang: "py" });
-  consoleBlock(s, "输入: 6 2 / python algorithm python math algorithm python\npython 3\nalgorithm 2", 0.5, 3.15, 4.35, 0.95, 10);
-  callout(s, "数据构造建议 / 评分要点", [
-    "卡 O(n²)：n=2×10⁵ 只用 500 个不同书名，`list.count()` 逐个统计会 TLE。",
-    "卡排序键：大量次数相同的书名，检验字典序是否升序。",
-    "常见失分：只按次数排序；用 `reverse=True` 导致书名也降序。",
-  ], 5.0, 3.15, 4.5, 1.55, { fontSize: 10, gap: 5 });
+  const s = content("T3", "3 月考样卷 · T3 M29917 牛顿迭代法", "迭代逼近、浮点终止条件");
+  text(s, "对每个正数 a（读到 EOF 为止），用初值 x=1 和迭代式 x = (x + a/x) / 2 求平方根；相邻两次近似值之差 ≤ 1e-6 时停止，输出迭代次数与两位小数结果。", 0.5, 1.02, 9, 0.6, { fontSize: 11.5, lsm: 1.1 });
+  codeBlock(s, `import sys
+for token in sys.stdin.read().split():
+    a, x, cnt = float(token), 1.0, 0
+    while True:
+        y = (x + a / x) / 2
+        cnt += 1
+        if abs(y - x) <= 1e-6:
+            print(cnt, f'{y:.2f}')
+            break
+        x = y`, 0.5, 1.7, 9.0, 2.15, { fontSize: 11, lang: "py" });
+  text(s, "样例输入：`12` / `25` / `144`", 0.5, 3.95, 4.85, 0.28, { fontSize: 10.5, color: C.muted });
+  consoleBlock(s, "6 3.46 / 7 5.00 / 8 12.00", 0.5, 4.25, 4.85, 0.55, 11);
+  callout(s, "不定行输入用 sys.stdin.read().split()", "题目没给数据组数，逐个 token 处理到 EOF；每个数独立跑一次牛顿迭代，互不影响。", 5.55, 3.95, 3.95, 0.85, { fontSize: 9.5 });
 }
 
-// T4 concept
+// T4
 {
-  const s = content("T4", "3 月考样卷 · T4 区间内的 T-数", "素数筛、复杂度意识、浮点陷阱");
-  text(s, "T-数：恰好有 3 个正约数的正整数。q 次询问，每次给出 x（≤ 10¹²），判断是否为 T-数。", 0.5, 1.05, 9, 0.35, { fontSize: 12 });
-  card(s, 0.5, 1.55, 9.0, 1.05, C.dark);
-  text(s, "为什么「恰好 3 个约数」⟺「素数的平方」", 0.7, 1.62, 8.6, 0.3, { fontSize: 12.5, bold: true, color: C.gold, margin: 0 });
-  text(s, "x = p₁^a₁·p₂^a₂··· 的约数个数 = (a₁+1)(a₂+1)···。要等于 3（素数），只能是单个因子且 a₁+1=3，即 x = p²。", 0.7, 1.95, 8.6, 0.55, { fontSize: 11.5, color: C.white, lsm: 1.15 });
-  codeBlock(s, `LIMIT = 10 ** 6                       # sqrt(10^12)
-r = int(x ** 0.5)
-while r * r > x:                  # 浮点开方可能偏大
-    r -= 1
-while (r + 1) * (r + 1) <= x:     # 也可能偏小
-    r += 1
-ans = "YES" if r * r == x and is_prime[r] else "NO"`, 0.5, 2.75, 5.6, 1.9, { fontSize: 10.5, lang: "py" });
-  callout(s, "评分要点", [
-    "想到「素数的平方」6 分；筛法预处理 5 分；浮点开方校正 4 分。",
-    "常见失分：`int(x**0.5)` 不校正，10¹² 量级偶发错 1。",
-  ], 6.3, 2.75, 3.2, 1.9, { fontSize: 10.5, gap: 6 });
+  const s = content("T4", "3 月考样卷 · T4 M29918 求亲和数", "倍数筛：真因数和");
+  text(s, "若 a 的真因数和 = b、b 的真因数和 = a（a ≠ b），称 (a, b) 为亲和数对。给定 n（≤ 100000），按较小数递增输出所有 a ≤ n 的亲和数对。", 0.5, 1.05, 9, 0.5, { fontSize: 11.5, lsm: 1.1 });
+  codeBlock(s, `import sys
+n = int(sys.stdin.buffer.read())
+s = [0] * (n + 1)
+for d in range(1, n // 2 + 1):
+    for x in range(2 * d, n + 1, d):
+        s[x] += d
+for a in range(2, n + 1):
+    b = s[a]
+    if a < b <= n and s[b] == a:
+        print(a, b)`, 0.5, 1.7, 5.7, 2.45, { fontSize: 10.5, lang: "py" });
+  text(s, "样例输入：`1500`", 6.35, 1.7, 3.15, 0.3, { fontSize: 10.5, color: C.muted });
+  consoleBlock(s, "220 284\n1184 1210", 6.35, 2.02, 3.15, 0.9, 10.5);
+  callout(s, "倍数筛，不是逐个试除", "对每个因子 d，把它加到所有 d 的倍数（除自身外）的累加器上——s[x] 最终就是 x 的真因数和，是 O(n log n)，比逐个试除到 √x 快得多。", 6.35, 3.0, 3.15, 2.15, { fontSize: 10 });
 }
 
-// T4 sieve
+// T5
 {
-  const s = content("T4", "3 月考样卷 · T4 完整解", "筛法预处理 + 浮点校正");
-  codeBlock(s, `def sieve(n):
-    p = bytearray([1]) * (n + 1)
-    p[0] = p[1] = 0
-    i = 2
-    while i * i <= n:
-        if p[i]:
-            p[i * i::i] = bytearray(len(p[i * i::i]))
-        i += 1
-    return p
-
-is_prime = sieve(LIMIT)
-for s in data[1:1 + q]:
-    x = int(s)
-    r = int(x ** 0.5)
-    while r * r > x:
-        r -= 1
-    while (r + 1) * (r + 1) <= x:
-        r += 1
-    out.append("YES" if r * r == x and is_prime[r] else "NO")`, 0.5, 1.05, 5.7, 4.05, { fontSize: 10, lang: "py" });
-  text(s, "样例输入：`4` / `4 5 9 12`", 6.35, 1.05, 3.15, 0.3, { fontSize: 10.5, color: C.muted });
-  consoleBlock(s, "YES\nNO\nYES\nNO", 6.35, 1.4, 3.15, 1.15, 10.5);
-  callout(s, "数据构造建议", "卡浮点：取 999999937²（LIMIT 内最大素数的平方）附近及 ±1；卡超时：q=10⁵ 且每次试除到 √x（约 10⁶ 次）→ 10¹¹ 次必 TLE。", 6.35, 2.7, 3.15, 2.4, { fontSize: 10.5 });
+  const s = content("T5", "3 月考样卷 · T5 M29949 贪婪的哥布林", "分数背包：按单位价值贪心");
+  text(s, "n 堆矿石，每堆价值 v、重量 w，可任意分割；背包承重 M。求能装下的最大总价值。", 0.5, 1.05, 9, 0.35, { fontSize: 12 });
+  codeBlock(s, `import sys
+d = list(map(int, sys.stdin.buffer.read().split()))
+n, cap = d[:2]
+items = sorted([(d[i] / d[i + 1], d[i], d[i + 1])
+                for i in range(2, 2 * n + 2, 2)], reverse=True)
+ans = 0.0
+for ratio, value, weight in items:
+    take = min(cap, weight)
+    ans += ratio * take
+    cap -= take
+    if cap == 0:
+        break
+print(f'{ans:.2f}')`, 0.5, 1.5, 9.0, 2.3, { fontSize: 10.5, lang: "py" });
+  consoleBlock(s, "输入: 3 50 / 60 10 / 100 20 / 120 30\n输出: 240.00", 0.5, 3.95, 4.35, 0.85, 10.5);
+  callout(s, "可分割背包：贪心一定最优", "按单位重量价值 v/w 从高到低取，能整堆拿就整堆拿，拿不下就切一部分——矿石可分割，不存在 0-1 背包那种「拿了就放不下别的」的取舍。", 5.0, 3.95, 4.5, 0.95, { fontSize: 9.5 });
 }
 
-// T5 concept + trace
+// T6
 {
-  const s = content("T5", "3 月考样卷 · T5 电梯调度模拟", "模拟、边界处理（综合）");
-  text(s, "电梯按请求顺序依次服务：移动到 fᵢ 接人（等到 tᵢ 才开门）→ 送到 gᵢ。移动 1 层耗时 1，开关门每次 2。求最后一人被送达（不含最后一次开关门）的时刻。", 0.5, 1.02, 9, 0.55, { fontSize: 11, lsm: 1.12 });
-  const rows = [
-    ["t=0", "接 1 号 (1→5)", "now=0，到 1 层无需移动，等到 0，开关门 +2 → 2；移动 4 → 6；开关门 +2 → 8"],
-    ["t=3", "接 2 号 (5→2)", "已在 5 层且 t=3 已到 → 开关门 +2 → 10；移动 3 → 13；开关门 +2 → 15"],
-  ];
-  rows.forEach((r, i) => {
-    const y = 1.65 + i * 0.85;
-    pill(s, r[0], 0.5, y, 0.8, 0.4, C.dark, C.white, 11);
-    text(s, r[1], 1.45, y, 2.0, 0.4, { fontSize: 11.5, bold: true, color: C.green, valign: "middle", margin: 0 });
-    text(s, r[2], 3.55, y, 5.95, 0.75, { fontSize: 10.5, valign: "middle", margin: 0, lsm: 1.1 });
-  });
-  card(s, 0.5, 3.5, 9.0, 0.5, C.dark);
-  text(s, "送达时刻 = 13（不含最后一次开关门；样例答案是 13 而非 15）", 0.7, 3.5, 8.6, 0.5, { fontSize: 13, bold: true, color: C.gold, valign: "middle", margin: 0 });
-  callout(s, "⚠️ 定义要写死", "「被送达」= 到达目标层的时刻，不含最后一次开关门。命题时这类定义必须写死，否则大批「逻辑对但差 2」的 WA。", 0.5, 4.15, 9.0, 0.95, { fontSize: 11.5, fill: "FDF0EE", tcolor: C.bad });
-}
-
-// T5 code
-{
-  const s = content("T5", "3 月考样卷 · T5 参考解答", "四步：移动 / 等待 / 开门 / 送达");
-  codeBlock(s, `now, pos, ans = 0, 1, 0
-for _ in range(n):
-    t, f, g = int(data[idx]), int(data[idx+1]), int(data[idx+2]); idx += 3
-    now += abs(pos - f)          # 移动到接人层
-    now = max(now, t)            # 人还没到就等
-    now += 2                     # 开关门接人
-    now += abs(f - g)            # 送到目标层
-    ans = now                    # 送达时刻（不含最后开关门）
-    now += 2                     # 开关门放人
-    pos = g
-print(ans)`, 0.5, 1.05, 9.0, 2.35, { fontSize: 11, lang: "py" });
-  callout(s, "数据构造建议", [
-    "n=10⁵、坐标 10⁹：验证是否用 `int`（Python 无溢出，C++ 需 `long long`）。",
-    "全部 tᵢ=0：检验「等待」分支是否被跳过。",
-    "相邻请求 fᵢ = 上一个 gᵢ：移动距离为 0 时仍要加开关门时间。",
-  ], 0.5, 3.55, 4.35, 1.55, { fontSize: 10.5, gap: 5 });
-  callout(s, "评分要点", "主循环四步齐全 12 分；送达时刻定义正确 4 分；快速输入通过 n=10⁵ 得 4 分。", 5.15, 3.55, 4.35, 1.55, { fontSize: 11 });
-}
-
-// T6 concept
-{
-  const s = content("T6", "3 月考样卷 · T6 补码计算器", "进制转换、补码、位运算、边界判定");
-  text(s, "n 位补码计算器（2 ≤ n ≤ 64）：", 0.5, 1.02, 9, 0.3, { fontSize: 12.5 });
-  table(s, [
-    ["指令", "含义", "输出"],
-    [{ t: "TO n x", mono: true }, "十进制 x 写成 n 位补码", "长度 n 的二进制串；越界输出 OVERFLOW"],
-    [{ t: "FROM n b", mono: true }, "n 位二进制串 b 按补码解释", "它表示的十进制值"],
-    [{ t: "ADD n a b", mono: true }, "n 位补码下 a+b（按 n 位回绕）", "结果；有符号溢出则加空格 + OVERFLOW"],
-  ], 0.5, 1.35, 9.0, [1.4, 3.5, 4.1], { fontSize: 11, rowH: 0.5 });
-  consoleBlock(s, "TO 8 -5 → 11111011\nTO 4 8 → OVERFLOW（4 位范围 −8~7）\nFROM 8 11111011 → -5\nADD 8 100 100 → -56 OVERFLOW\nADD 8 -100 -100 → 56 OVERFLOW\nADD 4 3 4 → 7", 0.5, 3.55, 9.0, 1.5, 10.5);
-}
-
-// T6 code
-{
-  const s = content("T6", "3 月考样卷 · T6 参考解答", "三行核心，全部来自第 3 周");
-  codeBlock(s, `if op == 'TO':
-    lo, hi = -(1 << (n-1)), (1 << (n-1)) - 1
-    out = 'OVERFLOW' if not lo <= x <= hi else format(x & ((1 << n) - 1), f'0{n}b')
-elif op == 'FROM':
-    v = int(b, 2)
-    out = str(v - (1 << n) if v >> (n - 1) else v)
-else:  # ADD
-    r = (a + b) & ((1 << n) - 1)          # 先按 n 位回绕
-    if r >> (n - 1): r -= 1 << n          # 再按补码解释成有符号数
-    out = str(r) if r == a + b else f'{r} OVERFLOW'`, 0.5, 1.05, 9.0, 2.1, { fontSize: 10.5, lang: "py" });
-  callout(s, "⚠️ 无符号进位 ≠ 有符号溢出", "`n=8, a=-1, b=1` 硬件上有进位输出，但结果 0 完全正确，不算溢出。把进位当溢出是最常见的错法——用 `r != a+b` 判溢出就不会错。", 0.5, 3.3, 9.0, 0.95, { fontSize: 11.5, fill: "FDF0EE", tcolor: C.bad });
-  callout(s, "评分要点", "TO/FROM 都正确 8 分；ADD 的 n 位回绕正确 6 分；有符号溢出判定正确（没把无符号进位当溢出）6 分。", 0.5, 4.35, 9.0, 0.8, { fontSize: 10.5 });
+  const s = content("T6", "3 月考样卷 · T6 T29947 校门外的树又来了", "区间合并、边界计数");
+  text(s, "0..L 共 L+1 棵树，给出 M 个闭区间并移除区间内的树，求剩余树的数量。排序后合并重叠 / 相邻区间，区间长度按 r-l+1 计算。", 0.5, 1.05, 9, 0.5, { fontSize: 11.5, lsm: 1.1 });
+  codeBlock(s, `import sys
+d = list(map(int, sys.stdin.buffer.read().split()))
+L, m = d[:2]
+seg = sorted(tuple(sorted(d[i:i + 2])) for i in range(2, 2 * m + 2, 2))
+removed = 0
+left = right = None
+for l, r in seg + [(10**18, 10**18)]:
+    if left is None:
+        left, right = l, r
+    elif l <= right + 1:
+        right = max(right, r)
+    else:
+        removed += right - left + 1
+        left, right = l, r
+print(L + 1 - removed)`, 0.5, 1.7, 5.7, 2.8, { fontSize: 10, lang: "py" });
+  text(s, "样例输入：`500 3` / `150 300` / `100 200` / `470 471`", 6.35, 1.7, 3.15, 0.55, { fontSize: 10, color: C.muted, lsm: 1.1 });
+  consoleBlock(s, "298", 6.35, 2.35, 3.15, 0.65, 11);
+  callout(s, "l ≤ right + 1 才算相邻要合并", "两个区间即使不重叠，只要端点相邻（中间没有树），也要合并成一段一起统计，否则会重复扣同一棵树，或漏掉紧挨着的区间。", 6.35, 3.1, 3.15, 2.0, { fontSize: 9.5 });
 }
 
 // ============================ PART 4 ============================

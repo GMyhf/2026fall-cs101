@@ -307,279 +307,130 @@ sectionSlide("Part 2", "12 月月考讲评", "6 题 / 112 分钟，期末机考�
 
 // ---- T1 ----
 {
-  const s = content("T1", "2 月考讲评 · T1", "课程互选统计");
-  text(s, "考点：字典、集合、排序（W4）　　难度：★★☆☆☆", 0.5, 1.0, 9, 0.3, { fontSize: 11.5, color: C.muted });
-  text(s, "n 个学生各选了若干门课。求**选课人数最多**的课程；若有并列，输出课程名字典序最小的那个。再求有多少对学生**至少共选了一门课**。", 0.5, 1.35, 9, 0.75, { fontSize: 12.5, lsm: 1.2 });
-  card(s, 0.5, 2.2, 4.4, 1.9, C.code);
-  text(s, "样例输入", 0.7, 2.3, 2, 0.3, { fontSize: 10.5, bold: true, color: C.muted, margin: 0 });
-  text(s, "3\n2 math physics\n2 math chemistry\n1 physics", 0.7, 2.6, 4.0, 1.4, { fontSize: 11.5, fontFace: MONO, margin: 0 });
-  card(s, 5.1, 2.2, 4.4, 1.9, "1B2B24");
-  text(s, "样例输出", 5.3, 2.3, 2, 0.3, { fontSize: 10.5, bold: true, color: C.gold, margin: 0 });
-  text(s, "math\n2", 5.3, 2.6, 4.0, 0.7, { fontSize: 13, fontFace: MONO, bold: true, color: C.mint, margin: 0 });
-  text(s, "math 与 physics 都是 2 人，取字典序小的 math；\n共选过课的学生对：(1,2) 同选 math，(1,3) 同选 physics，共 2 对。", 5.3, 3.35, 4.0, 0.7, { fontSize: 9.5, color: C.mint, margin: 0, lsm: 1.15 });
-  callout(s, "先算复杂度再动手", "题目保证 Σkᵢ ≤ 10⁴，按课程枚举学生对总数 ≤ Σ C(cᵢ,2)，最坏情况仍可控；对每对学生求集合交集是 O(n²·k)，n=1000 时 10⁷ 次 → 危险。", 0.5, 4.2, 9.0, 0.75, { fontSize: 10.5, fill: C.mint, tcolor: C.dark });
-}
-{
-  const s = content("T1", "2 月考讲评 · T1", "参考解答");
-  codeBlock(s, `from collections import defaultdict
-
-
-def solve(lines):
-    n = int(lines[0])
-    students = []
-    course_students = defaultdict(list)
-    for i in range(1, n + 1):
-        parts = lines[i].split()
-        courses = parts[1:1 + int(parts[0])]
-        students.append(set(courses))
-        for c in courses:
-            course_students[c].append(i - 1)
-
-    hottest = min(course_students,
-                  key=lambda c: (-len(course_students[c]), c))
-
-    pairs = set()
-    for c, ss in course_students.items():
-        for a in range(len(ss)):
-            for b in range(a + 1, len(ss)):
-                pairs.add((ss[a], ss[b]))
-    return hottest, len(pairs)
-
-
-print(solve(["3", "2 math physics", "2 math chemistry", "1 physics"]))
-# ('math', 2)`, 0.5, 1.1, 5.8, 3.75, { fontSize: 7.6, lang: "py" });
-  callout(s, "并列时取字典序最小", "physics 也是 2 人，但 math < physics。`min(..., key=lambda c: (-len(...), c))` 一行同时处理了「人数降序」和「名字升序」。", 6.45, 1.1, 3.05, 1.6, { fontSize: 11, fill: C.mint, tcolor: C.dark, lsm: 1.2 });
-  table(s, [["错法", "后果"], ["只按人数取 max，不处理并列", "并列输出不确定 → WA"], ["数学生对逐对求交集 O(n²k)", "n=1000 → 10⁷ 次 → TLE"]], 6.45, 2.85, 3.05, [1.55, 1.5], { fontSize: 9.5, rowH: 0.62 });
+  const s = content("T1", "2 月考讲评 · T1 E29945 神秘数字的宇宙旅行", "模拟：Collatz 轨迹");
+  text(s, "从正整数 n（≤ 2,000,000）开始：偶数变 n/2，奇数变 3n+1；逐步输出每次跳跃的算式，直到跳到 1，最后输出 End。", 0.5, 1.05, 9, 0.5, { fontSize: 12, lsm: 1.1 });
+  codeBlock(s, `n = int(input())
+while n != 1:
+    if n % 2:
+        print(f'{n}*3+1={3*n+1}')
+        n = 3 * n + 1
+    else:
+        print(f'{n}/2={n//2}')
+        n //= 2
+print('End')`, 0.5, 1.6, 5.6, 1.95, { fontSize: 11, lang: "py" });
+  consoleBlock(s, "输入: 5\n5*3+1=16, 16/2=8, 8/2=4, 4/2=2, 2/2=1, End", 0.5, 3.65, 5.6, 0.85, 10);
+  callout(s, "为什么一定会停在 1", "这是著名的「3n+1 猜想」——目前无人证明对所有正整数都成立，但 2×10⁶ 范围内已逐一验证过都会停，题目保证不会死循环。", 6.3, 1.6, 3.2, 2.2, { fontSize: 10.5 });
 }
 
 // ---- T2 ----
 {
-  const s = content("T2", "2 月考讲评 · T2", "最优装载顺序");
-  text(s, "考点：贪心 + 交换论证（W6、W10）　　难度：★★★☆☆", 0.5, 1.0, 9, 0.3, { fontSize: 11.5, color: C.muted });
-  text(s, "n 个货箱，第 i 个重 wᵢ、卸货耗时 tᵢ。按装货的逆序卸货，第 i 个被卸货箱的「等待成本」= 它前面所有被卸货箱的耗时之和 × 它的重量。求最小总成本。", 0.5, 1.35, 9, 0.75, { fontSize: 12.5, lsm: 1.2 });
-  card(s, 0.5, 2.25, 4.4, 1.6, C.code);
-  text(s, "样例：3 箱 (1,3) (2,1) (3,2) → 6", 0.7, 2.35, 4.0, 0.35, { fontSize: 11, bold: true, color: C.dark, margin: 0 });
-  text(s, "按 t/w 升序卸货：(2,1)→(3,2)→(1,3)\n成本 = 0×2 + 1×3 + 3×1 = 6", 0.7, 2.75, 4.0, 1.0, { fontSize: 10.5, fontFace: MONO, margin: 0, lsm: 1.2 });
-  callout(s, "交换论证：相邻 a、b 谁在前？", "a 在前额外成本 tₐ·w_b；b 在前额外成本 t_b·wₐ。所以 **a 排 b 前 ⟺ tₐ·w_b < t_b·wₐ ⟺ tₐ/wₐ < t_b/w_b**——按 t/w 升序。", 5.1, 2.25, 4.4, 1.9, { fontSize: 11, fill: C.mint, tcolor: C.dark, lsm: 1.2 });
-}
-{
-  const s = content("T2", "2 月考讲评 · T2", "参考解答：浮点版 → 整数交叉相乘");
-  codeBlock(s, `def min_cost(boxes):
-    """boxes: [(重量, 耗时)]；按 t/w 升序卸货。"""
-    order = sorted(boxes, key=lambda b: (b[1] * 1.0 / b[0]))
-    elapsed, total = 0, 0
-    for w, t in order:
-        total += elapsed * w      # 前面耗时之和 × 本箱重量
-        elapsed += t
-    return total
-
-
-print(min_cost([(1, 3), (2, 1), (3, 2)]))     # 6`, 0.5, 1.1, 5.8, 1.85, { fontSize: 10, lang: "py" });
-  codeBlock(s, `import functools
-
-
-def min_cost_int(boxes):
-    def cmp(x, y):          # x 在前更优 <=> t_x*w_y < t_y*w_x
-        left, right = x[1] * y[0], y[1] * x[0]
-        return -1 if left < right else (1 if left > right else 0)
-
-    order = sorted(boxes, key=functools.cmp_to_key(cmp))
-    elapsed, total = 0, 0
-    for w, t in order:
-        total += elapsed * w
-        elapsed += t
-    return total
-
-
-print(min_cost_int([(1, 3), (2, 1), (3, 2)]))    # 6`, 0.5, 3.05, 5.8, 2.05, { fontSize: 8.2, lang: "py" });
-  callout(s, "为什么推荐整数版", "大数据下 `t/w` 浮点排序在相等值附近的误差会让顺序不稳，偶发 WA；`cmp_to_key` 交叉相乘完全避开浮点。", 6.45, 1.1, 3.05, 1.55, { fontSize: 11, fill: C.mint, tcolor: C.dark, lsm: 1.2 });
-  table(s, [["错法", "后果"], ["按 w 降序 / t 升序", "反例 (1,100)(100,1) → WA"], ["t/w 浮点排序", "大数据偶发 WA"], ["每次重算前缀和", "O(n²) → TLE"]], 6.45, 2.85, 3.05, [1.4, 1.65], { fontSize: 9, rowH: 0.46 });
+  const s = content("T2", "2 月考讲评 · T2 E29946 删数问题", "单调栈：贪心删大数字");
+  text(s, "给定最多 250 位的正整数，删除恰好 k 位并保持剩余数字顺序，使所得非负整数最小。", 0.5, 1.05, 9, 0.35, { fontSize: 12 });
+  codeBlock(s, `n = input().strip()
+k = int(input())
+stack = []
+for ch in n:
+    while k and stack and stack[-1] > ch:
+        stack.pop(); k -= 1
+    stack.append(ch)
+if k:
+    stack = stack[:-k]
+print(("".join(stack)).lstrip('0') or '0')`, 0.5, 1.5, 5.6, 2.3, { fontSize: 10.5, lang: "py" });
+  consoleBlock(s, "输入: 175438 / k=4\n输出: 13", 0.5, 3.95, 5.6, 0.75, 10.5);
+  callout(s, "单调栈：越靠前的数字影响越大", "从左到右扫描，只要当前数字比栈顶小、还有删除名额，就弹掉栈顶——相当于优先删掉「前面比后面大」的高位数字，剩下的名额留到末尾删。", 6.3, 1.5, 3.2, 3.2, { fontSize: 10.5 });
 }
 
 // ---- T3 ----
 {
-  const s = content("T3", "2 月考讲评 · T3", "网格中的宝藏");
-  text(s, "考点：带状态 BFS（W12）　　难度：★★★☆☆", 0.5, 1.0, 9, 0.3, { fontSize: 11.5, color: C.muted });
-  text(s, "n×m 网格，`.` 可走、`#` 是墙、`K` 钥匙、`D` 上锁的门（拿到钥匙后可通过，一把钥匙开所有门）、S 起点、T 终点。求 S 到 T 的最少步数。", 0.5, 1.35, 9, 0.75, { fontSize: 12.5, lsm: 1.2 });
-  card(s, 0.5, 2.25, 4.4, 1.9, C.code);
-  text(s, "样例：3×5，答案 8", 0.7, 2.35, 4, 0.3, { fontSize: 11, bold: true, color: C.dark, margin: 0 });
-  text(s, "S . D . T\n. # . # .\n. . K . .", 0.7, 2.7, 4.0, 1.3, { fontSize: 15, fontFace: MONO, bold: true, color: C.dark, margin: 0, lsm: 1.3 });
-  callout(s, "关键：状态要不要加一维", "状态是 `(x, y, 是否已拿到钥匙)`——两层网格。如果「同一个格子，在不同情况下能做的事不同」，就必须加维——这是 BFS 题的核心判断。", 5.1, 2.25, 4.4, 1.9, { fontSize: 11.5, fill: C.mint, tcolor: C.dark, lsm: 1.2 });
-}
-{
-  const s = content("T3", "2 月考讲评 · T3", "参考解答");
-  codeBlock(s, `from collections import deque
-
-def treasure(grid):
-    n, m = len(grid), len(grid[0])
-    sx = sy = tx = ty = -1
-    for i in range(n):
-        for j in range(m):
-            if grid[i][j] == 'S': sx, sy = i, j
-            elif grid[i][j] == 'T': tx, ty = i, j
-    DIRS = ((-1,0),(1,0),(0,-1),(0,1))
-    dist = [[[-1]*m for _ in range(n)] for _ in range(2)]   # dist[has_key][x][y]
-    start_key = 1 if grid[sx][sy] == 'K' else 0
-    dist[start_key][sx][sy] = 0
-    q = deque([(sx, sy, start_key)])
-    while q:
-        x, y, k = q.popleft()
-        if (x, y) == (tx, ty):
-            return dist[k][x][y]
-        for dx, dy in DIRS:
-            nx, ny = x+dx, y+dy
-            if not (0 <= nx < n and 0 <= ny < m): continue
-            cell = grid[nx][ny]
-            if cell == '#': continue
-            if cell == 'D' and k == 0: continue   # 没钥匙，过不去
-            nk = 1 if cell == 'K' else k
-            if dist[nk][nx][ny] >= 0: continue
-            dist[nk][nx][ny] = dist[k][x][y] + 1
-            q.append((nx, ny, nk))
-    return -1
-
-print(treasure(["S.D.T", ".#.#.", "..K.."]))  # 8`, 0.5, 1.1, 8.95, 4.05, { fontSize: 7.5, lang: "py" });
-}
-{
-  const s = content("T3", "2 月考讲评 · T3", "错误归因");
-  table(s, [
-    ["错法", "后果"],
-    ["visited[x][y] 只有一层", "拿钥匙前访问过的格子，拿钥匙后进不去 → WA（答案偏大或 -1）"],
-    ["用 DFS 求最短步数", "第一次到达不是最短 → WA"],
-    ["用 list.pop(0)", "500×500×2 = 5×10⁵ 状态 → TLE"],
-    ["忘了起点本身可能是钥匙", "边界 WA"],
-  ], 0.5, 1.3, 9.0, [3.0, 6.0], { fontSize: 13, rowH: 0.5 });
-  callout(s, "「状态里要不要加一维」是 BFS 题的核心判断", "如果「同一个格子，在不同情况下能做的事不同」，就必须加维。", 0.5, 4.2, 9.0, 0.7, { fontSize: 12.5, fill: C.mint, tcolor: C.dark });
+  const s = content("T3", "2 月考讲评 · T3 E30091 缺德的图书馆管理员", "模拟：相遇即擦肩而过");
+  text(s, "走廊坐标 1..L，学生以速度 1 行走，相向相遇就同时转身；不知道每人初始朝哪，求全部离开的最短和最长可能时间。", 0.5, 1.05, 9, 0.5, { fontSize: 12, lsm: 1.1 });
+  codeBlock(s, `L = int(input())
+n = int(input())
+pos = list(map(int, input().split())) if n else []
+print(max(min(x, L + 1 - x) for x in pos) if pos else 0,
+      max(max(x, L + 1 - x) for x in pos) if pos else 0)`, 0.5, 1.7, 9.0, 1.55, { fontSize: 12, lang: "py" });
+  consoleBlock(s, "输入: L=4 / n=2 / pos=1 3\n输出: 2 4", 0.5, 3.45, 4.35, 0.85, 11);
+  callout(s, "相遇可以看成两人擦肩而过", "相向而行、相遇后同时转身，等价于两人互不影响地穿过对方——所以每人的离开时刻只取决于自己到最近/最远出口的距离，不用真的模拟碰撞。", 5.0, 3.45, 4.5, 1.35, { fontSize: 10 });
 }
 
 // ---- T4 ----
 {
-  const s = content("T4", "2 月考讲评 · T4", "分组考试");
-  text(s, "考点：DP + 前缀和（W10、W11）　　难度：★★★★☆", 0.5, 1.0, 9, 0.3, { fontSize: 11.5, color: C.muted });
-  text(s, "n 个学生按学号排成一列，成绩 a₁..aₙ。切成**恰好 k 段**连续区间，每段「不平衡度」= 段内最大值−最小值。求总不平衡度的最小值。", 0.5, 1.35, 9, 0.75, { fontSize: 12.5, lsm: 1.2 });
-  card(s, 0.5, 2.25, 4.4, 1.6, C.code);
-  text(s, "样例：[1,3,5,5,9], k=2 → 4", 0.7, 2.35, 4, 0.3, { fontSize: 11, bold: true, color: C.dark, margin: 0 });
-  text(s, "切成 [1,3,5,5]（度 4）与 [9]（度 0）\n总计 4", 0.7, 2.75, 4.0, 0.8, { fontSize: 11, fontFace: MONO, margin: 0, lsm: 1.2 });
-  callout(s, "状态 / 转移 / 边界", "`dp[i][j]` = 前 i 人分 j 段的最小总不平衡度；`dp[i][j] = min(dp[t][j-1] + cost(t+1,i))`；`dp[0][0]=0`，其余 +inf，答案 `dp[n][k]`。", 5.1, 2.25, 4.4, 1.9, { fontSize: 11, fill: C.mint, tcolor: C.dark, lsm: 1.2 });
-}
-{
-  const s = content("T4", "2 月考讲评 · T4", "参考解答：O(n²k)");
-  codeBlock(s, `def group_exam(a, k):
-    n = len(a)
-    INF = float('inf')
-    cost = [[0] * n for _ in range(n)]      # cost[l][r] = a[l..r] 最大-最小
-    for l in range(n):
-        mx = mn = a[l]
-        for r in range(l, n):
-            mx, mn = max(mx, a[r]), min(mn, a[r])
-            cost[l][r] = mx - mn
-
-    dp = [[INF] * (k + 1) for _ in range(n + 1)]
-    dp[0][0] = 0
-    for i in range(1, n + 1):
-        for j in range(1, min(i, k) + 1):
-            best = INF
-            for t in range(j - 1, i):          # 上一段结束于 t
-                if dp[t][j - 1] < INF:
-                    best = min(best, dp[t][j - 1] + cost[t][i - 1])
-            dp[i][j] = best
-    return dp[n][k]
-
-
-print(group_exam([1, 3, 5, 5, 9], 2))       # 4
-print(group_exam([1, 3, 5, 5, 9], 1))       # 8`, 0.5, 1.1, 5.8, 3.75, { fontSize: 9.0, lang: "py" });
-  callout(s, "「恰好 k 段」的坑", "`dp` 全初始化为 0 会让「恰好 k 段」退化成「至多 k 段」→ 答案偏小 WA。必须用 **+inf** 初始化——第 11 周 1.5 节讲过的坑，这里再犯一次的人非常多。", 6.45, 1.1, 3.05, 1.9, { fontSize: 11, fill: "FDF0EE", tcolor: C.bad, lsm: 1.2 });
-  table(s, [["错法", "后果"], ["dp 全初始化为 0", "「恰好」退化成「至多」→ WA"], ["现算 cost(t+1,i)", "O(n³k) → TLE"], ["贪心切最大间隙", "不平衡度不可加 → WA"]], 6.45, 3.15, 3.05, [1.35, 1.7], { fontSize: 8.2, rowH: 0.36 });
+  const s = content("T4", "2 月考讲评 · T4 M27371 Playfair密码", "字符串、5×5 矩阵模拟");
+  text(s, "用去重后的密钥和去掉 j 的字母表构造 5×5 矩阵；明文按字母对分组，重复字母间插入 x（首字母为 x 时插入 q），奇数长度末尾补字符，再按同行右移 / 同列下移 / 矩形换列加密。", 0.5, 1.0, 9, 0.6, { fontSize: 10.5, lsm: 1.1 });
+  codeBlock(s, `import string
+key = input().strip(); q = int(input())
+seq = []
+for ch in key + string.ascii_lowercase.replace('j', ''):
+    ch = 'i' if ch == 'j' else ch
+    if ch not in seq: seq.append(ch)
+at = {ch: divmod(i, 5) for i, ch in enumerate(seq)}
+def enc_pair(a, b):
+    ra, ca = at[a]; rb, cb = at[b]
+    if ra == rb: return seq[ra*5+(ca+1)%5] + seq[rb*5+(cb+1)%5]
+    if ca == cb: return seq[((ra+1)%5)*5+ca] + seq[((rb+1)%5)*5+cb]
+    return seq[ra*5+cb] + seq[rb*5+ca]
+for _ in range(q):
+    s = input().strip().replace('j', 'i'); out = []
+    i = 0
+    while i < len(s):
+        a = s[i]; b = s[i+1] if i+1 < len(s) else ('q' if a == 'x' else 'x')
+        if a == b: b = 'q' if a == 'x' else 'x'
+        else: i += 1
+        out.append(enc_pair(a, b)); i += 1
+    print(''.join(out))`, 0.5, 1.65, 5.9, 3.05, { fontSize: 8.3, lang: "py" });
+  consoleBlock(s, "输入: key=keyword / q=1\nballoon\n输出: cbizsces", 6.55, 1.65, 2.95, 0.85, 10);
+  callout(s, "三种加密规则", "同行：各自右移一格取字符；同列：各自下移一格；否则取「矩形对角」——本行取对方所在列。`enc_pair` 三个分支各对应一种。", 6.55, 2.65, 2.95, 2.05, { fontSize: 9.5 });
 }
 
 // ---- T5 ----
 {
-  const s = content("T5", "2 月考讲评 · T5", "书架分层");
-  text(s, "考点：二分答案 + 贪心校验（W12、W13）　　难度：★★★★☆", 0.5, 1.0, 9, 0.3, { fontSize: 11.5, color: C.muted });
-  text(s, "n 本书按顺序排列，第 i 本厚 aᵢ。放进**恰好 k 层**书架，每层放连续一段。一层「承重」= 该层书厚度之和。求最大承重的最小值。", 0.5, 1.35, 9, 0.75, { fontSize: 12.5, lsm: 1.2 });
-  card(s, 0.5, 2.25, 4.4, 1.6, C.code);
-  text(s, "样例：[1,2,3,4,5], k=3 → 6", 0.7, 2.35, 4, 0.3, { fontSize: 11, bold: true, color: C.dark, margin: 0 });
-  text(s, "切成 [1,2,3][4][5]，承重 6,4,5\n最大承重 6，任何切法都不小于 6", 0.7, 2.75, 4.0, 0.9, { fontSize: 10.5, fontFace: MONO, margin: 0, lsm: 1.2 });
-  callout(s, "为什么能二分", "答案具有单调性：承重上限 cap 越大，需要的层数越少。「最小的可行 cap」是二分答案的标准形状；下界必须是 **max(a)**，不是 0。", 5.1, 2.25, 4.4, 1.9, { fontSize: 11.5, fill: C.mint, tcolor: C.dark, lsm: 1.2 });
-}
-{
-  const s = content("T5", "2 月考讲评 · T5", "参考解答：O(n log Σaᵢ)");
-  codeBlock(s, `def solve(n, k, a):
-    def shelves(cap):                # 贪心：装不下就换下一层
-        cnt, cur = 1, 0
-        for x in a:
-            if cur + x > cap:
-                cnt += 1
-                cur = x
-            else:
-                cur += x
-        return cnt
-
-    lo, hi = max(a), sum(a)          # 下界必须是 max(a)：单本书也要放得下
-    while lo < hi:
-        mid = (lo + hi) // 2
-        if shelves(mid) <= k:        # 层数够少 -> 承重还能再压
-            hi = mid
-        else:
-            lo = mid + 1
-    return lo
-
-
-print(solve(5, 3, [1, 2, 3, 4, 5]))     # 6`, 0.5, 1.1, 5.8, 3.35, { fontSize: 10, lang: "py" });
-  callout(s, "判据是 <=k，不是 ==k", "层数比 k 少时，把任意一层再切一刀就能补到 k，承重只会更小、不会更大。", 6.45, 1.1, 3.05, 1.15, { fontSize: 11, fill: C.mint, tcolor: C.dark, lsm: 1.2 });
-  table(s, [["错法", "后果"], ["下界写 0 或 1", "shelves 恒不可行"], ["mid=(lo+hi+1)//2 配 hi=mid", "死循环 TLE"], ["判据写 ==k", "答案偏大 WA"]], 6.45, 2.4, 3.05, [1.55, 1.5], { fontSize: 9, rowH: 0.6 });
+  const s = content("T5", "2 月考讲评 · T5 T30201 旅行售货商问题", "状态压缩 DP：集合当下标");
+  text(s, "3 ≤ n ≤ 18 个城市完全连通，从任意城市出发访问每城恰好一次并回到起点，求最小总费用。", 0.5, 1.05, 9, 0.35, { fontSize: 12 });
+  codeBlock(s, `n = int(input()); c = [list(map(int, input().split())) for _ in range(n)]
+INF = 10**18
+dp = [[INF] * n for _ in range(1 << n)]
+dp[1][0] = 0
+for mask in range(1 << n):
+    for u in range(n):
+        if dp[mask][u] == INF: continue
+        for v in range(n):
+            if not mask >> v & 1:
+                nm = mask | (1 << v)
+                dp[nm][v] = min(dp[nm][v], dp[mask][u] + c[u][v])
+full = (1 << n) - 1
+print(min(dp[full][u] + c[u][0] for u in range(1, n)))`, 0.5, 1.5, 9.0, 2.55, { fontSize: 10.5, lang: "py" });
+  consoleBlock(s, "输入: n=4 及一个 4×4 费用矩阵\n输出: 7", 0.5, 4.2, 4.35, 0.75, 9.5);
+  callout(s, "已访问集合 + 当前城市", "mask 第 i 位是 1 表示城市 i 已访问；从 dp[mask][u] 转移到未访问的 v，n≤18 时 2¹⁸×18×18≈8×10⁷，可过。", 5.0, 4.2, 4.5, 0.75, { fontSize: 8.3 });
 }
 
 // ---- T6 ----
 {
-  const s = content("T6", "2 月考讲评 · T6", "敌友阵营");
-  text(s, "考点：扩展域并查集（W09）　　难度：★★★★★", 0.5, 1.0, 9, 0.3, { fontSize: 11.5, color: C.muted });
-  text(s, "n 人给出 m 条关系（F 朋友 / E 敌人），按输入顺序生效：朋友的朋友是朋友，敌人的敌人是朋友，朋友的敌人是敌人。矛盾的关系跳过。求第一条矛盾关系的编号、最终朋友团体数。", 0.5, 1.35, 9, 0.95, { fontSize: 12, lsm: 1.2 });
-  card(s, 0.5, 2.45, 4.4, 1.55, C.code);
-  text(s, "样例：F12 E23 E34 F45 → 0 / 2", 0.7, 2.55, 4, 0.3, { fontSize: 10.5, bold: true, color: C.dark, margin: 0 });
-  text(s, "E23、E34 推出 2、4 是朋友；\n1,2,4,5 一团体，3 独自，共 2 个", 0.7, 2.9, 4.0, 0.9, { fontSize: 10, margin: 0, lsm: 1.2 });
-  callout(s, "扩展域", "给每人开两个点：`i`（本人）与 `i+n`（对立面）。朋友把两域同向合并，敌人交叉合并——出现「否定」且否定间还能推理，就开对立域。", 5.1, 2.45, 4.4, 1.9, { fontSize: 11, fill: C.mint, tcolor: C.dark, lsm: 1.2 });
-}
-{
-  const s = content("T6", "2 月考讲评 · T6", "参考解答");
-  codeBlock(s, `p = list(range(2 * n + 1))          # i 与 i+n 互为对立域
+  const s = content("T6", "2 月考讲评 · T6 T30204 小P的LLM推理加速", "周期能耗：二分 + 前缀贪心");
+  text(s, "第 i 个核的能耗按 xᵢ,yᵢ,xᵢ,yᵢ,... 交替；总预算 m，任意分配任务，求最多完成的总周期数。完成 2q+1 个周期的成本是 q·(xᵢ+yᵢ)+xᵢ。", 0.5, 1.0, 9, 0.55, { fontSize: 11, lsm: 1.1 });
+  codeBlock(s, `import sys
+data = list(map(int, sys.stdin.buffer.read().split()))
+n, budget = data[:2]
+x = sorted(data[i] for i in range(2, 2 * n + 2, 2))
+pair = min(data[i] + data[i + 1] for i in range(2, 2 * n + 2, 2))
+prefix = [0]
+for v in x:
+    prefix.append(prefix[-1] + v)
 
-def find(x):
-    while p[x] != x:
-        p[x] = p[p[x]]               # 路径压缩：不写这行，10^5 条关系就 TLE
-        x = p[x]
-    return x
+def feasible(k):
+    start = k & 1
+    best = 10**30
+    for odd in range(start, min(n, k) + 1, 2):
+        best = min(best, (k - odd) // 2 * pair + prefix[odd])
+    return best <= budget
 
-def union(x, y):
-    rx, ry = find(x), find(y)
-    if rx != ry: p[rx] = ry
-
-bad = 0
-for i, (op, a, b) in enumerate(relations, 1):
-    if op == 'F':
-        conflict = find(a) == find(b + n)     # 说好朋友却已推出敌人
-    else:
-        conflict = find(a) == find(b)         # 说好敌人却已推出朋友
-    if conflict:
-        if bad == 0: bad = i
-        continue                              # 矛盾的关系不采纳
-    if op == 'F':
-        union(a, b); union(a + n, b + n)
-    else:
-        union(a, b + n); union(a + n, b)
-# bad=0, 团体数=len({find(i) for i in range(1,n+1)})=2`, 0.5, 1.1, 8.95, 4.0, { fontSize: 8.5, lang: "py" });
-}
-{
-  const s = content("T6", "2 月考讲评 · T6", "错误归因");
-  table(s, [
-    ["错法", "后果"],
-    ["find 里不写路径压缩", "链式数据退化 O(n)，10⁵ 条关系 → TLE"],
-    ["只开 n 个点，另用「敌人表」记录", "推不出「敌人的敌人是朋友」→ WA"],
-    ["E a b 只写 union(a,b+n)，漏了 union(a+n,b)", "对称性丢失，部分矛盾查不出来 → WA"],
-    ["判出矛盾后照样合并", "错误信息污染后续判断 → 团体数 WA"],
-    ["数团体时把 1..2n 全数一遍", "对立域被当成真人 → 个数翻倍 WA"],
-  ], 0.5, 1.15, 9.0, [3.6, 5.4], { fontSize: 10.5, rowH: 0.42 });
-  callout(s, "「要不要开对立域」的判据", "关系里出现了**否定**（敌人、异类、不同侧），且否定之间还能推理，就开——这与 T3 的「状态要不要加一维」是同一类判断：**信息装不进现有的状态，就扩状态**。", 0.5, 4.0, 9.0, 0.9, { fontSize: 11, fill: C.mint, tcolor: C.dark, lsm: 1.15 });
+lo, hi = 0, 2 * budget // pair + n + 1
+while lo + 1 < hi:
+    mid = (lo + hi) // 2
+    if feasible(mid): lo = mid
+    else: hi = mid
+print(lo)`, 0.5, 1.6, 5.9, 3.15, { fontSize: 8.5, lang: "py" });
+  consoleBlock(s, "输入: n=2 m=10 / 4 1 / 3 3\n输出: 4", 6.55, 1.6, 2.95, 0.75, 10);
+  callout(s, "二分周期数，贪心判可行性", "固定周期数 k，让 odd 个核各完成 1 个周期（选 xᵢ 最小的 odd 个），剩下的周期全部以最便宜的二周期组 pair 完成——枚举 odd 找最小总成本，≤ 预算就说明 k 可行。", 6.55, 2.5, 2.95, 2.25, { fontSize: 8.5 });
 }
 
 // ============================ PART 3 ============================

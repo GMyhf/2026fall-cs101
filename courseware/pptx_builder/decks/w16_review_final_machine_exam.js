@@ -250,137 +250,117 @@ sectionSlide("Part 3", "建议样卷（一套完整试题）", "T1 签到 → T2
 
 // T1
 {
-  const s = content("T1", "5 建议样卷", "T1. 成绩单核对　★☆☆☆☆");
-  text(s, "n 条成绩记录（学号 / 科目 / 分数），按**总分从高到低**输出学号的总分与平均分（两位小数）；总分相同按**学号升序**。考点：字典计数、多关键字排序、格式化输出（W2、W4）。", 0.5, 1.05, 9.0, 0.75, { fontSize: 11.5, lsm: 1.2 });
-  codeBlock(s, `total, cnt = defaultdict(int), defaultdict(int)
-for _ in range(n):
-    sid, _subject, score = data[idx], data[idx + 1], int(data[idx + 2])
-    total[sid] += score; cnt[sid] += 1
-order = sorted(total, key=lambda s: (-total[s], s))     # 多关键字排序
-out = [f"{s} {total[s]} {total[s] / cnt[s]:.2f}" for s in order]`, 0.5, 1.9, 5.5, 1.7, { fontSize: 10.5, lang: "py" });
-  callout(s, "数据构造建议", [
-    "卡 O(n²)：2×10⁵ 条记录但只有 500 个不同学号——`in list` 会稳定 TLE；",
-    "卡格式：平均分恰为整数（如 85）必须输出 `85.00`，不能是 `85.0`。",
-  ], 6.15, 1.9, 3.35, 1.7, { fontSize: 10.5, fill: C.cream });
-  text(s, "评分：字典一遍统计 6 分 · 多关键字排序 5 分 · 格式 `:.2f` 4 分", 0.5, 3.75, 9.0, 0.3, { fontSize: 10.5, color: C.muted });
-  callout(s, "红队实测", "固定反例：`2200002 math 85`、`2200001 math 85` + 8000 个不同学号 → 正确答案学号升序、`85.00`；已证实卡住「保留输入顺序」与「`str(float)`」两种错解。", 0.5, 4.15, 9.0, 0.9, { fontSize: 10.5, fill: C.code });
+  const s = content("T1", "5 建议样卷", "T1. E29982 一种等价类划分问题　★☆☆☆☆");
+  text(s, "在开区间 (m, n) 内筛出各位数字和是 k 的倍数的整数，按「数字和」分组；每组内升序、逗号分隔，组间按数字和递增输出。", 0.5, 1.05, 9.0, 0.55, { fontSize: 12, lsm: 1.15 });
+  codeBlock(s, `m, n, k = map(int, input().split(','))
+groups = {}
+for x in range(m + 1, n):
+    s = sum(map(int, str(x)))
+    if s % k == 0:
+        groups.setdefault(s, []).append(str(x))
+for s in sorted(groups):
+    print(','.join(groups[s]))`, 0.5, 1.65, 5.6, 1.95, { fontSize: 11, lang: "py" });
+  consoleBlock(s, "输入: 11,35,3\n12,21,30\n15,24,33\n18,27", 0.5, 3.7, 5.6, 1.0, 10);
+  callout(s, "按数字和分组，再按数字和排序", "数字和相同的数放进同一组；输出顺序先按数字和从小到大，组内再按数值升序——两层排序，`sorted(groups)` 负责外层，插入顺序天然满足内层。", 6.3, 1.65, 3.2, 3.05, { fontSize: 10 });
 }
 
 // T2
 {
-  const s = content("T2", "5 建议样卷", "T2. 括号嵌套深度　★★☆☆☆");
-  text(s, "字符串含 `()[]{}` 及任意字符。完全匹配则输出 `YES` 和**最大嵌套深度**；否则输出 `NO` 和**第一个出错位置**（未闭合则为 `len(s)+1`）。考点：栈、边界判断（W7）。", 0.5, 1.05, 9.0, 0.75, { fontSize: 11.5, lsm: 1.2 });
-  codeBlock(s, `pairs = {')': '(', ']': '[', '}': '{'}
-stack, depth, best = [], 0, 0
-for i, ch in enumerate(s):
-    if ch in '([{':
-        stack.append(ch); depth += 1; best = max(best, depth)
-    elif ch in pairs:
-        if not stack or stack[-1] != pairs[ch]:
-            print("NO", i + 1); return
-        stack.pop(); depth -= 1
-print(("NO", len(s) + 1) if stack else ("YES", best))`, 0.5, 1.9, 5.5, 1.85, { fontSize: 10.3, lang: "py" });
-  callout(s, "数据构造建议", [
-    "深嵌套 10⁵ 层：检验是否误用**递归**（会爆栈）而非栈；",
-    "末尾未闭合 `(((` → `NO 4`，检验 `len(s)+1` 这个边界。",
-  ], 6.15, 1.9, 3.35, 1.85, { fontSize: 10.5, fill: C.cream });
-  text(s, "评分：栈匹配三类错误全覆盖 8 分 · 最大深度 4 分 · `len(s)+1` 边界 3 分", 0.5, 3.9, 9.0, 0.3, { fontSize: 10.5, color: C.muted });
-  callout(s, "红队实测", "固定反例：`(]` → `NO 2`；另 `(` 重复超过 Python 递归深度 → 只计数不验类型 WA、递归扫描 `RecursionError`。", 0.5, 4.3, 9.0, 0.75, { fontSize: 10.5, fill: C.code });
+  const s = content("T2", "5 建议样卷", "T2. E30086 dance　★★☆☆☆");
+  text(s, "有 2N 名学生，要求两两配对且每对身高差不超过 D。将身高排序后只能相邻配对；所有相邻差均不超过 D 时输出 Yes，否则 No。", 0.5, 1.05, 9.0, 0.55, { fontSize: 12, lsm: 1.15 });
+  codeBlock(s, `n, d = map(int, input().split())
+a = sorted(map(int, input().split()))
+print('Yes' if all(a[i + 1] - a[i] <= d for i in range(0, 2 * n, 2)) else 'No')`, 0.5, 1.65, 9.0, 1.05, { fontSize: 12.5, lang: "py" });
+  consoleBlock(s, "输入: 6 4 / 22 15 32 36 16 30 42 30 39 23 17 18\n输出: Yes", 0.5, 2.9, 9.0, 0.65, 11);
+  callout(s, "排序后只需查相邻配对", "排完序后，任何「跳着配对」的方案都能通过交换相邻两人换成相邻配对而不变差——所以只要检查 (a₀,a₁)(a₂,a₃)... 这一种配对方式即可，不用枚举所有配对。", 0.5, 3.7, 9.0, 1.0, { fontSize: 10.5, lsm: 1.15 });
 }
 
 // T3
 {
-  const s = content("T3", "5 建议样卷", "T3. 会议室数量　★★★☆☆");
-  text(s, "n 场会议，第 i 场是**左闭右开**区间 [aᵢ,bᵢ)。求最少需要多少间会议室。考点：区间分组、差分 / 排序（W10）。答案 = 同一时刻最多有多少场会议在进行。", 0.5, 1.05, 9.0, 0.75, { fontSize: 11.5, lsm: 1.2 });
-  codeBlock(s, `events = []
-for a, b in intervals:
-    events.append((a, 1)); events.append((b, -1))
-events.sort()                       # (t,-1) 排在 (t,1) 前面：先释放再占用
-cur = best = 0
-for _, delta in events:
-    cur += delta
-    best = max(best, cur)
-print(best)`, 0.5, 1.9, 5.5, 1.85, { fontSize: 10.3, lang: "py" });
-  callout(s, "关键细节", [
-    "左闭右开时，同一时刻的 `-1` 必须排在 `+1` **前面**；",
-    "Python 中 `(t,-1) < (t,1)` 自动满足这一点。",
-  ], 6.15, 1.9, 3.35, 1.85, { fontSize: 10.5, fill: C.cream });
-  text(s, "评分：想到「同时进行的峰值」转化 7 分 · 排序/堆实现 5 分 · 左闭右开边界 3 分", 0.5, 3.9, 9.0, 0.3, { fontSize: 10.5, color: C.muted });
-  callout(s, "红队实测", "端点相接 `[0,1)[1,2)...` → 若 `-1` 排在 `+1` 之后会错答成 2；坐标范围 10⁹ → 检验是否试图按坐标开数组（MLE）。", 0.5, 4.3, 9.0, 0.75, { fontSize: 10.5, fill: C.code });
+  const s = content("T3", "5 建议样卷", "T3. M25570 洋葱　★★★☆☆");
+  text(s, "给定 n×n 非负矩阵，像剥洋葱一样逐层剥去外圈，求所有层元素和的最大值。每层是一圈方框边界；奇数阶矩阵的正中心单独成一层。", 0.5, 1.05, 9.0, 0.55, { fontSize: 11.5, lsm: 1.15 });
+  codeBlock(s, `n = int(input())
+a = [list(map(int, input().split())) for _ in range(n)]
+best = 0
+for layer in range((n + 1) // 2):
+    lo, hi = layer, n - 1 - layer
+    total = sum(a[lo][j] for j in range(lo, hi + 1))
+    if hi > lo:
+        total += sum(a[hi][j] for j in range(lo, hi + 1))
+        total += sum(a[i][lo] + a[i][hi] for i in range(lo + 1, hi))
+    best = max(best, total)
+print(best)`, 0.5, 1.65, 5.9, 2.55, { fontSize: 10, lang: "py" });
+  consoleBlock(s, "输入: 5×5 矩阵（中心为 7）\n输出: 8", 6.55, 1.65, 2.95, 0.8, 10);
+  callout(s, "layer 从外到内枚举", "第 layer 层是 [lo,hi]×[lo,hi] 这一圈的边界；`hi > lo` 时才有上下两条边和左右两条边（避免单行/单点被重复加）。", 6.55, 2.55, 2.95, 1.7, { fontSize: 9 });
 }
 
 // T4
 {
-  const s = content("T4", "5 建议样卷", "T4. 穿墙迷宫　★★★☆☆");
-  text(s, "n×m 网格，`.` 空地 `#` 墙，最多穿 k 面墙，求 S 到 T 的最少步数。考点：带状态的 BFS（W12）。关键：状态是 `(x, y, 已穿墙次数)`——把网格复制成 k+1 层。", 0.5, 1.05, 9.0, 0.75, { fontSize: 11.5, lsm: 1.2 });
-  codeBlock(s, `dist = [[[-1] * m for _ in range(n)] for _ in range(k + 1)]
-dist[0][sx][sy] = 0
-q = deque([(sx, sy, 0)])
-while q:
-    x, y, u = q.popleft()
-    if (x, y) == (tx, ty): print(dist[u][x][y]); return
-    for dx, dy in DIRS:
-        nx, ny = x + dx, y + dy
-        if not (0 <= nx < n and 0 <= ny < m): continue
-        nu = u + (1 if grid[nx][ny] == '#' else 0)
-        if nu > k or dist[nu][nx][ny] >= 0: continue
-        dist[nu][nx][ny] = dist[u][x][y] + 1
-        q.append((nx, ny, nu))`, 0.5, 1.9, 5.5, 2.15, { fontSize: 9.3, lang: "py" });
-  callout(s, "为什么是 BFS 不是 Dijkstra", "每一步代价都是 1（穿墙也算 1 步），边权相同，BFS 第一次到达即最短。若穿墙代价不是 1，就必须换 Dijkstra。", 6.15, 1.9, 3.35, 2.15, { fontSize: 10.5, fill: C.mint });
-  text(s, "评分：状态加「已穿墙次数」一维 7 分 · BFS 实现（deque+入队标记）5 分 · 边界 3 分", 0.5, 4.12, 9.0, 0.28, { fontSize: 10, color: C.muted });
-  callout(s, "红队实测", "只用 `visited[x][y]` 一层的错解在样例上就会答成 8 而非 4——这是最典型的错法，样例必须能卡住它。", 0.5, 4.4, 9.0, 0.5, { fontSize: 9.5, lsm: 1.0, fill: C.code });
+  const s = content("T4", "5 建议样卷", "T4. M28906 数的划分　★★★☆☆");
+  text(s, "把 n 分成 k 个非空正整数（顺序不计），求方案数（n ≤ 200, 2 ≤ k ≤ 6）。令下一份不小于上一份即可避免排列重复计数。", 0.5, 1.05, 9.0, 0.55, { fontSize: 12, lsm: 1.15 });
+  codeBlock(s, `from functools import lru_cache
+n, k = map(int, input().split())
+@lru_cache(None)
+def dfs(rem, left, low):
+    if left == 1:
+        return int(rem >= low)
+    return sum(dfs(rem - x, left - 1, x)
+               for x in range(low, rem // left + 1))
+print(dfs(n, k, 1))`, 0.5, 1.65, 5.6, 2.0, { fontSize: 10.5, lang: "py" });
+  consoleBlock(s, "输入: 7 3\n输出: 4", 0.5, 3.75, 5.6, 0.9, 11);
+  callout(s, "low 参数：只往「不减」的方向切", "把 7 分成 3 份：1+1+5、1+2+4、1+3+3、2+2+3 共 4 种。如果不限制 `low`，1+2+4 和 2+1+4 会被当成两种不同方案，重复计数。", 6.3, 1.65, 3.2, 2.65, { fontSize: 10 });
 }
 
 // T5
 {
-  const s = content("T5", "5 建议样卷", "T5. 作业时间分配　★★★★☆");
-  text(s, "剩余 T 分钟，n 份作业各需 tᵢ 分钟、得 sᵢ 分，0-1 选择。求最高总分；若多方案同分，求其中**总耗时最少**的耗时。考点：0-1 背包 + 次要目标（W11）。双目标 DP：`dp[c]` 最高分，`tm[c]` 最小耗时。", 0.5, 1.05, 9.0, 0.85, { fontSize: 11.3, lsm: 1.2 });
-  codeBlock(s, `for c in range(T, t - 1, -1):                 # 0-1 背包：必须倒序
-    cand = dp[c - t] + s
-    if cand > dp[c] or (cand == dp[c] and tm[c - t] + t < tm[c]):
-        dp[c] = cand; tm[c] = tm[c - t] + t
-best = max(dp)
-min_time = min(tm[c] for c in range(T + 1) if dp[c] == best)`, 0.5, 2.05, 5.5, 1.55, { fontSize: 10, lang: "py" });
-  callout(s, "两个易错点", [
-    "**必须倒序**（0-1 背包），正序会让同一份作业被做多次；",
-    "两个分支缺一不可：分更高就覆盖 / 分相同才比耗时，只写后一支会漏掉「分更高」。",
-  ], 6.15, 2.05, 3.35, 1.55, { fontSize: 10, fill: C.cream });
-  text(s, "评分：0-1 背包主目标（含倒序）10 分 · 次要目标 7 分 · 边界 3 分", 0.5, 3.75, 9.0, 0.3, { fontSize: 10.5, color: C.muted });
-  callout(s, "红队实测", "两组作业得分相同耗时不同 → 正序背包重复选同一作业 WA；同分时取耗时较大方案 WA。", 0.5, 4.15, 9.0, 0.6, { fontSize: 10.5, fill: C.code });
+  const s = content("T5", "5 建议样卷", "T5. M29896 购物　★★★★☆");
+  text(s, "有无限枚不同面值硬币，求最少带多少枚硬币，使 1..X 每个金额都能组合出来；不能覆盖时输出 -1。维护当前连续可覆盖区间 [1, reach]，每次选不超过 reach+1 的最大面值。", 0.5, 1.0, 9.0, 0.6, { fontSize: 11, lsm: 1.1 });
+  codeBlock(s, `X, n = map(int, input().split())
+coins = sorted(map(int, input().split()))
+reach = count = 0
+while reach < X:
+    usable = [c for c in coins if c <= reach + 1]
+    if not usable:
+        print(-1); break
+    reach += max(usable); count += 1
+else:
+    print(count)`, 0.5, 1.65, 5.6, 2.05, { fontSize: 10.5, lang: "py" });
+  consoleBlock(s, "输入: 20 4 / 1 2 5 10\n输出: 5", 0.5, 3.75, 5.6, 0.8, 10.5);
+  callout(s, "每步用最大的「还能接上」面值", "已能凑出 1..reach 时，只要新硬币 c ≤ reach+1，就能凑出 1..reach+c；选可用面值里最大的一个，扩张得最快，这是「跳跃覆盖」类贪心的标准写法。", 6.3, 1.65, 3.2, 2.75, { fontSize: 10 });
 }
 
 // T6
 {
-  const s = content("T6", "5 建议样卷", "T6. 电网巡检　★★★★★");
-  text(s, "n 个变电站、m 条带危险度的双向线路，路径「风险」= 路径上危险度最大值，求 1 到 n 的最小风险。考点：最小瓶颈路 = 排序 + 并查集（W6、W9）；亦可二分 + BFS（W12）。核心：按危险度升序加边，首次让 1、n 连通的边权即答案。", 0.5, 1.05, 9.0, 0.95, { fontSize: 11, lsm: 1.2 });
-  codeBlock(s, `edges.sort()                                    # 按危险度升序
-for w, u, v in edges:
-    ru, rv = find(u), find(v)
-    if ru != rv:
-        if size[ru] < size[rv]: ru, rv = rv, ru
-        parent[rv] = ru; size[ru] += size[rv]
-    if find(1) == find(n): print(w); return
-print(-1)`, 0.5, 2.1, 5.5, 1.55, { fontSize: 10, lang: "py" });
-  callout(s, "另一种解法", "二分答案 + BFS：O((n+m) log W)，思路更直观但更慢——用来交叉验证并查集解法（本题已做 400 组对拍）。", 6.15, 2.1, 3.35, 1.55, { fontSize: 10.5, fill: C.mint });
-  text(s, "评分：想到「按边权升序加边，首次连通即答案」10 分 · 并查集实现（路径压缩+按大小合并）6 分 · 边界 4 分", 0.5, 3.8, 9.0, 0.45, { fontSize: 10.3, color: C.muted, lsm: 1.15 });
-  callout(s, "红队实测", "按路径总和而非瓶颈值 WA（输出 6 而非正确的 5）；链状图未做路径压缩会有超过 40 亿次父指针遍历。", 0.5, 4.35, 9.0, 0.6, { fontSize: 10.5, fill: C.code });
-}
-
-// 5.7 red-team data table
-{
-  const s = content("5.7", "5 建议样卷", "红队测试数据（已实际验证）");
-  text(s, "以下数据已由 `tools/redteam_exam.py` 对照正确解与错误实现实际运行——不是「可能有用」的出题建议，每项都能使标明的错误解 WA / TLE / MLE 或触发递归深度错误。", 0.5, 1.05, 9.0, 0.55, { fontSize: 11, lsm: 1.15 });
-  const rows = [
-    ["T1", "8000 个不同学号 + 两个总分相同的学号", "保留输入顺序 / `str(float)` WA；`in list` 慢 20 倍+"],
-    ["T2", "`(]`；`(` 重复超过递归深度", "只计数不验类型 WA；递归扫描 `RecursionError`"],
-    ["T3", "`[0,1)[1,2)`；`[0,10⁹)`", "同时刻先开始后结束 WA；按坐标开数组 MLE"],
-    ["T4", "只维护 `visited[x][y]` 一层", "样例即错答（8 → -1）"],
-    ["T5", "两组作业同分不同耗时", "正序重复选 WA；同分取耗时较大 WA"],
-    ["T6", "按路径总和；10 万点链未路径压缩", "WA（输出 6）；40 亿+ 次父指针遍历"],
-  ];
-  table(s, [["题", "固定反例 / 大数据形状", "已证实能卡住的错误实现"], ...rows.map((r) => [{ t: r[0], bold: true }, { t: r[1], mono: true, fontSize: 9.5 }, r[2]])],
-    0.5, 1.65, 9.0, [0.6, 3.6, 4.8], { fontSize: 10, rowH: 0.44 });
-  text(s, "运行：`python3 tools/redteam_exam.py`", 0.5, 4.7, 9.0, 0.25, { fontSize: 9.5, color: C.muted });
+  const s = content("T6", "5 建议样卷", "T6. T25353 排队　★★★★★");
+  text(s, "相邻两人身高差不超过 D 才能交换，任意次交换后求字典序最小的身高序列。身高差大于 D 的两人相对顺序永远不能改变，可看成「前驱约束」——每个元素的层数是此前所有约束它的人里最大层数加一，同层元素可任意交换，逐层排序输出。", 0.5, 1.0, 9.0, 0.7, { fontSize: 10.5, lsm: 1.1 });
+  codeBlock(s, `import bisect
+import sys
+data = list(map(int, sys.stdin.buffer.read().split()))
+n, d = data[:2]
+h = data[2:2 + n]
+vals = sorted(set(h)); m = len(vals)
+lo_bit = [0] * (m + 1); hi_bit = [0] * (m + 1)
+def update(bit, i, value):
+    while i <= m:
+        bit[i] = max(bit[i], value); i += i & -i
+def query(bit, i):
+    ans = 0
+    while i:
+        ans = max(ans, bit[i]); i -= i & -i
+    return ans
+layers = {}
+for height in h:
+    small = query(lo_bit, bisect.bisect_left(vals, height - d))
+    large = query(hi_bit, m - bisect.bisect_right(vals, height + d))
+    level = max(small, large) + 1
+    layers.setdefault(level, []).append(height)
+    pos = bisect.bisect_left(vals, height) + 1
+    update(lo_bit, pos, level); update(hi_bit, m - pos + 1, level)
+for level in sorted(layers):
+    for height in sorted(layers[level]):
+        print(height)`, 0.5, 1.65, 5.9, 3.3, { fontSize: 7.6, lang: "py" });
+  consoleBlock(s, "输入: 5 3 / 7 7 3 6 2\n输出: 6 7 7 2 3", 6.55, 1.65, 2.95, 0.65, 9.5);
+  callout(s, "两棵树状数组各管一侧的约束", "lo_bit 查「比我小 D 以上」的人里最大层数，hi_bit 查「比我大 D 以上」的——这两类人身高差都超过 D，永远排在我前面，我的层数必须比它们都大。", 6.55, 2.4, 2.95, 2.55, { fontSize: 8.7 });
 }
 
 // ============================ PART 4 ============================
