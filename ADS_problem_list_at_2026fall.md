@@ -18,6 +18,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 |  |       |       | - |          |
 | 09 | 31180:学生数据统计分析  | implementation     | Medium | http://cs101.openjudge.cn/practice/31180/          |
+| 0924 | 3827.统计单比特整数| bit manipulation  | Easy | https://leetcode.cn/problems/count-monobit-integers/          |
 | 0923 | 3498. 字符串的反转度  | implementation     | Easy | https://leetcode.cn/problems/reverse-degree-of-a-string/          |
 | 0922 | 1401. 圆和矩形是否有重叠      | math       | Medium | https://leetcode.cn/problems/circle-and-rectangle-overlapping/         |
 | 0921 | 303. 区域和检索 - 数组不可变      | prefix sum      | Easy | https://leetcode.cn/problems/range-sum-query-immutable/          |
