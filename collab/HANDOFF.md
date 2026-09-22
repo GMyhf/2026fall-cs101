@@ -4,6 +4,40 @@
 
 ---
 
+### 2026-09-22 · Claude → Codex · T-028：核实并替换 W05/W14/W16 样卷里编造的 T1–T6
+
+- **做了什么**：人问起 W05「T5. 电梯调度模拟」是不是编的题——查证后确认：
+  `202609_ADS_W05_October_Exam_Review.md`、`202612_ADS_W14_AI_Literacy_Exam_Recap.md`、
+  `202612_ADS_W16_Review_Final_Machine_Exam.md` 三份讲义各自的 T1–T6（共 18 题），
+  全部是 T-001 批量生成课件时**编造**的原创题，未标来源，且与
+  `2025fall-cs101/previous_exam_questions.md`、`ADS_problem_list_at_2025fall.md`
+  现有题库对不上。人随后给出真题来源并明确指示「让 Codex 来完成」：
+  `http://cs101.openjudge.cn` 拉到底部「已结束的比赛」，5 位数题号，
+  可在 `http://cs101.openjudge.cn/practice/<题号>` 打开核实。
+- **改了哪些文件**：只动了 `collab/PLAN.md`（新增 T-028、Q-10）、
+  `collab/HANDOFF.md`（本条）、`collab/NOTES-claude.md`。**没有改动 `courseware/` 下任何文件**——
+  这次不是实现，是把找到的问题登记成任务转交给你。
+- **闸门**：未跑（本轮未改 `courseware/`，无需验）。
+- **红线自检**：不适用（未涉及课程指南 / `.pptx` / 讲义配对 / 代码 / 题号 / 诚信条款）。
+- **哪里没把握 / 想让你重点看**：
+  1. 我这边用 WebFetch 抓 `cs101.openjudge.cn` 直接 `ECONNREFUSED`——
+     该站似乎只认 HTTP，我的工具会强制升级到 HTTPS。这正是需要你（或你能联网的环境）
+     接手的原因，麻烦先确认你那边能不能正常打开
+     `http://cs101.openjudge.cn/practice/<题号>`。
+  2. 换题请优先保住原题在样卷里覆盖的**知识点**（T-028 备注列写了每份样卷原来覆盖哪几周的考点）
+     和**难度梯度**（★☆ 递增），而不是随手挑同风格的题——18 道题的知识点覆盖是刻意设计过的
+     （例如 W05 补的 T6「补码计算器」就是为了补上原样卷缺的 W3 考点，见 Decision Log 2026-09-01）。
+  3. 换完题后要同步改对应 `content/wNN.py`（课件源）和交叉引用（W13 引用过
+     「第 5 周月考样卷 T4 的筛法」，换题后这个引用点要么跟着换，要么另找一个仍成立的落点）。
+  4. 核实过的题号请按 T-008 的先例登记进 `VERIFIED_TITLES`（`tools/verify_courseware.py`），
+     不要只在 PLAN.md 里写一句「已核实」。
+  5. 换多少、怎么取舍见 PLAN.md 新增的 **Q-10**——候选题单选出来之后交回人拍板，
+     不必等拍板结果出来才开始选。
+- **结论**：T-028 **Backlog**，等你认领。认领后请照常流程：改 PLAN.md 状态 →
+  实现 → `NOTES-codex.md` 写发现 → 追加一条 HANDOFF → `handoff.py --from codex --to claude`。
+
+---
+
 ### 2026-09-01 · Claude → Codex · 复核 `a61d5fe`：T-014 验收通过，Q-9 销账
 
 - **结论**：**接受。** 记号泄漏这一族到此闭环：修在引擎、守在闸门第 10 项、
