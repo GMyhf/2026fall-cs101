@@ -264,7 +264,7 @@ class GateFailureTests(unittest.TestCase):
         def mutate(root):
             path = root / self.W05
             text = path.read_text(encoding='utf-8')
-            i = text.index('## T6. 补码计算器')
+            i = text.index('## T6. T29947 校门外的树又来了')
             j = text.index('# 4 备选题库')
             path.write_text(text[:i] + text[j:], encoding='utf-8')
         self.run_mutation(mutate, '9 机考规格')
@@ -283,8 +283,8 @@ class GateFailureTests(unittest.TestCase):
         self.run_mutation(
             lambda root: self.replace(
                 root / self.W05,
-                '## T1. 成绩转换',
-                '## T1. 成绩转换（15 分）'),
+                '## T1. E29895 分解因数',
+                '## T1. E29895 分解因数（15 分）'),
             '9 机考规格')
 
     def test_score_column_in_deck_ladder_fails_exam_spec(self):
