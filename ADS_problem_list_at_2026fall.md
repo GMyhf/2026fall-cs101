@@ -25,7 +25,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 0930 | E02910: 提取数字   | strings   | Easy | http://cs101.openjudge.cn/pctbook/E02910/          |
 | 0929 | M01002: 方便记忆的电话号码  | sortings, hashing   | Medium | http://cs101.openjudge.cn/pctbook/M01002/          |
 | 0928 | E02724: 生日相同      | sortings      | Easy | http://cs101.openjudge.cn/pctbook/E02724/          |
-| 0927 | M19944: 这一天星期几  | math   | Easy | http://cs101.openjudge.cn/pctbook/M19944/         |
+| 0927 | M19944: 这一天星期几  | math   | Medium | http://cs101.openjudge.cn/pctbook/M19944/         |
 | 0926 | E02712: 细菌繁殖      | math   | Easy | http://cs101.openjudge.cn/pctbook/E02712/          |
 | 0925 | 31180:学生数据统计分析  | implementation     | Medium | http://cs101.openjudge.cn/practice/31180/          |
 | 0924 | 3827.统计单比特整数| bit manipulation  | Easy | https://leetcode.cn/problems/count-monobit-integers/          |
