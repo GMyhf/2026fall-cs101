@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-09-25 10:10 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-09-26 18:00 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -17,6 +17,16 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 |  |       |       | - |          |
+| 10 |       |       | - |          |
+| 1004 | E19949: 提取实体   | strings | Easy | http://cs101.openjudge.cn/pctbook/E19949/         |
+| 1003 | E12556: 编码字符串 | strings | Easy | http://cs101.openjudge.cn/pctbook/E12556/          |
+| 1002 | E06374: 文字排版  | strings  | Easy | http://cs101.openjudge.cn/pctbook/E06374/          |
+| 1001 | 230B. T-primes    | binary search,implementation,math,number theory  | 1300 | http://codeforces.com/problemset/problem/230/B          |
+| 0930 | E02910: 提取数字   | strings   | Easy | http://cs101.openjudge.cn/pctbook/E02910/          |
+| 0929 | M01002: 方便记忆的电话号码  | sortings, hashing   | Medium | http://cs101.openjudge.cn/pctbook/M01002/          |
+| 0928 | E02724: 生日相同      | sortings      | Easy | http://cs101.openjudge.cn/pctbook/E02724/          |
+| 0927 | M19944: 这一天星期几  | math   | Easy | http://cs101.openjudge.cn/pctbook/M19944/         |
+| 0926 | E02712: 细菌繁殖      | math   | Easy | http://cs101.openjudge.cn/pctbook/E02712/          |
 | 0925 | 31180:学生数据统计分析  | implementation     | Medium | http://cs101.openjudge.cn/practice/31180/          |
 | 0924 | 3827.统计单比特整数| bit manipulation  | Easy | https://leetcode.cn/problems/count-monobit-integers/          |
 | 0923 | 3498. 字符串的反转度  | implementation     | Easy | https://leetcode.cn/problems/reverse-degree-of-a-string/          |
