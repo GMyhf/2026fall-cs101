@@ -18,6 +18,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 |  |       |       | - |          |
 | 10 |       |       | - |          |
+| 1006 | 1614.括号的最大嵌套深度    | implementation  | Easy | https://leetcode.cn/problems/maximum-nesting-depth-of-the-parentheses/          |
 | 1005 | M02977:生理周期    | implementation, math | Medium  | http://cs101.openjudge.cn/pctbook/M02977/          |
 | 1004 | E19949: 提取实体   | strings | Easy | http://cs101.openjudge.cn/pctbook/E19949/         |
 | 1003 | E12556: 编码字符串 | strings | Easy | http://cs101.openjudge.cn/pctbook/E12556/          |
