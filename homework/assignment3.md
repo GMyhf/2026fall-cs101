@@ -105,7 +105,7 @@ bit manipulation, Easy, https://leetcode.cn/problems/reverse-bits/
 
 
 
-### LC356: 根据数字二进制下 1 的数目排序
+### LC1356: 根据数字二进制下 1 的数目排序
 
 bit manipulation, Easy, https://leetcode.cn/problems/sort-integers-by-the-number-of-1-bits/
 
