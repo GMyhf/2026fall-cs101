@@ -17,7 +17,9 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 |  |       |       | - |          |
-| 10 |       |       | - |          |
+|  |       |       | - |          |
+| 1006 | M03468:电池的寿命  | greedy      | Medium | http://cs101.openjudge.cn/practice/03468/          |
+| 1005 | 12.整数转罗马数字  | hash table       | Medium | https://leetcode.cn/problems/integer-to-roman/          |
 | 1006 | 1614.括号的最大嵌套深度    | implementation  | Easy | https://leetcode.cn/problems/maximum-nesting-depth-of-the-parentheses/          |
 | 1005 | M02977:生理周期    | implementation, math | Medium  | http://cs101.openjudge.cn/pctbook/M02977/          |
 | 1004 | E19949: 提取实体   | strings | Easy | http://cs101.openjudge.cn/pctbook/E19949/         |
