@@ -17,6 +17,8 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 |  |       |       | - |          |
+| 10 |       |       | - |          |
+| 1008 | E03670:计算鞍点    | implementation       | Easy | http://cs101.openjudge.cn/pctbook/E03670/          |
 | 1007 | M2139.得到目标值的最少行动次数   | greedy   | Medium | https://leetcode.cn/problems/minimum-moves-to-reach-target-score/          |
 | 1006 | M03468:电池的寿命  | greedy      | Medium | http://cs101.openjudge.cn/practice/03468/          |
 | 1005 | 12.整数转罗马数字  | hash table       | Medium | https://leetcode.cn/problems/integer-to-roman/          |
