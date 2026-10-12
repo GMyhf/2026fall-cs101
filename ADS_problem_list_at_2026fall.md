@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-09-26 18:00 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-10-12 08:00 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -18,6 +18,8 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 |  |       |       | - |          |
 | 10 |       |       | - |          |
+| 1012 | 230A. Dragons | greedy, sortings     | 1000 | https://codeforces.com/contest/230/problem/A          |
+| 1011 | 270A. Fancy Fence | geometry, implementation, math   | 1100  | https://codeforces.com/contest/270/problem/A    |
 | 1010 | E03670:计算鞍点    | implementation       | Easy | http://cs101.openjudge.cn/pctbook/E03670/          |
 | 1009 | M2139.得到目标值的最少行动次数   | greedy   | Medium | https://leetcode.cn/problems/minimum-moves-to-reach-target-score/          |
 | 1008 | M03468:电池的寿命  | greedy      | Medium | http://cs101.openjudge.cn/practice/03468/          |
