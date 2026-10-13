@@ -112,18 +112,16 @@ for i in range(m):
 
 # 3 月考样卷
 
-> **T-028 更正（2026-09-22）**：下方原 T1–T6 是未标来源的草稿题，已废弃。2025-10-09 实际比赛“20251009 cs101 Mock Exam寒露第二天”的真实题目如下；完整题面、约束和提交入口以 OpenJudge 页面为准。
+> 2026-10-08 实际比赛“cs101 Mock Exam 寒露”（作业 #5）的 6 道真题，每题给出 **C++ 与 Python** 两份参考代码（均已对样例与随机数据验证）。完整题面、约束和提交入口以 OpenJudge 页面为准。
 
 | 题号 | 题名 | 主要考点 | 题面 |
 | --- | --- | --- | --- |
-| E29895 | 分解因数 | 试除 / 因数分解 | [29895](http://cs101.openjudge.cn/practice/29895/) |
-| E29940 | 机器猫斗恶龙 | 贪心、前缀最低血量 | [29940](http://cs101.openjudge.cn/practice/29940/) |
-| M29917 | 牛顿迭代法 | 迭代、浮点终止条件 | [29917](http://cs101.openjudge.cn/practice/29917/) |
-| M29918 | 求亲和数 | 真因数和、数论 | [29918](http://cs101.openjudge.cn/practice/29918/) |
-| M29949 | 贪婪的哥布林 | 分数背包、贪心排序 | [29949](http://cs101.openjudge.cn/practice/29949/) |
-| T29947 | 校门外的树又来了 | 区间合并 / 覆盖计数 | [29947](http://cs101.openjudge.cn/practice/29947/) |
-
-以下旧 T1–T6 内容仅保留作历史审计，不再作为真题讲解。
+| E31295 | 宿舍的空调 | 公共区间 · 取交集 | [31295](http://cs101.openjudge.cn/practice/31295/) |
+| E31294 | 大肥鱼卖白饭 | 找零 · 模拟计数 | [31294](http://cs101.openjudge.cn/practice/31294/) |
+| E31293 | 双十一凑单大作战 | 买三免一 · 贪心排序 | [31293](http://cs101.openjudge.cn/practice/31293/) |
+| M31297 | 恒星共振裂变 | 质数拆分 · 筛法 | [31297](http://cs101.openjudge.cn/practice/31297/) |
+| M31296 | “淹园”救援 | 救援小艇 · 双指针 | [31296](http://cs101.openjudge.cn/practice/31296/) |
+| T31298 | 警察招募又来了 | 警员招募 · 队列 | [31298](http://cs101.openjudge.cn/practice/31298/) |
 
 > 三次月考与期末上机考试**同一规格**：**6 题 / 112 分钟**。
 > 月考的意义就在于**提前把机考的题量与时间压力演练一遍**。
@@ -131,129 +129,413 @@ for i in range(m):
 **难度梯度**：
 
 ```
-T1  ★☆☆☆☆   签到：读入与格式化输出      —— 95% 应 AC
-T2  ★★☆☆☆   字符串处理                  —— 75% AC
-T3  ★★★☆☆   字典 / 排序 + 多关键字       —— 55% AC
-T4  ★★★☆☆   复杂度意识：必须用筛或前缀和 —— 45% AC
-T5  ★★★★☆   综合模拟，边界多            —— 25% AC
-T6  ★★★★☆   补码 / 位运算，符号边界密集 —— 20% AC
+T1  ★☆☆☆☆   公共区间 · 取交集
+T2  ★★☆☆☆   找零 · 模拟计数
+T3  ★★☆☆☆   买三免一 · 贪心排序
+T4  ★★★☆☆   质数拆分 · 筛法
+T5  ★★★☆☆   救援小艇 · 双指针
+T6  ★★★★☆   警员招募 · 队列
 ```
 
 ---
 
-## T1. E29895 分解因数
+## T1. E31295 宿舍的空调
 
-**题意复述**：给定合数 `n (1 <= n <= 10^10)`，求两个不同正因数分解中最大的真因数。算法是枚举到 `sqrt(n)` 的最小因数 `p`，输出 `n // p`。
+**题意复述**：n 位同学，第 i 位能接受闭区间 [lᵢ, rᵢ] 内的任意整数温度（n ≤ 10⁵，|l|,|r| ≤ 10⁹）。空调只能设一个整数温度，求所有人都接受的最低温度；不存在输出 -1。
+
+**样例 1**
+
+```text
+输入
+3
+18 25
+20 30
+16 22
+输出
+20
+```
+
+**样例 2**
+
+```text
+输入
+2
+-5 0
+1 6
+输出
+-1
+```
+
+**思路**：交集 = [max l, min r]。所有区间的公共部分就是 [max(lᵢ), min(rᵢ)]。若 max l ≤ min r，最低可行温度就是 max l；否则无解。一遍扫描 O(n)，不用存数组。
+
+C++：
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    long long lo = -1e9, hi = 1e9, l, r;
+    while (n--) {
+        cin >> l >> r;
+        lo = max(lo, l);
+        hi = min(hi, r);
+    }
+    cout << (lo <= hi ? lo : -1) << endl;
+}
+```
+
+Python：
 
 ```python
 n = int(input())
-p = 2
-while n % p:
-    p += 1
-print(n // p)
+lo, hi = -10**9, 10**9
+for _ in range(n):
+    l, r = map(int, input().split())
+    lo, hi = max(lo, l), min(hi, r)
+print(lo if lo <= hi else -1)
 ```
 
-题目：[E29895 分解因数](http://cs101.openjudge.cn/practice/29895/)。
+题目：[E31295 宿舍的空调](http://cs101.openjudge.cn/practice/31295/)。
 
-## T2. E29940 机器猫斗恶龙
+## T2. E31294 大肥鱼卖白饭
 
-**题意复述**：依次经过 `n` 个关卡，正数回血、负数扣血，任何时刻血量必须为正；求最小正整数初始血量（`n <= 10^5`）。扫描前缀和，答案为 `1 - 最小前缀和`。
+**题意复述**：每份 5 元，n 位顾客依次付 5 / 10 / 20 元的一张纸币，开始时没有零钱，不能赊账、不能换序。判断能否依次正确找零（n ≤ 10⁵）。
 
-```python
-import sys
-a = list(map(int, sys.stdin.buffer.read().split()))
-cur = mn = 0
-for x in a[1:1 + a[0]]:
-    cur += x
-    mn = min(mn, cur)
-print(1 - mn)
+**样例 1**
+
+```text
+输入
+5
+5 5 10 5 20
+输出
+YES
 ```
 
-题目：[E29940 机器猫斗恶龙](http://cs101.openjudge.cn/practice/29940/)。
+**样例 2**
 
-## T3. M29917 牛顿迭代法
-
-**题意复述**：对 EOF 输入的每个正数，用初值 `1` 和 `x_next=(x+a/x)/2` 求平方根；相邻近似值差不超过 `1e-6` 时停止，输出迭代次数和两位小数结果。
-
-```python
-import sys
-for token in sys.stdin.read().split():
-    a, x, cnt = float(token), 1.0, 0
-    while True:
-        y = (x + a / x) / 2
-        cnt += 1
-        if abs(y - x) <= 1e-6:
-            print(cnt, f'{y:.2f}')
-            break
-        x = y
+```text
+输入
+4
+5 10 20 5
+输出
+NO
 ```
 
-题目：[M29917 牛顿迭代法](http://cs101.openjudge.cn/practice/29917/)。
+**思路**：只需记 5 元、10 元的张数。付 5 元：不用找；付 10 元：找一张 5；付 20 元：优先找 10+5，没有再找 5+5+5。5 元比 10 元更万能，所以要把 5 元留到最后用。一旦失败，该人及之后的找零都不再成立，答案为 NO。
 
-## T4. M29918 求亲和数
+C++：
 
-**题意复述**：若两个数的真因数和互相等于对方，则称为亲和数。给定 `n <= 100000`，按较小数递增输出所有不超过 `n` 的亲和数对。用倍数筛累计真因数和。
-
-```python
-import sys
-n = int(sys.stdin.buffer.read())
-s = [0] * (n + 1)
-for d in range(1, n // 2 + 1):
-    for x in range(2 * d, n + 1, d):
-        s[x] += d
-for a in range(2, n + 1):
-    b = s[a]
-    if a < b <= n and s[b] == a:
-        print(a, b)
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n, b, c5 = 0, c10 = 0;
+    bool ok = true;
+    cin >> n;
+    while (n--) {
+        cin >> b;
+        if (b == 5) c5++;
+        else if (b == 10) {
+            if (c5 > 0) c5--, c10++;
+            else ok = false;
+        } else {  // 20：优先找 10+5
+            if (c10 > 0 && c5 > 0) c10--, c5--;
+            else if (c5 >= 3) c5 -= 3;
+            else ok = false;
+        }
+    }
+    cout << (ok ? "YES" : "NO") << endl;
+}
 ```
 
-题目：[M29918 求亲和数](http://cs101.openjudge.cn/practice/29918/)。
-
-## T5. M29949 贪婪的哥布林
-
-**题意复述**：矿石可任意分割，每堆有价值 `v` 和重量 `w`，背包承重为 `M`；求最大价值。按单位重量价值 `v/w` 降序取，最后一堆可取部分。
+Python：
 
 ```python
-import sys
-d = list(map(int, sys.stdin.buffer.read().split()))
-n, cap = d[:2]
-items = sorted([(d[i] / d[i + 1], d[i], d[i + 1])
-                for i in range(2, 2 * n + 2, 2)], reverse=True)
-ans = 0.0
-for ratio, value, weight in items:
-    take = min(cap, weight)
-    ans += ratio * take
-    cap -= take
-    if cap == 0:
-        break
-print(f'{ans:.2f}')
+n = int(input())
+c5 = c10 = 0
+ok = True
+for b in map(int, input().split()):
+    if b == 5:
+        c5 += 1
+    elif b == 10:
+        if c5 > 0:
+            c5 -= 1
+            c10 += 1
+        else:
+            ok = False
+    else:  # 20：优先找 10+5
+        if c10 > 0 and c5 > 0:
+            c10 -= 1
+            c5 -= 1
+        elif c5 >= 3:
+            c5 -= 3
+        else:
+            ok = False
+print("YES" if ok else "NO")
 ```
 
-题目：[M29949 贪婪的哥布林](http://cs101.openjudge.cn/practice/29949/)。
+题目：[E31294 大肥鱼卖白饭](http://cs101.openjudge.cn/practice/31294/)。
 
-## T6. T29947 校门外的树又来了
+## T3. E31293 双十一凑单大作战
 
-**题意复述**：`0..L` 共 `L+1` 棵树，给出 `M` 个闭区间并移除区间内树，求剩余数量。排序并合并重叠区间，区间长度按 `r-l+1` 计算。
+**题意复述**：n 件商品价格 pᵢ（n ≤ 10⁵，pᵢ ≤ 10⁹）。可任选恰好 3 件成一组，组内最便宜的免费；每件至多属于一组。求买下全部商品的最少支付金额。
+
+**样例 1**
+
+```text
+输入
+4
+3 2 1 10
+输出
+14
+```
+
+**样例 2**
+
+```text
+输入
+7
+6 5 5 5 2 1 1
+输出
+19
+```
+
+**思路**：相邻的三件价格最接近，免掉的最多。从大到小排序后每 3 件一组，免掉每组最小的一件，即第 3、6、9… 件。总价最大 10¹⁴，超过 32 位：C++ 必须用 long long，Python 无需担心。
+
+C++：
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector<long long> p(n);
+    long long sum = 0;
+    for (auto &x : p) cin >> x, sum += x;
+    sort(p.rbegin(), p.rend());  // 降序
+    for (int i = 2; i < n; i += 3)  // 免单
+        sum -= p[i];
+    cout << sum << endl;
+}
+```
+
+Python：
 
 ```python
-import sys
-d = list(map(int, sys.stdin.buffer.read().split()))
-L, m = d[:2]
-seg = sorted(tuple(sorted(d[i:i + 2])) for i in range(2, 2 * m + 2, 2))
-removed = 0
-left = right = None
-for l, r in seg + [(10**18, 10**18)]:
-    if left is None:
-        left, right = l, r
-    elif l <= right + 1:
-        right = max(right, r)
+n = int(input())
+p = sorted(map(int, input().split()), reverse=True)  # 降序
+print(sum(p) - sum(p[2::3]))  # 第 3、6、9… 件免单
+```
+
+题目：[E31293 双十一凑单大作战](http://cs101.openjudge.cn/practice/31293/)。
+
+## T4. M31297 恒星共振裂变
+
+**题意复述**：T 组数据（T ≤ 10⁴），每组给偶数 N（4 ≤ N ≤ 10⁶），把 N 拆成两个质数 p₁ + p₂（p₁ ≤ p₂），使乘积最大。
+
+**样例 1**
+
+```text
+输入
+3
+4
+10
+16
+输出
+2 2
+5 5
+5 11
+```
+
+**思路**：和一定时，两数越接近乘积越大。预处理 10⁶ 以内的素数筛（每组数据现场试除会 TLE）。对每个 N 从 N/2 开始向下找第一个 p，使 p 和 N−p 都是质数——质数分布密，通常只需试很少几步。
+
+C++：
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1000000;
+bool comp[N + 1];  // true 表示合数
+int main() {
+    comp[0] = comp[1] = true;
+    for (int i = 2; i * i <= N; i++)
+        if (!comp[i])
+            for (int j = i * i; j <= N; j += i)
+                comp[j] = true;
+    int t, n;
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        int p = n / 2;  // 两数越接近乘积越大
+        while (comp[p] || comp[n - p]) p--;
+        cout << p << " " << n - p << "\n";
+    }
+}
+```
+
+Python：
+
+```python
+N = 10**6
+ok = bytearray([1]) * (N + 1)  # 1 表示质数
+ok[0] = ok[1] = 0
+for i in range(2, int(N**0.5) + 1):
+    if ok[i]:
+        ok[i * i::i] = bytes(len(ok[i * i::i]))
+for _ in range(int(input())):
+    n = int(input())
+    p = n // 2  # 两数越接近乘积越大
+    while not (ok[p] and ok[n - p]):
+        p -= 1
+    print(p, n - p)
+```
+
+题目：[M31297 恒星共振裂变](http://cs101.openjudge.cn/practice/31297/)。
+
+## T5. M31296 “淹园”救援
+
+**题意复述**：n 名学生体重 wᵢ，小艇载重上限 C，每艘最多 2 人且体重和 ≤ C，保证 wᵢ ≤ C（n ≤ 10⁵）。求转移所有学生最少需要的小艇数。
+
+**样例 1**
+
+```text
+输入
+4 5
+3 2 2 1
+输出
+2
+```
+
+**样例 2**
+
+```text
+输入
+5 3
+3 2 2 1 1
+输出
+3
+```
+
+**思路**：最重的人必占一艘艇。排序后 l 指最轻、r 指最重。最重的人无论如何要占一艘；若最轻的能和他同乘就一起走（l 前进），否则他单独走。每轮 r 前进、艇数 +1，O(n log n)。
+
+C++：
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n, c;
+    cin >> n >> c;
+    vector<int> w(n);
+    for (auto &x : w) cin >> x;
+    sort(w.begin(), w.end());
+    int l = 0, r = n - 1, boats = 0;
+    while (l <= r) {
+        if (l < r && w[l] + w[r] <= c)
+            l++;  // 最轻的搭最重的
+        r--;      // 最重的必占一艘
+        boats++;
+    }
+    cout << boats << endl;
+}
+```
+
+Python：
+
+```python
+n, c = map(int, input().split())
+w = sorted(map(int, input().split()))
+l, r, boats = 0, n - 1, 0
+while l <= r:
+    if l < r and w[l] + w[r] <= c:
+        l += 1  # 最轻的搭最重的
+    r -= 1  # 最重的必占一艘
+    boats += 1
+print(boats)
+```
+
+题目：[M31296 “淹园”救援](http://cs101.openjudge.cn/practice/31296/)。
+
+## T6. T31298 警察招募又来了
+
+**题意复述**：第 1…n 分钟各发生一个事件：aᵢ = x（1 ≤ x ≤ 10）表示招募 x 名警员，aᵢ = -1 表示一起犯罪。警员第 t 分钟入伍，只能处理 [t, t+k−1] 内的犯罪，且至多处理一起；有空闲警员时派最早入伍者。求无法处理的犯罪数。
+
+**样例 1**
+
+```text
+输入
+6 2
+1 1 -1 -1 -1 1
+输出
+2
+```
+
+**样例 2**
+
+```text
+输入
+5 1
+5 -1 3 -1 -1
+输出
+3
+```
+
+**思路**：批次入队，队首优先、过期弹出。每批警员记为 (过期时刻 = t+k−1, 人数) 入队。遇到犯罪时先把队首已过期的批次弹出；队列空则 +1 计数，否则队首人数 −1，减到 0 就弹出。每批最多入队、出队各一次，O(n)。
+
+C++：
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n, k, a, bad = 0;
+    cin >> n >> k;
+    queue<pair<int, int>> q;  // 过期时刻,人数
+    for (int i = 1; i <= n; i++) {
+        cin >> a;
+        if (a > 0) {
+            q.push({i + k - 1, a});
+            continue;
+        }
+        while (!q.empty() &&
+               q.front().first < i)
+            q.pop();
+        if (q.empty()) bad++;
+        else if (--q.front().second == 0)
+            q.pop();
+    }
+    cout << bad << endl;
+}
+```
+
+Python：
+
+```python
+from collections import deque
+ 
+n, k = map(int, input().split())
+q = deque()  # [过期时刻, 人数]
+bad = 0
+for i, a in enumerate(
+        map(int, input().split()), 1):
+    if a > 0:
+        q.append([i + k - 1, a])
+        continue
+    while q and q[0][0] < i:
+        q.popleft()
+    if not q:
+        bad += 1
     else:
-        removed += right - left + 1
-        left, right = l, r
-print(L + 1 - removed)
+        q[0][1] -= 1
+        if q[0][1] == 0:
+            q.popleft()
+print(bad)
 ```
 
-题目：[T29947 校门外的树又来了](http://cs101.openjudge.cn/practice/29947/)。
+题目：[T31298 警察招募又来了](http://cs101.openjudge.cn/practice/31298/)。
 
 <!-- 历史草稿原文保留在本文件此处，仅供审计，不属于当前样卷正文。
 
@@ -795,7 +1077,7 @@ solve()
 
 1. 月考是**体检**：暴露语法关、速度关、调试关三处短板。
 2. 自检清单打不了勾的地方，就是本周的复习重点。
-3. 样卷的难度梯度是 **签到 → 字符串 → 字典排序 → 复杂度意识 → 综合模拟 → 补码位运算**，
+3. 样卷的难度梯度是 **取交集 → 找零模拟 → 排序贪心 → 筛法 → 双指针 → 队列模拟**，
    对应第 1–4 周的全部内容；规格与期末机考一致：**6 题 / 112 分钟**。
 4. 订正的唯一有效方法：**分类 → 关题解重写 → 记录错误类型**。
 5. 考场六条：通读、看范围、早提交、造数据、按时换题、查格式。

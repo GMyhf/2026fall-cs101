@@ -20,7 +20,7 @@ titleSlide({
   kicker: "计算概论（B） · 第 5 周 · 2026 Fall",
   title: "10 月月考与阶段复习",
   subtitle: "第 1–4 周知识清单自检 · 月考样卷 6 题 · 考后订正方法 · 考场策略",
-  topics: "第 1–4 周知识清单自检（语法容器 · 计算机基础 · 复杂度）\n月考样卷：6 题，含题面 / 样例 / 参考解答 / 评分要点\n备选题库 · 考后订正的三分类方法\n机房考试流程与考场策略",
+  topics: "第 1–4 周知识清单自检（语法容器 · 计算机基础 · 复杂度）\n月考样卷：6 题，含题面 / 样例 / 思路 / C++ 与 Python 参考代码\n备选题库 · 考后订正的三分类方法\n机房考试流程与考场策略",
   footer: "Compiled by Hongfei Yan · 2026 Fall · github.com/GMyhf/2026fall-cs101",
 });
 
@@ -49,7 +49,7 @@ titleSlide({
   const s = content("≡", "本周导引", "内容地图");
   const cols = [
     ["1  自检", ["1 月考的定位：体检的三件事", "1.1 考试形式：112 分钟 / 6 题", "2 第 1–4 周知识清单（逐条打勾）", "2.4 常用模板（写进 cheat sheet）"]],
-    ["2  样卷", ["3 月考样卷：难度梯度 T1→T6", "每题：题面 · 参考解答 · 评分要点", "4 备选题库（可替换样卷任意一题）"]],
+    ["2  样卷", ["3 月考样卷：难度梯度 T1→T6（C++ / Python 双解）", "每题：题面 · 思路 · C++ 与 Python 代码", "4 备选题库（可替换样卷任意一题）"]],
     ["3  之后", ["5 考后订正：三分类 + 重写规则", "5.3 建立自己的错题类型表", "6 考场策略：112 分钟时间预算", "7 本周作业 · 小结"]],
   ];
   cols.forEach((c, i) => {
@@ -105,9 +105,9 @@ sectionSlide("Part 2", "第 1–4 周知识清单", "逐条打勾，打不了勾
     "补码：负数 = 取反加一；n 位范围 −2ⁿ⁻¹ ~ 2ⁿ⁻¹−1",
     "位运算：`&` `|` `^` `<<` `>>`；`n & (n-1)`、`n & 1`",
     "ASCII：`'0'=48` `'A'=65` `'a'=97`，`ord` / `chr`",
-    "浮点：不能用 `==` 比较；`int(x**0.5)` 要校正（本周 T4 会用到）",
+    "浮点：不能用 `==` 比较；`int(x**0.5)` 要校正",
   ], 0.5, 1.1, 9.0, 2.6, { fontSize: 14, gap: 14 });
-  callout(s, "自检打不了勾？", "回第 3 周讲义《计算机原理（1/2）》对应小节重看一遍，本周样卷的 T4、T6 直接考这些。", 0.5, 4.0, 9.0, 0.95, { fontSize: 12.5, fill: C.mint, tcolor: C.dark });
+  callout(s, "自检打不了勾？", "回第 3 周讲义《计算机原理（1/2）》对应小节重看一遍，本周样卷的 T3（C++ 64 位整数溢出）、T4（筛法）直接考这些。", 0.5, 4.0, 9.0, 0.95, { fontSize: 12.5, fill: C.mint, tcolor: C.dark });
 }
 
 // 2.3 complexity checklist
@@ -120,9 +120,9 @@ sectionSlide("Part 2", "第 1–4 周知识清单", "逐条打勾，打不了勾
     "会写埃氏筛",
   ], 0.5, 1.1, 9.0, 2.2, { fontSize: 14.5, gap: 16 });
   callout(s, "本周样卷怎么用到", [
-    "T3：`x in lst` 逐个统计会稳定 TLE，要用 `Counter`。",
-    "T4：现场试除到 √x 会 TLE，要先筛。",
-    "T2：`+=` 拼接字符串是 O(n²)，要用 `''.join()`。",
+    "T4：T 组询问若每次现场试除会 TLE，要先筛一次、再查表。",
+    "T3 / T5：先排序（O(n log n)）再贪心，不要两两枚举（O(n²)）。",
+    "T6：每批警员只入队、出队一次，用队列而不是每次扫全体。",
   ], 0.5, 3.5, 9.0, 1.45, { fontSize: 12, gap: 6 });
 }
 
@@ -187,12 +187,12 @@ sectionSlide("Part 3", "月考样卷", "三次月考与期末上机考试同一�
 {
   const s = content("3.0", "3 月考样卷", "难度梯度：从签到到综合");
   const rows = [
-    ["E29895", "★☆☆☆☆", "分解因数 · 试除", "真实题", C.ok],
-    ["E29940", "★★☆☆☆", "机器猫斗恶龙 · 贪心", "真实题", C.ok],
-    ["M29917", "★★★☆☆", "牛顿迭代法 · 浮点", "真实题", C.gold],
-    ["M29918", "★★★☆☆", "求亲和数 · 数论", "真实题", C.gold],
-    ["M29949", "★★★★☆", "贪婪的哥布林 · 分数背包", "真实题", C.bad],
-    ["T29947", "★★★★☆", "校门外的树又来了 · 区间", "真实题", C.bad],
+    ["E31295", "★☆☆☆☆", "宿舍的空调 · 公共区间", "真实题", C.ok],
+    ["E31294", "★★☆☆☆", "大肥鱼卖白饭 · 找零", "真实题", C.ok],
+    ["E31293", "★★☆☆☆", "双十一凑单大作战 · 买三免一", "真实题", C.gold],
+    ["M31297", "★★★☆☆", "恒星共振裂变 · 质数拆分", "真实题", C.gold],
+    ["M31296", "★★★☆☆", "“淹园”救援 · 救援小艇", "真实题", C.gold],
+    ["T31298", "★★★★☆", "警察招募又来了 · 警员招募", "真实题", C.bad],
   ];
   rows.forEach((r, i) => {
     const y = 1.15 + i * 0.58;
@@ -201,120 +201,345 @@ sectionSlide("Part 3", "月考样卷", "三次月考与期末上机考试同一�
     text(s, r[2], 3.0, y, 4.0, 0.44, { fontSize: 12.5, valign: "middle", margin: 0 });
     pill(s, r[3], 7.2, y + 0.02, 1.75, 0.4, r[4], C.white, 11);
   });
-  text(s, "月考的意义就在于：提前把机考的题量与时间压力演练一遍——三次月考与期末上机考试**同一规格**：**6 题 / 112 分钟**。", 0.5, 4.7, 9.0, 0.45, { fontSize: 11.5, color: C.muted, lsm: 1.1 });
+  text(s, "每题均给出 **C++ 与 Python 两份参考代码**。月考的意义就在于：提前把机考的题量与时间压力演练一遍——**6 题 / 112 分钟**。", 0.5, 4.7, 9.0, 0.45, { fontSize: 11.5, color: C.muted, lsm: 1.1 });
 }
 
 // T1
 {
-  const s = content("T1", "3 月考样卷 · T1 E29895 分解因数", "签到题：试除找最小因子");
-  text(s, "给定合数 n（1 ≤ n ≤ 10¹⁰），求它的最大真因数（除 1、n 本身外的最大因数）。", 0.5, 1.05, 9, 0.35, { fontSize: 12.5 });
+  const s = content("T1", "3 月考样卷 · T1 E31295 宿舍的空调", "取交集：最大的 l 与最小的 r");
+  text(s, "n 位同学，第 i 位能接受闭区间 [lᵢ, rᵢ] 内的任意整数温度（n ≤ 10⁵，|l|,|r| ≤ 10⁹）。空调只能设一个整数温度，求所有人都接受的最低温度；不存在输出 -1。", 0.5, 1.0, 9, 0.9, { fontSize: 12, lsm: 1.15 });
+  text(s, "样例 1", 0.5, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+3
+18 25
+20 30
+16 22
+输出
+20`, 0.5, 2.0, 4.4, 1.38, { fontSize: 10, lang: "text" });
+  text(s, "样例 2", 5.1, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+2
+-5 0
+1 6
+输出
+-1`, 5.1, 2.0, 4.4, 1.38, { fontSize: 10, lang: "text" });
+  callout(s, "交集 = [max l, min r]", "所有区间的公共部分就是 [max(lᵢ), min(rᵢ)]。若 max l ≤ min r，最低可行温度就是 max l；否则无解。一遍扫描 O(n)，不用存数组。", 0.5, 3.53, 9.0, 1.32, { fontSize: 12.5 });
+  text(s, "题目：cs101.openjudge.cn/practice/31295/", 0.5, 4.95, 9, 0.28, { fontSize: 10, color: C.muted });
+}
+
+// T1 code
+{
+  const s = content("T1", "3 月考样卷 · T1 E31295 宿舍的空调 · 参考代码", "C++ 与 Python 对照");
+  text(s, "C++", 0.5, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  text(s, "Python", 5.1, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    long long lo = -1e9, hi = 1e9, l, r;
+    while (n--) {
+        cin >> l >> r;
+        lo = max(lo, l);
+        hi = min(hi, r);
+    }
+    cout << (lo <= hi ? lo : -1) << endl;
+}`, 0.5, 1.25, 4.5, 3.75, { fontSize: 10.5, lang: "cpp" });
   codeBlock(s, `n = int(input())
-p = 2
-while n % p:
-    p += 1
-print(n // p)`, 0.5, 1.55, 5.6, 1.5, { fontSize: 13, lang: "py" });
-  consoleBlock(s, "输入: 21\n输出: 7", 0.5, 3.2, 5.6, 0.85, 11);
-  callout(s, "为什么 n // p 就是最大因子", "p 从 2 开始逐个试除，第一个整除 n 的 p 就是 n 的最小因子；因数成对出现，最小因子对应的另一半就是最大真因子 n/p。", 6.3, 1.55, 3.2, 2.5, { fontSize: 10.5 });
-  text(s, "题目：cs101.openjudge.cn/practice/29895/", 0.5, 4.25, 9, 0.3, { fontSize: 10, color: C.muted });
+lo, hi = -10**9, 10**9
+for _ in range(n):
+    l, r = map(int, input().split())
+    lo, hi = max(lo, l), min(hi, r)
+print(lo if lo <= hi else -1)`, 5.1, 1.25, 4.4, 3.75, { fontSize: 10.5, lang: "py" });
 }
 
 // T2
 {
-  const s = content("T2", "3 月考样卷 · T2 E29940 机器猫斗恶龙", "前缀和：血量全程为正");
-  text(s, "依次经过 n 个关卡，正数回血、负数扣血；任何时刻血量必须为正数。求最小的正整数初始血量（n ≤ 10⁵）。", 0.5, 1.05, 9, 0.5, { fontSize: 12, lsm: 1.1 });
-  codeBlock(s, `import sys
-a = list(map(int, sys.stdin.buffer.read().split()))
-cur = mn = 0
-for x in a[1:1 + a[0]]:
-    cur += x
-    mn = min(mn, cur)
-print(1 - mn)`, 0.5, 1.7, 5.6, 1.9, { fontSize: 11, lang: "py" });
-  consoleBlock(s, "输入: 5 / -200 -300 1000 -100 -100\n输出: 501", 0.5, 3.75, 5.6, 0.85, 10.5);
-  callout(s, "前缀和的最小值就是最大跌幅", "cur 是相对初始血量的累计变化，mn 是过程中最深的一次跌幅（负数）。初始血量只要 ≥ 1 - mn，全程血量就能保持 > 0。", 6.3, 1.7, 3.2, 2.9, { fontSize: 10.5 });
+  const s = content("T2", "3 月考样卷 · T2 E31294 大肥鱼卖白饭", "贪心找零：20 元优先用 10+5");
+  text(s, "每份 5 元，n 位顾客依次付 5 / 10 / 20 元的一张纸币，开始时没有零钱，不能赊账、不能换序。判断能否依次正确找零（n ≤ 10⁵）。", 0.5, 1.0, 9, 0.9, { fontSize: 12, lsm: 1.15 });
+  text(s, "样例 1", 0.5, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+5
+5 5 10 5 20
+输出
+YES`, 0.5, 2.0, 4.4, 1.02, { fontSize: 10, lang: "text" });
+  text(s, "样例 2", 5.1, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+4
+5 10 20 5
+输出
+NO`, 5.1, 2.0, 4.4, 1.02, { fontSize: 10, lang: "text" });
+  callout(s, "只需记 5 元、10 元的张数", "付 5 元：不用找；付 10 元：找一张 5；付 20 元：优先找 10+5，没有再找 5+5+5。5 元比 10 元更万能，所以要把 5 元留到最后用。一旦失败，该人及之后的找零都不再成立，答案为 NO。", 0.5, 3.17, 9.0, 1.68, { fontSize: 12.5 });
+  text(s, "题目：cs101.openjudge.cn/practice/31294/", 0.5, 4.95, 9, 0.28, { fontSize: 10, color: C.muted });
+}
+
+// T2 code
+{
+  const s = content("T2", "3 月考样卷 · T2 E31294 大肥鱼卖白饭 · 参考代码", "C++ 与 Python 对照");
+  text(s, "C++", 0.5, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  text(s, "Python", 5.1, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n, b, c5 = 0, c10 = 0;
+    bool ok = true;
+    cin >> n;
+    while (n--) {
+        cin >> b;
+        if (b == 5) c5++;
+        else if (b == 10) {
+            if (c5 > 0) c5--, c10++;
+            else ok = false;
+        } else {  // 20：优先找 10+5
+            if (c10 > 0 && c5 > 0) c10--, c5--;
+            else if (c5 >= 3) c5 -= 3;
+            else ok = false;
+        }
+    }
+    cout << (ok ? "YES" : "NO") << endl;
+}`, 0.5, 1.25, 4.5, 3.75, { fontSize: 10.5, lang: "cpp" });
+  codeBlock(s, `n = int(input())
+c5 = c10 = 0
+ok = True
+for b in map(int, input().split()):
+    if b == 5:
+        c5 += 1
+    elif b == 10:
+        if c5 > 0:
+            c5 -= 1
+            c10 += 1
+        else:
+            ok = False
+    else:  # 20：优先找 10+5
+        if c10 > 0 and c5 > 0:
+            c10 -= 1
+            c5 -= 1
+        elif c5 >= 3:
+            c5 -= 3
+        else:
+            ok = False
+print("YES" if ok else "NO")`, 5.1, 1.25, 4.4, 3.75, { fontSize: 10.5, lang: "py" });
 }
 
 // T3
 {
-  const s = content("T3", "3 月考样卷 · T3 M29917 牛顿迭代法", "迭代逼近、浮点终止条件");
-  text(s, "对每个正数 a（读到 EOF 为止），用初值 x=1 和迭代式 x = (x + a/x) / 2 求平方根；相邻两次近似值之差 ≤ 1e-6 时停止，输出迭代次数与两位小数结果。", 0.5, 1.02, 9, 0.6, { fontSize: 11.5, lsm: 1.1 });
-  codeBlock(s, `import sys
-for token in sys.stdin.read().split():
-    a, x, cnt = float(token), 1.0, 0
-    while True:
-        y = (x + a / x) / 2
-        cnt += 1
-        if abs(y - x) <= 1e-6:
-            print(cnt, f'{y:.2f}')
-            break
-        x = y`, 0.5, 1.7, 9.0, 2.15, { fontSize: 11, lang: "py" });
-  text(s, "样例输入：`12` / `25` / `144`", 0.5, 3.95, 4.85, 0.28, { fontSize: 10.5, color: C.muted });
-  consoleBlock(s, "6 3.46 / 7 5.00 / 8 12.00", 0.5, 4.25, 4.85, 0.55, 11);
-  callout(s, "不定行输入用 sys.stdin.read().split()", "题目没给数据组数，逐个 token 处理到 EOF；每个数独立跑一次牛顿迭代，互不影响。", 5.55, 3.95, 3.95, 0.85, { fontSize: 9.5 });
+  const s = content("T3", "3 月考样卷 · T3 E31293 双十一凑单大作战", "从大到小排序，免第 3、6、9… 件");
+  text(s, "n 件商品价格 pᵢ（n ≤ 10⁵，pᵢ ≤ 10⁹）。可任选恰好 3 件成一组，组内最便宜的免费；每件至多属于一组。求买下全部商品的最少支付金额。", 0.5, 1.0, 9, 0.9, { fontSize: 12, lsm: 1.15 });
+  text(s, "样例 1", 0.5, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+4
+3 2 1 10
+输出
+14`, 0.5, 2.0, 4.4, 1.02, { fontSize: 10, lang: "text" });
+  text(s, "样例 2", 5.1, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+7
+6 5 5 5 2 1 1
+输出
+19`, 5.1, 2.0, 4.4, 1.02, { fontSize: 10, lang: "text" });
+  callout(s, "相邻的三件价格最接近，免掉的最多", "从大到小排序后每 3 件一组，免掉每组最小的一件，即第 3、6、9… 件。总价最大 10¹⁴，超过 32 位：C++ 必须用 long long，Python 无需担心。", 0.5, 3.17, 9.0, 1.68, { fontSize: 12.5 });
+  text(s, "题目：cs101.openjudge.cn/practice/31293/", 0.5, 4.95, 9, 0.28, { fontSize: 10, color: C.muted });
+}
+
+// T3 code
+{
+  const s = content("T3", "3 月考样卷 · T3 E31293 双十一凑单大作战 · 参考代码", "C++ 与 Python 对照");
+  text(s, "C++", 0.5, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  text(s, "Python", 5.1, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector<long long> p(n);
+    long long sum = 0;
+    for (auto &x : p) cin >> x, sum += x;
+    sort(p.rbegin(), p.rend());  // 降序
+    for (int i = 2; i < n; i += 3)  // 免单
+        sum -= p[i];
+    cout << sum << endl;
+}`, 0.5, 1.25, 4.5, 3.75, { fontSize: 10.5, lang: "cpp" });
+  codeBlock(s, `n = int(input())
+p = sorted(map(int, input().split()), reverse=True)  # 降序
+print(sum(p) - sum(p[2::3]))  # 第 3、6、9… 件免单`, 5.1, 1.25, 4.4, 3.75, { fontSize: 10.5, lang: "py" });
 }
 
 // T4
 {
-  const s = content("T4", "3 月考样卷 · T4 M29918 求亲和数", "倍数筛：真因数和");
-  text(s, "若 a 的真因数和 = b、b 的真因数和 = a（a ≠ b），称 (a, b) 为亲和数对。给定 n（≤ 100000），按较小数递增输出所有 a ≤ n 的亲和数对。", 0.5, 1.05, 9, 0.5, { fontSize: 11.5, lsm: 1.1 });
-  codeBlock(s, `import sys
-n = int(sys.stdin.buffer.read())
-s = [0] * (n + 1)
-for d in range(1, n // 2 + 1):
-    for x in range(2 * d, n + 1, d):
-        s[x] += d
-for a in range(2, n + 1):
-    b = s[a]
-    if a < b <= n and s[b] == a:
-        print(a, b)`, 0.5, 1.7, 5.7, 2.45, { fontSize: 10.5, lang: "py" });
-  text(s, "样例输入：`1500`", 6.35, 1.7, 3.15, 0.3, { fontSize: 10.5, color: C.muted });
-  consoleBlock(s, "220 284\n1184 1210", 6.35, 2.02, 3.15, 0.9, 10.5);
-  callout(s, "倍数筛，不是逐个试除", "对每个因子 d，把它加到所有 d 的倍数（除自身外）的累加器上——s[x] 最终就是 x 的真因数和，是 O(n log n)，比逐个试除到 √x 快得多。", 6.35, 3.0, 3.15, 2.15, { fontSize: 10 });
+  const s = content("T4", "3 月考样卷 · T4 M31297 恒星共振裂变", "先筛后查：从 N/2 向下找第一对质数");
+  text(s, "T 组数据（T ≤ 10⁴），每组给偶数 N（4 ≤ N ≤ 10⁶），把 N 拆成两个质数 p₁ + p₂（p₁ ≤ p₂），使乘积最大。", 0.5, 1.0, 9, 0.9, { fontSize: 12, lsm: 1.15 });
+  text(s, "样例", 0.5, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+3
+4
+10
+16
+输出
+2 2
+5 5
+5 11`, 0.5, 2.0, 9.0, 1.74, { fontSize: 10, lang: "text" });
+  callout(s, "和一定时，两数越接近乘积越大", "预处理 10⁶ 以内的素数筛（每组数据现场试除会 TLE）。对每个 N 从 N/2 开始向下找第一个 p，使 p 和 N−p 都是质数——质数分布密，通常只需试很少几步。", 0.5, 3.89, 9.0, 0.96, { fontSize: 12.5 });
+  text(s, "题目：cs101.openjudge.cn/practice/31297/", 0.5, 4.95, 9, 0.28, { fontSize: 10, color: C.muted });
+}
+
+// T4 code
+{
+  const s = content("T4", "3 月考样卷 · T4 M31297 恒星共振裂变 · 参考代码", "C++ 与 Python 对照");
+  text(s, "C++", 0.5, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  text(s, "Python", 5.1, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `#include <bits/stdc++.h>
+using namespace std;
+const int N = 1000000;
+bool comp[N + 1];  // true 表示合数
+int main() {
+    comp[0] = comp[1] = true;
+    for (int i = 2; i * i <= N; i++)
+        if (!comp[i])
+            for (int j = i * i; j <= N; j += i)
+                comp[j] = true;
+    int t, n;
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        int p = n / 2;  // 两数越接近乘积越大
+        while (comp[p] || comp[n - p]) p--;
+        cout << p << " " << n - p << "\\n";
+    }
+}`, 0.5, 1.25, 4.5, 3.75, { fontSize: 10.5, lang: "cpp" });
+  codeBlock(s, `N = 10**6
+ok = bytearray([1]) * (N + 1)  # 1 表示质数
+ok[0] = ok[1] = 0
+for i in range(2, int(N**0.5) + 1):
+    if ok[i]:
+        ok[i * i::i] = bytes(len(ok[i * i::i]))
+for _ in range(int(input())):
+    n = int(input())
+    p = n // 2  # 两数越接近乘积越大
+    while not (ok[p] and ok[n - p]):
+        p -= 1
+    print(p, n - p)`, 5.1, 1.25, 4.4, 3.75, { fontSize: 10.5, lang: "py" });
 }
 
 // T5
 {
-  const s = content("T5", "3 月考样卷 · T5 M29949 贪婪的哥布林", "分数背包：按单位价值贪心");
-  text(s, "n 堆矿石，每堆价值 v、重量 w，可任意分割；背包承重 M。求能装下的最大总价值。", 0.5, 1.05, 9, 0.35, { fontSize: 12 });
-  codeBlock(s, `import sys
-d = list(map(int, sys.stdin.buffer.read().split()))
-n, cap = d[:2]
-items = sorted([(d[i] / d[i + 1], d[i], d[i + 1])
-                for i in range(2, 2 * n + 2, 2)], reverse=True)
-ans = 0.0
-for ratio, value, weight in items:
-    take = min(cap, weight)
-    ans += ratio * take
-    cap -= take
-    if cap == 0:
-        break
-print(f'{ans:.2f}')`, 0.5, 1.5, 9.0, 2.3, { fontSize: 10.5, lang: "py" });
-  consoleBlock(s, "输入: 3 50 / 60 10 / 100 20 / 120 30\n输出: 240.00", 0.5, 3.95, 4.35, 0.85, 10.5);
-  callout(s, "可分割背包：贪心一定最优", "按单位重量价值 v/w 从高到低取，能整堆拿就整堆拿，拿不下就切一部分——矿石可分割，不存在 0-1 背包那种「拿了就放不下别的」的取舍。", 5.0, 3.95, 4.5, 0.95, { fontSize: 9.5 });
+  const s = content("T5", "3 月考样卷 · T5 M31296 “淹园”救援", "排序 + 双指针：最轻配最重");
+  text(s, "n 名学生体重 wᵢ，小艇载重上限 C，每艘最多 2 人且体重和 ≤ C，保证 wᵢ ≤ C（n ≤ 10⁵）。求转移所有学生最少需要的小艇数。", 0.5, 1.0, 9, 0.9, { fontSize: 12, lsm: 1.15 });
+  text(s, "样例 1", 0.5, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+4 5
+3 2 2 1
+输出
+2`, 0.5, 2.0, 4.4, 1.02, { fontSize: 10, lang: "text" });
+  text(s, "样例 2", 5.1, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+5 3
+3 2 2 1 1
+输出
+3`, 5.1, 2.0, 4.4, 1.02, { fontSize: 10, lang: "text" });
+  callout(s, "最重的人必占一艘艇", "排序后 l 指最轻、r 指最重。最重的人无论如何要占一艘；若最轻的能和他同乘就一起走（l 前进），否则他单独走。每轮 r 前进、艇数 +1，O(n log n)。", 0.5, 3.17, 9.0, 1.68, { fontSize: 12.5 });
+  text(s, "题目：cs101.openjudge.cn/practice/31296/", 0.5, 4.95, 9, 0.28, { fontSize: 10, color: C.muted });
+}
+
+// T5 code
+{
+  const s = content("T5", "3 月考样卷 · T5 M31296 “淹园”救援 · 参考代码", "C++ 与 Python 对照");
+  text(s, "C++", 0.5, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  text(s, "Python", 5.1, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n, c;
+    cin >> n >> c;
+    vector<int> w(n);
+    for (auto &x : w) cin >> x;
+    sort(w.begin(), w.end());
+    int l = 0, r = n - 1, boats = 0;
+    while (l <= r) {
+        if (l < r && w[l] + w[r] <= c)
+            l++;  // 最轻的搭最重的
+        r--;      // 最重的必占一艘
+        boats++;
+    }
+    cout << boats << endl;
+}`, 0.5, 1.25, 4.5, 3.75, { fontSize: 10.5, lang: "cpp" });
+  codeBlock(s, `n, c = map(int, input().split())
+w = sorted(map(int, input().split()))
+l, r, boats = 0, n - 1, 0
+while l <= r:
+    if l < r and w[l] + w[r] <= c:
+        l += 1  # 最轻的搭最重的
+    r -= 1  # 最重的必占一艘
+    boats += 1
+print(boats)`, 5.1, 1.25, 4.4, 3.75, { fontSize: 10.5, lang: "py" });
 }
 
 // T6
 {
-  const s = content("T6", "3 月考样卷 · T6 T29947 校门外的树又来了", "区间合并、边界计数");
-  text(s, "0..L 共 L+1 棵树，给出 M 个闭区间并移除区间内的树，求剩余树的数量。排序后合并重叠 / 相邻区间，区间长度按 r-l+1 计算。", 0.5, 1.05, 9, 0.5, { fontSize: 11.5, lsm: 1.1 });
-  codeBlock(s, `import sys
-d = list(map(int, sys.stdin.buffer.read().split()))
-L, m = d[:2]
-seg = sorted(tuple(sorted(d[i:i + 2])) for i in range(2, 2 * m + 2, 2))
-removed = 0
-left = right = None
-for l, r in seg + [(10**18, 10**18)]:
-    if left is None:
-        left, right = l, r
-    elif l <= right + 1:
-        right = max(right, r)
-    else:
-        removed += right - left + 1
-        left, right = l, r
-print(L + 1 - removed)`, 0.5, 1.7, 5.7, 2.8, { fontSize: 10, lang: "py" });
-  text(s, "样例输入：`500 3` / `150 300` / `100 200` / `470 471`", 6.35, 1.7, 3.15, 0.55, { fontSize: 10, color: C.muted, lsm: 1.1 });
-  consoleBlock(s, "298", 6.35, 2.35, 3.15, 0.65, 11);
-  callout(s, "l ≤ right + 1 才算相邻要合并", "两个区间即使不重叠，只要端点相邻（中间没有树），也要合并成一段一起统计，否则会重复扣同一棵树，或漏掉紧挨着的区间。", 6.35, 3.1, 3.15, 2.0, { fontSize: 9.5 });
+  const s = content("T6", "3 月考样卷 · T6 T31298 警察招募又来了", "队列存「过期时刻 + 人数」，按入伍先后派出");
+  text(s, "第 1…n 分钟各发生一个事件：aᵢ = x（1 ≤ x ≤ 10）表示招募 x 名警员，aᵢ = -1 表示一起犯罪。警员第 t 分钟入伍，只能处理 [t, t+k−1] 内的犯罪，且至多处理一起；有空闲警员时派最早入伍者。求无法处理的犯罪数。", 0.5, 1.0, 9, 0.9, { fontSize: 12, lsm: 1.15 });
+  text(s, "样例 1", 0.5, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+6 2
+1 1 -1 -1 -1 1
+输出
+2`, 0.5, 2.0, 4.4, 1.02, { fontSize: 10, lang: "text" });
+  text(s, "样例 2", 5.1, 1.78, 2, 0.22, { fontSize: 9, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `输入
+5 1
+5 -1 3 -1 -1
+输出
+3`, 5.1, 2.0, 4.4, 1.02, { fontSize: 10, lang: "text" });
+  callout(s, "批次入队，队首优先、过期弹出", "每批警员记为 (过期时刻 = t+k−1, 人数) 入队。遇到犯罪时先把队首已过期的批次弹出；队列空则 +1 计数，否则队首人数 −1，减到 0 就弹出。每批最多入队、出队各一次，O(n)。", 0.5, 3.17, 9.0, 1.68, { fontSize: 12.5 });
+  text(s, "题目：cs101.openjudge.cn/practice/31298/", 0.5, 4.95, 9, 0.28, { fontSize: 10, color: C.muted });
 }
+
+// T6 code
+{
+  const s = content("T6", "3 月考样卷 · T6 T31298 警察招募又来了 · 参考代码", "C++ 与 Python 对照");
+  text(s, "C++", 0.5, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  text(s, "Python", 5.1, 0.98, 2, 0.25, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n, k, a, bad = 0;
+    cin >> n >> k;
+    queue<pair<int, int>> q;  // 过期时刻,人数
+    for (int i = 1; i <= n; i++) {
+        cin >> a;
+        if (a > 0) {
+            q.push({i + k - 1, a});
+            continue;
+        }
+        while (!q.empty() &&
+               q.front().first < i)
+            q.pop();
+        if (q.empty()) bad++;
+        else if (--q.front().second == 0)
+            q.pop();
+    }
+    cout << bad << endl;
+}`, 0.5, 1.25, 4.5, 3.75, { fontSize: 10.5, lang: "cpp" });
+  codeBlock(s, `from collections import deque
+
+n, k = map(int, input().split())
+q = deque()  # [过期时刻, 人数]
+bad = 0
+for i, a in enumerate(
+        map(int, input().split()), 1):
+    if a > 0:
+        q.append([i + k - 1, a])
+        continue
+    while q and q[0][0] < i:
+        q.popleft()
+    if not q:
+        bad += 1
+    else:
+        q[0][1] -= 1
+        if q[0][1] == 0:
+            q.popleft()
+print(bad)`, 5.1, 1.25, 4.4, 3.75, { fontSize: 10.5, lang: "py" });
+}
+
 
 // ============================ PART 4 ============================
 sectionSlide("Part 4", "备选题库与考后订正", "可替换样卷任意一题\n三分类 · 重写规则 · 错题类型表");
@@ -403,7 +628,7 @@ sectionSlide("Part 4", "备选题库与考后订正", "可替换样卷任意一�
 summarySlide("本周小结", [
   ["体检", "月考是体检：暴露**语法关、速度关、调试关**三处短板。"],
   ["自检清单", "打不了勾的地方，就是本周的复习重点。"],
-  ["难度梯度", "签到 → 字符串 → 字典排序 → 复杂度意识 → 综合模拟 → 补码位运算，规格与期末机考一致：**6 题 / 112 分钟**。"],
+  ["难度梯度", "取交集 → 找零模拟 → 排序贪心 → 筛法 → 双指针 → 队列模拟，规格与期末机考一致：**6 题 / 112 分钟**。"],
   ["订正方法", "唯一有效的方法：**分类 → 关题解重写 → 记录错误类型**。"],
   ["考场六条", "通读、看范围、早提交、造数据、按时换题、查格式。"],
 ]);
