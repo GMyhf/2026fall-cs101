@@ -16,9 +16,9 @@
 
 ## 1. 题目
 
-### E31295:宿舍的空调
+### M21554: 排队做实验
 
-http://cs101.openjudge.cn/practice/31295/
+greedy, http://cs101.openjudge.cn/pctbook/M21554/
 
 思路：
 
