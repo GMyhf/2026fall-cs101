@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-10-12 08:00 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-10-13 14:00 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -17,7 +17,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 |  |       |       | - |          |
-| 10 |       |       | - |          |
+| 1013 | T12559:最大最小整数      | greedy    | Tough | http://cs101.openjudge.cn/pctbook/T12559/          |
 | 1012 | 230A. Dragons | greedy, sortings     | 1000 | https://codeforces.com/contest/230/problem/A          |
 | 1011 | 270A. Fancy Fence | geometry, implementation, math   | 1100  | https://codeforces.com/contest/270/problem/A    |
 | 1010 | E03670:计算鞍点    | implementation       | Easy | http://cs101.openjudge.cn/pctbook/E03670/          |
