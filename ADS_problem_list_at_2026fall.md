@@ -18,8 +18,8 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 |  |       |       | - |          |
 | 1019 | M3551.数位和排序需要的最小交换次数   | 置换群的最小交换次数 | Medium | https://leetcode.cn/problems/minimum-swaps-to-sort-by-digit-sum/          |
-| 1018 | 31422:最短未出现的子序列（数据加强版）      |       | T | http://cs101.openjudge.cn/practice/31422/         |
-| 1017 | 31421:最短未出现的子序列（数据简化版）      |       | M~T | http://cs101.openjudge.cn/practice/31421/          |
+| 1018 | 31422:最短未出现的子序列（数据加强版）| greedy      | T | http://cs101.openjudge.cn/practice/31422/         |
+| 1017 | 31421:最短未出现的子序列（数据简化版）| greedy      | M~T | http://cs101.openjudge.cn/practice/31421/          |
 | 1016 | 31420:一盏灯，照亮整间房？   | math   | M~T | http://cs101.openjudge.cn/practice/31420/          |
 | 1015 | 31419:宿舍熄灯      | implementation  | E | http://cs101.openjudge.cn/practice/31419/          |
 | 1014 | 3723. 数位平方和的最大值 | greedy    | Medium | https://leetcode.cn/problems/maximize-sum-of-squares-of-digits/         |
