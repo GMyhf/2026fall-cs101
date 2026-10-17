@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-10-13 14:00 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-10-17 13:55 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -17,6 +17,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 |  |       |       | - |          |
+| 1019 | M3551.数位和排序需要的最小交换次数   | 置换群的最小交换次数 | Medium | https://leetcode.cn/problems/minimum-swaps-to-sort-by-digit-sum/          |
 | 1018 | 31422:最短未出现的子序列（数据加强版）      |       | T | http://cs101.openjudge.cn/practice/31422/         |
 | 1017 | 31421:最短未出现的子序列（数据简化版）      |       | M~T | http://cs101.openjudge.cn/practice/31421/          |
 | 1016 | 31420:一盏灯，照亮整间房？   |       | M~T | http://cs101.openjudge.cn/practice/31420/          |
