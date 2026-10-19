@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-10-17 13:55 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-10-19 22:04 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -16,12 +16,20 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
-|  |       |       | - |          |
+| 10 |       |       | - |          |
+| 1027 | T135.分发糖果      | greedy      | Tough | https://leetcode.cn/problems/candy/          |
+| 1026 | T239.滑动窗口最大值 | sliding window, monotonic queue    | Tough | https://leetcode.cn/problems/sliding-window-maximum/          |
+| 1025 | T26977:接雨水       | stack, two pointers       | Tough | http://cs101.openjudge.cn/practice/26977/          |
+| 1024 | M02746:约瑟夫问题   | queue, math | Medium | http://cs101.openjudge.cn/pctbook/M02746/         |
+| 1023 | 22067:快速堆猪      | 辅助栈      | Medium | http://cs101.openjudge.cn/practice/22067          |
+| 1022 | 24588:后序表达式求值 | stack, recursion  | Easy | http://cs101.openjudge.cn/practice/24588j          |
+| 1021 | E20. 有效的括号      | stack      | Easy | https://leetcode.cn/problems/valid-parenjtheses/         |
+| 1020 | E19942:二维矩阵上的卷积运算      | matrix  | Easy | http://cs101.openjudge.cn/pctbook/E19942          |
 | 1019 | M3551.数位和排序需要的最小交换次数   | 置换群的最小交换次数 | Medium | https://leetcode.cn/problems/minimum-swaps-to-sort-by-digit-sum/          |
-| 1018 | 31422:最短未出现的子序列（数据加强版）| greedy      | T | http://cs101.openjudge.cn/practice/31422/         |
+| 1018 | 31422:最短未出现的子序列（数据加强版）| greedy      | Tough | http://cs101.openjudge.cn/practice/31422/         |
 | 1017 | 31421:最短未出现的子序列（数据简化版）| greedy      | M~T | http://cs101.openjudge.cn/practice/31421/          |
 | 1016 | 31420:一盏灯，照亮整间房？   | math   | M~T | http://cs101.openjudge.cn/practice/31420/          |
-| 1015 | 31419:宿舍熄灯      | implementation  | E | http://cs101.openjudge.cn/practice/31419/          |
+| 1015 | 31270:宿舍熄灯      | implementation  | E | http://cs101.openjudge.cn/practice/31270/          |
 | 1014 | 3723. 数位平方和的最大值 | greedy    | Medium | https://leetcode.cn/problems/maximize-sum-of-squares-of-digits/         |
 | 1013 | T12559:最大最小整数      | greedy    | Tough | http://cs101.openjudge.cn/pctbook/T12559/          |
 | 1012 | 230A. Dragons | greedy, sortings     | 1000 | https://codeforces.com/contest/230/problem/A          |
