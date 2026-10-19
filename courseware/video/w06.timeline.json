@@ -1,265 +1,481 @@
 {
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
-  "total": "17:31",
-  "source_pptx_sha256": "9d8f66fdc261cf152373b36cf931cc3d6561a00995f51b41d232965727b9939d",
-  "source_script_sha256": "99f4643bf33b6fe723d7bf10e9e22dbad254f98caa1413b911226d282cd4216e",
+  "total": "35:43",
+  "source_pptx_sha256": "280ee48564ff0940ac7a96472787e5d1a78a24e0d50ac5c1832fbf4f82f1f06a",
+  "source_script_sha256": "041978a71583da5589ab7c7f704fe257a3ca63575044a8c76732c056eb6cee78",
   "sections": [
     {
       "page": 1,
       "title": "封面",
       "start": "00:00",
       "end": "00:28",
-      "seconds": 27.8,
-      "chars": 141
+      "seconds": 27.7,
+      "chars": 134
     },
     {
       "page": 2,
-      "title": "本讲内容",
+      "title": "本周要回答三个问题",
       "start": "00:28",
-      "end": "00:58",
-      "seconds": 30.6,
-      "chars": 151
+      "end": "01:13",
+      "seconds": 44.8,
+      "chars": 218
     },
     {
       "page": 3,
-      "title": "第 1 节　矩阵",
-      "start": "00:58",
-      "end": "01:02",
-      "seconds": 3.2,
-      "chars": 7
+      "title": "内容地图",
+      "start": "01:13",
+      "end": "01:49",
+      "seconds": 36.2,
+      "chars": 180
     },
     {
       "page": 4,
-      "title": "表示与读入",
-      "start": "01:02",
-      "end": "01:37",
+      "title": "先跑一遍",
+      "start": "01:49",
+      "end": "02:33",
+      "seconds": 44.1,
+      "chars": 223
+    },
+    {
+      "page": 5,
+      "title": "Part 1　矩阵",
+      "start": "02:33",
+      "end": "02:39",
+      "seconds": 6.3,
+      "chars": 25
+    },
+    {
+      "page": 6,
+      "title": "矩阵是什么：数字排成行与列",
+      "start": "02:39",
+      "end": "03:16",
+      "seconds": 36.5,
+      "chars": 187
+    },
+    {
+      "page": 7,
+      "title": "元素的下标与转置",
+      "start": "03:16",
+      "end": "03:50",
+      "seconds": 34.6,
+      "chars": 195
+    },
+    {
+      "page": 8,
+      "title": "矩阵的加法与乘法规则",
+      "start": "03:50",
+      "end": "04:24",
+      "seconds": 34.1,
+      "chars": 178
+    },
+    {
+      "page": 9,
+      "title": "例题 263A：1 要移到中心要几步",
+      "start": "04:24",
+      "end": "05:00",
+      "seconds": 35.9,
+      "chars": 185
+    },
+    {
+      "page": 10,
+      "title": "例题 E18161：先判形状，再计算",
+      "start": "05:00",
+      "end": "05:38",
+      "seconds": 37.2,
+      "chars": 204
+    },
+    {
+      "page": 11,
+      "title": "E18161 的代码：三步写完",
+      "start": "05:38",
+      "end": "06:18",
+      "seconds": 40.3,
+      "chars": 225
+    },
+    {
+      "page": 12,
+      "title": "m 行 n 列：一定要用列表推导式逐行建",
+      "start": "06:18",
+      "end": "06:49",
+      "seconds": 31.4,
+      "chars": 157
+    },
+    {
+      "page": 13,
+      "title": "读入一个 m×n 矩阵；按行遍历为什么更快",
+      "start": "06:49",
+      "end": "07:25",
       "seconds": 35.5,
       "chars": 185
     },
     {
-      "page": 5,
-      "title": "保护圈：省掉边界判断",
-      "start": "01:37",
-      "end": "02:16",
-      "seconds": 39.1,
-      "chars": 209
-    },
-    {
-      "page": 6,
-      "title": "方向数组与转置旋转",
-      "start": "02:16",
-      "end": "02:56",
-      "seconds": 39.5,
-      "chars": 190
-    },
-    {
-      "page": 7,
-      "title": "矩阵乘法",
-      "start": "02:56",
-      "end": "03:40",
-      "seconds": 44.1,
-      "chars": 232
-    },
-    {
-      "page": 8,
-      "title": "二维前缀和",
-      "start": "03:40",
-      "end": "04:18",
-      "seconds": 38.0,
-      "chars": 192
-    },
-    {
-      "page": 9,
-      "title": "第 2 节　排序",
-      "start": "04:18",
-      "end": "04:21",
-      "seconds": 3.3,
-      "chars": 7
-    },
-    {
-      "page": 10,
-      "title": "会用 sorted 就够应付大多数题",
-      "start": "04:21",
-      "end": "05:08",
-      "seconds": 46.3,
-      "chars": 248
-    },
-    {
-      "page": 11,
-      "title": "五种基础排序",
-      "start": "05:08",
-      "end": "05:51",
-      "seconds": 43.0,
-      "chars": 200
-    },
-    {
-      "page": 12,
-      "title": "归并排序求逆序对",
-      "start": "05:51",
-      "end": "06:28",
-      "seconds": 37.6,
-      "chars": 191
-    },
-    {
-      "page": 13,
-      "title": "第 3 节　贪心",
-      "start": "06:28",
-      "end": "06:34",
-      "seconds": 5.6,
-      "chars": 17
-    },
-    {
       "page": 14,
-      "title": "贪心的三个要素",
-      "start": "06:34",
-      "end": "07:03",
-      "seconds": 29.3,
-      "chars": 137
-    },
-    {
-      "page": 15,
-      "title": "标准反例：找零问题",
-      "start": "07:03",
-      "end": "07:35",
-      "seconds": 32.0,
-      "chars": 150
-    },
-    {
-      "page": 16,
-      "title": "排序型贪心：最常见的套路",
-      "start": "07:35",
-      "end": "07:51",
-      "seconds": 16.1,
-      "chars": 78
-    },
-    {
-      "page": 17,
-      "title": "装箱问题：从大到小放加打表",
-      "start": "07:51",
-      "end": "08:34",
-      "seconds": 42.5,
-      "chars": 205
-    },
-    {
-      "page": 18,
-      "title": "最大最小整数：交换论证",
-      "start": "08:34",
-      "end": "09:14",
-      "seconds": 40.5,
-      "chars": 206
-    },
-    {
-      "page": 19,
-      "title": "交换论证",
-      "start": "09:14",
-      "end": "09:37",
-      "seconds": 22.6,
-      "chars": 110
-    },
-    {
-      "page": 20,
-      "title": "交换论证的三步骨架",
-      "start": "09:37",
-      "end": "10:36",
-      "seconds": 59.7,
-      "chars": 300
-    },
-    {
-      "page": 21,
-      "title": "反过来用：这才是它在考场上的价值",
-      "start": "10:36",
-      "end": "11:04",
-      "seconds": 27.3,
-      "chars": 143
-    },
-    {
-      "page": 22,
-      "title": "最大最小整数的排序键是这么推出来的",
-      "start": "11:04",
-      "end": "11:56",
-      "seconds": 52.3,
-      "chars": 282
-    },
-    {
-      "page": 23,
-      "title": "两种形态，别混",
-      "start": "11:56",
-      "end": "12:30",
-      "seconds": 34.0,
-      "chars": 170
-    },
-    {
-      "page": 24,
-      "title": "两个必须自己检查的前提",
-      "start": "12:30",
-      "end": "13:27",
-      "seconds": 57.0,
-      "chars": 303
-    },
-    {
-      "page": 25,
-      "title": "因材施教与军备竞赛",
-      "start": "13:27",
-      "end": "14:14",
-      "seconds": 47.3,
-      "chars": 234
-    },
-    {
-      "page": 26,
-      "title": "贪心的常见形状速查",
-      "start": "14:14",
-      "end": "14:45",
-      "seconds": 30.5,
-      "chars": 143
-    },
-    {
-      "page": 27,
-      "title": "第 4 节　复杂度实战",
-      "start": "14:45",
-      "end": "14:51",
-      "seconds": 6.5,
-      "chars": 23
-    },
-    {
-      "page": 28,
-      "title": "同一道题的三种写法",
-      "start": "14:51",
-      "end": "15:30",
-      "seconds": 38.3,
-      "chars": 179
-    },
-    {
-      "page": 29,
-      "title": "三种复杂度对应三个可解规模",
-      "start": "15:30",
-      "end": "15:58",
-      "seconds": 28.2,
-      "chars": 139
-    },
-    {
-      "page": 30,
-      "title": "本周作业",
-      "start": "15:58",
-      "end": "16:45",
-      "seconds": 46.9,
-      "chars": 218
-    },
-    {
-      "page": 31,
-      "title": "小结",
-      "start": "16:45",
-      "end": "17:16",
-      "seconds": 31.3,
+      "title": "「每格看上下左右邻居」：不加保护圈很啰嗦",
+      "start": "07:25",
+      "end": "07:55",
+      "seconds": 29.9,
       "chars": 146
     },
     {
+      "page": 15,
+      "title": "保护圈（padding）：四周补一圈 0，内部不用再判越界",
+      "start": "07:55",
+      "end": "08:30",
+      "seconds": 34.8,
+      "chars": 170
+    },
+    {
+      "page": 16,
+      "title": "DIRS4 / DIRS8：把「往哪走」写成一张表",
+      "start": "08:30",
+      "end": "09:06",
+      "seconds": 36.7,
+      "chars": 179
+    },
+    {
+      "page": 17,
+      "title": "zip(*a) 一行转置；配合切片一行旋转",
+      "start": "09:06",
+      "end": "09:40",
+      "seconds": 33.8,
+      "chars": 161
+    },
+    {
+      "page": 18,
+      "title": "C = A·B：C[i][j] = Σ A[i][t]·B[t][j]",
+      "start": "09:40",
+      "end": "10:22",
+      "seconds": 42.4,
+      "chars": 214
+    },
+    {
+      "page": 19,
+      "title": "先搞懂：循环顺序为什么能换",
+      "start": "10:22",
+      "end": "11:12",
+      "seconds": 49.5,
+      "chars": 274
+    },
+    {
+      "page": 20,
+      "title": "用 A=[[1,2],[3,4]]、B=[[5,6],[7,8]] 手算一遍",
+      "start": "11:12",
+      "end": "11:54",
+      "seconds": 42.2,
+      "chars": 208
+    },
+    {
+      "page": 21,
+      "title": "三个优化技巧 + 做题注意",
+      "start": "11:54",
+      "end": "12:41",
+      "seconds": 46.5,
+      "chars": 249
+    },
+    {
+      "page": 22,
+      "title": "E23555 节省存储的矩阵乘法：稀疏 → 普通矩阵 → 稀疏",
+      "start": "12:41",
+      "end": "13:23",
+      "seconds": 42.5,
+      "chars": 206
+    },
+    {
+      "page": 23,
+      "title": "E23555 的代码：三个函数连起来",
+      "start": "13:23",
+      "end": "13:56",
+      "seconds": 32.6,
+      "chars": 173
+    },
+    {
+      "page": 24,
+      "title": "进阶：直接在三元组上乘（省空间）",
+      "start": "13:56",
+      "end": "14:37",
+      "seconds": 41.6,
+      "chars": 223
+    },
+    {
+      "page": 25,
+      "title": "预处理 O(mn)，单次查询 O(1)",
+      "start": "14:37",
+      "end": "15:21",
+      "seconds": 43.5,
+      "chars": 220
+    },
+    {
+      "page": 26,
+      "title": "Part 2　排序",
+      "start": "15:21",
+      "end": "15:29",
+      "seconds": 8.0,
+      "chars": 35
+    },
+    {
+      "page": 27,
+      "title": "多关键字排序：key 返回一个元组",
+      "start": "15:29",
+      "end": "16:06",
+      "seconds": 37.0,
+      "chars": 203
+    },
+    {
+      "page": 28,
+      "title": "Python 的 sort 是稳定的：相等元素保持原有相对顺序",
+      "start": "16:06",
+      "end": "16:42",
+      "seconds": 35.8,
+      "chars": 191
+    },
+    {
+      "page": 29,
+      "title": "复杂度与稳定性一览",
+      "start": "16:42",
+      "end": "17:27",
+      "seconds": 44.9,
+      "chars": 228
+    },
+    {
+      "page": 30,
+      "title": "两种 O(n²) 排序",
+      "start": "17:27",
+      "end": "17:59",
+      "seconds": 32.1,
+      "chars": 155
+    },
+    {
+      "page": 31,
+      "title": "两种 O(n log n) 排序",
+      "start": "17:59",
+      "end": "18:35",
+      "seconds": 36.4,
+      "chars": 178
+    },
+    {
       "page": 32,
+      "title": "四种手写排序 + 内建 sorted：结果必须一致",
+      "start": "18:35",
+      "end": "18:59",
+      "seconds": 23.5,
+      "chars": 126
+    },
+    {
+      "page": 33,
+      "title": "合并的同时顺手数「谁比谁靠前还更大」",
+      "start": "18:59",
+      "end": "19:39",
+      "seconds": 40.4,
+      "chars": 215
+    },
+    {
+      "page": 34,
+      "title": "为什么是 cnt += len(left) - i，不是 += 1？",
+      "start": "19:39",
+      "end": "20:15",
+      "seconds": 36.5,
+      "chars": 189
+    },
+    {
+      "page": 35,
+      "title": "Part 3　贪心",
+      "start": "20:15",
+      "end": "20:26",
+      "seconds": 10.3,
+      "chars": 44
+    },
+    {
+      "page": 36,
+      "title": "每一步都选当前看起来最好的，且不回头",
+      "start": "20:26",
+      "end": "20:55",
+      "seconds": 29.3,
+      "chars": 133
+    },
+    {
+      "page": 37,
+      "title": "找零问题：面额不同，贪心可能不是最优",
+      "start": "20:55",
+      "end": "21:32",
+      "seconds": 36.6,
+      "chars": 161
+    },
+    {
+      "page": 38,
+      "title": "找零问题：dp_coins 给出真正的最优解",
+      "start": "21:32",
+      "end": "22:11",
+      "seconds": 39.8,
+      "chars": 206
+    },
+    {
+      "page": 39,
+      "title": "最常见的套路：先按某个键排序，再一遍扫过去",
+      "start": "22:11",
+      "end": "22:41",
+      "seconds": 30.0,
+      "chars": 154
+    },
+    {
+      "page": 40,
+      "title": "1×1 到 6×6 六种产品，每箱 6×6，求最少箱子数",
+      "start": "22:41",
+      "end": "23:31",
+      "seconds": 50.0,
+      "chars": 240
+    },
+    {
+      "page": 41,
+      "title": "拼接数字串成整数，求能拼出的最大值与最小值",
+      "start": "23:31",
+      "end": "24:22",
+      "seconds": 50.6,
+      "chars": 263
+    },
+    {
+      "page": 42,
+      "title": "n 个学生分 k 组，组内最高分减最低分之和最小",
+      "start": "24:22",
+      "end": "24:59",
+      "seconds": 37.3,
+      "chars": 170
+    },
+    {
+      "page": 43,
+      "title": "排序后双指针：钱不够就把最贵的卖掉",
+      "start": "24:59",
+      "end": "25:40",
+      "seconds": 41.0,
+      "chars": 200
+    },
+    {
+      "page": 44,
+      "title": "arms_race(10, [3, 4, 5, 6])，排序后 [3,4,5,6]",
+      "start": "25:40",
+      "end": "26:13",
+      "seconds": 32.6,
+      "chars": 144
+    },
+    {
+      "page": 45,
+      "title": "先看一个排队打水的故事",
+      "start": "26:13",
+      "end": "26:49",
+      "seconds": 36.4,
+      "chars": 172
+    },
+    {
+      "page": 46,
+      "title": "从一次交换到一个证明",
+      "start": "26:49",
+      "end": "27:32",
+      "seconds": 42.7,
+      "chars": 205
+    },
+    {
+      "page": 47,
+      "title": "把故事写成标准三步",
+      "start": "27:32",
+      "end": "28:15",
+      "seconds": 43.5,
+      "chars": 216
+    },
+    {
+      "page": 48,
+      "title": "为什么必须是「相邻」两项",
+      "start": "28:15",
+      "end": "28:44",
+      "seconds": 29.0,
+      "chars": 146
+    },
+    {
+      "page": 49,
+      "title": "反过来用：以 12559 为例，把排序键推出来",
+      "start": "28:44",
+      "end": "29:39",
+      "seconds": 54.2,
+      "chars": 275
+    },
+    {
+      "page": 50,
+      "title": "推完之后，一定要和暴力对拍",
+      "start": "29:39",
+      "end": "30:14",
+      "seconds": 35.4,
+      "chars": 172
+    },
+    {
+      "page": 51,
+      "title": "两种形态，别混；两个前提必须自己检查",
+      "start": "30:14",
+      "end": "31:07",
+      "seconds": 53.0,
+      "chars": 256
+    },
+    {
+      "page": 52,
+      "title": "拿到贪心题，先往这张表上对一对",
+      "start": "31:07",
+      "end": "31:42",
+      "seconds": 34.8,
+      "chars": 163
+    },
+    {
+      "page": 53,
+      "title": "Part 4　复杂度实战",
+      "start": "31:42",
+      "end": "31:51",
+      "seconds": 8.6,
+      "chars": 35
+    },
+    {
+      "page": 54,
+      "title": "最大连续子数组和（第 11 周会作为 DP 重讲）",
+      "start": "31:51",
+      "end": "32:35",
+      "seconds": 44.6,
+      "chars": 221
+    },
+    {
+      "page": 55,
+      "title": "同一个 n，三个不同的可解规模",
+      "start": "32:35",
+      "end": "33:04",
+      "seconds": 29.0,
+      "chars": 141
+    },
+    {
+      "page": 56,
+      "title": "本周作业",
+      "start": "33:04",
+      "end": "33:56",
+      "seconds": 52.3,
+      "chars": 251
+    },
+    {
+      "page": 57,
+      "title": "思考题",
+      "start": "33:56",
+      "end": "34:38",
+      "seconds": 41.3,
+      "chars": 212
+    },
+    {
+      "page": 58,
+      "title": "本周小结",
+      "start": "34:38",
+      "end": "35:26",
+      "seconds": 48.2,
+      "chars": 232
+    },
+    {
+      "page": 59,
       "title": "下周预告",
-      "start": "17:16",
-      "end": "17:31",
-      "seconds": 14.9,
-      "chars": 67
+      "start": "35:26",
+      "end": "35:43",
+      "seconds": 17.3,
+      "chars": 78
     }
   ]
 }

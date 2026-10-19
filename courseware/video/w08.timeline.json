@@ -1,241 +1,297 @@
 {
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
-  "total": "15:28",
-  "source_pptx_sha256": "44e5675affbe2f035c97dc588b0d8d899c31bb9208df145c5df907c344f053c0",
-  "source_script_sha256": "fc4d512e6e2ba4d82b74e390436d95a38d545ef38ecb5433724e168f6017c63a",
+  "total": "23:01",
+  "source_pptx_sha256": "540a502eef30357ef225233ffde8101f3c8cd1ad7a09e8e70340920ade5c652b",
+  "source_script_sha256": "b7d44232eccf3e6013c4d07c3bd85351ca188d281c473ad13d74e93a8ff3005a",
   "sections": [
     {
       "page": 1,
       "title": "封面",
       "start": "00:00",
-      "end": "00:19",
-      "seconds": 18.8,
-      "chars": 91
+      "end": "00:30",
+      "seconds": 30.2,
+      "chars": 150
     },
     {
       "page": 2,
-      "title": "什么是递归",
-      "start": "00:19",
-      "end": "00:44",
-      "seconds": 25.3,
-      "chars": 127
+      "title": "本周导引：本周要回答三个问题",
+      "start": "00:30",
+      "end": "01:16",
+      "seconds": 45.7,
+      "chars": 228
     },
     {
       "page": 3,
-      "title": "递归三法则",
-      "start": "00:44",
-      "end": "01:09",
-      "seconds": 25.1,
-      "chars": 113
+      "title": "本周导引：内容地图",
+      "start": "01:16",
+      "end": "01:56",
+      "seconds": 39.9,
+      "chars": 189
     },
     {
       "page": 4,
-      "title": "递归的思维方式：相信它",
-      "start": "01:09",
-      "end": "01:40",
-      "seconds": 30.7,
-      "chars": 155
+      "title": "Part 1　什么是递归",
+      "start": "01:56",
+      "end": "02:07",
+      "seconds": 11.6,
+      "chars": 49
     },
     {
       "page": 5,
-      "title": "例：求数组之和",
-      "start": "01:40",
-      "end": "02:19",
-      "seconds": 38.9,
-      "chars": 185
-    },
-    {
-      "page": 6,
-      "title": "递归与迭代可以互相改写",
-      "start": "02:19",
-      "end": "02:52",
-      "seconds": 32.8,
-      "chars": 158
-    },
-    {
-      "page": 7,
-      "title": "第 1 节　栈帧：递归为什么会爆栈",
-      "start": "02:52",
-      "end": "02:59",
-      "seconds": 7.3,
-      "chars": 29
-    },
-    {
-      "page": 8,
-      "title": "系统调用栈",
-      "start": "02:59",
-      "end": "03:36",
-      "seconds": 36.9,
-      "chars": 176
-    },
-    {
-      "page": 9,
-      "title": "递归深度限制：其实有两道墙",
-      "start": "03:36",
-      "end": "04:22",
-      "seconds": 45.7,
-      "chars": 283
-    },
-    {
-      "page": 10,
-      "title": "3.11 之后两道墙的位置变了",
-      "start": "04:22",
-      "end": "05:14",
-      "seconds": 52.9,
-      "chars": 324
-    },
-    {
-      "page": 11,
-      "title": "什么叫「递归穿过 C 代码」",
-      "start": "05:14",
-      "end": "06:06",
-      "seconds": 51.9,
-      "chars": 295
-    },
-    {
-      "page": 12,
-      "title": "唯一与版本、评测机都无关的做法：显式栈",
-      "start": "06:06",
-      "end": "06:46",
-      "seconds": 39.2,
-      "chars": 195
-    },
-    {
-      "page": 13,
-      "title": "进程的虚拟地址空间",
-      "start": "06:46",
-      "end": "07:25",
-      "seconds": 39.1,
-      "chars": 188
-    },
-    {
-      "page": 14,
-      "title": "第 2 节　递归三部曲",
-      "start": "07:25",
-      "end": "07:32",
-      "seconds": 7.4,
-      "chars": 27
-    },
-    {
-      "page": 15,
-      "title": "序曲：朴素斐波那契是指数级",
-      "start": "07:32",
-      "end": "08:00",
-      "seconds": 27.9,
-      "chars": 131
-    },
-    {
-      "page": 16,
-      "title": "三种修法",
-      "start": "08:00",
-      "end": "08:42",
-      "seconds": 42.1,
-      "chars": 207
-    },
-    {
-      "page": 17,
-      "title": "第一部：汉诺塔",
-      "start": "08:42",
-      "end": "09:17",
-      "seconds": 34.7,
-      "chars": 188
-    },
-    {
-      "page": 18,
-      "title": "汉诺塔实现",
-      "start": "09:17",
-      "end": "09:55",
-      "seconds": 37.9,
-      "chars": 183
-    },
-    {
-      "page": 19,
-      "title": "第二部：全排列",
-      "start": "09:55",
-      "end": "10:45",
-      "seconds": 49.8,
-      "chars": 246
-    },
-    {
-      "page": 20,
-      "title": "第 3 节　分治",
-      "start": "10:45",
-      "end": "10:48",
-      "seconds": 3.3,
-      "chars": 7
-    },
-    {
-      "page": 21,
-      "title": "分治：分、治、合",
-      "start": "10:48",
-      "end": "11:22",
-      "seconds": 33.9,
-      "chars": 161
-    },
-    {
-      "page": 22,
-      "title": "快速幂与二分查找",
-      "start": "11:22",
-      "end": "12:08",
-      "seconds": 46.3,
+      "title": "递归：函数调用自己 + 三法则",
+      "start": "02:07",
+      "end": "02:51",
+      "seconds": 43.9,
       "chars": 229
     },
     {
+      "page": 6,
+      "title": "相信它：只回答两个问题",
+      "start": "02:51",
+      "end": "03:44",
+      "seconds": 52.7,
+      "chars": 265
+    },
+    {
+      "page": 7,
+      "title": "任何递归都能改写成迭代（用显式栈）",
+      "start": "03:44",
+      "end": "04:30",
+      "seconds": 45.5,
+      "chars": 227
+    },
+    {
+      "page": 8,
+      "title": "Part 2　栈帧：递归为什么会爆栈",
+      "start": "04:30",
+      "end": "04:44",
+      "seconds": 14.0,
+      "chars": 62
+    },
+    {
+      "page": 9,
+      "title": "每次函数调用都压入一个栈帧",
+      "start": "04:44",
+      "end": "05:26",
+      "seconds": 42.9,
+      "chars": 201
+    },
+    {
+      "page": 10,
+      "title": "递归深度限制：其实有两道墙",
+      "start": "05:26",
+      "end": "06:17",
+      "seconds": 50.3,
+      "chars": 288
+    },
+    {
+      "page": 11,
+      "title": "CPython 3.11 之后，两道墙的位置变了",
+      "start": "06:17",
+      "end": "07:11",
+      "seconds": 54.2,
+      "chars": 326
+    },
+    {
+      "page": 12,
+      "title": "什么叫「递归穿过 C 代码」",
+      "start": "07:11",
+      "end": "07:52",
+      "seconds": 41.2,
+      "chars": 243
+    },
+    {
+      "page": 13,
+      "title": "二分探测：纯递归 vs 穿过 lru_cache",
+      "start": "07:52",
+      "end": "08:38",
+      "seconds": 46.4,
+      "chars": 261
+    },
+    {
+      "page": 14,
+      "title": "那段线程写法还要不要写",
+      "start": "08:38",
+      "end": "09:30",
+      "seconds": 51.3,
+      "chars": 284
+    },
+    {
+      "page": 15,
+      "title": "唯一与版本、评测机都无关的做法：改写成迭代",
+      "start": "09:30",
+      "end": "10:18",
+      "seconds": 48.2,
+      "chars": 245
+    },
+    {
+      "page": 16,
+      "title": "进程的虚拟地址空间：栈从哪儿来？",
+      "start": "10:18",
+      "end": "11:07",
+      "seconds": 48.9,
+      "chars": 235
+    },
+    {
+      "page": 17,
+      "title": "Part 3　递归三部曲",
+      "start": "11:07",
+      "end": "11:22",
+      "seconds": 14.8,
+      "chars": 67
+    },
+    {
+      "page": 18,
+      "title": "序曲：02753 菲波那契数列",
+      "start": "11:22",
+      "end": "11:56",
+      "seconds": 34.4,
+      "chars": 179
+    },
+    {
+      "page": 19,
+      "title": "重叠子问题：fib(5) 的调用树",
+      "start": "11:56",
+      "end": "12:31",
+      "seconds": 34.6,
+      "chars": 158
+    },
+    {
+      "page": 20,
+      "title": "三种修法：记忆化 · 迭代递推 · 自底向上填表",
+      "start": "12:31",
+      "end": "13:22",
+      "seconds": 51.0,
+      "chars": 252
+    },
+    {
+      "page": 21,
+      "title": "第一部：04147 汉诺塔问题",
+      "start": "13:22",
+      "end": "14:01",
+      "seconds": 39.5,
+      "chars": 214
+    },
+    {
+      "page": 22,
+      "title": "跑一遍 hanoi(3, ...) + 移动次数公式",
+      "start": "14:01",
+      "end": "14:48",
+      "seconds": 47.0,
+      "chars": 236
+    },
+    {
       "page": 23,
-      "title": "最大公约数",
-      "start": "12:08",
-      "end": "12:38",
-      "seconds": 29.7,
-      "chars": 156
+      "title": "第二部：02748 全排列",
+      "start": "14:48",
+      "end": "15:39",
+      "seconds": 50.5,
+      "chars": 249
     },
     {
       "page": 24,
-      "title": "第 4 节　递归的调试",
-      "start": "12:38",
-      "end": "12:48",
-      "seconds": 10.2,
-      "chars": 43
+      "title": "Python 内建也提供全排列",
+      "start": "15:39",
+      "end": "16:07",
+      "seconds": 27.9,
+      "chars": 157
     },
     {
       "page": 25,
-      "title": "打印调用树",
-      "start": "12:48",
-      "end": "13:22",
-      "seconds": 34.1,
-      "chars": 178
+      "title": "Part 4　分治：递归的另一种用法",
+      "start": "16:07",
+      "end": "16:15",
+      "seconds": 8.3,
+      "chars": 34
     },
     {
       "page": 26,
-      "title": "递归的常见错误",
-      "start": "13:22",
-      "end": "13:56",
-      "seconds": 34.1,
-      "chars": 192
+      "title": "分治：分 → 治 → 合",
+      "start": "16:15",
+      "end": "16:57",
+      "seconds": 41.9,
+      "chars": 212
     },
     {
       "page": 27,
-      "title": "本周作业",
-      "start": "13:56",
-      "end": "14:31",
-      "seconds": 34.5,
-      "chars": 165
+      "title": "快速幂：指数减半",
+      "start": "16:57",
+      "end": "17:35",
+      "seconds": 38.0,
+      "chars": 205
     },
     {
       "page": 28,
-      "title": "小结",
-      "start": "14:31",
-      "end": "15:11",
-      "seconds": 39.8,
-      "chars": 200
+      "title": "二分查找：只保留半边",
+      "start": "17:35",
+      "end": "18:22",
+      "seconds": 47.4,
+      "chars": 276
     },
     {
       "page": 29,
-      "title": "下周预告",
-      "start": "15:11",
-      "end": "15:28",
-      "seconds": 17.3,
-      "chars": 79
+      "title": "最大公约数：03248 辗转相除",
+      "start": "18:22",
+      "end": "19:12",
+      "seconds": 49.4,
+      "chars": 269
+    },
+    {
+      "page": 30,
+      "title": "Part 5　递归的调试",
+      "start": "19:12",
+      "end": "19:25",
+      "seconds": 13.2,
+      "chars": 58
+    },
+    {
+      "page": 31,
+      "title": "打印调用树：缩进就是栈深度",
+      "start": "19:25",
+      "end": "19:47",
+      "seconds": 22.5,
+      "chars": 107
+    },
+    {
+      "page": 32,
+      "title": "可视化与常见错误",
+      "start": "19:47",
+      "end": "20:34",
+      "seconds": 47.1,
+      "chars": 255
+    },
+    {
+      "page": 33,
+      "title": "本周作业：10 道题",
+      "start": "20:34",
+      "end": "21:17",
+      "seconds": 42.6,
+      "chars": 209
+    },
+    {
+      "page": 34,
+      "title": "思考题：五道思考题",
+      "start": "21:17",
+      "end": "21:58",
+      "seconds": 40.8,
+      "chars": 212
+    },
+    {
+      "page": 35,
+      "title": "本周小结",
+      "start": "21:58",
+      "end": "22:43",
+      "seconds": 45.4,
+      "chars": 222
+    },
+    {
+      "page": 36,
+      "title": "下周预告：递归、回溯与并查集",
+      "start": "22:43",
+      "end": "23:01",
+      "seconds": 17.8,
+      "chars": 75
     }
   ]
 }

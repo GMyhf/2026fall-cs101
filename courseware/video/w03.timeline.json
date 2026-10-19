@@ -1,233 +1,457 @@
 {
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
-  "total": "15:25",
-  "source_pptx_sha256": "b74d91498da2e2c6489e6cdc1920ba26bc7038a0287e3727c49ebae8def4bb86",
-  "source_script_sha256": "939a9c87082014fc9e428c4145fdeb4217d41ebde246a7e53c57d97c7c60c276",
+  "total": "37:39",
+  "source_pptx_sha256": "6acf91fc1981be4564d6115b59c31d5eb4d3f5d64af5645a1a84f1864ee04963",
+  "source_script_sha256": "edcff352dd409088c865522414bf023384502128aafcedb61aac549ef6837343",
   "sections": [
     {
       "page": 1,
       "title": "封面",
       "start": "00:00",
-      "end": "00:31",
-      "seconds": 30.7,
-      "chars": 151
+      "end": "00:34",
+      "seconds": 34.3,
+      "chars": 167
     },
     {
       "page": 2,
-      "title": "一个常见的误解",
-      "start": "00:31",
-      "end": "00:56",
-      "seconds": 25.4,
-      "chars": 125
-    },
-    {
-      "page": 3,
-      "title": "学科体系",
-      "start": "00:56",
-      "end": "01:36",
-      "seconds": 39.8,
-      "chars": 185
-    },
-    {
-      "page": 4,
-      "title": "抽象：计算机科学最核心的工具",
-      "start": "01:36",
-      "end": "02:17",
-      "seconds": 41.3,
-      "chars": 219
-    },
-    {
-      "page": 5,
-      "title": "第 1 节　图灵机与可计算性",
-      "start": "02:17",
-      "end": "02:22",
-      "seconds": 4.4,
-      "chars": 13
-    },
-    {
-      "page": 6,
-      "title": "图灵机模型",
-      "start": "02:22",
-      "end": "02:56",
-      "seconds": 34.1,
-      "chars": 158
-    },
-    {
-      "page": 7,
-      "title": "为什么图灵机重要",
-      "start": "02:56",
-      "end": "03:36",
-      "seconds": 40.4,
-      "chars": 208
-    },
-    {
-      "page": 8,
-      "title": "用 Python 实现一台图灵机",
-      "start": "03:36",
-      "end": "04:26",
-      "seconds": 50.4,
-      "chars": 241
-    },
-    {
-      "page": 9,
-      "title": "第 2 节　冯·诺依曼结构",
-      "start": "04:26",
-      "end": "04:34",
-      "seconds": 7.4,
-      "chars": 25
-    },
-    {
-      "page": 10,
-      "title": "五大部件",
-      "start": "04:34",
-      "end": "05:10",
-      "seconds": 35.8,
-      "chars": 172
-    },
-    {
-      "page": 11,
-      "title": "指令周期与瓶颈",
-      "start": "05:10",
-      "end": "05:45",
-      "seconds": 35.6,
-      "chars": 171
-    },
-    {
-      "page": 12,
-      "title": "存储层次",
-      "start": "05:45",
-      "end": "06:36",
-      "seconds": 51.2,
-      "chars": 254
-    },
-    {
-      "page": 13,
-      "title": "第 3 节　数据的二进制表示",
-      "start": "06:36",
-      "end": "06:41",
-      "seconds": 4.2,
-      "chars": 13
-    },
-    {
-      "page": 14,
-      "title": "进制转换",
-      "start": "06:41",
-      "end": "07:32",
-      "seconds": 51.0,
-      "chars": 265
-    },
-    {
-      "page": 15,
-      "title": "有符号整数：以 8 位表示负五",
-      "start": "07:32",
-      "end": "08:28",
-      "seconds": 56.1,
-      "chars": 266
-    },
-    {
-      "page": 16,
-      "title": "位运算的三个常用技巧",
-      "start": "08:28",
-      "end": "09:22",
-      "seconds": 53.7,
-      "chars": 273
-    },
-    {
-      "page": 17,
-      "title": "IEEE 754 双精度",
-      "start": "09:22",
-      "end": "09:54",
-      "seconds": 32.6,
-      "chars": 159
-    },
-    {
-      "page": 18,
-      "title": "浮点数陷阱与正确比较",
-      "start": "09:54",
-      "end": "10:48",
-      "seconds": 54.2,
-      "chars": 297
-    },
-    {
-      "page": 19,
-      "title": "本课的硬规则",
-      "start": "10:48",
-      "end": "11:02",
-      "seconds": 13.4,
-      "chars": 59
-    },
-    {
-      "page": 20,
-      "title": "第 4 节　字符编码",
-      "start": "11:02",
-      "end": "11:05",
-      "seconds": 3.8,
-      "chars": 9
-    },
-    {
-      "page": 21,
-      "title": "ASCII：必须记住的几个",
-      "start": "11:05",
-      "end": "11:33",
-      "seconds": 27.7,
-      "chars": 126
-    },
-    {
-      "page": 22,
-      "title": "ord 与 chr，Unicode 与 UTF-8",
-      "start": "11:33",
-      "end": "12:27",
-      "seconds": 53.6,
-      "chars": 277
-    },
-    {
-      "page": 23,
-      "title": "第 5 节　计算机文化",
-      "start": "12:27",
-      "end": "12:33",
-      "seconds": 6.4,
-      "chars": 22
-    },
-    {
-      "page": 24,
-      "title": "几位必须知道的人",
-      "start": "12:33",
-      "end": "13:12",
-      "seconds": 39.3,
+      "title": "本周要回答三个问题",
+      "start": "00:34",
+      "end": "01:15",
+      "seconds": 41.2,
       "chars": 202
     },
     {
+      "page": 3,
+      "title": "内容地图",
+      "start": "01:15",
+      "end": "01:56",
+      "seconds": 41.0,
+      "chars": 201
+    },
+    {
+      "page": 4,
+      "title": "先跑一遍",
+      "start": "01:56",
+      "end": "02:41",
+      "seconds": 44.9,
+      "chars": 236
+    },
+    {
+      "page": 5,
+      "title": "第 1 部分　计算机科学是什么",
+      "start": "02:41",
+      "end": "02:50",
+      "seconds": 8.2,
+      "chars": 32
+    },
+    {
+      "page": 6,
+      "title": "一个常见的误解",
+      "start": "02:50",
+      "end": "03:27",
+      "seconds": 37.2,
+      "chars": 186
+    },
+    {
+      "page": 7,
+      "title": "学科体系：三个层次",
+      "start": "03:27",
+      "end": "04:15",
+      "seconds": 48.5,
+      "chars": 256
+    },
+    {
+      "page": 8,
+      "title": "抽象：计算机科学最核心的工具",
+      "start": "04:15",
+      "end": "04:57",
+      "seconds": 41.2,
+      "chars": 214
+    },
+    {
+      "page": 9,
+      "title": "出了问题，往下一层找原因",
+      "start": "04:57",
+      "end": "05:46",
+      "seconds": 49.4,
+      "chars": 244
+    },
+    {
+      "page": 10,
+      "title": "第 2 部分　图灵机与可计算性",
+      "start": "05:46",
+      "end": "05:55",
+      "seconds": 9.4,
+      "chars": 41
+    },
+    {
+      "page": 11,
+      "title": "图灵机：纸带加读写头加状态机",
+      "start": "05:55",
+      "end": "06:36",
+      "seconds": 40.3,
+      "chars": 193
+    },
+    {
+      "page": 12,
+      "title": "二进制加一的图灵机：只要三条规则",
+      "start": "06:36",
+      "end": "07:24",
+      "seconds": 48.5,
+      "chars": 226
+    },
+    {
+      "page": 13,
+      "title": "手动跑一遍：一零一一加一",
+      "start": "07:24",
+      "end": "07:55",
+      "seconds": 31.3,
+      "chars": 142
+    },
+    {
+      "page": 14,
+      "title": "它划定了「可计算」的边界",
+      "start": "07:55",
+      "end": "08:37",
+      "seconds": 41.5,
+      "chars": 213
+    },
+    {
+      "page": 15,
+      "title": "为什么不可能？一个反证",
+      "start": "08:37",
+      "end": "09:26",
+      "seconds": 49.5,
+      "chars": 276
+    },
+    {
+      "page": 16,
+      "title": "用 Python 实现一台通用图灵机",
+      "start": "09:26",
+      "end": "10:17",
+      "seconds": 50.2,
+      "chars": 248
+    },
+    {
+      "page": 17,
+      "title": "三处值得细看的写法",
+      "start": "10:17",
+      "end": "11:02",
+      "seconds": 45.0,
+      "chars": 220
+    },
+    {
+      "page": 18,
+      "title": "第 3 部分　冯·诺依曼结构",
+      "start": "11:02",
+      "end": "11:12",
+      "seconds": 10.4,
+      "chars": 41
+    },
+    {
+      "page": 19,
+      "title": "五大部件",
+      "start": "11:12",
+      "end": "11:50",
+      "seconds": 38.4,
+      "chars": 183
+    },
+    {
+      "page": 20,
+      "title": "在 Python 里亲眼看到「程序也是数据」",
+      "start": "11:50",
+      "end": "12:31",
+      "seconds": 40.4,
+      "chars": 222
+    },
+    {
+      "page": 21,
+      "title": "指令周期：取指、译码、执行、写回",
+      "start": "12:31",
+      "end": "13:14",
+      "seconds": 42.8,
+      "chars": 204
+    },
+    {
+      "page": 22,
+      "title": "冯·诺依曼瓶颈与缓存",
+      "start": "13:14",
+      "end": "14:01",
+      "seconds": 47.5,
+      "chars": 238
+    },
+    {
+      "page": 23,
+      "title": "存储层次",
+      "start": "14:01",
+      "end": "14:52",
+      "seconds": 50.5,
+      "chars": 247
+    },
+    {
+      "page": 24,
+      "title": "换成人的时间尺度",
+      "start": "14:52",
+      "end": "15:32",
+      "seconds": 39.9,
+      "chars": 190
+    },
+    {
       "page": 25,
-      "title": "摩尔定律与它的放缓",
-      "start": "13:12",
-      "end": "13:49",
-      "seconds": 36.4,
-      "chars": 189
+      "title": "第 4 部分　数据的二进制表示",
+      "start": "15:32",
+      "end": "15:39",
+      "seconds": 7.6,
+      "chars": 30
     },
     {
       "page": 26,
-      "title": "本周作业",
-      "start": "13:49",
-      "end": "14:29",
-      "seconds": 40.3,
-      "chars": 197
+      "title": "四种常用进制",
+      "start": "15:39",
+      "end": "16:26",
+      "seconds": 46.4,
+      "chars": 231
     },
     {
       "page": 27,
-      "title": "小结",
-      "start": "14:29",
-      "end": "15:07",
-      "seconds": 38.3,
-      "chars": 188
+      "title": "Python 里的进制转换",
+      "start": "16:26",
+      "end": "17:09",
+      "seconds": 43.8,
+      "chars": 234
     },
     {
       "page": 28,
+      "title": "除基取余，余数逆序读",
+      "start": "17:09",
+      "end": "17:48",
+      "seconds": 38.5,
+      "chars": 181
+    },
+    {
+      "page": 29,
+      "title": "二进制与八进制、十六进制：分组就行",
+      "start": "17:48",
+      "end": "18:31",
+      "seconds": 43.2,
+      "chars": 209
+    },
+    {
+      "page": 30,
+      "title": "例题：E 零二七三四　十进制到八进制",
+      "start": "18:31",
+      "end": "19:13",
+      "seconds": 42.2,
+      "chars": 220
+    },
+    {
+      "page": 31,
+      "title": "原码、反码、补码：以八位表示负五",
+      "start": "19:13",
+      "end": "20:04",
+      "seconds": 50.2,
+      "chars": 225
+    },
+    {
+      "page": 32,
+      "title": "用 Python 看补码；n 位补码的范围",
+      "start": "20:04",
+      "end": "21:02",
+      "seconds": 58.3,
+      "chars": 321
+    },
+    {
+      "page": 33,
+      "title": "为什么补码让减法变成加法：算五减七",
+      "start": "21:02",
+      "end": "21:53",
+      "seconds": 51.4,
+      "chars": 232
+    },
+    {
+      "page": 34,
+      "title": "溢出：C 加加 里最常见的 WA 来源",
+      "start": "21:53",
+      "end": "22:46",
+      "seconds": 53.1,
+      "chars": 307
+    },
+    {
+      "page": 35,
+      "title": "六个位运算符",
+      "start": "22:46",
+      "end": "23:31",
+      "seconds": 44.7,
+      "chars": 218
+    },
+    {
+      "page": 36,
+      "title": "三个常用技巧",
+      "start": "23:31",
+      "end": "24:28",
+      "seconds": 56.8,
+      "chars": 297
+    },
+    {
+      "page": 37,
+      "title": "按位看：n 与 n 减一，异或累积",
+      "start": "24:28",
+      "end": "25:12",
+      "seconds": 44.4,
+      "chars": 200
+    },
+    {
+      "page": 38,
+      "title": "IEEE 七五四双精度",
+      "start": "25:12",
+      "end": "25:56",
+      "seconds": 43.4,
+      "chars": 222
+    },
+    {
+      "page": 39,
+      "title": "为什么零点一无法精确表示？",
+      "start": "25:56",
+      "end": "26:43",
+      "seconds": 47.0,
+      "chars": 241
+    },
+    {
+      "page": 40,
+      "title": "浮点数陷阱与正确的比较方式",
+      "start": "26:43",
+      "end": "27:31",
+      "seconds": 48.6,
+      "chars": 271
+    },
+    {
+      "page": 41,
+      "title": "另一个陷阱：大整数放进浮点会丢精度",
+      "start": "27:31",
+      "end": "28:27",
+      "seconds": 55.8,
+      "chars": 282
+    },
+    {
+      "page": 42,
+      "title": "本课的硬规则",
+      "start": "28:27",
+      "end": "28:58",
+      "seconds": 31.1,
+      "chars": 153
+    },
+    {
+      "page": 43,
+      "title": "第 5 部分　字符编码",
+      "start": "28:58",
+      "end": "29:05",
+      "seconds": 6.6,
+      "chars": 23
+    },
+    {
+      "page": 44,
+      "title": "ASCII：七位，一百二十八个字符",
+      "start": "29:05",
+      "end": "29:47",
+      "seconds": 42.2,
+      "chars": 210
+    },
+    {
+      "page": 45,
+      "title": "ord 与 chr：字符与编号互转",
+      "start": "29:47",
+      "end": "30:36",
+      "seconds": 48.8,
+      "chars": 259
+    },
+    {
+      "page": 46,
+      "title": "字符集不等于编码方式",
+      "start": "30:36",
+      "end": "31:23",
+      "seconds": 47.0,
+      "chars": 256
+    },
+    {
+      "page": 47,
+      "title": "手工编码一次：「中」",
+      "start": "31:23",
+      "end": "32:06",
+      "seconds": 43.6,
+      "chars": 222
+    },
+    {
+      "page": 48,
+      "title": "str 与 bytes：字符数不等于字节数",
+      "start": "32:06",
+      "end": "32:43",
+      "seconds": 36.7,
+      "chars": 210
+    },
+    {
+      "page": 49,
+      "title": "乱码的本质",
+      "start": "32:43",
+      "end": "33:27",
+      "seconds": 43.6,
+      "chars": 249
+    },
+    {
+      "page": 50,
+      "title": "第 6 部分　计算机文化",
+      "start": "33:27",
+      "end": "33:35",
+      "seconds": 8.0,
+      "chars": 32
+    },
+    {
+      "page": 51,
+      "title": "几位必须知道的人",
+      "start": "33:35",
+      "end": "34:27",
+      "seconds": 52.3,
+      "chars": 272
+    },
+    {
+      "page": 52,
+      "title": "摩尔定律与它的放缓",
+      "start": "34:27",
+      "end": "35:01",
+      "seconds": 34.1,
+      "chars": 170
+    },
+    {
+      "page": 53,
+      "title": "本周练习",
+      "start": "35:01",
+      "end": "35:47",
+      "seconds": 46.3,
+      "chars": 244
+    },
+    {
+      "page": 54,
+      "title": "思考题",
+      "start": "35:47",
+      "end": "36:31",
+      "seconds": 43.4,
+      "chars": 214
+    },
+    {
+      "page": 55,
+      "title": "本周小结",
+      "start": "36:31",
+      "end": "37:19",
+      "seconds": 48.6,
+      "chars": 238
+    },
+    {
+      "page": 56,
       "title": "下周预告",
-      "start": "15:07",
-      "end": "15:25",
-      "seconds": 17.9,
-      "chars": 94
+      "start": "37:19",
+      "end": "37:39",
+      "seconds": 20.0,
+      "chars": 104
     }
   ]
 }

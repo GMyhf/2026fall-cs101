@@ -1,241 +1,265 @@
 {
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
-  "total": "13:42",
-  "source_pptx_sha256": "2cc87f4a987ea681ef20546462c8c8095d108bc0957073e07afb0993f9dfbabc",
-  "source_script_sha256": "15d1d76473269e99d5302a9e6724500cf98d35fc912a19cdd93ee8487d06c17e",
+  "total": "20:38",
+  "source_pptx_sha256": "9c2275654805a4dfecebc1e4fcde3fd6868b6f07043b55cfa0d283860311dbcb",
+  "source_script_sha256": "1d8d4a08f14bf7144cbecf60e3651efd0a30b729895a0588f3187d4ca381c64c",
   "sections": [
     {
       "page": 1,
       "title": "封面",
       "start": "00:00",
-      "end": "00:30",
-      "seconds": 30.1,
-      "chars": 159
+      "end": "00:33",
+      "seconds": 33.5,
+      "chars": 164
     },
     {
       "page": 2,
-      "title": "第 1 节　程序是怎么跑起来的",
-      "start": "00:30",
-      "end": "00:34",
-      "seconds": 4.3,
-      "chars": 14
+      "title": "本周要回答三个问题",
+      "start": "00:33",
+      "end": "01:25",
+      "seconds": 51.9,
+      "chars": 261
     },
     {
       "page": 3,
-      "title": "编译型与解释型",
-      "start": "00:34",
-      "end": "01:09",
-      "seconds": 35.0,
-      "chars": 180
+      "title": "内容地图",
+      "start": "01:25",
+      "end": "02:04",
+      "seconds": 38.4,
+      "chars": 196
     },
     {
       "page": 4,
-      "title": "两者的差别与本课影响",
-      "start": "01:09",
-      "end": "01:52",
-      "seconds": 42.1,
-      "chars": 224
+      "title": "先跑一遍",
+      "start": "02:04",
+      "end": "02:49",
+      "seconds": 44.8,
+      "chars": 232
     },
     {
       "page": 5,
-      "title": "Python 的对策",
-      "start": "01:52",
-      "end": "02:12",
-      "seconds": 20.6,
-      "chars": 105
+      "title": "Part 1　程序是怎么跑起来的",
+      "start": "02:49",
+      "end": "02:58",
+      "seconds": 9.1,
+      "chars": 38
     },
     {
       "page": 6,
-      "title": "看看字节码",
-      "start": "02:12",
-      "end": "02:40",
-      "seconds": 27.6,
-      "chars": 137
+      "title": "编译型 vs 解释型",
+      "start": "02:58",
+      "end": "04:00",
+      "seconds": 62.2,
+      "chars": 332
     },
     {
       "page": 7,
-      "title": "实测：Python 循环与内建函数",
-      "start": "02:40",
-      "end": "03:04",
-      "seconds": 24.2,
-      "chars": 132
+      "title": "Python 的字节码",
+      "start": "04:00",
+      "end": "04:43",
+      "seconds": 43.1,
+      "chars": 244
     },
     {
       "page": 8,
       "title": "CPython 的 GIL",
-      "start": "03:04",
-      "end": "03:34",
-      "seconds": 29.5,
-      "chars": 168
+      "start": "04:43",
+      "end": "05:22",
+      "seconds": 39.2,
+      "chars": 215
     },
     {
       "page": 9,
-      "title": "第 2 节　进程与内存",
-      "start": "03:34",
-      "end": "03:37",
-      "seconds": 4.0,
-      "chars": 10
+      "title": "Part 2　进程与内存",
+      "start": "05:22",
+      "end": "05:38",
+      "seconds": 15.4,
+      "chars": 67
     },
     {
       "page": 10,
       "title": "进程与线程",
-      "start": "03:37",
-      "end": "04:10",
-      "seconds": 32.1,
-      "chars": 150
+      "start": "05:38",
+      "end": "06:13",
+      "seconds": 35.6,
+      "chars": 164
     },
     {
       "page": 11,
-      "title": "虚拟地址空间",
-      "start": "04:10",
-      "end": "04:48",
-      "seconds": 38.7,
-      "chars": 200
+      "title": "虚拟地址空间：一个进程「以为」自己看到的内存",
+      "start": "06:13",
+      "end": "07:03",
+      "seconds": 49.9,
+      "chars": 246
     },
     {
       "page": 12,
-      "title": "「虚拟」的三个好处",
-      "start": "04:48",
-      "end": "05:06",
-      "seconds": 17.6,
-      "chars": 85
+      "title": "页表与 MMU：谁把「虚拟」翻译成「物理」",
+      "start": "07:03",
+      "end": "07:54",
+      "seconds": 51.1,
+      "chars": 252
     },
     {
       "page": 13,
-      "title": "能申请 10 的 18 次方字节吗",
-      "start": "05:06",
-      "end": "05:44",
-      "seconds": 38.3,
-      "chars": 193
+      "title": "能申请 10¹⁸ 字节的内存吗",
+      "start": "07:54",
+      "end": "08:54",
+      "seconds": 59.6,
+      "chars": 328
     },
     {
       "page": 14,
-      "title": "做题时的内存估算",
-      "start": "05:44",
-      "end": "06:23",
-      "seconds": 38.3,
-      "chars": 217
+      "title": "Python 的内存管理：引用计数 + 分代 GC",
+      "start": "08:54",
+      "end": "09:43",
+      "seconds": 49.2,
+      "chars": 274
     },
     {
       "page": 15,
-      "title": "Python 的内存管理",
-      "start": "06:23",
-      "end": "06:51",
-      "seconds": 28.2,
-      "chars": 151
+      "title": "Part 3　缓存与局部性",
+      "start": "09:43",
+      "end": "09:52",
+      "seconds": 9.4,
+      "chars": 38
     },
     {
       "page": 16,
-      "title": "第 3 节　缓存与局部性",
-      "start": "06:51",
-      "end": "06:55",
-      "seconds": 4.1,
-      "chars": 11
+      "title": "局部性原理",
+      "start": "09:52",
+      "end": "10:23",
+      "seconds": 30.2,
+      "chars": 145
     },
     {
       "page": 17,
-      "title": "局部性原理",
-      "start": "06:55",
-      "end": "07:24",
-      "seconds": 29.3,
-      "chars": 149
+      "title": "实测：按行遍历 vs 按列遍历",
+      "start": "10:23",
+      "end": "11:09",
+      "seconds": 46.3,
+      "chars": 244
     },
     {
       "page": 18,
-      "title": "时间层次的实感",
-      "start": "07:24",
-      "end": "07:57",
-      "seconds": 33.1,
-      "chars": 155
+      "title": "时间层次的实感：把 1 ns 想象成 1 秒",
+      "start": "11:09",
+      "end": "11:47",
+      "seconds": 38.0,
+      "chars": 179
     },
     {
       "page": 19,
-      "title": "文件 I/O 与缓冲",
-      "start": "07:57",
-      "end": "08:29",
-      "seconds": 32.2,
-      "chars": 173
+      "title": "Part 4　文件 I/O",
+      "start": "11:47",
+      "end": "12:00",
+      "seconds": 12.8,
+      "chars": 61
     },
     {
       "page": 20,
-      "title": "第 4 节　阶段综合练习",
-      "start": "08:29",
-      "end": "08:37",
-      "seconds": 7.2,
-      "chars": 26
+      "title": "基本用法",
+      "start": "12:00",
+      "end": "12:42",
+      "seconds": 42.1,
+      "chars": 263
     },
     {
       "page": 21,
-      "title": "题型识别速查表（上）",
-      "start": "08:37",
-      "end": "09:22",
-      "seconds": 45.8,
-      "chars": 231
+      "title": "缓冲：为什么 print 很慢",
+      "start": "12:42",
+      "end": "13:25",
+      "seconds": 42.9,
+      "chars": 259
     },
     {
       "page": 22,
-      "title": "题型识别速查表（下）",
-      "start": "09:22",
-      "end": "09:57",
-      "seconds": 34.9,
-      "chars": 189
-    },
-    {
-      "page": 23,
-      "title": "综合练习题单",
-      "start": "09:57",
-      "end": "10:40",
-      "seconds": 43.0,
-      "chars": 208
-    },
-    {
-      "page": 24,
-      "title": "一道综合例题的完整拆解",
-      "start": "10:40",
-      "end": "11:27",
-      "seconds": 46.3,
-      "chars": 228
-    },
-    {
-      "page": 25,
-      "title": "综合例题的实现与对拍",
-      "start": "11:27",
-      "end": "12:01",
-      "seconds": 34.5,
-      "chars": 172
-    },
-    {
-      "page": 26,
-      "title": "这就是考场上应有的流程",
-      "start": "12:01",
-      "end": "12:17",
-      "seconds": 15.9,
+      "title": "Part 5　阶段综合练习",
+      "start": "13:25",
+      "end": "13:39",
+      "seconds": 14.6,
       "chars": 68
     },
     {
+      "page": 23,
+      "title": "题型识别速查表：看到这些字眼，往这想",
+      "start": "13:39",
+      "end": "14:51",
+      "seconds": 71.4,
+      "chars": 376
+    },
+    {
+      "page": 24,
+      "title": "综合练习题单（1/2）：A 组 · B 组",
+      "start": "14:51",
+      "end": "15:32",
+      "seconds": 41.6,
+      "chars": 206
+    },
+    {
+      "page": 25,
+      "title": "综合练习题单（2/2）：C 组（提高，选做）",
+      "start": "15:32",
+      "end": "16:04",
+      "seconds": 31.4,
+      "chars": 158
+    },
+    {
+      "page": 26,
+      "title": "一道综合例题的完整拆解（1/3）：题目与思路",
+      "start": "16:04",
+      "end": "16:47",
+      "seconds": 43.6,
+      "chars": 223
+    },
+    {
       "page": 27,
-      "title": "本周作业",
-      "start": "12:17",
-      "end": "12:45",
-      "seconds": 27.5,
-      "chars": 132
+      "title": "一道综合例题的完整拆解（2/3）：代码与证明",
+      "start": "16:47",
+      "end": "17:28",
+      "seconds": 41.0,
+      "chars": 201
     },
     {
       "page": 28,
-      "title": "小结",
-      "start": "12:45",
-      "end": "13:27",
-      "seconds": 42.1,
-      "chars": 228
+      "title": "一道综合例题的完整拆解（3/3）：验证 —— 和暴力对拍",
+      "start": "17:28",
+      "end": "18:08",
+      "seconds": 40.1,
+      "chars": 191
     },
     {
       "page": 29,
+      "title": "本周作业",
+      "start": "18:08",
+      "end": "18:38",
+      "seconds": 29.4,
+      "chars": 142
+    },
+    {
+      "page": 30,
+      "title": "思考题",
+      "start": "18:38",
+      "end": "19:23",
+      "seconds": 45.0,
+      "chars": 253
+    },
+    {
+      "page": 31,
+      "title": "本周小结",
+      "start": "19:23",
+      "end": "20:19",
+      "seconds": 56.6,
+      "chars": 304
+    },
+    {
+      "page": 32,
       "title": "下周预告",
-      "start": "13:27",
-      "end": "13:42",
-      "seconds": 15.2,
-      "chars": 72
+      "start": "20:19",
+      "end": "20:38",
+      "seconds": 18.8,
+      "chars": 86
     }
   ]
 }

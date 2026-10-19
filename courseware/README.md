@@ -27,25 +27,24 @@ https://github.com/GMyhf/2026fall-cs101
 | ---- | ---- | ---- | ---- | ---- |
 | 1 | `202609_ADS_W01_Overview_Platform_AI_Basics` | 32 | 16:46 | 课程概述、学习平台、AI 基础、第一个 Python 程序 |
 | 2 | `202609_ADS_W02_VM_Shell_DevEnv` | 45 | 32:41 | 虚拟机、xLab 实验环境、Linux Shell、uv 开发环境、语法练习与 30 道入门题 |
-| 3 | `202609_ADS_W03_Computer_Principles_1` | 56 | 15:25（旧 28 页版，待重合成） | 图灵机与停机问题、冯·诺依曼结构、进制与补码、位运算、浮点、ASCII / UTF-8 |
-| 4 | `202609_ADS_W04_Python_Basics_Algorithm_Analysis` | 42 | 15:20（旧 30 页版，待重合成） | 容器与代价、大 O、从数据范围倒推算法、埃氏筛 |
-| 5 | `202609_ADS_W05_October_Exam_Review` | 34 | 14:27（旧 28 页版，待重合成） | 10 月月考样卷（6 题 / 112 分钟）、订正方法、考场策略 |
-| 6 | `202610_ADS_W06_Matrices_Sorting_Greedy` | 59 | 17:31（旧 32 页版，待重合成） | 保护圈、矩阵乘法、二维前缀和、排序、贪心与交换论证 |
-| 7 | `202610_ADS_W07_Matrix_Queue_Stack_Greedy` | 39 | 14:22（旧 29 页版，待重合成） | 栈与四类应用、单调栈、队列、单调队列 |
-| 8 | `202610_ADS_W08_Recursion` | 36 | 15:28（旧 29 页版，待重合成） | 递归三法则、栈帧、递归三部曲、分治 |
-| 9 | `202610_ADS_W09_Recursion_Backtracking_DSU` | 31 | 12:06（旧 23 页版，待重合成） | 回溯模板与三形态、剪枝、八皇后、并查集 |
-| 10 | `202611_ADS_W10_Intervals_DP_Intro` | 32 | 15:07（旧 29 页版，待重合成） | 五类区间问题、差分、DP 三要素 |
-| 11 | `202611_ADS_W11_DP` | 31 | 12:10（旧 23 页版，待重合成） | 0-1 / 完全 / 多重背包、LIS、LCS、降维 |
-| 12 | `202611_ADS_W12_DP_BFS` | 32 | 12:20（旧 26 页版，待重合成） | BFS 三铁律、带状态 / 多源 BFS、Dijkstra、二分答案 |
-| 13 | `202611_ADS_W13_Computer_Principles_2` | 32 | 13:42（旧 29 页版，待重合成） | 编译与解释、GIL、虚拟内存、局部性、综合练习 |
-| 14 | `202612_ADS_W14_AI_Literacy_Exam_Recap` | 32 | 15:19（旧 33 页版，待重合成） | LLM 原理、幻觉、提示词、12 月月考讲评（6 题） |
-| 15 | `202612_ADS_W15_Knowledge_Graph_Neural_Network` | 30 | 11:44（旧 24 页版，待重合成） | 知识图谱、RAG、神经网络、反向传播、CNN |
-| 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 38 | 20:09（旧 40 页版，待重合成） | 知识体系总结、期末上机考试命题方案与样卷 |
+| 3 | `202609_ADS_W03_Computer_Principles_1` | 56 | 37:39 | 图灵机与停机问题、冯·诺依曼结构、进制与补码、位运算、浮点、ASCII / UTF-8 |
+| 4 | `202609_ADS_W04_Python_Basics_Algorithm_Analysis` | 42 | 24:23 | 容器与代价、大 O、从数据范围倒推算法、埃氏筛 |
+| 5 | `202609_ADS_W05_October_Exam_Review` | 34 | 19:55 | 10 月月考样卷（6 题 / 112 分钟）、订正方法、考场策略 |
+| 6 | `202610_ADS_W06_Matrices_Sorting_Greedy` | 59 | 35:43 | 保护圈、矩阵乘法、二维前缀和、排序、贪心与交换论证 |
+| 7 | `202610_ADS_W07_Matrix_Queue_Stack_Greedy` | 39 | 25:00 | 栈与四类应用、单调栈、队列、单调队列 |
+| 8 | `202610_ADS_W08_Recursion` | 36 | 23:01 | 递归三法则、栈帧、递归三部曲、分治 |
+| 9 | `202610_ADS_W09_Recursion_Backtracking_DSU` | 31 | 20:03 | 回溯模板与三形态、剪枝、八皇后、并查集 |
+| 10 | `202611_ADS_W10_Intervals_DP_Intro` | 32 | 21:54 | 五类区间问题、差分、DP 三要素 |
+| 11 | `202611_ADS_W11_DP` | 31 | 20:07 | 0-1 / 完全 / 多重背包、LIS、LCS、降维 |
+| 12 | `202611_ADS_W12_DP_BFS` | 32 | 19:44 | BFS 三铁律、带状态 / 多源 BFS、Dijkstra、二分答案 |
+| 13 | `202611_ADS_W13_Computer_Principles_2` | 32 | 20:38 | 编译与解释、GIL、虚拟内存、局部性、综合练习 |
+| 14 | `202612_ADS_W14_AI_Literacy_Exam_Recap` | 32 | 20:28 | LLM 原理、幻觉、提示词、12 月月考讲评（6 题） |
+| 15 | `202612_ADS_W15_Knowledge_Graph_Neural_Network` | 30 | 18:37 | 知识图谱、RAG、神经网络、反向传播、CNN |
+| 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 38 | 26:47 | 知识体系总结、期末上机考试命题方案与样卷 |
 
 课件合计 **581 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
-第 3–16 周已改用 `pptx_builder` 重排、页数普遍增加；对应视频尚未重新合成（见各行「待重合成」），
-旁白讲稿 `content/wNN_narration.md` 仍是旧版页数，**第 3–16 周讲稿待按新页数重写**。
-第 1–2 周视频已合成，共 77 节（一节对应一页）。
+第 3–16 周已改用 `pptx_builder` 重排、页数普遍增加；旁白讲稿已按新页数重写，视频已重新合成。
+16 周视频共 581 节（一节对应一页），`make_video.py NN --check` 全部通过。
 
 ---
 

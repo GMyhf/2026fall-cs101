@@ -1,217 +1,265 @@
 {
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
-  "total": "12:20",
-  "source_pptx_sha256": "4b671026fac787bc9ddb8c182b1d4ab3dd752f20e3a32aee38de21e376a011b3",
-  "source_script_sha256": "15773861f948c720288529ec271d0661ef7d075382f83a38b3cf61ed799b8402",
+  "total": "19:44",
+  "source_pptx_sha256": "7e7033f3301d0dc8baae7b6115c1fa591512310f876f5f7af6e19340097b5915",
+  "source_script_sha256": "26d4d27e6e4bc9e36b4541ee7647055202833f0ffa362e78cc0a85701869f4c4",
   "sections": [
     {
       "page": 1,
       "title": "封面",
       "start": "00:00",
-      "end": "00:23",
-      "seconds": 23.2,
-      "chars": 123
+      "end": "00:29",
+      "seconds": 28.8,
+      "chars": 150
     },
     {
       "page": 2,
-      "title": "第 1 节　图与它的表示",
-      "start": "00:23",
-      "end": "00:27",
-      "seconds": 3.8,
-      "chars": 11
+      "title": "本周要回答三个问题",
+      "start": "00:29",
+      "end": "01:12",
+      "seconds": 43.0,
+      "chars": 218
     },
     {
       "page": 3,
-      "title": "三种表示",
-      "start": "00:27",
-      "end": "01:14",
-      "seconds": 46.7,
-      "chars": 227
+      "title": "内容地图",
+      "start": "01:12",
+      "end": "01:44",
+      "seconds": 32.5,
+      "chars": 162
     },
     {
       "page": 4,
-      "title": "认出「这是个图」",
-      "start": "01:14",
-      "end": "01:37",
-      "seconds": 23.1,
-      "chars": 110
+      "title": "Part 1　图的表示与 BFS",
+      "start": "01:44",
+      "end": "01:49",
+      "seconds": 4.9,
+      "chars": 17
     },
     {
       "page": 5,
-      "title": "第 2 节　广度优先搜索",
-      "start": "01:37",
-      "end": "01:41",
-      "seconds": 4.1,
-      "chars": 11
+      "title": "术语",
+      "start": "01:49",
+      "end": "02:23",
+      "seconds": 34.0,
+      "chars": 153
     },
     {
       "page": 6,
-      "title": "一层一层地扩展",
-      "start": "01:41",
-      "end": "02:16",
-      "seconds": 35.5,
-      "chars": 180
+      "title": "回看第 10 周：最长路为什么没有最优子结构",
+      "start": "02:23",
+      "end": "03:13",
+      "seconds": 49.7,
+      "chars": 269
     },
     {
       "page": 7,
-      "title": "BFS 模板",
-      "start": "02:16",
-      "end": "02:45",
-      "seconds": 28.4,
-      "chars": 146
+      "title": "三种表示：邻接矩阵与邻接表",
+      "start": "03:13",
+      "end": "03:51",
+      "seconds": 38.6,
+      "chars": 188
     },
     {
       "page": 8,
-      "title": "BFS 三条铁律",
-      "start": "02:45",
-      "end": "03:13",
-      "seconds": 28.1,
-      "chars": 149
+      "title": "三种表示：隐式图",
+      "start": "03:51",
+      "end": "04:29",
+      "seconds": 37.5,
+      "chars": 186
     },
     {
       "page": 9,
-      "title": "迷宫最短路径",
-      "start": "03:13",
-      "end": "03:37",
-      "seconds": 24.5,
-      "chars": 118
+      "title": "BFS 核心思想",
+      "start": "04:29",
+      "end": "05:05",
+      "seconds": 36.1,
+      "chars": 183
     },
     {
       "page": 10,
-      "title": "鸣人和佐助：带状态的 BFS",
-      "start": "03:37",
-      "end": "04:25",
-      "seconds": 48.0,
-      "chars": 249
+      "title": "BFS 模板",
+      "start": "05:05",
+      "end": "05:49",
+      "seconds": 44.0,
+      "chars": 232
     },
     {
       "page": 11,
-      "title": "多源 BFS",
-      "start": "04:25",
-      "end": "04:57",
-      "seconds": 31.5,
-      "chars": 162
+      "title": "按层处理的写法",
+      "start": "05:49",
+      "end": "06:22",
+      "seconds": 33.0,
+      "chars": 172
     },
     {
       "page": 12,
-      "title": "第 3 节　Dijkstra",
-      "start": "04:57",
-      "end": "05:03",
-      "seconds": 5.6,
-      "chars": 26
+      "title": "例：迷宫最短路径",
+      "start": "06:22",
+      "end": "07:08",
+      "seconds": 45.8,
+      "chars": 223
     },
     {
       "page": 13,
-      "title": "Dijkstra 模板",
-      "start": "05:03",
-      "end": "05:47",
-      "seconds": 44.2,
-      "chars": 229
+      "title": "例：带状态的 BFS —— 鸣人和佐助",
+      "start": "07:08",
+      "end": "07:47",
+      "seconds": 39.2,
+      "chars": 198
     },
     {
       "page": 14,
-      "title": "走山路：网格上的 Dijkstra",
-      "start": "05:47",
-      "end": "06:15",
-      "seconds": 28.6,
-      "chars": 162
+      "title": "状态设计是 BFS 题的全部难度",
+      "start": "07:47",
+      "end": "08:30",
+      "seconds": 42.7,
+      "chars": 217
     },
     {
       "page": 15,
-      "title": "DFS 还是 BFS",
-      "start": "06:15",
-      "end": "06:50",
-      "seconds": 34.6,
-      "chars": 169
+      "title": "例：多源 BFS",
+      "start": "08:30",
+      "end": "09:04",
+      "seconds": 34.2,
+      "chars": 176
     },
     {
       "page": 16,
-      "title": "第 4 节　二分查找答案",
-      "start": "06:50",
-      "end": "06:59",
-      "seconds": 8.9,
-      "chars": 38
+      "title": "例：水淹七军",
+      "start": "09:04",
+      "end": "09:53",
+      "seconds": 49.5,
+      "chars": 238
     },
     {
       "page": 17,
-      "title": "一类高频题型",
-      "start": "06:59",
-      "end": "07:25",
-      "seconds": 26.3,
-      "chars": 136
+      "title": "Part 2　最短路与搜索选择",
+      "start": "09:53",
+      "end": "10:06",
+      "seconds": 12.4,
+      "chars": 62
     },
     {
       "page": 18,
-      "title": "河中跳房子：求最大可行值",
-      "start": "07:25",
-      "end": "08:07",
-      "seconds": 41.6,
-      "chars": 216
+      "title": "Dijkstra：带权图的最短路",
+      "start": "10:06",
+      "end": "11:00",
+      "seconds": 54.4,
+      "chars": 267
     },
     {
       "page": 19,
-      "title": "月度开销：求最小可行值",
-      "start": "08:07",
-      "end": "08:44",
-      "seconds": 37.0,
-      "chars": 208
+      "title": "应用：走山路",
+      "start": "11:00",
+      "end": "11:46",
+      "seconds": 45.8,
+      "chars": 258
     },
     {
       "page": 20,
-      "title": "二分答案三步模板",
-      "start": "08:44",
-      "end": "09:15",
-      "seconds": 30.9,
-      "chars": 160
+      "title": "DFS 还是 BFS：怎么选",
+      "start": "11:46",
+      "end": "12:18",
+      "seconds": 32.0,
+      "chars": 150
     },
     {
       "page": 21,
-      "title": "第 5 节　网格 DP 与搜索的分界",
-      "start": "09:15",
-      "end": "09:26",
-      "seconds": 11.2,
-      "chars": 45
+      "title": "例：岛屿数量",
+      "start": "12:18",
+      "end": "12:54",
+      "seconds": 36.4,
+      "chars": 175
     },
     {
       "page": 22,
-      "title": "判据是「有没有环」",
-      "start": "09:26",
-      "end": "10:17",
-      "seconds": 50.8,
-      "chars": 279
+      "title": "Part 3　二分答案与网格 DP",
+      "start": "12:54",
+      "end": "13:10",
+      "seconds": 15.5,
+      "chars": 66
     },
     {
       "page": 23,
-      "title": "最小路径和",
-      "start": "10:17",
-      "end": "10:46",
-      "seconds": 29.0,
-      "chars": 142
+      "title": "最小化最大值：一类高频题型",
+      "start": "13:10",
+      "end": "13:49",
+      "seconds": 39.1,
+      "chars": 198
     },
     {
       "page": 24,
-      "title": "本周作业",
-      "start": "10:46",
-      "end": "11:22",
-      "seconds": 36.4,
-      "chars": 170
+      "title": "例：河中跳房子",
+      "start": "13:49",
+      "end": "14:28",
+      "seconds": 39.2,
+      "chars": 207
     },
     {
       "page": 25,
-      "title": "小结",
-      "start": "11:22",
-      "end": "12:02",
-      "seconds": 39.4,
-      "chars": 192
+      "title": "求最大可行值时，mid 的加一不能少",
+      "start": "14:28",
+      "end": "15:00",
+      "seconds": 31.7,
+      "chars": 188
     },
     {
       "page": 26,
+      "title": "例：月度开销",
+      "start": "15:00",
+      "end": "15:52",
+      "seconds": 52.2,
+      "chars": 268
+    },
+    {
+      "page": 27,
+      "title": "网格 DP 与搜索的分界",
+      "start": "15:52",
+      "end": "16:34",
+      "seconds": 41.6,
+      "chars": 193
+    },
+    {
+      "page": 28,
+      "title": "例：最小路径和",
+      "start": "16:34",
+      "end": "17:13",
+      "seconds": 39.4,
+      "chars": 201
+    },
+    {
+      "page": 29,
+      "title": "本周作业",
+      "start": "17:13",
+      "end": "18:00",
+      "seconds": 46.5,
+      "chars": 231
+    },
+    {
+      "page": 30,
+      "title": "思考题",
+      "start": "18:00",
+      "end": "18:44",
+      "seconds": 44.5,
+      "chars": 229
+    },
+    {
+      "page": 31,
+      "title": "本周小结",
+      "start": "18:44",
+      "end": "19:26",
+      "seconds": 41.4,
+      "chars": 212
+    },
+    {
+      "page": 32,
       "title": "下周预告",
-      "start": "12:02",
-      "end": "12:20",
+      "start": "19:26",
+      "end": "19:44",
       "seconds": 18.7,
-      "chars": 81
+      "chars": 78
     }
   ]
 }

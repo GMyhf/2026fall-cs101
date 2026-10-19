@@ -1,273 +1,265 @@
 {
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
-  "total": "15:19",
-  "source_pptx_sha256": "a95969455bd70349b09dc342d3f61e22bf4ea7d54a005df3b696786afbabd46c",
-  "source_script_sha256": "ac0fa41f25bd1c570f0a4a2121dda399ee95512a340b58708421c23e55e71e80",
+  "total": "20:28",
+  "source_pptx_sha256": "dbc172e9d98f8a5c7ee0c4c225400bb02f20fc8784331ada25c935186efd5f3f",
+  "source_script_sha256": "a6f0de12459dc16e83ba0861a799f54cd721e5a200e001ffd6a0487002efc5b1",
   "sections": [
     {
       "page": 1,
       "title": "封面",
       "start": "00:00",
-      "end": "00:24",
-      "seconds": 24.4,
-      "chars": 119
+      "end": "00:29",
+      "seconds": 28.9,
+      "chars": 143
     },
     {
       "page": 2,
-      "title": "第 1 节　AI 素养",
-      "start": "00:24",
-      "end": "00:28",
-      "seconds": 3.6,
-      "chars": 10
+      "title": "本周要回答三个问题",
+      "start": "00:29",
+      "end": "01:18",
+      "seconds": 49.2,
+      "chars": 242
     },
     {
       "page": 3,
-      "title": "大语言模型在做什么",
-      "start": "00:28",
-      "end": "00:58",
-      "seconds": 29.8,
-      "chars": 161
+      "title": "内容地图",
+      "start": "01:18",
+      "end": "01:55",
+      "seconds": 37.0,
+      "chars": 175
     },
     {
       "page": 4,
-      "title": "四个关键部件",
-      "start": "00:58",
-      "end": "01:01",
-      "seconds": 2.9,
-      "chars": 5
+      "title": "Part 1　AI 素养",
+      "start": "01:55",
+      "end": "02:03",
+      "seconds": 8.1,
+      "chars": 35
     },
     {
       "page": 5,
-      "title": "词向量：语义就是几何关系",
-      "start": "01:01",
-      "end": "01:36",
-      "seconds": 35.0,
-      "chars": 187
+      "title": "大语言模型在做什么",
+      "start": "02:03",
+      "end": "02:43",
+      "seconds": 39.6,
+      "chars": 215
     },
     {
       "page": 6,
-      "title": "注意力：最简形式",
-      "start": "01:36",
-      "end": "02:14",
-      "seconds": 37.9,
-      "chars": 240
+      "title": "（1）分词 Tokenization",
+      "start": "02:43",
+      "end": "03:18",
+      "seconds": 35.3,
+      "chars": 197
     },
     {
       "page": 7,
-      "title": "幻觉的成因",
-      "start": "02:14",
-      "end": "02:32",
-      "seconds": 18.2,
-      "chars": 100
+      "title": "（2）词向量 Embedding",
+      "start": "03:18",
+      "end": "04:02",
+      "seconds": 43.9,
+      "chars": 236
     },
     {
       "page": 8,
-      "title": "最容易出错的四类",
-      "start": "02:32",
-      "end": "02:44",
-      "seconds": 12.4,
-      "chars": 61
+      "title": "（3）注意力 Attention：概念",
+      "start": "04:02",
+      "end": "04:45",
+      "seconds": 42.9,
+      "chars": 260
     },
     {
       "page": 9,
-      "title": "自检方法",
-      "start": "02:44",
-      "end": "02:48",
-      "seconds": 3.8,
-      "chars": 9
+      "title": "（3）注意力 Attention：最小实现",
+      "start": "04:45",
+      "end": "05:25",
+      "seconds": 40.2,
+      "chars": 236
     },
     {
       "page": 10,
-      "title": "提示词的有效结构",
-      "start": "02:48",
-      "end": "03:27",
-      "seconds": 38.7,
-      "chars": 200
+      "title": "（4）训练与对齐",
+      "start": "05:25",
+      "end": "05:51",
+      "seconds": 25.4,
+      "chars": 122
     },
     {
       "page": 11,
-      "title": "AI 辅助编程：能与不能",
-      "start": "03:27",
-      "end": "04:03",
-      "seconds": 36.2,
-      "chars": 188
+      "title": "幻觉：为什么它会编",
+      "start": "05:51",
+      "end": "06:43",
+      "seconds": 52.9,
+      "chars": 277
     },
     {
       "page": 12,
-      "title": "学术诚信",
-      "start": "04:03",
-      "end": "04:20",
-      "seconds": 17.4,
-      "chars": 81
+      "title": "自检方法",
+      "start": "06:43",
+      "end": "07:08",
+      "seconds": 24.5,
+      "chars": 110
     },
     {
       "page": 13,
-      "title": "第 2 节　12 月月考讲评",
-      "start": "04:20",
-      "end": "04:24",
-      "seconds": 4.3,
-      "chars": 12
+      "title": "提示词：有效的结构",
+      "start": "07:08",
+      "end": "07:52",
+      "seconds": 44.0,
+      "chars": 228
     },
     {
       "page": 14,
-      "title": "为什么讲「错误归因」而不是「正确解法」",
-      "start": "04:24",
-      "end": "04:52",
-      "seconds": 27.9,
-      "chars": 128
+      "title": "AI 辅助编程：能与不能",
+      "start": "07:52",
+      "end": "08:44",
+      "seconds": 51.6,
+      "chars": 266
     },
     {
       "page": 15,
-      "title": "T1 课程互选统计",
-      "start": "04:52",
-      "end": "05:23",
-      "seconds": 30.7,
-      "chars": 162
+      "title": "学术诚信",
+      "start": "08:44",
+      "end": "09:15",
+      "seconds": 31.1,
+      "chars": 151
     },
     {
       "page": 16,
-      "title": "T1 错误归因",
-      "start": "05:23",
-      "end": "05:55",
-      "seconds": 32.4,
-      "chars": 160
+      "title": "Part 2　12 月月考讲评",
+      "start": "09:15",
+      "end": "09:28",
+      "seconds": 13.0,
+      "chars": 56
     },
     {
       "page": 17,
-      "title": "T2 最优装载顺序",
-      "start": "05:55",
-      "end": "06:40",
-      "seconds": 44.4,
-      "chars": 232
+      "title": "一套样卷，六个难度台阶",
+      "start": "09:28",
+      "end": "10:16",
+      "seconds": 48.1,
+      "chars": 243
     },
     {
       "page": 18,
-      "title": "T2 错误归因",
-      "start": "06:40",
-      "end": "07:06",
-      "seconds": 26.6,
-      "chars": 133
+      "title": "T1 E29945 神秘数字的宇宙旅行",
+      "start": "10:16",
+      "end": "10:57",
+      "seconds": 41.6,
+      "chars": 219
     },
     {
       "page": 19,
-      "title": "T3 网格中的宝藏，上半",
-      "start": "07:06",
-      "end": "07:32",
-      "seconds": 25.3,
-      "chars": 126
+      "title": "T2 E29946 删数问题",
+      "start": "10:57",
+      "end": "11:40",
+      "seconds": 42.9,
+      "chars": 203
     },
     {
       "page": 20,
-      "title": "T3 网格中的宝藏，下半",
-      "start": "07:32",
-      "end": "07:57",
-      "seconds": 24.8,
-      "chars": 118
+      "title": "T3 E30091 缺德的图书馆管理员",
+      "start": "11:40",
+      "end": "12:29",
+      "seconds": 48.7,
+      "chars": 230
     },
     {
       "page": 21,
-      "title": "T3 错误归因",
-      "start": "07:57",
-      "end": "08:29",
-      "seconds": 32.7,
-      "chars": 171
+      "title": "T4 M27371 Playfair密码",
+      "start": "12:29",
+      "end": "13:19",
+      "seconds": 50.2,
+      "chars": 264
     },
     {
       "page": 22,
-      "title": "T4 分组考试",
-      "start": "08:29",
-      "end": "09:04",
-      "seconds": 34.9,
-      "chars": 179
+      "title": "T5 T30201 旅行售货商问题",
+      "start": "13:19",
+      "end": "14:06",
+      "seconds": 47.1,
+      "chars": 245
     },
     {
       "page": 23,
-      "title": "T4 错误归因",
-      "start": "09:04",
-      "end": "09:41",
-      "seconds": 36.8,
-      "chars": 194
+      "title": "T6 T30204 小P的LLM推理加速",
+      "start": "14:06",
+      "end": "14:55",
+      "seconds": 49.2,
+      "chars": 266
     },
     {
       "page": 24,
-      "title": "T5 书架分层",
-      "start": "09:41",
-      "end": "10:14",
-      "seconds": 33.5,
-      "chars": 174
+      "title": "Part 3　综合复习清单",
+      "start": "14:55",
+      "end": "15:05",
+      "seconds": 9.1,
+      "chars": 36
     },
     {
       "page": 25,
-      "title": "T5 错误归因",
-      "start": "10:14",
-      "end": "10:56",
-      "seconds": 41.7,
-      "chars": 231
+      "title": "必须能默写的 12 个模板",
+      "start": "15:05",
+      "end": "16:06",
+      "seconds": 61.0,
+      "chars": 287
     },
     {
       "page": 26,
-      "title": "T6 敌友阵营",
-      "start": "10:56",
-      "end": "11:37",
-      "seconds": 40.8,
-      "chars": 206
+      "title": "高频陷阱清单",
+      "start": "16:06",
+      "end": "16:51",
+      "seconds": 45.2,
+      "chars": 221
     },
     {
       "page": 27,
-      "title": "T6 错误归因",
-      "start": "11:37",
-      "end": "12:12",
-      "seconds": 34.5,
-      "chars": 195
+      "title": "复习节奏建议（本周到机考）",
+      "start": "16:51",
+      "end": "17:27",
+      "seconds": 36.3,
+      "chars": 182
     },
     {
       "page": 28,
-      "title": "第 3 节　综合复习清单",
-      "start": "12:12",
-      "end": "12:20",
-      "seconds": 8.4,
-      "chars": 33
+      "title": "本周作业",
+      "start": "17:27",
+      "end": "18:08",
+      "seconds": 40.6,
+      "chars": 213
     },
     {
       "page": 29,
-      "title": "必须能默写的 12 个模板",
-      "start": "12:20",
-      "end": "12:57",
-      "seconds": 37.4,
-      "chars": 185
+      "title": "思考题（1/2）",
+      "start": "18:08",
+      "end": "18:47",
+      "seconds": 39.7,
+      "chars": 206
     },
     {
       "page": 30,
-      "title": "高频陷阱清单",
-      "start": "12:57",
-      "end": "13:41",
-      "seconds": 43.5,
-      "chars": 209
+      "title": "思考题（2/2）",
+      "start": "18:47",
+      "end": "19:19",
+      "seconds": 32.1,
+      "chars": 168
     },
     {
       "page": 31,
-      "title": "复习节奏建议",
-      "start": "13:41",
-      "end": "14:17",
-      "seconds": 36.0,
-      "chars": 184
+      "title": "本周小结",
+      "start": "19:19",
+      "end": "20:10",
+      "seconds": 50.9,
+      "chars": 243
     },
     {
       "page": 32,
-      "title": "小结",
-      "start": "14:17",
-      "end": "15:02",
-      "seconds": 45.6,
-      "chars": 222
-    },
-    {
-      "page": 33,
       "title": "下周预告",
-      "start": "15:02",
-      "end": "15:19",
-      "seconds": 16.6,
-      "chars": 83
+      "start": "20:10",
+      "end": "20:28",
+      "seconds": 17.5,
+      "chars": 84
     }
   ]
 }

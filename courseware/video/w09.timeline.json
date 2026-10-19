@@ -1,193 +1,257 @@
 {
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
-  "total": "12:06",
-  "source_pptx_sha256": "5d7e906d9479fd7d240898939844932324e5ed5deed4a583d4a4b2321ceb958e",
-  "source_script_sha256": "fde1807b8fc30cdad2d9729fba8c4157fdf8728ec0db5b74f16911a5d31095be",
+  "total": "20:03",
+  "source_pptx_sha256": "d7719650a8d28bd65ebb6c4eca1b9995e72cb4b653a20c16b023bdf0c10b2a3c",
+  "source_script_sha256": "3f1bc3b707dae4697f1157b727b282ccf0df3eabf682d67e71fc11adda438934",
   "sections": [
     {
       "page": 1,
       "title": "封面",
       "start": "00:00",
-      "end": "00:22",
-      "seconds": 22.2,
-      "chars": 109
+      "end": "00:39",
+      "seconds": 39.4,
+      "chars": 195
     },
     {
       "page": 2,
-      "title": "第 1 节　回溯法",
-      "start": "00:22",
-      "end": "00:26",
-      "seconds": 3.4,
-      "chars": 8
+      "title": "本周导引：三个问题",
+      "start": "00:39",
+      "end": "01:28",
+      "seconds": 48.4,
+      "chars": 225
     },
     {
       "page": 3,
-      "title": "回溯等于深度优先搜索加撤销",
-      "start": "00:26",
-      "end": "00:54",
-      "seconds": 28.0,
-      "chars": 135
+      "title": "内容地图",
+      "start": "01:28",
+      "end": "02:08",
+      "seconds": 40.2,
+      "chars": 192
     },
     {
       "page": 4,
-      "title": "通用模板",
-      "start": "00:54",
-      "end": "01:31",
-      "seconds": 37.2,
-      "chars": 185
+      "title": "Part 1　回溯法",
+      "start": "02:08",
+      "end": "02:16",
+      "seconds": 8.1,
+      "chars": 33
     },
     {
       "page": 5,
-      "title": "形态一：子集",
-      "start": "01:31",
-      "end": "02:03",
-      "seconds": 32.0,
-      "chars": 166
+      "title": "什么是回溯：DFS 加撤销",
+      "start": "02:16",
+      "end": "03:05",
+      "seconds": 48.7,
+      "chars": 233
     },
     {
       "page": 6,
-      "title": "形态二：组合总和",
-      "start": "02:03",
-      "end": "02:44",
-      "seconds": 41.7,
-      "chars": 234
+      "title": "三个要素与两个必犯错误",
+      "start": "03:05",
+      "end": "03:51",
+      "seconds": 46.7,
+      "chars": 240
     },
     {
       "page": 7,
-      "title": "形态三：带重复元素的去重排列",
-      "start": "02:44",
-      "end": "03:27",
-      "seconds": 42.4,
-      "chars": 209
+      "title": "形态一：子集",
+      "start": "03:51",
+      "end": "04:32",
+      "seconds": 40.5,
+      "chars": 204
     },
     {
       "page": 8,
-      "title": "三大形态靠递归参数区分",
-      "start": "03:27",
-      "end": "03:55",
-      "seconds": 28.3,
-      "chars": 137
+      "title": "形态二：组合总和",
+      "start": "04:32",
+      "end": "05:22",
+      "seconds": 50.0,
+      "chars": 268
     },
     {
       "page": 9,
-      "title": "剪枝：让指数变得可行",
-      "start": "03:55",
-      "end": "04:35",
-      "seconds": 39.5,
-      "chars": 192
+      "title": "形态三：带重复元素的排列去重",
+      "start": "05:22",
+      "end": "06:12",
+      "seconds": 50.0,
+      "chars": 243
     },
     {
       "page": 10,
-      "title": "八皇后",
-      "start": "04:35",
-      "end": "05:14",
-      "seconds": 39.6,
-      "chars": 192
+      "title": "对照表：递归参数怎么变",
+      "start": "06:12",
+      "end": "06:54",
+      "seconds": 41.9,
+      "chars": 218
     },
     {
       "page": 11,
-      "title": "为什么用行减列和行加列",
-      "start": "05:14",
-      "end": "05:46",
-      "seconds": 31.6,
-      "chars": 151
-    },
-    {
-      "page": 12,
-      "title": "马走日",
-      "start": "05:46",
-      "end": "06:26",
-      "seconds": 40.0,
-      "chars": 190
-    },
-    {
-      "page": 13,
-      "title": "Lake Counting：Flood Fill",
-      "start": "06:26",
-      "end": "07:08",
-      "seconds": 42.3,
-      "chars": 220
-    },
-    {
-      "page": 14,
-      "title": "第 2 节　并查集",
-      "start": "07:08",
-      "end": "07:11",
-      "seconds": 3.5,
-      "chars": 8
-    },
-    {
-      "page": 15,
-      "title": "它解决什么问题",
-      "start": "07:11",
-      "end": "07:40",
-      "seconds": 28.1,
-      "chars": 143
-    },
-    {
-      "page": 16,
-      "title": "实现：路径压缩加按大小合并",
-      "start": "07:40",
-      "end": "08:18",
-      "seconds": 38.2,
+      "title": "剪枝：让指数变得可行",
+      "start": "06:54",
+      "end": "07:33",
+      "seconds": 38.8,
       "chars": 203
     },
     {
+      "page": 12,
+      "title": "八皇后（1）：三个集合",
+      "start": "07:33",
+      "end": "08:17",
+      "seconds": 44.3,
+      "chars": 217
+    },
+    {
+      "page": 13,
+      "title": "八皇后（2）：为什么用 row 减 c 和 row 加 c",
+      "start": "08:17",
+      "end": "08:57",
+      "seconds": 39.9,
+      "chars": 203
+    },
+    {
+      "page": 14,
+      "title": "马走日",
+      "start": "08:57",
+      "end": "09:48",
+      "seconds": 51.3,
+      "chars": 264
+    },
+    {
+      "page": 15,
+      "title": "DFS 求连通块：Lake Counting",
+      "start": "09:48",
+      "end": "10:39",
+      "seconds": 50.9,
+      "chars": 279
+    },
+    {
+      "page": 16,
+      "title": "Part 2　并查集",
+      "start": "10:39",
+      "end": "10:47",
+      "seconds": 7.9,
+      "chars": 32
+    },
+    {
       "page": 17,
-      "title": "两个直接应用",
-      "start": "08:18",
-      "end": "08:49",
-      "seconds": 31.5,
-      "chars": 176
+      "title": "它解决什么问题",
+      "start": "10:47",
+      "end": "11:13",
+      "seconds": 25.8,
+      "chars": 130
     },
     {
       "page": 18,
-      "title": "食物链：扩展域并查集",
-      "start": "08:49",
-      "end": "09:49",
-      "seconds": 59.8,
-      "chars": 326
+      "title": "最朴素的实现",
+      "start": "11:13",
+      "end": "11:53",
+      "seconds": 40.4,
+      "chars": 219
     },
     {
       "page": 19,
-      "title": "并查集的复杂度",
-      "start": "09:49",
-      "end": "10:16",
-      "seconds": 26.7,
-      "chars": 121
+      "title": "路径压缩加按大小合并",
+      "start": "11:53",
+      "end": "12:45",
+      "seconds": 51.8,
+      "chars": 271
     },
     {
       "page": 20,
-      "title": "深度优先搜索还是并查集",
-      "start": "10:16",
-      "end": "10:43",
-      "seconds": 27.4,
-      "chars": 123
+      "title": "宗教信仰：数连通块个数",
+      "start": "12:45",
+      "end": "13:19",
+      "seconds": 34.3,
+      "chars": 178
     },
     {
       "page": 21,
-      "title": "本周作业",
-      "start": "10:43",
-      "end": "11:17",
-      "seconds": 33.3,
-      "chars": 167
+      "title": "判环：union 返回 False 就是环",
+      "start": "13:19",
+      "end": "13:48",
+      "seconds": 28.4,
+      "chars": 158
     },
     {
       "page": 22,
-      "title": "小结",
-      "start": "11:17",
-      "end": "11:51",
-      "seconds": 34.1,
-      "chars": 183
+      "title": "食物链：扩展域写法",
+      "start": "13:48",
+      "end": "14:36",
+      "seconds": 48.3,
+      "chars": 269
     },
     {
       "page": 23,
+      "title": "食物链：假话怎么判定",
+      "start": "14:36",
+      "end": "15:19",
+      "seconds": 42.8,
+      "chars": 235
+    },
+    {
+      "page": 24,
+      "title": "食物链：跑一遍样例",
+      "start": "15:19",
+      "end": "16:06",
+      "seconds": 47.0,
+      "chars": 238
+    },
+    {
+      "page": 25,
+      "title": "复杂度：为什么可以当 O 一用",
+      "start": "16:06",
+      "end": "16:36",
+      "seconds": 29.9,
+      "chars": 151
+    },
+    {
+      "page": 26,
+      "title": "Part 3　DFS/BFS 与并查集",
+      "start": "16:36",
+      "end": "16:49",
+      "seconds": 12.9,
+      "chars": 53
+    },
+    {
+      "page": 27,
+      "title": "DFS/BFS 与并查集：什么时候用哪个",
+      "start": "16:49",
+      "end": "17:28",
+      "seconds": 38.7,
+      "chars": 176
+    },
+    {
+      "page": 28,
+      "title": "本周作业",
+      "start": "17:28",
+      "end": "18:12",
+      "seconds": 44.8,
+      "chars": 219
+    },
+    {
+      "page": 29,
+      "title": "思考题",
+      "start": "18:12",
+      "end": "18:56",
+      "seconds": 43.3,
+      "chars": 223
+    },
+    {
+      "page": 30,
+      "title": "本周小结",
+      "start": "18:56",
+      "end": "19:44",
+      "seconds": 48.7,
+      "chars": 262
+    },
+    {
+      "page": 31,
       "title": "下周预告",
-      "start": "11:51",
-      "end": "12:06",
-      "seconds": 15.7,
-      "chars": 74
+      "start": "19:44",
+      "end": "20:03",
+      "seconds": 18.8,
+      "chars": 84
     }
   ]
 }

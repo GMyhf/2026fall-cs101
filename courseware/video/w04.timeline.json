@@ -1,249 +1,345 @@
 {
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
-  "total": "15:20",
-  "source_pptx_sha256": "b9cb9e51f230e45a2d28a13af129bee65e09bf47d53b63f5b3b518d33f67916d",
-  "source_script_sha256": "887d002f1e7b22b25599947ef954e326a1b0b42c14f2aded3472c97f64bd6235",
+  "total": "24:23",
+  "source_pptx_sha256": "133f820faebfe34af0aef6ac0c5505e53aff8c21247ded7acc19180b16838fd7",
+  "source_script_sha256": "631084438906929f55ed1157fa55a0d07bcf280c4ac3b57be9787c85ede04df1",
   "sections": [
     {
       "page": 1,
       "title": "封面",
       "start": "00:00",
-      "end": "00:24",
-      "seconds": 24.0,
-      "chars": 129
+      "end": "00:37",
+      "seconds": 37.2,
+      "chars": 192
     },
     {
       "page": 2,
-      "title": "本讲内容",
-      "start": "00:24",
-      "end": "01:00",
-      "seconds": 36.3,
-      "chars": 181
-    },
-    {
-      "page": 3,
-      "title": "第 1 节　Python 基础补齐",
-      "start": "01:00",
-      "end": "01:05",
-      "seconds": 4.2,
-      "chars": 16
-    },
-    {
-      "page": 4,
-      "title": "经典陷阱：默认参数是可变对象",
-      "start": "01:05",
-      "end": "01:40",
-      "seconds": 35.8,
-      "chars": 194
-    },
-    {
-      "page": 5,
-      "title": "可变与不可变",
-      "start": "01:40",
-      "end": "02:07",
-      "seconds": 26.5,
-      "chars": 124
-    },
-    {
-      "page": 6,
-      "title": "浅拷贝与深拷贝",
-      "start": "02:07",
-      "end": "02:49",
-      "seconds": 42.2,
-      "chars": 209
-    },
-    {
-      "page": 7,
-      "title": "OJ 上最常用的异常处理",
-      "start": "02:49",
-      "end": "03:18",
-      "seconds": 28.7,
-      "chars": 155
-    },
-    {
-      "page": 8,
-      "title": "第 2 节　四种容器与它们的代价",
-      "start": "03:18",
-      "end": "03:25",
-      "seconds": 7.0,
-      "chars": 25
-    },
-    {
-      "page": 9,
-      "title": "容器选型",
-      "start": "03:25",
-      "end": "03:58",
-      "seconds": 33.4,
-      "chars": 152
-    },
-    {
-      "page": 10,
-      "title": "操作复杂度：必须背下来",
-      "start": "03:58",
-      "end": "04:42",
-      "seconds": 44.2,
-      "chars": 208
-    },
-    {
-      "page": 11,
-      "title": "实测：列表的 in 与集合的 in",
-      "start": "04:42",
-      "end": "05:08",
-      "seconds": 26.2,
-      "chars": 122
-    },
-    {
-      "page": 12,
-      "title": "需要队列时用 deque，计数用 Counter",
-      "start": "05:08",
-      "end": "05:53",
-      "seconds": 44.6,
+      "title": "本周要回答三个问题",
+      "start": "00:37",
+      "end": "01:25",
+      "seconds": 48.1,
       "chars": 240
     },
     {
-      "page": 13,
-      "title": "第 3 节　算法分析：这段代码够快吗",
-      "start": "05:53",
-      "end": "06:00",
-      "seconds": 6.7,
-      "chars": 24
+      "page": 3,
+      "title": "内容地图",
+      "start": "01:25",
+      "end": "02:10",
+      "seconds": 45.0,
+      "chars": 221
     },
     {
-      "page": 14,
-      "title": "大 O 忽略常数与低阶项",
-      "start": "06:00",
-      "end": "06:28",
-      "seconds": 28.4,
-      "chars": 154
+      "page": 4,
+      "title": "Part 1　Python 基础补齐",
+      "start": "02:10",
+      "end": "02:21",
+      "seconds": 10.6,
+      "chars": 46
     },
     {
-      "page": 15,
-      "title": "常见复杂度级别",
-      "start": "06:28",
-      "end": "07:04",
-      "seconds": 35.9,
-      "chars": 160
+      "page": 5,
+      "title": "函数：默认参数、关键字参数、可变参数",
+      "start": "02:21",
+      "end": "03:07",
+      "seconds": 45.9,
+      "chars": 229
     },
     {
-      "page": 16,
-      "title": "隐藏的复杂度",
-      "start": "07:04",
-      "end": "07:40",
-      "seconds": 36.0,
-      "chars": 186
+      "page": 6,
+      "title": "默认参数是可变对象",
+      "start": "03:07",
+      "end": "03:47",
+      "seconds": 40.6,
+      "chars": 221
     },
     {
-      "page": 17,
-      "title": "从数据范围倒推算法",
-      "start": "07:40",
-      "end": "08:32",
-      "seconds": 52.0,
-      "chars": 261
-    },
-    {
-      "page": 18,
-      "title": "考场流程",
-      "start": "08:32",
-      "end": "08:51",
-      "seconds": 19.1,
-      "chars": 95
-    },
-    {
-      "page": 19,
-      "title": "空间复杂度",
-      "start": "08:51",
-      "end": "09:19",
-      "seconds": 28.3,
-      "chars": 147
-    },
-    {
-      "page": 20,
-      "title": "第 4 节　常数优化",
-      "start": "09:19",
-      "end": "09:28",
-      "seconds": 8.6,
-      "chars": 34
-    },
-    {
-      "page": 21,
-      "title": "按收益排序的三招",
-      "start": "09:28",
-      "end": "10:20",
-      "seconds": 52.5,
-      "chars": 286
-    },
-    {
-      "page": 22,
-      "title": "埃拉托色尼筛",
-      "start": "10:20",
-      "end": "10:56",
-      "seconds": 35.8,
-      "chars": 198
-    },
-    {
-      "page": 23,
-      "title": "T-primes：恰好三个约数",
-      "start": "10:56",
-      "end": "11:47",
-      "seconds": 50.8,
-      "chars": 258
-    },
-    {
-      "page": 24,
-      "title": "第 5 节　调试",
-      "start": "11:47",
-      "end": "11:54",
-      "seconds": 6.7,
-      "chars": 24
-    },
-    {
-      "page": 25,
-      "title": "通用方法",
-      "start": "11:54",
-      "end": "12:41",
-      "seconds": 46.9,
-      "chars": 238
-    },
-    {
-      "page": 26,
-      "title": "常见错误与对策",
-      "start": "12:41",
-      "end": "13:21",
-      "seconds": 39.9,
+      "page": 7,
+      "title": "可变与不可变",
+      "start": "03:47",
+      "end": "04:28",
+      "seconds": 40.5,
       "chars": 193
     },
     {
+      "page": 8,
+      "title": "浅拷贝与深拷贝",
+      "start": "04:28",
+      "end": "05:16",
+      "seconds": 48.2,
+      "chars": 237
+    },
+    {
+      "page": 9,
+      "title": "异常处理",
+      "start": "05:16",
+      "end": "05:50",
+      "seconds": 34.1,
+      "chars": 196
+    },
+    {
+      "page": 10,
+      "title": "OJ 最常用的用法：读到文件尾就结束",
+      "start": "05:50",
+      "end": "06:26",
+      "seconds": 35.9,
+      "chars": 190
+    },
+    {
+      "page": 11,
+      "title": "Part 2　四种容器与它们的代价",
+      "start": "06:26",
+      "end": "06:36",
+      "seconds": 10.4,
+      "chars": 52
+    },
+    {
+      "page": 12,
+      "title": "选型表",
+      "start": "06:36",
+      "end": "07:17",
+      "seconds": 41.0,
+      "chars": 182
+    },
+    {
+      "page": 13,
+      "title": "操作复杂度（必须背下来）",
+      "start": "07:17",
+      "end": "08:02",
+      "seconds": 44.3,
+      "chars": 211
+    },
+    {
+      "page": 14,
+      "title": "list 的 in 与 set 的 in：差多少？",
+      "start": "08:02",
+      "end": "08:29",
+      "seconds": 27.5,
+      "chars": 134
+    },
+    {
+      "page": 15,
+      "title": "需要队列时用 deque",
+      "start": "08:29",
+      "end": "09:11",
+      "seconds": 41.8,
+      "chars": 227
+    },
+    {
+      "page": 16,
+      "title": "计数与分组的标准写法",
+      "start": "09:11",
+      "end": "09:47",
+      "seconds": 35.8,
+      "chars": 208
+    },
+    {
+      "page": 17,
+      "title": "Counter 为什么快",
+      "start": "09:47",
+      "end": "10:20",
+      "seconds": 33.4,
+      "chars": 185
+    },
+    {
+      "page": 18,
+      "title": "Part 3　算法分析：这段代码够快吗",
+      "start": "10:20",
+      "end": "10:33",
+      "seconds": 12.5,
+      "chars": 55
+    },
+    {
+      "page": 19,
+      "title": "大 O 记号",
+      "start": "10:33",
+      "end": "11:15",
+      "seconds": 42.9,
+      "chars": 219
+    },
+    {
+      "page": 20,
+      "title": "常见复杂度级别",
+      "start": "11:15",
+      "end": "11:55",
+      "seconds": 39.4,
+      "chars": 173
+    },
+    {
+      "page": 21,
+      "title": "增长速度的直观感受",
+      "start": "11:55",
+      "end": "12:22",
+      "seconds": 26.9,
+      "chars": 129
+    },
+    {
+      "page": 22,
+      "title": "怎么数（1/2）：单层与两重循环",
+      "start": "12:22",
+      "end": "12:53",
+      "seconds": 31.0,
+      "chars": 155
+    },
+    {
+      "page": 23,
+      "title": "怎么数（2/2）：排序与二分",
+      "start": "12:53",
+      "end": "13:20",
+      "seconds": 27.0,
+      "chars": 155
+    },
+    {
+      "page": 24,
+      "title": "隐藏的复杂度——最容易漏的一种",
+      "start": "13:20",
+      "end": "13:56",
+      "seconds": 36.5,
+      "chars": 187
+    },
+    {
+      "page": 25,
+      "title": "从数据范围倒推算法",
+      "start": "13:56",
+      "end": "14:59",
+      "seconds": 62.6,
+      "chars": 312
+    },
+    {
+      "page": 26,
+      "title": "空间复杂度",
+      "start": "14:59",
+      "end": "15:29",
+      "seconds": 30.0,
+      "chars": 158
+    },
+    {
       "page": 27,
-      "title": "三条考场纪律",
-      "start": "13:21",
-      "end": "13:42",
-      "seconds": 21.9,
-      "chars": 111
+      "title": "Part 4　常数优化",
+      "start": "15:29",
+      "end": "15:39",
+      "seconds": 9.8,
+      "chars": 41
     },
     {
       "page": 28,
-      "title": "本周作业",
-      "start": "13:42",
-      "end": "14:24",
-      "seconds": 41.1,
-      "chars": 203
+      "title": "快速输入输出",
+      "start": "15:39",
+      "end": "16:18",
+      "seconds": 38.8,
+      "chars": 219
     },
     {
       "page": 29,
-      "title": "小结",
-      "start": "14:24",
-      "end": "15:00",
-      "seconds": 36.0,
-      "chars": 175
+      "title": "少做重复计算",
+      "start": "16:18",
+      "end": "16:48",
+      "seconds": 30.8,
+      "chars": 167
     },
     {
       "page": 30,
+      "title": "用内建函数",
+      "start": "16:48",
+      "end": "17:16",
+      "seconds": 28.0,
+      "chars": 153
+    },
+    {
+      "page": 31,
+      "title": "埃拉托色尼筛",
+      "start": "17:16",
+      "end": "18:03",
+      "seconds": 46.4,
+      "chars": 256
+    },
+    {
+      "page": 32,
+      "title": "经典应用：T-primes（恰好 3 个约数的数）",
+      "start": "18:03",
+      "end": "18:43",
+      "seconds": 40.1,
+      "chars": 186
+    },
+    {
+      "page": 33,
+      "title": "两行 while 校正在纠正什么",
+      "start": "18:43",
+      "end": "19:23",
+      "seconds": 39.9,
+      "chars": 207
+    },
+    {
+      "page": 34,
+      "title": "E03143 验证“歌德巴赫猜想”",
+      "start": "19:23",
+      "end": "19:50",
+      "seconds": 27.1,
+      "chars": 139
+    },
+    {
+      "page": 35,
+      "title": "Part 5　调试",
+      "start": "19:50",
+      "end": "20:02",
+      "seconds": 12.3,
+      "chars": 51
+    },
+    {
+      "page": 36,
+      "title": "通用方法",
+      "start": "20:02",
+      "end": "20:45",
+      "seconds": 42.8,
+      "chars": 205
+    },
+    {
+      "page": 37,
+      "title": "常见错误与对策",
+      "start": "20:45",
+      "end": "21:28",
+      "seconds": 43.0,
+      "chars": 209
+    },
+    {
+      "page": 38,
+      "title": "三条考场纪律",
+      "start": "21:28",
+      "end": "21:56",
+      "seconds": 28.2,
+      "chars": 127
+    },
+    {
+      "page": 39,
+      "title": "本周练习",
+      "start": "21:56",
+      "end": "22:42",
+      "seconds": 45.6,
+      "chars": 234
+    },
+    {
+      "page": 40,
+      "title": "思考题",
+      "start": "22:42",
+      "end": "23:19",
+      "seconds": 36.7,
+      "chars": 204
+    },
+    {
+      "page": 41,
+      "title": "本周小结",
+      "start": "23:19",
+      "end": "23:59",
+      "seconds": 40.6,
+      "chars": 198
+    },
+    {
+      "page": 42,
       "title": "下周预告",
-      "start": "15:00",
-      "end": "15:20",
-      "seconds": 20.0,
-      "chars": 91
+      "start": "23:59",
+      "end": "24:23",
+      "seconds": 23.9,
+      "chars": 108
     }
   ]
 }
