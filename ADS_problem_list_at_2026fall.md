@@ -22,7 +22,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 1025 | T26977:接雨水       | stack, two pointers       | Tough | http://cs101.openjudge.cn/practice/26977/          |
 | 1024 | M02746:约瑟夫问题   | queue, math | Medium | http://cs101.openjudge.cn/pctbook/M02746/         |
 | 1023 | 22067:快速堆猪      | 辅助栈      | Medium | http://cs101.openjudge.cn/practice/22067          |
-| 1022 | 24588:后序表达式求值 | stack, recursion  | Easy | http://cs101.openjudge.cn/practice/24588j          |
+| 1022 | 24588:后序表达式求值 | stack, recursion  | Easy | http://cs101.openjudge.cn/practice/24588/          |
 | 1021 | E20. 有效的括号      | stack      | Easy | https://leetcode.cn/problems/valid-parenjtheses/         |
 | 1020 | E19942:二维矩阵上的卷积运算      | matrix  | Easy | http://cs101.openjudge.cn/pctbook/E19942          |
 | 1019 | M3551.数位和排序需要的最小交换次数   | 置换群的最小交换次数 | Medium | https://leetcode.cn/problems/minimum-swaps-to-sort-by-digit-sum/          |
