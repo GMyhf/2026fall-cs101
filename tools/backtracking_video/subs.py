@@ -204,6 +204,59 @@ S('空间复杂度', '空间方面：递归深度是 n，sol 最多 n 个元素�
     ('额外空间：O(n)（不计输出 ans）', YELLOW),
 ], size=30, gap=70), sub='空间复杂度：递归深度 n，sol 最多 n 个元素，不计输出 ans，额外空间 O(n)。')
 
+# ---------- 回溯与 DFS ----------
+def dfs_body(d):
+    text(d, (W // 2, 120), '回溯 = 在决策树上做 DFS + 退回时撤销选择', 32, YELLOW, bold=True, anchor='mm')
+    for i, (t, lines) in enumerate([
+            ('DFS：讲的是遍历顺序', ['沿一条路走到底', '走不下去就退回上一个岔路口', '换下一条路', '适用于任何图或树']),
+            ('回溯：讲的是状态怎么维护', ['只用一份共享的 sol', '选 nums[i]：append', '退回来：恢复原样（pop）', '下一条路不受残留状态污染'])]):
+        x0 = 90 + i * 560
+        d.rounded_rectangle([x0, 175, x0 + 540, 500], 14, outline=BLUE if i == 0 else ORANGE, width=3)
+        text(d, (x0 + 24, 195), t, 28, BLUE if i == 0 else ORANGE, bold=True)
+        for j, l in enumerate(lines):
+            text(d, (x0 + 40, 260 + j * 56), '· ' + l, 26, FG)
+S('backtrack 就是 DFS 吗？', '学到这里，可能有同学会问：backtrack 就是 DFS 吗？可以这么理解：回溯，就是在决策树上做 DFS，再加上退回时撤销选择。DFS 讲的是遍历顺序：沿一条路走到底，走不下去就退回上一个岔路口，换下一条路。回溯讲的是状态怎么维护：整个搜索只用一份共享的 sol，选 nums[i] 时把它加进去，退回来时把它弹出，恢复原样。这棵决策树同样没有真的建出来，而是代码边走边生成的。', dfs_body,
+  sub='backtrack 就是 DFS 吗？回溯 = 在决策树上做 DFS + 退回时撤销选择。DFS 讲遍历顺序；回溯讲状态维护：共享一份 sol，选时 append、回来时 pop。')
+
+BT2 = '''def backtrack(i):              # 回溯
+    if i == n:
+        ans.append(sol[:])         # 要拷贝
+        return
+    backtrack(i + 1)               # 不选
+    sol.append(nums[i])
+    backtrack(i + 1)               # 选
+    sol.pop()                      # 撤销'''.split('\n')
+DFS2 = '''def dfs(i, path):         # 不撤销的 DFS
+    if i == n:
+        ans.append(path)      # 已是新列表
+        return
+    dfs(i + 1, path)               # 不选
+    dfs(i + 1, path + [nums[i]])   # 选
+    # 返回后无需恢复'''.split('\n')
+def cmp_body(d):
+    text(d, (60, 92), '共享一份 sol，原地改、原地恢复', 24, ORANGE)
+    draw_code(d, BT2, 80, 135, size=17, lh=27, hl=(3, 6, 8), width=540)
+    text(d, (670, 92), '每层生成新列表往下传', 24, BLUE)
+    draw_code(d, DFS2, 690, 135, size=17, lh=27, hl=(3, 6), width=560)
+    text(d, (70, 400), '两者结果相同、遍历顺序也相同，都是 DFS；右边没有“撤销”，严格说不算回溯。', 25, FG)
+    text(d, (70, 450), '代价：右边“选”的分支每次都要复制列表（path + [nums[i]]）；回溯写法更省。', 25, YELLOW)
+S('对比：不撤销的 DFS 写法', '对比一下不撤销的 DFS 写法。右边多传一个参数 path：“不选”时把 path 原样传下去；“选”时把 path 加上 nums[i]，生成一个新列表传下去。各层不共享可变的状态，所以返回后什么都不用恢复，收集答案时也不用再拷贝。两种写法结果相同，遍历顺序也相同，都是 DFS；但右边没有撤销这一步，严格说不算回溯。代价是每次“选”都要复制列表。左边的回溯写法只用一份 sol，原地修改、原地恢复，更省。', cmp_body,
+  sub='不撤销的 DFS：dfs(i + 1, path + [nums[i]]) 传新列表，返回后无需恢复。结果与遍历顺序相同，但没有“撤销”，严格说不算回溯；代价是复制列表。')
+
+def visited_body(d):
+    for i, (t, c, lines) in enumerate([
+            ('图上的 DFS', BLUE, ['用 visited 记录走过的节点', '标记后不再取消', '目的：防止重复访问同一节点']),
+            ('回溯：子集', ORANGE, ['状态就是下标 i 和 sol', 'i 只往前走，不会回头', '不需要 visited；sol 退回时 pop'])]):
+        x0 = 90 + i * 560
+        d.rounded_rectangle([x0, 100, x0 + 540, 380], 14, outline=c, width=3)
+        text(d, (x0 + 24, 120), t, 28, c, bold=True)
+        for j, l in enumerate(lines):
+            text(d, (x0 + 40, 190 + j * 58), '· ' + l, 25, FG)
+    text(d, (90, 430), '原因：回溯走的是树，同一个状态不会从两条不同的路到达，不需要永久的 visited。', 25, YELLOW)
+    text(d, (90, 480), '（全排列里用 used[i] 标记已用的数，退回时也要取消标记。）', 23, DIM)
+S('对比：图上 DFS 的 visited', '再说和图上 DFS 的区别。图上做 DFS，通常用 visited 记录走过的节点，标记之后就不再取消，防止重复访问。回溯走的是树，同一个状态不会从两条不同的路到达。在子集问题里，状态就是下标 i 和 sol：i 只往前走，不会回头，所以根本不需要 visited，只要在退回时把 sol 弹出即可。上一讲的全排列用 used 数组标记已用的数，那个标记在退回时也要取消。', visited_body,
+  sub='图上 DFS：visited 标记后不取消，防止重复访问。子集回溯：状态是 i 和 sol，i 只往前走，不需要 visited，退回时 pop 即可。')
+
 # ---------- 对比总结 ----------
 def table(d):
     rows = [('', '全排列 (46)', '子集 (78)'),
