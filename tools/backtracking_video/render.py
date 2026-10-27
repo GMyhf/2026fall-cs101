@@ -165,7 +165,7 @@ class Tree:
         dy = (y1 - y0) / max(depth, 1)
         self.pos = {k: (x, y0 + nodes[k]['depth'] * dy) for k, x in self.pos.items()}
 
-    def draw(self, d, visible=None, state=None, path=(), size=18, elabels=True):
+    def draw(self, d, visible=None, state=None, path=(), size=18, elabels=True, cjk=False):
         """state: key -> 'cur'|'done'|'leaf'|'seen'；path: 当前根到节点的 key 列表"""
         state = state or {}
         pset = set(zip(path, path[1:]))
@@ -187,7 +187,7 @@ class Tree:
             x, y = self.pos[k]
             st = state.get(k)
             col = {'cur': YELLOW, 'leaf': GREEN, 'seen': ORANGE}.get(st, ORANGE if state == {} else (150, 110, 95))
-            f = font('mono', size)
+            f = font('cjk' if cjk else 'mono', size)
             tw = f.getlength(n['label'])
             if st == 'cur':
                 d.rounded_rectangle([x - tw / 2 - 8, y - 16, x + tw / 2 + 8, y + 16], 8, outline=YELLOW, width=3, fill=(60, 55, 25))

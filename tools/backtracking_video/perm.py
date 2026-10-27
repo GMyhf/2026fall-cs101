@@ -46,6 +46,98 @@ def title_body(d):
     text(d, (W // 2, 390), '递归 + 回溯（backtracking）', 30, BLUE, anchor='mm')
 S('', '大家好。这一讲我们用递归加回溯，来解决力扣第46题：全排列。这是回溯算法最经典的模板之一，务必熟练掌握。', title_body)
 
+# ---------- 预备知识 ----------
+def small_tree(box):
+    nd = {'A': None, 'B': 'A', 'C': 'A', 'D': 'B', 'E': 'B', 'F': 'C'}
+    dep = {'A': 0, 'B': 1, 'C': 1, 'D': 2, 'E': 2, 'F': 2}
+    nodes_ = {k: dict(label=k, parent=p, depth=dep[k], elabel='') for k, p in nd.items()}
+    return Tree(nodes_, ['A', 'B', 'D', 'E', 'C', 'F'], box)
+ST = small_tree((140, 140, 640, 480))
+
+def pre_tree(d):
+    ST.draw(d, state={'A': 'seen', 'B': 'seen', 'C': 'seen', 'D': 'leaf', 'E': 'leaf', 'F': 'leaf'}, size=26)
+    for dd, k in enumerate('ABD'):
+        text(d, (40, ST.pos[k][1] - 14), f'第 {dd} 层', 20, DIM)
+    ax, ay = ST.pos['A']
+    text(d, (ax + 30, ay - 16), '← 根', 22, YELLOW)
+    bx, by = ST.pos['B']
+    text(d, (bx - 30, by - 16), '父节点 →', 20, YELLOW, anchor='ra')
+    (dx, dy), (ex, ey) = ST.pos['D'], ST.pos['E']
+    text(d, ((dx + ex) / 2, dy + 30), '子节点', 20, YELLOW, anchor='ma')
+    fx, fy = ST.pos['F']
+    text(d, (fx + 30, fy - 16), '← 叶子', 22, GREEN)
+    text(d, ((ax + ST.pos['C'][0]) / 2 + 14, (ay + ST.pos['C'][1]) / 2 - 22), '边', 20, YELLOW)
+    bullets([
+        ('根：最上面的节点', FG),
+        ('边：连接两个节点', FG),
+        ('父节点 / 子节点：一条边的上 / 下两端', FG),
+        ('叶子：没有子节点的节点', GREEN),
+        ('层（深度）：根为第 0 层，往下依次 +1', FG),
+        ('计算机里的树倒着画：根在上，叶在下', DIM),
+    ], x=720, y=130, size=24, gap=58)(d)
+S('预备知识 ①：树', '在正式开始之前，先补充一点预备知识。第一个概念是树。树由节点和连接节点的边组成。最上面的节点叫根。一条边连接的上下两个节点，上面的叫父节点，下面的叫子节点。没有子节点的节点叫叶子。从根往下数，根在第 0 层，它的子节点在第 1 层，依此类推，层数也叫深度。注意，计算机里的树通常是倒着画的：根在上，叶子在下。', pre_tree,
+  sub='预备知识 ① 树：由节点和边组成。最上面的是根；一条边的上端是父节点、下端是子节点；没有子节点的是叶子；根在第 0 层，往下依次 +1。')
+
+OUT = {'': None, 'T': '', 'S': '', 'TJ': 'T', 'TD': 'T', 'SJ': 'S', 'SD': 'S'}
+OUT_LABEL = {'': '开始', 'T': '白T恤', 'S': '衬衫', 'TJ': '白T+牛仔裤', 'TD': '白T+短裤', 'SJ': '衬衫+牛仔裤', 'SD': '衬衫+短裤'}
+OUT_E = {'T': '上衣：白T', 'S': '上衣：衬衫', 'TJ': '牛仔裤', 'TD': '短裤', 'SJ': '牛仔裤', 'SD': '短裤'}
+OT = Tree({k: dict(label=OUT_LABEL[k], parent=p, depth=len(k), elabel=OUT_E.get(k, '')) for k, p in OUT.items()},
+          ['', 'T', 'TJ', 'TD', 'S', 'SJ', 'SD'], (90, 140, 690, 470))
+def pre_dtree(d):
+    OT.draw(d, size=21, cjk=True)
+    text(d, (390, 530), '2 种上衣 × 2 种裤子 = 4 种搭配（4 个叶子）', 24, YELLOW, anchor='mm')
+    bullets([
+        ('节点 = 做到一半的状态', FG),
+        ('边 = 一次选择', FG),
+        ('叶子 = 全部选完', GREEN),
+        ('根 → 叶子的一条路径', BLUE),
+        ('     = 一个完整方案', BLUE),
+    ], x=780, y=150, size=26, gap=64)(d)
+S('预备知识 ②：决策树', '第二个概念是决策树。它是一种特殊的树，用来表示一步一步做选择的过程。举个例子：出门穿衣服，先选上衣，有白T恤和衬衫两种；再选裤子，有牛仔裤和短裤两种。画出来就是这样：根节点表示还没开始选，第一层表示选好了上衣，第二层表示上衣和裤子都选好了。在决策树里，每个节点表示做到一半的状态，每条边表示一次选择，叶子表示全部选完，从根到叶子的一条路径，就是一个完整的方案。这里一共有 2 乘 2 等于 4 种搭配。', pre_dtree,
+  sub='预备知识 ② 决策树：表示一步步做选择的过程。节点 = 做到一半的状态，边 = 一次选择，叶子 = 全部选完，根到叶子的路径 = 一个完整方案。')
+
+def badge(d, k, n, tree=ST, col=BLUE):
+    x, y = tree.pos[k]
+    d.ellipse([x + 20, y - 44, x + 50, y - 14], fill=col)
+    d.text((x + 35, y - 29), str(n), font=font('monob', 18), fill=BG, anchor='mm')
+def pre_dfs(d):
+    order_ = 'ABDECF'
+    ST.draw(d, state={k: 'seen' for k in order_}, size=26)
+    for i, k in enumerate(order_, 1):
+        badge(d, k, i)
+    text(d, (390, 520), '蓝色数字 = DFS 访问顺序', 22, BLUE, anchor='mm')
+    bullets([
+        ('像走迷宫：', YELLOW),
+        '· 沿一条路走到底',
+        '· 到尽头就退回最近的岔路口',
+        '· 换一条没走过的路继续',
+        ('DFS：A → B → D →(退回 B)→ E', BLUE),
+        ('      →(退回 A)→ C → F', BLUE),
+        ('对比 BFS（一层一层）：A B C D E F', DIM),
+    ], x=700, y=110, size=24, gap=56)(d)
+S('预备知识 ③：DFS', '第三个概念是深度优先搜索，英文缩写 DFS。它是一种按顺序访问树上所有节点的方法，就像走迷宫：沿着一条路一直走到底；走到尽头，就退回到最近的岔路口，换一条没走过的路继续。在这棵树上，DFS 先走 A、B、D；D 是叶子，退回 B，走 E；E 也是叶子，B 下面都走完了，退回 A，再走 C 和 F。所以访问顺序是 A B D E C F。作为对比，另一种方法叫广度优先搜索，BFS，它是一层一层地走，顺序是 A B C D E F。这两讲只用到 DFS。', pre_dfs,
+  sub='预备知识 ③ DFS（深度优先搜索）：像走迷宫，一条路走到底，到尽头就退回最近的岔路口换路。顺序 A B D E C F；对比 BFS 一层一层：A B C D E F。')
+
+RDFS = '''def dfs(node):
+    visit(node)                  # 访问当前节点
+    for child in node.children:
+        dfs(child)               # 调用 = 往下走一层
+    # 函数结束返回 = 退回上一层'''.split('\n')
+def pre_rec(d):
+    draw_code(d, RDFS, 90, 110, size=19, lh=32, hl=(4, 5), width=640)
+    text(d, (70, 300), '走到 D 时的调用栈：', 24, FG)
+    for i, s in enumerate(['dfs(A)', 'dfs(B)', 'dfs(D)  ← 当前']):
+        y = 470 - i * 52
+        d.rounded_rectangle([90, y - 22, 400, y + 22], 8, outline=ORANGE if i < 2 else YELLOW, width=2, fill=(40, 40, 46))
+        mono_mixed(d, 110, y - 12, s, 20, YELLOW if i == 2 else FG)
+    text(d, (430, 420), '栈里的调用', 22, YELLOW)
+    text(d, (430, 452), '= 根到当前节点的路径', 22, YELLOW)
+    small = small_tree((820, 170, 1180, 440))
+    small.draw(d, state={'A': 'seen', 'B': 'seen', 'D': 'cur'}, path=['A', 'B', 'D'], size=24)
+    text(d, (1000, 520), '路径 A → B → D', 24, BLUE, anchor='mm')
+S('预备知识 ④：用递归实现 DFS', '最后，怎么用代码实现 DFS？用递归最自然。dfs 函数先访问当前节点，再对每个子节点递归调用 dfs。调用一次 dfs，就是往下走一层；函数执行完返回，就是退回上一层，回到岔路口，接着循环处理下一个子节点。比如走到 D 时，调用栈里依次是 dfs(A)、dfs(B)、dfs(D)，恰好就是从根到当前节点的路径。待会儿的 backtrack 函数，就是在决策树上这样做 DFS。好，预备知识就到这里，下面来看题目。', pre_rec,
+  sub='预备知识 ④ 递归实现 DFS：调用一次 = 往下走一层，返回 = 退回上一层。走到 D 时调用栈是 dfs(A)、dfs(B)、dfs(D)，正是根到当前节点的路径。')
+
 S('题目', '题目是：给定一个不含重复数字的数组 nums，返回它所有可能的全排列，可以按任意顺序返回。', bullets([
     '给定一个 不含重复数字 的数组 nums，返回其 所有可能的全排列。',
     '可以 按任意顺序 返回答案。',
@@ -93,7 +185,7 @@ S('决策树', '我们把“逐个位置做选择”的过程画成一棵决策�
 S('决策树', '第一层：从 1、2、3 中任选一个放在第一个位置，得到三个分支：1、2、3。', tree_upto(1))
 S('决策树', '第二层：在剩下的数里再选一个。比如第一个选了 1，那么第二个只能选 2 或 3；第一个选了 2，第二个只能选 1 或 3。', tree_upto(2))
 S('决策树', '第三层：只剩最后一个数，别无选择。最底层的 6 个叶子节点，从左到右，恰好就是全部 6 个排列。', tree_upto(3, '叶子 = 答案：共 3! = 6 个'))
-S('决策树', '所以，我们的任务就是：用深度优先搜索，也就是 DFS，把这棵树从左到右走一遍，每走到一个叶子，就把从根到叶子的路径记录下来。', tree_upto(3, '用 DFS 遍历整棵树，每到一个叶子就记录路径'),
+S('决策树', '所以，我们的任务就是：用刚才介绍的深度优先搜索 DFS，把这棵树从左到右走一遍，每走到一个叶子，就把从根到叶子的路径记录下来。', tree_upto(3, '用 DFS 遍历整棵树，每到一个叶子就记录路径'),
   sub='任务：用深度优先搜索（DFS）把这棵树从左到右走一遍，每到一个叶子，就把从根到叶子的路径记录下来。')
 S('决策树', '为此需要两个变量：sol 表示当前这条路径，也就是正在构造的排列；ans 用来收集所有完整的排列。', tree_upto(3, 'sol：当前路径（正在构造的排列）    ans：所有答案'))
 
