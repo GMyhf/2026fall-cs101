@@ -1,0 +1,245 @@
+import sys
+from common import *
+
+CODE = '''class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        ans, sol = [], []
+
+        def backtrack():
+            # 终止条件：当前排列已满
+            if len(sol) == n:
+                ans.append(sol[:])  # 拷贝一份再存
+                return
+
+            # 尝试每个尚未使用的数
+            for x in nums:
+                if x not in sol:    # 跳过已使用的数
+                    sol.append(x)   # 选择
+                    backtrack()     # 递归
+                    sol.pop()       # 撤销选择（回溯）
+
+        backtrack()
+        return ans'''.split('\n')
+
+NUMS = [1, 2, 3]
+nodes, order = {}, []
+def mk(path):
+    order.append(path)
+    nodes[path] = dict(label=fmt(path), parent=path[:-1] if path else None, depth=len(path),
+                       elabel=f'选{path[-1]}' if path else '')
+    for x in NUMS:
+        if x not in path:
+            mk(path + (x,))
+mk(())
+
+TREE_FULL = Tree(nodes, order, (90, 130, 1190, 520))
+TREE_R = Tree(nodes, order, (650, 110, 1250, 400))
+
+scenes = []
+S = lambda *a, **k: scenes.append(slide(*a, **k))
+
+# ---------- 开场 ----------
+def title_body(d):
+    text(d, (W // 2, 230), '全排列', 72, ORANGE, bold=True, anchor='mm')
+    text(d, (W // 2, 320), 'LeetCode 46 · Permutations', 32, FG, anchor='mm')
+    text(d, (W // 2, 390), '递归 + 回溯（backtracking）', 30, BLUE, anchor='mm')
+S('', '大家好。这一讲我们用递归加回溯，来解决力扣第46题：全排列。这是回溯算法最经典的模板之一，务必熟练掌握。', title_body)
+
+S('题目', '题目是：给定一个不含重复数字的数组 nums，返回它所有可能的全排列，可以按任意顺序返回。', bullets([
+    '给定一个 不含重复数字 的数组 nums，返回其 所有可能的全排列。',
+    '可以 按任意顺序 返回答案。',
+    ('示例 1：nums = [1,2,3]', BLUE),
+    ('   输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]', GREEN),
+    ('示例 2：nums = [0,1]   →  [[0,1],[1,0]]', BLUE),
+    ('示例 3：nums = [1]     →  [[1]]', BLUE),
+    ('提示：1 <= n <= 6，元素互不相同', DIM),
+], size=26, gap=58))
+
+S('题目', '比如 nums 等于 1、2、3 时，一共有 6 种排列。数据范围很小，n 最多只有 6，所以直接把所有排列都枚举出来就可以。', bullets([
+    ('示例 1：nums = [1,2,3]', BLUE),
+    ('   输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]', GREEN),
+    '一共 6 种排列',
+    ('n ≤ 6  →  最多 6! = 720 种，直接全部枚举即可', YELLOW),
+], size=28, gap=64))
+
+def count_body(d):
+    for i, (c, lab) in enumerate([('3', '第 1 个位置'), ('2', '第 2 个位置'), ('1', '第 3 个位置')]):
+        x = 300 + i * 260
+        d.rounded_rectangle([x - 90, 170, x + 90, 330], 14, outline=ORANGE, width=3)
+        text(d, (x, 235), c, 64, ORANGE, bold=True, anchor='mm')
+        text(d, (x, 300), '种选择', 22, DIM, anchor='mm')
+        text(d, (x, 360), lab, 24, FG, anchor='mm')
+        if i < 2:
+            text(d, (x + 130, 235), '×', 48, FG, anchor='mm')
+    text(d, (W // 2, 450), '3 × 2 × 1 = 3! = 6        一般地：n 个不同的数共有 n! 种排列', 30, YELLOW, anchor='mm')
+S('为什么是 6 种？', '为什么是 6 种？第一个位置有 3 种选法；选完之后，第二个位置只剩 2 种；最后一个位置只剩 1 种。所以一共是 3 乘 2 乘 1，也就是 3 的阶乘，等于 6。一般地，n 个不同的数，共有 n 的阶乘种排列。', count_body,
+  sub='为什么是 6 种？第 1 个位置 3 种选法，第 2 个位置剩 2 种，第 3 个位置剩 1 种：3 × 2 × 1 = 3! = 6。一般地，n 个不同的数共有 n! 种排列。')
+
+# ---------- 决策树 ----------
+def tree_upto(depth, note=None):
+    def f(d):
+        vis = {k for k in nodes if len(k) <= depth}
+        TREE_FULL.draw(d, visible=vis, size=22)
+        text(d, (W - 60, 95), 'nums = [1,2,3]', 24, DIM, anchor='ra')
+        for dd in range(depth + 1):
+            y = TREE_FULL.pos[order[0] if dd == 0 else next(k for k in order if len(k) == dd)][1]
+            text(d, (40, y - 12), ['根', '第1层', '第2层', '第3层'][dd], 20, DIM)
+        if note:
+            text(d, (W // 2, 560), note, 26, YELLOW, anchor='mm')
+    return f
+
+S('决策树', '我们把“逐个位置做选择”的过程画成一棵决策树。根节点是空列表，表示还什么都没有选。', tree_upto(0))
+S('决策树', '第一层：从 1、2、3 中任选一个放在第一个位置，得到三个分支：1、2、3。', tree_upto(1))
+S('决策树', '第二层：在剩下的数里再选一个。比如第一个选了 1，那么第二个只能选 2 或 3；第一个选了 2，第二个只能选 1 或 3。', tree_upto(2))
+S('决策树', '第三层：只剩最后一个数，别无选择。最底层的 6 个叶子节点，从左到右，恰好就是全部 6 个排列。', tree_upto(3, '叶子 = 答案：共 3! = 6 个'))
+S('决策树', '所以，我们的任务就是：用深度优先搜索，也就是 DFS，把这棵树从左到右走一遍，每走到一个叶子，就把从根到叶子的路径记录下来。', tree_upto(3, '用 DFS 遍历整棵树，每到一个叶子就记录路径'),
+  sub='任务：用深度优先搜索（DFS）把这棵树从左到右走一遍，每到一个叶子，就把从根到叶子的路径记录下来。')
+S('决策树', '为此需要两个变量：sol 表示当前这条路径，也就是正在构造的排列；ans 用来收集所有完整的排列。', tree_upto(3, 'sol：当前路径（正在构造的排列）    ans：所有答案'))
+
+# ---------- 代码讲解 ----------
+def code_scene(hl, narr, sub=None, side=None):
+    def f(d):
+        draw_code(d, CODE, 90, 100, size=19, lh=24, hl=hl, dim_others=True, width=1120)
+        if side:
+            side(d)
+    S('代码', narr, f, sub=sub)
+
+code_scene([3, 4], '下面来看代码。n 是数组长度；ans 保存所有答案；sol 是当前路径。两者一开始都是空列表。')
+code_scene([6], 'backtrack 函数负责 DFS。它定义在 permute 内部，可以直接使用外层的 nums、sol 和 ans，所以不需要参数。')
+code_scene([7, 8, 9, 10], '首先是终止条件：如果 sol 的长度等于 n，说明已经走到叶子，得到了一个完整的排列，把它存进 ans，然后 return。')
+code_scene([9], '注意这里存的是 sol 的拷贝，也就是 sol 冒号切片。如果直接存 sol 本身，ans 里放的都是同一个列表对象；回溯结束后它会被清空，最后得到的就全是空列表。',
+           sub='注意：存的是 sol 的拷贝 sol[:]。若直接 ans.append(sol)，ans 里放的都是同一个列表对象，回溯结束后它被清空，结果全是空列表 [ ]。')
+code_scene([13, 14], '如果还没满，就遍历 nums 中的每一个数 x。如果 x 已经在 sol 里，说明这个数用过了，跳过它。')
+code_scene([15, 16, 17], '对于还没用过的 x，就是回溯的三部曲：第一，做选择，把 x 加入 sol；第二，递归，进入下一层；第三，递归返回后撤销选择，把 x 弹出。这一步弹出，就是“回溯”：退回到选择之前的状态，好去尝试下一个数。',
+           sub='回溯三部曲：① 做选择 sol.append(x)　② 递归 backtrack()　③ 撤销选择 sol.pop() —— 退回选择前的状态，再去尝试下一个数。')
+code_scene([19, 20], '最后，从空路径开始调用一次 backtrack，返回 ans 即可。下面我们结合决策树，一步一步跟踪代码的执行过程。')
+
+# ---------- 执行跟踪 ----------
+frames = []
+sol, ans = [], []
+seen, leafs = set(), set()
+mode = {'detail': True}
+
+def snap(path, hl, narr, sub=None):
+    frames.append(dict(path=path, sol=list(sol), ans=[list(a) for a in ans], seen=set(seen), leafs=set(leafs),
+                       hl=hl, narr=narr, sub=sub))
+
+def bt(path):
+    seen.add(path)
+    det = mode['detail']
+    if len(sol) == len(NUMS):
+        ans.append(sol[:])
+        leafs.add(path)
+        if det:
+            snap(path, [8, 9, 10], f'现在 sol 是 {fmt(sol)}，长度等于 3，到达叶子！把它的拷贝加入 ans，然后 return 返回上一层。')
+        else:
+            snap(path, [8, 9, 10], f'得到 {fmt(sol)}，加入 ans。')
+        return
+    if det:
+        if not path:
+            snap(path, [8, 13], '从根节点开始：sol 为空，长度不等于 3，进入 for 循环。')
+        else:
+            snap(path, [8, 13], f'进入下一层：sol 是 {fmt(sol)}，长度为 {len(sol)}，还没满，进入 for 循环，从头尝试每个数。')
+    for x in NUMS:
+        if x in sol:
+            if mode['detail']:
+                snap(path, [14], f'{x} 已经在 sol 中，跳过。')
+            continue
+        sol.append(x)
+        if mode['detail']:
+            snap(path, [15, 16], f'{x} 还没用过：把 {x} 加入 sol，sol 变成 {fmt(sol)}，然后递归调用 backtrack。')
+        bt(path + (x,))
+        sol.pop()
+        if mode['detail']:
+            if path == ():
+                snap(path, [17], '回到根节点，弹出 1，sol 恢复为空。以 1 开头的两个排列都找到了。接下来，循环继续尝试 2 和 3，过程完全一样，我们加快速度。')
+                mode['detail'] = False
+            else:
+                snap(path, [17], f'从下一层返回后，执行 pop，弹出 {x}，sol 恢复为 {fmt(sol)}。这就是回溯。')
+    if mode['detail'] and path:
+        snap(path, [13], f'for 循环结束，{fmt(path)} 这一层的所有选择都试过了，函数返回上一层。')
+
+bt(())
+frames.append(dict(frames[-1]))
+frames[-1].update(path=None, hl=[20], narr='整棵树遍历完毕，ans 中正好是 6 个全排列，顺序与示例一致。返回 ans。')
+
+def trace_scene(fr):
+    def f(d):
+        draw_code(d, CODE, 70, 95, size=15, lh=21, hl=fr['hl'], width=500)
+        path = fr['path']
+        st = {k: 'seen' for k in fr['seen']}
+        for k in fr['leafs']:
+            st[k] = 'leaf'
+        chain = []
+        if path is not None:
+            st[path] = 'cur'
+            chain = [path[:i] for i in range(len(path) + 1)]
+        TREE_R.draw(d, state=st, path=chain, size=15, elabels=False)
+        state_box(d, fr['sol'], fr['ans'], extra=f'递归深度 {len(path)}' if path is not None else '')
+    S('跟踪执行  nums = [1,2,3]', fr['narr'], f, sub=fr['sub'])
+
+for fr in frames:
+    trace_scene(fr)
+
+# ---------- 复杂度 ----------
+def cx1(d):
+    TREE_FULL.draw(d, size=20)
+    d.line([90, 545, 1190, 545], fill=BLUE, width=3)
+    text(d, (W // 2, 575), '叶子：n! 个，每个叶子拷贝 sol[:] 需 O(n)', 26, YELLOW, anchor='mm')
+S('时间复杂度', '再来分析时间复杂度。叶子节点一共有 n 的阶乘个，每到一个叶子，都要拷贝一次长度为 n 的 sol，仅这一项就是 n 乘 n 的阶乘。', cx1,
+  sub='时间复杂度：叶子共 n! 个，每到一个叶子都要拷贝长度为 n 的 sol，仅这一项就是 O(n · n!)。')
+
+S('时间复杂度', '而树中全部节点的个数，也只是 n 的阶乘的常数倍，大约是 e 乘 n 的阶乘。所以这类全排列算法的时间复杂度通常记为 O(n 乘 n 的阶乘)。', bullets([
+    '叶子数：n!',
+    '节点总数：n!/n! + n!/(n-1)! + … + n!/0!  <  e · n!',
+    ('通常记为：O(n · n!)', YELLOW),
+], size=28, gap=70), sub='树的节点总数也只是 n! 的常数倍（不超过 e · n!），所以全排列回溯的时间复杂度通常记为 O(n · n!)。')
+
+USED = '''def backtrack():
+    if len(sol) == n:
+        ans.append(sol[:])
+        return
+    for i in range(n):
+        if not used[i]:            # O(1) 判断
+            used[i] = True
+            sol.append(nums[i])
+            backtrack()
+            sol.pop()
+            used[i] = False        # 撤销标记'''.split('\n')
+def cx3(d):
+    text(d, (80, 95), '细节：x not in sol 要扫描 sol，本身是 O(n)，因此这份代码严格来说是 O(n² · n!)。', 24, FG)
+    text(d, (80, 135), '改用布尔数组 used 标记，判断降为 O(1)，即可做到 O(n · n!)：', 24, FG)
+    draw_code(d, USED, 120, 190, size=19, lh=26, hl=(6, 7, 11), width=700)
+    text(d, (880, 300), 'used = [False] * n', 22, BLUE)
+    text(d, (880, 340), '（n ≤ 6 时两种写法都很快）', 22, DIM)
+S('时间复杂度', '这里有一个细节：代码里用 x not in sol 判断是否用过，它要扫描整个 sol，本身就是 O(n)，所以这份代码严格来说是 n 平方乘 n 的阶乘。如果改用一个布尔数组 used 来标记，判断就只要 O(1)，复杂度就是 O(n 乘 n 的阶乘)。当然，n 最多是 6，两种写法都足够快。', cx3,
+  sub='细节：x not in sol 本身是 O(n)，严格来说这份代码是 O(n²·n!)；改用布尔数组 used 标记可做到 O(n·n!)。n ≤ 6 时两种写法都足够快。')
+
+S('空间复杂度', '空间方面：递归深度为 n，sol 的长度也最多为 n，所以除去存放答案的 ans 之外，额外空间是 O(n)。', bullets([
+    '递归调用栈深度：n',
+    'sol 长度：最多 n',
+    ('额外空间：O(n)（不计输出 ans）', YELLOW),
+], size=30, gap=70), sub='空间复杂度：递归深度 n，sol 长度最多 n，不计输出 ans，额外空间 O(n)。')
+
+# ---------- 总结 ----------
+S('小结：回溯模板', '最后总结一下回溯模板：第一，终止条件，到达叶子就收集答案，记得存拷贝；第二，遍历当前所有可选的选择；第三，做选择、递归、撤销选择。一句话：先走到底，再退回来。下一讲，我们用同样的思路来解决子集问题。', bullets([
+    ('def backtrack():', BLUE),
+    '    if 满足终止条件:  ans.append(sol[:]); return     # 收集答案（存拷贝）',
+    '    for 选择 in 当前可选的选择:',
+    ('        做选择        # sol.append(x)', ORANGE),
+    ('        backtrack()   # 递归', ORANGE),
+    ('        撤销选择      # sol.pop()', ORANGE),
+    ('“递归是思想，回溯是技巧；先走到底，再退回来。”', YELLOW),
+], size=26, gap=58),
+  sub='小结：① 终止条件——收集答案（存拷贝）② 遍历所有可选的选择 ③ 做选择 → 递归 → 撤销选择。先走到底，再退回来。下一讲：子集。')
+
+if __name__ == '__main__':
+    out = sys.argv[1]
+    if len(sys.argv) > 2 and sys.argv[2] == 'preview':
+        os.makedirs(out, exist_ok=True)
+        for i, (im, n) in enumerate(scenes):
+            im.save(f'{out}/p{i:03d}.png')
+        print(len(scenes))
+    else:
+        build(scenes, sys.argv[2], out)
