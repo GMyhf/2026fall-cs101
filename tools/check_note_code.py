@@ -712,6 +712,25 @@ def t_perm(ns):
         assert [tuple(p) for p in f(a)] == list(itertools.permutations(a)), n
 
 
+@case('W08', '隐式回溯全排列 == 显式回溯版')
+def t_perm_implicit(ns):
+    for n in range(0, 7):
+        a = list(range(n))
+        assert ns['permutations_implicit'](a) == ns['permutations'](a), n
+
+
+@case('W08', '子集（选或不选）vs 位掩码枚举')
+def t_subsets(ns):
+    f = ns['subsets']
+    assert f([1, 2, 3]) == [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
+    for n in range(0, 9):
+        a = list(range(10, 10 + n))
+        got = f(a)
+        assert len(got) == 1 << n, n
+        want = sorted(sorted(a[i] for i in range(n) if m >> i & 1) for m in range(1 << n))
+        assert sorted(map(sorted, got)) == want, n
+
+
 @case('W08', '快速幂 vs 内建 pow')
 def t_pow(ns):
     f = ns['fast_pow']

@@ -13,6 +13,22 @@ const OUT = process.argv[2] || path.join(__dirname, "..", "out", "202610_ADS_W08
     cells, arrowLabel, pill, numCircle, titleSlide, sectionSlide, content, summarySlide,
   } = D;
 
+// 树：nodes = [{ l, x, y, p(父节点下标), w?, fill?, color?, fs? }]，边从父节点底边中点连到子节点顶边中点
+function tree(s, nodes, { w = 0.5, h = 0.34, fs = 11 } = {}) {
+  nodes.forEach((n) => {
+    if (n.p === undefined) return;
+    const q = nodes[n.p], qw = q.w || w, nw = n.w || w;
+    s.addShape(pres.shapes.LINE, { x: q.x + qw / 2, y: q.y + h, w: n.x + nw / 2 - (q.x + qw / 2), h: n.y - q.y - h, line: { color: C.muted, width: 1 } });
+  });
+  nodes.forEach((n) => pill(s, n.l, n.x, n.y, n.w || w, h, n.fill || C.code, n.color || C.dark, n.fs || fs));
+}
+// 第 0/1/2 层的 A–F 小树（预备知识两页共用）
+const ABC = (dx = 0) => [
+  { l: "A", x: 2.75 + dx, y: 1.5 },
+  { l: "B", x: 2.0 + dx, y: 2.25, p: 0 }, { l: "C", x: 3.5 + dx, y: 2.25, p: 0 },
+  { l: "D", x: 1.55 + dx, y: 3.0, p: 1, fill: C.mint }, { l: "E", x: 2.45 + dx, y: 3.0, p: 1, fill: C.mint }, { l: "F", x: 3.5 + dx, y: 3.0, p: 2, fill: C.mint },
+];
+
 // ---- slides（顶层不缩进，避免改动模板字符串里的代码缩进）----
 // =====================================================================
 // Cover
@@ -20,7 +36,7 @@ titleSlide({
   kicker: "计算概论（B） · 第 8 周 · 2026 Fall",
   title: "递归",
   subtitle: "相信它，而不是展开它",
-  topics: "递归的定义与三法则 · 栈帧与系统调用栈 · 递归深度的两道墙\n经典三部曲：斐波那契 · 汉诺塔 · 全排列\n分治：快速幂 · 二分查找 · 最大公约数\n递归的调试：打印调用树、常见错误",
+  topics: "递归的定义与三法则 · 栈帧与系统调用栈 · 递归深度的两道墙\n经典三部曲：斐波那契 · 汉诺塔 · 全排列（决策树与 DFS）· 子集\n分治：快速幂 · 二分查找 · 最大公约数\n递归的调试：打印调用树、常见错误",
   footer: "Compiled by Hongfei Yan · 2026 Fall · github.com/GMyhf/2026fall-cs101",
 });
 
@@ -53,7 +69,7 @@ titleSlide({
   const s = content("≡", "本周导引", "内容地图");
   const cols = [
     ["1–2  是什么 · 会怎样", ["1.1 递归三法则", "1.2 思维方式：相信它", "1.3 递归 ⇄ 迭代", "2 栈帧：两道墙、虚拟地址空间"]],
-    ["3  三部曲", ["3.1 斐波那契：重叠子问题 → 记忆化", "3.2 汉诺塔：指数复杂度的实感", "3.3 全排列：回溯模板"]],
+    ["3  三部曲", ["3.1 斐波那契：重叠子问题 → 记忆化", "3.2 汉诺塔：指数复杂度的实感", "3.3 全排列：决策树 · DFS · 回溯", "3.4 子集：选或不选"]],
     ["4–5  分治与调试", ["4 分治：快速幂 · 二分查找 · gcd", "5 打印调用树、可视化、常见错误", "本周作业 · 思考题 · 小结"]],
   ];
   cols.forEach((c, i) => {
@@ -298,7 +314,7 @@ def depth_iter(n):
 }
 
 // ============================ PART 3 ============================
-sectionSlide("Part 3", "递归三部曲", "斐波那契：重叠子问题 → 记忆化\n汉诺塔：指数复杂度的实感\n全排列：回溯模板");
+sectionSlide("Part 3", "递归三部曲", "斐波那契：重叠子问题 → 记忆化\n汉诺塔：指数复杂度的实感\n全排列：决策树 + DFS = 回溯模板；补充：子集");
 
 // 3.1 fibonacci naive
 {
@@ -391,6 +407,71 @@ print([hanoi_count(k) for k in range(1, 8)])`, 0.5, 3.05, 5.6, 1.15, { fontSize:
   callout(s, "指数复杂度的实感", "传说中的 64 层汉诺塔需要 2⁶⁴−1 ≈ 1.8×10¹⁹ 次移动。每秒一次，需要约 **5850 亿年**。", 0.5, 4.35, 9.0, 0.7, { fontSize: 11.5, fill: "FDF0EE", tcolor: C.bad });
 }
 
+// 3.3 prerequisite: tree + decision tree
+{
+  const s = content("3.3", "3.3 预备知识", "树与决策树");
+  card(s, 0.5, 1.05, 4.05, 3.0, "FAFCFB", C.mint);
+  text(s, "树：节点 + 边", 0.65, 1.1, 3, 0.3, { fontSize: 12, bold: true, color: C.green, margin: 0 });
+  ["第 0 层", "第 1 层", "第 2 层"].forEach((t, i) => text(s, t, 0.65, 1.55 + i * 0.75, 0.8, 0.26, { fontSize: 9, color: C.muted, margin: 0 }));
+  tree(s, ABC());
+  text(s, "← 根", 3.3, 1.52, 0.8, 0.3, { fontSize: 10, bold: true, color: C.goldText, margin: 0 });
+  text(s, "B 是 D、E 的**父节点**；D、E 是 B 的**子节点**\nD、E、F 没有子节点，叫**叶子**", 0.65, 3.45, 3.85, 0.55, { fontSize: 9.5, margin: 0, lsm: 1.1 });
+  card(s, 4.75, 1.05, 4.75, 3.0, "FAFCFB", C.mint);
+  text(s, "决策树：一步一步做选择（出门穿搭）", 4.9, 1.1, 4.5, 0.3, { fontSize: 12, bold: true, color: C.green, margin: 0 });
+  tree(s, [
+    { l: "开始", x: 6.65, y: 1.5, w: 0.9 },
+    { l: "白T恤", x: 5.6, y: 2.25, w: 0.9, p: 0 }, { l: "衬衫", x: 7.75, y: 2.25, w: 0.9, p: 0 },
+    { l: "白T+牛仔裤", x: 4.85, y: 3.0, w: 1.05, p: 1, fill: C.mint, fs: 9 }, { l: "白T+短裤", x: 5.95, y: 3.0, w: 1.05, p: 1, fill: C.mint, fs: 9 },
+    { l: "衬衫+牛仔裤", x: 7.1, y: 3.0, w: 1.05, p: 2, fill: C.mint, fs: 9 }, { l: "衬衫+短裤", x: 8.25, y: 3.0, w: 1.05, p: 2, fill: C.mint, fs: 9 },
+  ]);
+  text(s, "先选上衣（2 种），再选裤子（2 种）：2 × 2 = 4 个叶子", 4.9, 3.55, 4.5, 0.3, { fontSize: 9.5, margin: 0 });
+  callout(s, "决策树的四个对应", "**节点** = 做到一半的状态 · **边** = 一次选择 · **叶子** = 全部选完 · **根 → 叶子的一条路径** = 一个完整方案", 0.5, 4.2, 9.0, 0.82, { fontSize: 11.5, fill: C.mint, tcolor: C.dark });
+}
+
+// 3.3 prerequisite: DFS
+{
+  const s = content("3.3", "3.3 预备知识", "DFS：一条路走到底，再退回岔路口");
+  card(s, 0.5, 1.05, 4.05, 3.0, "FAFCFB", C.mint);
+  text(s, "蓝圈数字 = DFS 访问顺序", 0.65, 1.1, 3.5, 0.3, { fontSize: 12, bold: true, color: C.green, margin: 0 });
+  const t = ABC();
+  tree(s, t);
+  ["A", "B", "D", "E", "C", "F"].forEach((l, i) => {
+    const n = t.find((m) => m.l === l);
+    numCircle(s, i + 1, n.x + 0.52, n.y - 0.17, 0.28, "2F6FB0");
+  });
+  text(s, "DFS：A B D E C F\nBFS（一层一层）：A B C D E F", 0.65, 3.45, 3.85, 0.55, { fontSize: 10, margin: 0, lsm: 1.1 });
+  codeBlock(s, `def dfs(node):
+    visit(node)                  # 访问当前节点
+    for child in node.children:
+        dfs(child)               # 调用 = 往下走一层
+    # 函数返回 = 退回上一层`, 4.75, 1.05, 4.75, 1.3, { fontSize: 9.8, lang: "py" });
+  callout(s, "递归就是天然的 DFS", [
+    "调用一次 `dfs(child)` = **往下走一层**；",
+    "函数返回 = **退回上一层**，回到岔路口换下一个孩子；",
+    "走到 D 时栈里是 `dfs(A)`、`dfs(B)`、`dfs(D)` —— 正是根到 D 的路径。",
+  ], 4.75, 2.5, 4.75, 1.55, { fontSize: 10.5, gap: 4 });
+  callout(s, "像走迷宫", "沿一条路走到底；走到尽头，就退回最近的岔路口，换一条没走过的路 —— 这就是**深度优先搜索**（Depth-First Search）。", 0.5, 4.2, 9.0, 0.82, { fontSize: 11.5, fill: C.mint, tcolor: C.dark });
+}
+
+// 3.3 permutation decision tree
+{
+  const s = content("3.3", "3.3 第二部：全排列", "全排列的决策树：叶子就是答案");
+  const lx = (i) => 1.45 + i * 1.33, lw = 0.95;
+  const perms = ["1,2,3", "1,3,2", "2,1,3", "2,3,1", "3,1,2", "3,2,1"];
+  const nodes = [{ l: "[ ]", x: 0, y: 1.1, w: lw }];
+  [1, 2, 3].forEach((v, k) => nodes.push({ l: `[${v}]`, x: (lx(2 * k) + lx(2 * k + 1)) / 2, y: 1.75, w: lw, p: 0 }));
+  perms.forEach((pm, i) => nodes.push({ l: `[${pm.slice(0, 3)}]`, x: lx(i), y: 2.4, w: lw, p: 1 + Math.floor(i / 2) }));
+  perms.forEach((pm, i) => nodes.push({ l: `[${pm}]`, x: lx(i), y: 3.05, w: lw, p: 4 + i, fill: C.mint }));
+  nodes[0].x = (nodes[1].x + nodes[3].x) / 2;
+  tree(s, nodes, { h: 0.36, fs: 10.5 });
+  ["根：1 个", "选 1 个：3 个", "选 2 个：3×2 = 6", "叶子：3×2×1 = 6"].forEach((t, i) => text(s, t, 0.3, 1.13 + i * 0.65, 1.15, 0.3, { fontSize: 8.5, color: C.muted, margin: 0 }));
+  callout(s, "用 DFS 从左到右走一遍", [
+    "`path` = 根到当前节点的路径：`dfs()` 往下一层，`path.pop()` 退回一层；",
+    "走到叶子（`len(path) == n`）就把 `path[:]` 存进 `res` —— 6 个叶子恰好是 6 个排列；",
+    "下一页的代码，就是在这棵树上做 DFS。",
+  ], 0.5, 3.62, 9.0, 1.4, { fontSize: 11, gap: 4 });
+}
+
 // 3.3 permutations
 {
   const s = content("3.3", "3.3 第二部：全排列", "02748: 全排列");
@@ -414,8 +495,54 @@ for p in permutations([1, 2, 3]):
   callout(s, "三个必须记住的细节", [
     "`res.append(path[:])`——**不拷贝就全是同一个空列表**；",
     "`path.pop()` 与 `used[i]=False`——**回溯要把状态还原**；",
-    "复杂度 **O(n! · n)**，n ≤ 10 才可行（第 4 周的范围表）。",
+    "复杂度 **O(n · n!)**（下一页解释），n ≤ 10 才可行（第 4 周的范围表）。",
   ], 6.35, 1.8, 3.15, 2.35, { fontSize: 10.3, gap: 6 });
+}
+
+// 3.3 why O(n * n!)
+{
+  const s = content("3.3", "3.3 全排列", "为什么是 O(n · n!)：数一数节点");
+  text(s, "从叶子往上看，每往上一层少选一个数，节点数依次再除以 1、2、3、…", 0.5, 1.02, 9, 0.3, { fontSize: 11.5, margin: 0 });
+  table(s, [
+    ["层", "n = 3", "一般形式"],
+    ["叶子", "6", "n! / 0!"],
+    ["往上一层", "6 ÷ 1 = 6", "n! / 1!"],
+    ["再往上", "6 ÷ 2 = 3", "n! / 2!"],
+    ["根", "3 ÷ 3 = 1", "n! / n! = 1"],
+    [{ t: "合计", bold: true }, { t: "16", bold: true }, { t: "n! × (1/0! + 1/1! + … + 1/n!)", bold: true }],
+  ], 0.5, 1.4, 5.0, [1.1, 1.2, 2.7], { fontSize: 10.5, rowH: 0.36 });
+  callout(s, "为什么 < e · n!", [
+    "1 + 1 + 1/2! + 1/3! + … 无限加下去 = **e ≈ 2.718**；",
+    "只加到 1/n!，所以节点总数 **< e · n!**；",
+    "验算 n = 3：6 × 2.667 = 16 < e × 6 ≈ 16.3。",
+  ], 5.7, 1.4, 3.8, 2.16, { fontSize: 10.5, gap: 5 });
+  callout(s, "每个节点 O(n) ⟹ 总时间 O(n · n!)", "内部节点要把 n 个数循环一遍（`used[i]` 判断是 O(1)），叶子要拷贝 n 个数。节点数只是叶子数 n! 的常数倍。", 0.5, 3.72, 9.0, 0.66, { fontSize: 10.5, lsm: 1.0, fill: C.mint, tcolor: C.dark });
+  callout(s, "若用 `x not in path` 判断是否已用", "这一步本身就是 O(n)，总时间变成 O(n² · n!)。上一页的代码用 `used` 数组，正是为了让判断降到 O(1)。", 0.5, 4.44, 9.0, 0.6, { fontSize: 10.5, lsm: 1.0, fill: "FDF0EE", tcolor: C.bad });
+}
+
+// 3.3 backtracking = DFS + undo; explicit vs implicit
+{
+  const s = content("3.3", "3.3 全排列", "回溯 = DFS + 撤销：显式与隐式");
+  text(s, "显式回溯：共享 `path` / `used`，手动撤销", 0.5, 1.0, 4.4, 0.28, { fontSize: 11, bold: true, color: C.goldText, margin: 0 });
+  codeBlock(s, `for i in range(len(a)):
+    if used[i]: continue
+    used[i] = True; path.append(a[i])
+    dfs()
+    path.pop(); used[i] = False   # 手动撤销`, 0.5, 1.3, 4.4, 1.65, { fontSize: 9.6, lang: "py", hl: [5] });
+  text(s, "隐式回溯：每层传一个新列表", 5.1, 1.0, 4.4, 0.28, { fontSize: 11, bold: true, color: C.green, margin: 0 });
+  codeBlock(s, `def dfs(p):
+    if len(p) == len(a):
+        res.append(p)        # p 已是新列表
+        return
+    for x in a:
+        if x not in p:
+            dfs(p + [x])     # 返回后自动恢复`, 5.1, 1.3, 4.4, 1.65, { fontSize: 9.6, lang: "py", hl: [7] });
+  table(s, [
+    ["", "显式回溯", "隐式回溯"],
+    ["退回时", "`path.pop()`，自己写", "栈帧丢弃，`p` 从未被改，自动恢复"],
+    ["代价", "修改、恢复都是 O(1)", "每层复制一次列表，O(n)"],
+  ], 0.5, 3.08, 9.0, [1.2, 3.4, 4.4], { fontSize: 10.5, rowH: 0.34 });
+  callout(s, "规律", "**传值的状态**（`i + 1`、`p + [x]`）返回后自动恢复；**共享且原地修改的状态**（`path`、`used`）必须手动撤销。回溯 = 在决策树上做 DFS + 退回时撤销。", 0.5, 4.2, 9.0, 0.84, { fontSize: 11, lsm: 1.05, fill: C.mint, tcolor: C.dark });
 }
 
 // 3.3 itertools
@@ -426,6 +553,33 @@ for p in permutations([1, 2, 3]):
 print([''.join(map(str, p)) for p in it_perm([1, 2, 3])])
 # ['123', '132', '213', '231', '312', '321']`, 0.5, 1.1, 9.0, 1.15, { fontSize: 11.5, lang: "py" });
   callout(s, "但考试要会手写", "第 9 周的回溯（八皇后、组合、子集）全建立在 `dfs` 这个模板上——「选择 → 递归 → 撤销」三步，itertools 帮不了你现场推导。", 0.5, 2.5, 9.0, 1.0, { fontSize: 13, fill: "FDF0EE", tcolor: C.bad });
+}
+
+// 3.4 subsets
+{
+  const s = content("3.4", "3.4 补充：子集", "LC 78 子集：每个元素选或不选");
+  codeBlock(s, `def subsets(nums):
+    n, ans, sol = len(nums), [], []
+    def backtrack(i):
+        if i == n:                 # 叶子：每个元素都决定过了
+            ans.append(sol[:])
+            return
+        backtrack(i + 1)           # 不选 nums[i]
+        sol.append(nums[i])        # 选 nums[i]
+        backtrack(i + 1)
+        sol.pop()                  # 手动撤销
+    backtrack(0)
+    return ans
+
+print(subsets([1, 2, 3]))`, 0.5, 1.05, 5.1, 3.05, { fontSize: 9.6, lang: "py" });
+  consoleBlock(s, "[[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]", 0.5, 4.2, 5.1, 0.82, 9.5);
+  callout(s, "决策树：每层决定一个元素", [
+    "左 = 不选，右 = 选；**叶子 2ⁿ 个**，就是全部子集；",
+    "只在 `i == n`（叶子）收集；中间节点不收集，否则会重复；",
+    "复杂度 **O(n · 2ⁿ)**：每个叶子拷贝 O(n)；",
+    "下标 `i` 是隐式回溯，`sol` 要手动 `pop`；",
+    "输出顺序与 LC 示例不同，题目允许任意顺序。第 9 周再讲 `for` + `start` 的写法。",
+  ], 5.8, 1.05, 3.7, 3.97, { fontSize: 10.5, gap: 6 });
 }
 
 // ============================ PART 4 ============================
@@ -576,9 +730,9 @@ fib_trace(4)`, 0.5, 1.1, 5.6, 2.0, { fontSize: 10.5, lang: "py" });
 summarySlide("本周小结", [
   ["三法则", "**有基例、向基例逼近、调用自身**。写的时候只想两层，不要在脑子里展开。"],
   ["两道墙", "Python 层计数器（`setrecursionlimit` 管得到）和 **C 调用栈**（管不到）；穿过 C 的递归另有一道调不动的上限。**深递归唯一可靠的解法是显式栈**。"],
-  ["三部曲", "**斐波那契**（重叠子问题 → 记忆化）、**汉诺塔**（2ⁿ−1，指数的实感）、**全排列**（回溯模板：选择 → 递归 → 撤销）。"],
+  ["三部曲", "**斐波那契**（重叠子问题 → 记忆化）、**汉诺塔**（2ⁿ−1，指数的实感）、**全排列**（决策树 + DFS：选择 → 递归 → 撤销）；**子集**（选或不选，2ⁿ）。"],
   ["分治", "分 + 治 + 合：归并、快排、二分、快速幂。"],
-  ["回溯两个必犯错误", "**忘拷贝**（`path[:]`）、**忘还原**（`pop`）。"],
+  ["回溯两个必犯错误", "**忘拷贝**（`path[:]`）、**忘还原**（`pop`）。传值的状态自动恢复（隐式回溯），共享的状态要手动撤销。"],
 ]);
 
 // Next week

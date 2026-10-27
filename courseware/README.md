@@ -32,7 +32,7 @@ https://github.com/GMyhf/2026fall-cs101
 | 5 | `202609_ADS_W05_October_Exam_Review` | 34 | 19:55 | 10 月月考样卷（6 题 / 112 分钟）、订正方法、考场策略 |
 | 6 | `202610_ADS_W06_Matrices_Sorting_Greedy` | 59 | 35:43 | 保护圈、矩阵乘法、二维前缀和、排序、贪心与交换论证 |
 | 7 | `202610_ADS_W07_Matrix_Queue_Stack_Greedy` | 39 | 25:00 | 栈与四类应用、单调栈、队列、单调队列 |
-| 8 | `202610_ADS_W08_Recursion` | 36 | 23:01 | 递归三法则、栈帧、递归三部曲、分治 |
+| 8 | `202610_ADS_W08_Recursion` | 42 | 30:07 | 递归三法则、栈帧、递归三部曲（决策树与 DFS、子集）、分治 |
 | 9 | `202610_ADS_W09_Recursion_Backtracking_DSU` | 31 | 20:03 | 回溯模板与三形态、剪枝、八皇后、并查集 |
 | 10 | `202611_ADS_W10_Intervals_DP_Intro` | 32 | 21:54 | 五类区间问题、差分、DP 三要素 |
 | 11 | `202611_ADS_W11_DP` | 31 | 20:07 | 0-1 / 完全 / 多重背包、LIS、LCS、降维 |
@@ -42,9 +42,9 @@ https://github.com/GMyhf/2026fall-cs101
 | 15 | `202612_ADS_W15_Knowledge_Graph_Neural_Network` | 30 | 18:37 | 知识图谱、RAG、神经网络、反向传播、CNN |
 | 16 | `202612_ADS_W16_Review_Final_Machine_Exam` | 38 | 26:47 | 知识体系总结、期末上机考试命题方案与样卷 |
 
-课件合计 **581 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
+课件合计 **587 页**，版面 16:9，中文字体 **微软雅黑**，代码字体 **Consolas**。
 第 3–16 周已改用 `pptx_builder` 重排、页数普遍增加；旁白讲稿已按新页数重写，视频已重新合成。
-16 周视频共 581 节（一节对应一页），`make_video.py NN --check` 全部通过。
+16 周视频共 587 节（一节对应一页），`make_video.py NN --check` 全部通过。
 
 ---
 
