@@ -21,7 +21,7 @@ node lib.js check ../202611_ADS_W10_Intervals_DP_Intro.pptx           # 负尺�
 | 05 | `decks/w05_october_exam_review.js` | 28 |
 | 06 | `decks/w06_matrices_sorting_greedy.js` | 45 |
 | 07 | `decks/w07_matrix_queue_stack_greedy.js` | 39 |
-| 08 | `decks/w08_recursion.js` | 36 |
+| 08 | `decks/w08_recursion.js` | 42 |
 | 09 | `decks/w09_recursion_backtracking_dsu.js` | 31 |
 | 10 | `decks/w10_intervals_dp_intro.js` | 32 |
 | 11 | `decks/w11_dp.js` | 31 |
