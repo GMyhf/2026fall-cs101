@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-10-19 22:04 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-10-28 17:31 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -17,6 +17,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 | 10 |       |       | - |          |
+| 1028 | M3882.网格图中最小异或路径 | dfs | Medium | https://leetcode.cn/problems/minimum-xor-path-in-a-grid/          |
 | 1027 | T135.分发糖果      | greedy      | Tough | https://leetcode.cn/problems/candy/          |
 | 1026 | T239.滑动窗口最大值 | sliding window, monotonic queue    | Tough | https://leetcode.cn/problems/sliding-window-maximum/          |
 | 1025 | T26977:接雨水       | stack, two pointers       | Tough | http://cs101.openjudge.cn/practice/26977/          |
