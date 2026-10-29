@@ -16,8 +16,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
-| 10 |       |       | - |          |
-
+| 11 |       |       | - |          |
 | 1102 | 78.子集      | backtracking       | Medium | https://leetcode.cn/problems/subsets/          |
 | 1101 | 04110: 圣诞老人的礼物 | greedy     | Medium | http://cs101.openjudge.cn/pctbook/M04110/          |
 | 1030 | 1852: Ants  | physics, greedy      | Medium | http://cs101.openjudge.cn/pctbook/M01852          |
