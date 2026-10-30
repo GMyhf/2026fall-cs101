@@ -22,7 +22,7 @@ function tree(s, nodes, { w = 0.5, h = 0.34, fs = 11 } = {}) {
   });
   nodes.forEach((n) => pill(s, n.l, n.x, n.y, n.w || w, h, n.fill || C.code, n.color || C.dark, n.fs || fs));
 }
-// 第 0/1/2 层的 A–F 小树（预备知识两页共用）
+// 第 0/1/2 层的 A–F 小树（§1.3 两页共用）
 const ABC = (dx = 0) => [
   { l: "A", x: 2.75 + dx, y: 1.5 },
   { l: "B", x: 2.0 + dx, y: 2.25, p: 0 }, { l: "C", x: 3.5 + dx, y: 2.25, p: 0 },
@@ -36,7 +36,7 @@ titleSlide({
   kicker: "计算概论（B） · 第 8 周 · 2026 Fall",
   title: "递归",
   subtitle: "相信它，而不是展开它",
-  topics: "递归的定义与三法则 · 栈帧与系统调用栈 · 递归深度的两道墙\n经典三部曲：斐波那契 · 汉诺塔 · 全排列（决策树与 DFS）· 子集\n分治：快速幂 · 二分查找 · 最大公约数\n递归的调试：打印调用树、常见错误",
+  topics: "递归的定义与三法则 · 调用树：时间看节点数、栈深看树高\n栈帧与递归深度的两道墙 · 经典三部曲：斐波那契 · 汉诺塔 · 全排列 · 子集\n分治：快速幂 · 二分查找 · 最大公约数\n递归的调试：可视化、常见错误",
   footer: "Compiled by Hongfei Yan · 2026 Fall · github.com/GMyhf/2026fall-cs101",
 });
 
@@ -68,9 +68,9 @@ titleSlide({
 {
   const s = content("≡", "本周导引", "内容地图");
   const cols = [
-    ["1–2  是什么 · 会怎样", ["1.1 递归三法则", "1.2 思维方式：相信它", "1.3 递归 ⇄ 迭代", "2 栈帧：两道墙、虚拟地址空间"]],
-    ["3  三部曲", ["3.1 斐波那契：重叠子问题 → 记忆化", "3.2 汉诺塔：指数复杂度的实感", "3.3 全排列：决策树 · DFS · 回溯", "3.4 子集：选或不选"]],
-    ["4–5  分治与调试", ["4 分治：快速幂 · 二分查找 · gcd", "5 打印调用树、可视化、常见错误", "本周作业 · 思考题 · 小结"]],
+    ["1–2  是什么 · 会怎样", ["1.1 递归三法则", "1.2 思维方式：相信它", "1.3 调用树：树 · DFS · 两个数", "1.4 递归 ⇄ 迭代", "2 栈帧：两道墙、虚拟地址空间"]],
+    ["3  三部曲，三种树", ["3.1 斐波那契：重复子树 → 记忆化", "3.2 汉诺塔：满二叉树，2ⁿ−1", "3.3 全排列：决策树 · 回溯", "3.4 子集：选或不选"]],
+    ["4–5  分治与调试", ["4 分治：快速幂 · 二分查找 · gcd", "5 可视化、常见错误", "本周作业 · 思考题 · 小结"]],
   ];
   cols.forEach((c, i) => {
     const x = 0.5 + i * 3.05;
@@ -81,7 +81,7 @@ titleSlide({
 }
 
 // ============================ PART 1 ============================
-sectionSlide("Part 1", "什么是递归", "函数在自己的定义中调用自己\n三法则 · 相信它 · 递归 ⇄ 迭代");
+sectionSlide("Part 1", "什么是递归", "函数在自己的定义中调用自己\n三法则 · 相信它 · 调用树 · 递归 ⇄ 迭代");
 
 // 1.1 definition + three rules
 {
@@ -125,9 +125,104 @@ print(list_sum2([1, 3, 5, 7, 9]))   # 25`, 4.99, 2.4, 4.51, 1.85, { fontSize: 9.
   callout(s, "⚠️ 例子求和的时间复杂度", "左边每层都做 `a[1:]` 切片（O(n)），整体 **O(n²)**。实战里用**下标**而不是切片——右边改成 O(n) 的方式，用一个下标 `i` 代替真的切一刀。", 0.5, 4.28, 9.0, 0.75, { fontSize: 10, lsm: 1.0, fill: C.mint, tcolor: C.dark });
 }
 
-// 1.3 recursion <-> iteration
+// 1.3 tree vocabulary + call tree
 {
-  const s = content("1.3", "1 递归 ⇄ 迭代", "任何递归都能改写成迭代（用显式栈）");
+  const s = content("1.3", "1.3 把递归画出来", "调用树：每一次调用画成一个节点");
+  card(s, 0.5, 1.05, 4.05, 3.0, "FAFCFB", C.mint);
+  text(s, "树：节点 + 边", 0.65, 1.1, 3, 0.3, { fontSize: 12, bold: true, color: C.green, margin: 0 });
+  ["第 0 层", "第 1 层", "第 2 层"].forEach((t, i) => text(s, t, 0.65, 1.55 + i * 0.75, 0.8, 0.26, { fontSize: 9, color: C.muted, margin: 0 }));
+  tree(s, ABC());
+  text(s, "← 根", 3.3, 1.52, 0.8, 0.3, { fontSize: 10, bold: true, color: C.goldText, margin: 0 });
+  text(s, "B 是 D、E 的**父节点**；D、E、F 没有子节点，叫**叶子**\nB、D、E 本身也是一棵**子树**——树的定义就是递归的", 0.65, 3.42, 3.85, 0.6, { fontSize: 9.3, margin: 0, lsm: 1.1 });
+  table(s, [
+    ["调用树里的", "递归里的"],
+    ["节点", "一次函数调用（带着自己那组参数）"],
+    ["根", "最外层的那次调用"],
+    ["父 → 子的一条边", "一次递归调用"],
+    ["叶子", "基例：不再往下调"],
+    ["回到父节点", "`return`，把结果交还给调用者"],
+    ["根到当前节点的路径", "此刻的调用栈（§2.1）"],
+  ], 4.75, 1.05, 4.75, [1.75, 3.0], { fontSize: 10.5, rowH: 0.42 });
+  callout(s, "为什么要画出来", "「相信它」是**写**递归的方法；要**看懂**递归——先算哪个、要算多久、为什么会爆栈——就把它画成这棵树。本章后面每个例子都会回到这棵树上。", 0.5, 4.2, 9.0, 0.82, { fontSize: 11, fill: C.mint, tcolor: C.dark });
+}
+
+// 1.3 chain vs binary tree
+{
+  const s = content("1.3", "1.3 调用树", "factorial 是一条链，fib 是一棵二叉树");
+  card(s, 0.5, 1.05, 3.4, 3.0, "FAFCFB", C.mint);
+  text(s, "factorial(4)：每次调自己 1 次", 0.65, 1.1, 3.2, 0.3, { fontSize: 11.5, bold: true, color: C.green, margin: 0 });
+  tree(s, [0, 1, 2, 3].map((k) => ({ l: `factorial(${4 - k})`, x: 0.95, y: 1.55 + k * 0.6, w: 1.45, p: k ? k - 1 : undefined, fill: k === 3 ? C.mint : C.code })), { fs: 10 });
+  text(s, "← 叶子（基例）", 2.5, 3.35, 1.35, 0.3, { fontSize: 9.5, bold: true, color: C.goldText, margin: 0 });
+  card(s, 4.1, 1.05, 5.4, 3.0, "FAFCFB", C.mint);
+  text(s, "fib(4)：每次调自己 2 次", 4.25, 1.1, 5, 0.3, { fontSize: 11.5, bold: true, color: C.green, margin: 0 });
+  tree(s, [
+    { l: "fib(4)", x: 6.4, y: 1.55, w: 0.9 },
+    { l: "fib(3)", x: 5.3, y: 2.3, w: 0.9, p: 0 }, { l: "fib(2)", x: 7.5, y: 2.3, w: 0.9, p: 0, fill: C.mint },
+    { l: "fib(2)", x: 4.7, y: 3.05, w: 0.9, p: 1, fill: C.mint }, { l: "fib(1)", x: 5.9, y: 3.05, w: 0.9, p: 1, fill: C.mint },
+  ], { fs: 10 });
+  text(s, "浅绿 = 叶子 = 基例（n ≤ 2）", 4.25, 3.62, 5, 0.3, { fontSize: 9.5, color: C.muted, margin: 0 });
+  callout(s, "调用自己几次，就分几个叉", "函数体里写 1 次自调用 → **链**；写 2 次 → **二叉树**；写在 `for` 循环里 → **多叉树**（§3.3 的全排列）。", 0.5, 4.2, 9.0, 0.82, { fontSize: 11.5, fill: C.mint, tcolor: C.dark });
+}
+
+// 1.3 execution order = DFS
+{
+  const s = content("1.3", "1.3 执行顺序就是 DFS", "一条路走到底，再退回岔路口");
+  card(s, 0.5, 1.05, 4.05, 3.0, "FAFCFB", C.mint);
+  text(s, "蓝圈数字 = DFS 访问顺序", 0.65, 1.1, 3.5, 0.3, { fontSize: 12, bold: true, color: C.green, margin: 0 });
+  const t = ABC();
+  tree(s, t);
+  ["A", "B", "D", "E", "C", "F"].forEach((l, i) => {
+    const n = t.find((m) => m.l === l);
+    numCircle(s, i + 1, n.x + 0.52, n.y - 0.17, 0.28, "2F6FB0");
+  });
+  text(s, "DFS：A B D E C F\nBFS（一层一层）：A B C D E F", 0.65, 3.45, 3.85, 0.55, { fontSize: 10, margin: 0, lsm: 1.1 });
+  codeBlock(s, `def dfs(node):
+    visit(node)                  # 访问当前节点
+    for child in node.children:
+        dfs(child)               # 调用 = 往下走一层
+    # 函数返回 = 退回上一层`, 4.75, 1.05, 4.75, 1.3, { fontSize: 9.8, lang: "py" });
+  callout(s, "递归就是天然的 DFS", [
+    "调用一次 `dfs(child)` = **往下走一层**；",
+    "函数返回 = **退回上一层**，回到岔路口换下一个孩子；",
+    "走到 D 时栈里是 `dfs(A)`、`dfs(B)`、`dfs(D)` —— 正是根到 D 的路径。",
+  ], 4.75, 2.5, 4.75, 1.55, { fontSize: 10.5, gap: 4 });
+  callout(s, "计算机不会同时算两个孩子", "`fib(4)` 先调用 `fib(3)`，必须等 `fib(3)` 的**整棵子树**算完返回，才轮到 `fib(2)`——沿一条路走到底，再退回岔路口：这就是**深度优先搜索**（Depth-First Search）。", 0.5, 4.2, 9.0, 0.82, { fontSize: 11, fill: C.mint, tcolor: C.dark });
+}
+
+// 1.3 print call tree
+{
+  const s = content("1.3", "1.3 打印调用树", "让程序自己把调用树打出来");
+  codeBlock(s, `def fib_trace(n, depth=0):
+    print("  " * depth + f"fib({n})")
+    if n <= 2:
+        return 1
+    return fib_trace(n - 1, depth + 1) + fib_trace(n - 2, depth + 1)
+
+
+fib_trace(4)`, 0.5, 1.1, 5.6, 2.0, { fontSize: 10.5, lang: "py" });
+  consoleBlock(s, "fib(4)\n  fib(3)\n    fib(2)\n    fib(1)\n  fib(2)", 6.3, 1.1, 3.15, 1.75, 11);
+  callout(s, "缩进 = 深度，打印顺序 = DFS 顺序", "缩进越深，就是树里越深的一层；按行读下去，就是 DFS 走过节点的顺序——对照前面那棵 `fib(4)`。递归写不对时，这是最快的调试手段。", 0.5, 3.3, 9.0, 0.95, { fontSize: 12, fill: C.mint, tcolor: C.dark });
+}
+
+// 1.3 two numbers
+{
+  const s = content("1.3", "1.3 两个数看穿一个递归", "时间看节点数，栈深看树高");
+  callout(s, "时间 ≈ 节点数 × 每个节点的工作量", "只算节点**自己**做的事，不算它的子调用。", 0.5, 1.05, 4.4, 0.85, { fontSize: 11 });
+  callout(s, "栈深 ≈ 树高", "同一时刻栈里只有**一条从根往下的路径**；树越高，越容易爆栈（§2）。", 5.1, 1.05, 4.4, 0.85, { fontSize: 11 });
+  table(s, [
+    ["递归", "树的形状", "节点数", "最大栈深", "出处"],
+    [{ t: "factorial(n)", mono: true }, "链", "n", "n", "§1"],
+    [{ t: "list_sum2(a)", mono: true }, "链", "n + 1", "n + 1", "§1.2"],
+    [{ t: "fib_naive(n)", mono: true }, { t: "二叉树，有重复子树", color: C.bad }, "指数级", "n − 1", "§3.1"],
+    [{ t: "hanoi(n)", mono: true }, "满二叉树", "2ⁿ − 1", "n + 1", "§3.2"],
+    ["全排列", "决策树", "< e · n!", "n + 1", "§3.3"],
+  ], 0.5, 2.05, 9.0, [2.0, 2.6, 1.7, 1.5, 1.2], { fontSize: 10.5, rowH: 0.36 });
+  callout(s, "切片版 list_sum(a) 为什么是 O(n²)", "也是 n 个节点的链，但每个节点切片 O(n)——节点数没变，**每个节点的工作量**变了。", 0.5, 4.32, 9.0, 0.72, { fontSize: 10.5, lsm: 1.0, fill: C.mint, tcolor: C.dark });
+}
+
+// 1.4 recursion <-> iteration
+{
+  const s = content("1.4", "1.4 递归 ⇄ 迭代", "任何递归都能改写成迭代（用显式栈）");
   codeBlock(s, `# 递归版
 def to_base_rec(n, base):
     digits = "0123456789ABCDEF"
@@ -177,7 +272,7 @@ sectionSlide("Part 2", "栈帧：递归为什么会爆栈", "系统调用栈 · 
     }
     text(s, r[2], 6.35, y, 2.8, 0.38, { fontSize: 10.5, color: C.muted, valign: "middle", margin: 0 });
   });
-  callout(s, "递归 = 在用系统栈", "栈的空间有限，递归太深就会溢出。", 0.5, 4.32, 9.0, 0.55, { fontSize: 11, lsm: 1.0, fill: C.mint, tcolor: C.dark });
+  callout(s, "递归 = 在用系统栈", "栈里装的始终是调用树上**从根到当前节点的那条路径**（§1.3）：往下调一层压一帧，`return` 弹一帧。最大栈深 = 最深那条路径的长度，树太高，栈就溢出。", 0.5, 4.3, 9.0, 0.78, { fontSize: 10.5, lsm: 1.0, fill: C.mint, tcolor: C.dark });
 }
 
 // 2.2 two walls
@@ -314,7 +409,7 @@ def depth_iter(n):
 }
 
 // ============================ PART 3 ============================
-sectionSlide("Part 3", "递归三部曲", "斐波那契：重叠子问题 → 记忆化\n汉诺塔：指数复杂度的实感\n全排列：决策树 + DFS = 回溯模板；补充：子集");
+sectionSlide("Part 3", "递归三部曲，三种树", "斐波那契：二叉树有重复子树 → 记忆化\n汉诺塔：满二叉树，2ⁿ−1 个节点 = 2ⁿ−1 次移动\n全排列：决策树 + DFS = 回溯模板；补充：子集");
 
 // 3.1 fibonacci naive
 {
@@ -328,7 +423,7 @@ sectionSlide("Part 3", "递归三部曲", "斐波那契：重叠子问题 → �
 
 print(fib_naive(10))        # 55`, 0.5, 1.55, 5.6, 1.8, { fontSize: 11, lang: "py" });
   consoleBlock(s, "55", 6.3, 1.55, 3.15, 0.6);
-  callout(s, "问题：这是 O(2ⁿ)", "同一个子问题被重复计算无数次——下一页画出这棵调用树。", 6.3, 2.35, 3.15, 1.0, { fontSize: 11.5, fill: "FDF0EE", tcolor: C.bad });
+  callout(s, "问题：这是 O(2ⁿ)", "调用树每层都分两个叉，节点数随 n 指数增长——下一页画大一点。", 6.3, 2.35, 3.15, 1.0, { fontSize: 11.5, fill: "FDF0EE", tcolor: C.bad });
 }
 
 // 3.1 recursion tree
@@ -343,8 +438,8 @@ print(fib_naive(10))        # 55`, 0.5, 1.55, 5.6, 1.8, { fontSize: 11, lang: "p
   nodes.forEach((n) => { pill(s, n[0], n[1], n[2], 0.85, 0.42, n[3], n[4], 11); });
   const edges = [[4.5, 1.57, 2.7, 1.85], [4.55, 1.57, 6.15, 1.85], [2.65, 2.27, 1.4, 2.55], [2.7, 2.27, 3.85, 2.55], [6.15, 2.27, 5.35, 2.55], [6.4, 2.27, 6.9, 2.55], [1.45, 2.97, 0.85, 3.25], [1.5, 2.97, 2.0, 3.25]];
   edges.forEach((e) => s.addShape(pres.shapes.LINE, { x: e[0], y: e[1], w: e[2] - e[0], h: e[3] - e[1], line: { color: C.muted, width: 1 } }));
-  text(s, "fib(3) 算了 2 次，fib(2) 算了 3 次——问题规模越大，重复越多。", 0.5, 3.9, 9, 0.4, { fontSize: 12 });
-  callout(s, "看到重复的子树，就该上记忆化", "把「算过的答案」存起来，下次直接查表——这就是下一页的三种修法。", 0.5, 4.4, 9.0, 0.65, { fontSize: 12, fill: C.mint, tcolor: C.dark });
+  text(s, "fib(3) 算了 2 次，fib(2) 算了 3 次——问题规模越大，重复越多。", 0.5, 3.8, 9, 0.4, { fontSize: 12 });
+  callout(s, "记忆化 = 每棵子树只算一次", "第一次算完 `fib(3)` 就记下来，再遇到直接返回、不再往下长。整棵树剪得只剩最左边那条链（右孩子都变成查表即返回的叶子），节点数从指数级降到 **O(n)**。", 0.5, 4.25, 9.0, 0.8, { fontSize: 10.5, lsm: 1.0, fill: C.mint, tcolor: C.dark });
 }
 
 // 3.1 three fixes
@@ -407,15 +502,38 @@ print([hanoi_count(k) for k in range(1, 8)])`, 0.5, 3.05, 5.6, 1.15, { fontSize:
   callout(s, "指数复杂度的实感", "传说中的 64 层汉诺塔需要 2⁶⁴−1 ≈ 1.8×10¹⁹ 次移动。每秒一次，需要约 **5850 亿年**。", 0.5, 4.35, 9.0, 0.7, { fontSize: 11.5, fill: "FDF0EE", tcolor: C.bad });
 }
 
-// 3.3 prerequisite: tree + decision tree
+// 3.2 hanoi call tree
 {
-  const s = content("3.3", "3.3 预备知识", "树与决策树");
-  card(s, 0.5, 1.05, 4.05, 3.0, "FAFCFB", C.mint);
-  text(s, "树：节点 + 边", 0.65, 1.1, 3, 0.3, { fontSize: 12, bold: true, color: C.green, margin: 0 });
-  ["第 0 层", "第 1 层", "第 2 层"].forEach((t, i) => text(s, t, 0.65, 1.55 + i * 0.75, 0.8, 0.26, { fontSize: 9, color: C.muted, margin: 0 }));
-  tree(s, ABC());
-  text(s, "← 根", 3.3, 1.52, 0.8, 0.3, { fontSize: 10, bold: true, color: C.goldText, margin: 0 });
-  text(s, "B 是 D、E 的**父节点**；D、E 是 B 的**子节点**\nD、E、F 没有子节点，叫**叶子**", 0.65, 3.45, 3.85, 0.55, { fontSize: 9.5, margin: 0, lsm: 1.1 });
+  const s = content("3.2", "3.2 汉诺塔", "调用树：一棵满二叉树");
+  const hn = [
+    { l: "3: A->C", x: 4.45, y: 1.15 },
+    { l: "2: A->B", x: 2.45, y: 1.85, p: 0 }, { l: "2: B->C", x: 6.45, y: 1.85, p: 0 },
+    { l: "1: A->C", x: 1.45, y: 2.55, p: 1, fill: C.mint }, { l: "1: C->B", x: 3.45, y: 2.55, p: 1, fill: C.mint },
+    { l: "1: B->A", x: 5.45, y: 2.55, p: 2, fill: C.mint }, { l: "1: A->C", x: 7.45, y: 2.55, p: 2, fill: C.mint },
+  ];
+  tree(s, hn, { w: 1.1, h: 0.38, fs: 11 });
+  [3, 1, 4, 0, 5, 2, 6].forEach((k, i) => numCircle(s, i + 1, hn[k].x + 1.0, hn[k].y - 0.17, 0.28, "2F6FB0"));
+  text(s, "节点标「盘数: 从哪根柱 → 到哪根柱」，省略了 n = 0 的空调用；蓝圈 = 移动的先后顺序", 0.5, 3.08, 9, 0.3, { fontSize: 10, color: C.muted, margin: 0 });
+  callout(s, "每个节点恰好移动一次", [
+    "移动次数 = 节点数 = 1 + 2 + 4 = **7**；",
+    "n 层满二叉树有 **2ⁿ − 1** 个节点；",
+    "与递推式 T(n) = 2T(n−1) + 1 的结果一致。",
+  ], 0.5, 3.48, 4.4, 1.57, { fontSize: 11, gap: 4 });
+  callout(s, "移动顺序 = 中序遍历", [
+    "先左子树、再自己、再右子树（第 1、2、3 步）；",
+    "从左到右读节点，正是程序输出的 7 行；",
+    "「左、根、右」叫**中序遍历**，学二叉树还会遇到。",
+  ], 5.1, 3.48, 4.4, 1.57, { fontSize: 11, gap: 4, fill: C.mint, tcolor: C.dark });
+}
+
+// 3.3 decision tree
+{
+  const s = content("3.3", "3.3 从调用树到决策树", "每一层做一次选择：决策树");
+  callout(s, "和斐波那契、汉诺塔比，多了什么", [
+    "前两部怎么分叉由**公式**决定；全排列每一层要**做一次选择**：第一个位置放谁、第二个放谁……",
+    "节点仍是一次调用，边仍是一次递归调用，顺序仍是 DFS；",
+    "**只多一件事**：往下走时把选择记进 `path`，退回来时擦掉。",
+  ], 0.5, 1.05, 4.05, 3.0, { fontSize: 11, gap: 8 });
   card(s, 4.75, 1.05, 4.75, 3.0, "FAFCFB", C.mint);
   text(s, "决策树：一步一步做选择（出门穿搭）", 4.9, 1.1, 4.5, 0.3, { fontSize: 12, bold: true, color: C.green, margin: 0 });
   tree(s, [
@@ -426,31 +544,6 @@ print([hanoi_count(k) for k in range(1, 8)])`, 0.5, 3.05, 5.6, 1.15, { fontSize:
   ]);
   text(s, "先选上衣（2 种），再选裤子（2 种）：2 × 2 = 4 个叶子", 4.9, 3.55, 4.5, 0.3, { fontSize: 9.5, margin: 0 });
   callout(s, "决策树的四个对应", "**节点** = 做到一半的状态 · **边** = 一次选择 · **叶子** = 全部选完 · **根 → 叶子的一条路径** = 一个完整方案", 0.5, 4.2, 9.0, 0.82, { fontSize: 11.5, fill: C.mint, tcolor: C.dark });
-}
-
-// 3.3 prerequisite: DFS
-{
-  const s = content("3.3", "3.3 预备知识", "DFS：一条路走到底，再退回岔路口");
-  card(s, 0.5, 1.05, 4.05, 3.0, "FAFCFB", C.mint);
-  text(s, "蓝圈数字 = DFS 访问顺序", 0.65, 1.1, 3.5, 0.3, { fontSize: 12, bold: true, color: C.green, margin: 0 });
-  const t = ABC();
-  tree(s, t);
-  ["A", "B", "D", "E", "C", "F"].forEach((l, i) => {
-    const n = t.find((m) => m.l === l);
-    numCircle(s, i + 1, n.x + 0.52, n.y - 0.17, 0.28, "2F6FB0");
-  });
-  text(s, "DFS：A B D E C F\nBFS（一层一层）：A B C D E F", 0.65, 3.45, 3.85, 0.55, { fontSize: 10, margin: 0, lsm: 1.1 });
-  codeBlock(s, `def dfs(node):
-    visit(node)                  # 访问当前节点
-    for child in node.children:
-        dfs(child)               # 调用 = 往下走一层
-    # 函数返回 = 退回上一层`, 4.75, 1.05, 4.75, 1.3, { fontSize: 9.8, lang: "py" });
-  callout(s, "递归就是天然的 DFS", [
-    "调用一次 `dfs(child)` = **往下走一层**；",
-    "函数返回 = **退回上一层**，回到岔路口换下一个孩子；",
-    "走到 D 时栈里是 `dfs(A)`、`dfs(B)`、`dfs(D)` —— 正是根到 D 的路径。",
-  ], 4.75, 2.5, 4.75, 1.55, { fontSize: 10.5, gap: 4 });
-  callout(s, "像走迷宫", "沿一条路走到底；走到尽头，就退回最近的岔路口，换一条没走过的路 —— 这就是**深度优先搜索**（Depth-First Search）。", 0.5, 4.2, 9.0, 0.82, { fontSize: 11.5, fill: C.mint, tcolor: C.dark });
 }
 
 // 3.3 permutation decision tree
@@ -658,22 +751,7 @@ print(gcd(12, 18), lcm(4, 6))        # 6 12`, 0.5, 1.1, 5.6, 1.7, { fontSize: 11
 }
 
 // ============================ PART 5 ============================
-sectionSlide("Part 5", "递归的调试", "打印调用树 · 可视化 · 常见错误");
-
-// 5.1 print call tree
-{
-  const s = content("5.1", "5.1 打印调用树", "缩进就是栈深度");
-  codeBlock(s, `def fib_trace(n, depth=0):
-    print("  " * depth + f"fib({n})")
-    if n <= 2:
-        return 1
-    return fib_trace(n - 1, depth + 1) + fib_trace(n - 2, depth + 1)
-
-
-fib_trace(4)`, 0.5, 1.1, 5.6, 2.0, { fontSize: 10.5, lang: "py" });
-  consoleBlock(s, "fib(4)\n  fib(3)\n    fib(2)\n    fib(1)\n  fib(2)", 6.3, 1.1, 3.15, 1.75, 11);
-  callout(s, "看到重复的子树，就该上记忆化", "调用树里 `fib(2)` 出现了不止一次——这正是 §3.1 里「重叠子问题」的直接证据。", 0.5, 3.3, 9.0, 0.85, { fontSize: 12, fill: C.mint, tcolor: C.dark });
-}
+sectionSlide("Part 5", "递归的调试", "打印调用树（§1.3）· 可视化 · 常见错误");
 
 // 5.2/5.3 visualization + errors
 {
@@ -728,9 +806,9 @@ fib_trace(4)`, 0.5, 1.1, 5.6, 2.0, { fontSize: 10.5, lang: "py" });
 }
 
 summarySlide("本周小结", [
-  ["三法则", "**有基例、向基例逼近、调用自身**。写的时候只想两层，不要在脑子里展开。"],
+  ["三法则 · 调用树", "**有基例、向基例逼近、调用自身**。写时只想两层；看懂时画成**调用树**：时间看节点数，栈深看树高。"],
   ["两道墙", "Python 层计数器（`setrecursionlimit` 管得到）和 **C 调用栈**（管不到）；穿过 C 的递归另有一道调不动的上限。**深递归唯一可靠的解法是显式栈**。"],
-  ["三部曲", "**斐波那契**（重叠子问题 → 记忆化）、**汉诺塔**（2ⁿ−1，指数的实感）、**全排列**（决策树 + DFS：选择 → 递归 → 撤销）；**子集**（选或不选，2ⁿ）。"],
+  ["三部曲，三种树", "**斐波那契**（重复子树 → 记忆化）、**汉诺塔**（满二叉树，2ⁿ−1 个节点 = 2ⁿ−1 次移动）、**全排列**（决策树：选择 → 递归 → 撤销）；**子集**（选或不选，2ⁿ）。"],
   ["分治", "分 + 治 + 合：归并、快排、二分、快速幂。"],
   ["回溯两个必犯错误", "**忘拷贝**（`path[:]`）、**忘还原**（`pop`）。传值的状态自动恢复（隐式回溯），共享的状态要手动撤销。"],
 ]);
