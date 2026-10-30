@@ -1,9 +1,9 @@
 {
   "voice": "zh-CN-YunyangNeural",
   "rate": "+0%",
-  "total": "20:03",
-  "source_pptx_sha256": "d7719650a8d28bd65ebb6c4eca1b9995e72cb4b653a20c16b023bdf0c10b2a3c",
-  "source_script_sha256": "3f1bc3b707dae4697f1157b727b282ccf0df3eabf682d67e71fc11adda438934",
+  "total": "20:56",
+  "source_pptx_sha256": "0692b680438beccee02c1f6f7e295c8446a4732413e8fa55a97c1e55861498c3",
+  "source_script_sha256": "c8d5e9f36fd6f3d717ee2bee84e8045c9fec12ead6712cfa541bd3f20c95fece",
   "sections": [
     {
       "page": 1,
@@ -41,215 +41,215 @@
       "page": 5,
       "title": "什么是回溯：DFS 加撤销",
       "start": "02:16",
-      "end": "03:05",
-      "seconds": 48.7,
-      "chars": 233
+      "end": "03:21",
+      "seconds": 64.5,
+      "chars": 311
     },
     {
       "page": 6,
       "title": "三个要素与两个必犯错误",
-      "start": "03:05",
-      "end": "03:51",
-      "seconds": 46.7,
-      "chars": 240
+      "start": "03:21",
+      "end": "04:21",
+      "seconds": 60.2,
+      "chars": 311
     },
     {
       "page": 7,
       "title": "形态一：子集",
-      "start": "03:51",
-      "end": "04:32",
-      "seconds": 40.5,
-      "chars": 204
+      "start": "04:21",
+      "end": "05:16",
+      "seconds": 54.9,
+      "chars": 280
     },
     {
       "page": 8,
       "title": "形态二：组合总和",
-      "start": "04:32",
-      "end": "05:22",
+      "start": "05:16",
+      "end": "06:06",
       "seconds": 50.0,
       "chars": 268
     },
     {
       "page": 9,
       "title": "形态三：带重复元素的排列去重",
-      "start": "05:22",
-      "end": "06:12",
+      "start": "06:06",
+      "end": "06:56",
       "seconds": 50.0,
       "chars": 243
     },
     {
       "page": 10,
       "title": "对照表：递归参数怎么变",
-      "start": "06:12",
-      "end": "06:54",
+      "start": "06:56",
+      "end": "07:38",
       "seconds": 41.9,
       "chars": 218
     },
     {
       "page": 11,
       "title": "剪枝：让指数变得可行",
-      "start": "06:54",
-      "end": "07:33",
-      "seconds": 38.8,
-      "chars": 203
+      "start": "07:38",
+      "end": "08:26",
+      "seconds": 48.2,
+      "chars": 251
     },
     {
       "page": 12,
       "title": "八皇后（1）：三个集合",
-      "start": "07:33",
-      "end": "08:17",
+      "start": "08:26",
+      "end": "09:10",
       "seconds": 44.3,
       "chars": 217
     },
     {
       "page": 13,
       "title": "八皇后（2）：为什么用 row 减 c 和 row 加 c",
-      "start": "08:17",
-      "end": "08:57",
+      "start": "09:10",
+      "end": "09:50",
       "seconds": 39.9,
       "chars": 203
     },
     {
       "page": 14,
       "title": "马走日",
-      "start": "08:57",
-      "end": "09:48",
+      "start": "09:50",
+      "end": "10:41",
       "seconds": 51.3,
       "chars": 264
     },
     {
       "page": 15,
       "title": "DFS 求连通块：Lake Counting",
-      "start": "09:48",
-      "end": "10:39",
+      "start": "10:41",
+      "end": "11:32",
       "seconds": 50.9,
       "chars": 279
     },
     {
       "page": 16,
       "title": "Part 2　并查集",
-      "start": "10:39",
-      "end": "10:47",
+      "start": "11:32",
+      "end": "11:40",
       "seconds": 7.9,
       "chars": 32
     },
     {
       "page": 17,
       "title": "它解决什么问题",
-      "start": "10:47",
-      "end": "11:13",
+      "start": "11:40",
+      "end": "12:06",
       "seconds": 25.8,
       "chars": 130
     },
     {
       "page": 18,
       "title": "最朴素的实现",
-      "start": "11:13",
-      "end": "11:53",
+      "start": "12:06",
+      "end": "12:46",
       "seconds": 40.4,
       "chars": 219
     },
     {
       "page": 19,
       "title": "路径压缩加按大小合并",
-      "start": "11:53",
-      "end": "12:45",
+      "start": "12:46",
+      "end": "13:38",
       "seconds": 51.8,
       "chars": 271
     },
     {
       "page": 20,
       "title": "宗教信仰：数连通块个数",
-      "start": "12:45",
-      "end": "13:19",
+      "start": "13:38",
+      "end": "14:13",
       "seconds": 34.3,
       "chars": 178
     },
     {
       "page": 21,
       "title": "判环：union 返回 False 就是环",
-      "start": "13:19",
-      "end": "13:48",
+      "start": "14:13",
+      "end": "14:41",
       "seconds": 28.4,
       "chars": 158
     },
     {
       "page": 22,
       "title": "食物链：扩展域写法",
-      "start": "13:48",
-      "end": "14:36",
+      "start": "14:41",
+      "end": "15:29",
       "seconds": 48.3,
       "chars": 269
     },
     {
       "page": 23,
       "title": "食物链：假话怎么判定",
-      "start": "14:36",
-      "end": "15:19",
+      "start": "15:29",
+      "end": "16:12",
       "seconds": 42.8,
       "chars": 235
     },
     {
       "page": 24,
       "title": "食物链：跑一遍样例",
-      "start": "15:19",
-      "end": "16:06",
+      "start": "16:12",
+      "end": "16:59",
       "seconds": 47.0,
       "chars": 238
     },
     {
       "page": 25,
       "title": "复杂度：为什么可以当 O 一用",
-      "start": "16:06",
-      "end": "16:36",
+      "start": "16:59",
+      "end": "17:29",
       "seconds": 29.9,
       "chars": 151
     },
     {
       "page": 26,
       "title": "Part 3　DFS/BFS 与并查集",
-      "start": "16:36",
-      "end": "16:49",
+      "start": "17:29",
+      "end": "17:42",
       "seconds": 12.9,
       "chars": 53
     },
     {
       "page": 27,
       "title": "DFS/BFS 与并查集：什么时候用哪个",
-      "start": "16:49",
-      "end": "17:28",
+      "start": "17:42",
+      "end": "18:21",
       "seconds": 38.7,
       "chars": 176
     },
     {
       "page": 28,
       "title": "本周作业",
-      "start": "17:28",
-      "end": "18:12",
+      "start": "18:21",
+      "end": "19:05",
       "seconds": 44.8,
       "chars": 219
     },
     {
       "page": 29,
       "title": "思考题",
-      "start": "18:12",
-      "end": "18:56",
+      "start": "19:05",
+      "end": "19:49",
       "seconds": 43.3,
       "chars": 223
     },
     {
       "page": 30,
       "title": "本周小结",
-      "start": "18:56",
-      "end": "19:44",
+      "start": "19:49",
+      "end": "20:37",
       "seconds": 48.7,
       "chars": 262
     },
     {
       "page": 31,
       "title": "下周预告",
-      "start": "19:44",
-      "end": "20:03",
+      "start": "20:37",
+      "end": "20:56",
       "seconds": 18.8,
       "chars": 84
     }

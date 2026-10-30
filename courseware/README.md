@@ -33,7 +33,7 @@ https://github.com/GMyhf/2026fall-cs101
 | 6 | `202610_ADS_W06_Matrices_Sorting_Greedy` | 59 | 35:43 | 保护圈、矩阵乘法、二维前缀和、排序、贪心与交换论证 |
 | 7 | `202610_ADS_W07_Matrix_Queue_Stack_Greedy` | 39 | 25:00 | 栈与四类应用、单调栈、队列、单调队列 |
 | 8 | `202610_ADS_W08_Recursion` | 46 | 36:48 | 递归三法则、调用树（DFS、节点数与树高）、栈帧、递归三部曲（决策树、子集）、分治 |
-| 9 | `202610_ADS_W09_Recursion_Backtracking_DSU` | 31 | 20:03 | 回溯模板与三形态、剪枝、八皇后、并查集 |
+| 9 | `202610_ADS_W09_Recursion_Backtracking_DSU` | 31 | 20:56 | 回溯模板与三形态、剪枝、八皇后、并查集 |
 | 10 | `202611_ADS_W10_Intervals_DP_Intro` | 32 | 21:54 | 五类区间问题、差分、DP 三要素 |
 | 11 | `202611_ADS_W11_DP` | 31 | 20:07 | 0-1 / 完全 / 多重背包、LIS、LCS、降维 |
 | 12 | `202611_ADS_W12_DP_BFS` | 32 | 19:44 | BFS 三铁律、带状态 / 多源 BFS、Dijkstra、二分答案 |
