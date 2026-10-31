@@ -56,6 +56,16 @@ class GateFailureTests(unittest.TestCase):
             self.assertNotEqual(proc.returncode, 0, proc.stdout + proc.stderr)
             self.assertIn(expected_check, proc.stdout)
 
+    # W03–16 的 content/wNN.py 只剩 META、SLIDES 为空，凡是要改"deck.py 课件源"的
+    # 变异只能落在 W01–02；JS 课件源在 pptx_builder/decks/ 下。
+    W02_PY = 'courseware/content/w02.py'
+    W05_JS = 'courseware/pptx_builder/decks/w05_october_exam_review.js'
+    W14_JS = 'courseware/pptx_builder/decks/w14_ai_literacy_exam_recap.js'
+
+    @classmethod
+    def prepend_slide(cls, root, slide_src):
+        cls.replace(root / cls.W02_PY, 'SLIDES = [\n', 'SLIDES = [\n' + slide_src)
+
     @staticmethod
     def replace(path, old, new):
         text = path.read_text(encoding='utf-8')
@@ -273,7 +283,7 @@ class GateFailureTests(unittest.TestCase):
         """课件里残留「2 小时」也必须红 —— 讲义与课件是成对维护的。"""
         self.run_mutation(
             lambda root: self.replace(
-                root / 'courseware/content/w14.py',
+                root / self.W14_JS,
                 '限时模拟一整套（112 分钟 6 题）',
                 '限时模拟一整套（2 小时 6 题）'),
             '9 机考规格')
@@ -283,7 +293,7 @@ class GateFailureTests(unittest.TestCase):
         def mutate(root):
             path = root / self.W05
             text = path.read_text(encoding='utf-8')
-            i = text.index('## T6. T29947 校门外的树又来了')
+            i = text.index('## T6. T31298 警察招募又来了')
             j = text.index('# 4 备选题库')
             path.write_text(text[:i] + text[j:], encoding='utf-8')
         self.run_mutation(mutate, '9 机考规格')
@@ -302,8 +312,8 @@ class GateFailureTests(unittest.TestCase):
         self.run_mutation(
             lambda root: self.replace(
                 root / self.W05,
-                '## T1. E29895 分解因数',
-                '## T1. E29895 分解因数（15 分）'),
+                '## T1. E31295 宿舍的空调',
+                '## T1. E31295 宿舍的空调（15 分）'),
             '9 机考规格')
 
     def test_score_column_in_deck_ladder_fails_exam_spec(self):
@@ -313,27 +323,23 @@ class GateFailureTests(unittest.TestCase):
         梯度表再列一列分数会跟真正的核算口径打架。这一列曾经真的存在过
         （W05 p10、W16 p13 的第二列 15分/20分），是人眼看出来的、闸门没管。
 
-        ⚠️ T-017 之后梯度表已从 `ascii` 改成 `table`，所以这里变异的是
-        **表格单元格**——判据若只认 ascii，表格里再写分数就会静默放过。
+        ⚠️ W05 课件已改由 JS 生成，梯度页是 w05_*.js 里 `content(..., "难度梯度：...")`
+        那一页；判据若还只看 content/w05.py（SLIDES 为空），这里会静默放过。
         """
-        def mutate(root):
-            path = root / 'courseware/content/w05.py'
-            text = path.read_text(encoding='utf-8')
-            # 只改单元格内容、不加列 —— 加列会让表格行列数对不上，
-            # 第 6 项重建时就先炸了，验不到第 9 项。
-            self.assertIn("['题号', '难度', '预期 AC', '考点']", text)
-            text = text.replace("'预期 AC', '考点'", "'分值', '考点'", 1)
-            text = text.replace("'★☆☆☆☆', '95%'", "'★☆☆☆☆', '15 分'", 1)
-            path.write_text(text, encoding='utf-8')
-        self.run_mutation(mutate, '9 机考规格')
+        self.run_mutation(
+            lambda root: self.replace(
+                root / self.W05_JS,
+                '"宿舍的空调 · 公共区间", "真实题"',
+                '"宿舍的空调 · 公共区间", "15 分"'),
+            '9 机考规格')
 
     def test_score_column_in_note_ladder_fails_exam_spec(self):
         """讲义侧的梯度表同样不许出现分数 —— 讲义与课件成对维护。"""
         self.run_mutation(
             lambda root: self.replace(
                 root / self.W16,
-                'T5  ★★★★☆   DP，状态设计有难度，30% AC',
-                'T5  ★★★★☆  20 分  DP，状态设计有难度，30% AC'),
+                'T5  ★★★★☆   贪心，需论证覆盖区间，30% AC',
+                'T5  ★★★★☆  20 分  贪心，需论证覆盖区间，30% AC'),
             '9 机考规格')
 
     def test_eight_hours_of_homework_is_not_flagged(self):
@@ -378,17 +384,13 @@ class GateFailureTests(unittest.TestCase):
 
     def test_ascii_column_crossing_chinese_fails_alignment(self):
         """把难度梯度改回"靠空格对齐的 ascii 表" —— 必须红。"""
-        def mutate(root):
-            path = root / 'courseware/content/w05.py'
-            text = path.read_text(encoding='utf-8')
-            i = text.index("    ('table', '难度梯度'")
-            j = text.index("需按实际结果逐年校准'),", i) + len("需按实际结果逐年校准'),")
-            text = text[:i] + """    ('ascii', '难度梯度', r\"\"\"
+        self.run_mutation(
+            lambda root: self.prepend_slide(root, """    ('ascii', '难度梯度', r\"\"\"
    T1   *          签到：读入与格式化输出        -- 95% AC
    T2   **         字符串处理                    -- 75% AC
-\"\"\"),""" + text[j:]
-            path.write_text(text, encoding='utf-8')
-        self.run_mutation(mutate, '11 列对齐', rebuild=True)
+\"\"\"),
+"""),
+            '11 列对齐')
 
     def test_new_ragged_diagram_is_not_covered_by_the_known_list(self):
         """挂账名单按（模块, 标题）记；换一张图出问题照样要红。
@@ -431,20 +433,30 @@ class GateFailureTests(unittest.TestCase):
     def test_pure_ascii_column_is_not_flagged(self):
         """反向对照：前缀里没有中文的列，补空格就是准的，不许误报。
 
-        W16 p4 的流程图左侧 `|` / `+--` 列前缀全是空格，
+        W16 p4 曾有的流程图左侧 `|` / `+--` 列前缀全是空格，
         本机实测 x 极差 0.0pt —— 判据若写成"只要有中文就报"，这张图会被冤枉。
+        W16 改用 JS 生成后这张图已不在 deck.py 课件里，所以把它原样插进 W02 来测。
+        （插页会让第 6 项因页数变化而红，这里只看第 11 项没有报。）
         """
         with tempfile.TemporaryDirectory() as tmp:
             clone = Path(tmp) / 'repo'
             shutil.copytree(ROOT, clone, ignore=shutil.ignore_patterns(
                 '.git', '__pycache__', '*.pyc', '.DS_Store'))
-            text = (clone / 'courseware/content/w16.py').read_text(encoding='utf-8')
-            self.assertIn('+-- 排序后一遍扫 -> 贪心', text)   # 确认测的是那张图
+            self.prepend_slide(clone, """    ('ascii', '算法主线：一条演化路径', r\"\"\"
+   暴力枚举
+       |
+       +-- 剪枝 -> 回溯 (W9)
+       |
+       +-- 排序后一遍扫 -> 贪心 (W6, W10)；贪心失效时 -> 动态规划
+       |
+       +-- 记忆化 -> 动态规划 (W10, W11)
+\"\"\"),
+""")
             proc = subprocess.run(
                 [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
                 capture_output=True, text=True, timeout=300, env=gate_env())
-            self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
-            self.assertIn('列对齐：', proc.stdout)
+            self.assertIn('列对齐：5 张等宽图', proc.stdout, proc.stdout)
+            self.assertNotIn('[11 列对齐]', proc.stdout, proc.stdout)
 
     def test_semantic_suite_survives_an_open_stdin(self):
         """回归：check_note_code.py 曾在 stdin 是"不关闭的管道"时整个挂死。
@@ -509,9 +521,9 @@ class GateFailureTests(unittest.TestCase):
         """
         self.run_mutation(
             lambda root: self.replace(
-                root / 'courseware/content/w05.py',
-                "        '自检清单打不了勾的地方，就是本周的复习重点',",
-                "        '自检清单打不了勾的地方，就是本周的复习重点',\n"
+                root / self.W02_PY,
+                "        '**第 15 周要跑神经网络** —— 本地跑不动的实验放到云主机上',",
+                "        '**第 15 周要跑神经网络** —— 本地跑不动的实验放到云主机上',\n"
                 "        '\u3000\u3000\u3000\u3000伪造的续行',"),
             '10 版面标记')
 

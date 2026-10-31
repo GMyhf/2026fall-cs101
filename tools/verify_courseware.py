@@ -107,6 +107,18 @@ def note(msg):
     notes.append(msg)
 
 
+def js_deck_sources():
+    """第 03–16 周的课件源是 pptx_builder 下的 JS 脚本：{周: 路径}。
+
+    `content/wNN.py` 在这些周只剩 META、`SLIDES = []`，凡是"课件侧"的源检查
+    都必须改看这里，否则会对着空列表静默通过。
+    """
+    if str(COURSEWARE) not in sys.path:
+        sys.path.insert(0, str(COURSEWARE))
+    import build_all
+    return {wk: COURSEWARE / rel for wk, rel in build_all.JS_DECKS.items()}
+
+
 def read(path):
     return path.read_text(encoding='utf-8')
 
@@ -646,9 +658,9 @@ def check_render(files):
         return
 
     pptxs = [files[wk][1] for wk in WEEKS if files[wk][1]]
-    import build_all
+    js_weeks = js_deck_sources()
     js_stems = {files[wk][1].stem for wk in WEEKS
-                if files[wk][1] and wk in build_all.JS_DECKS}
+                if files[wk][1] and wk in js_weeks}
     with tempfile.TemporaryDirectory() as tmp:
         proc = subprocess.run(
             [soffice, '--headless', '--convert-to', 'pdf', '--outdir', tmp]
@@ -743,7 +755,23 @@ def _strings(obj):
             yield from _strings(x)
 
 
-def exam_ladders(md_text, py_path):
+# JS 课件按页切块：每页是一个顶层 `{ ... }` 块，或一句 sectionSlide(...) / titleSlide(...)
+JS_SLIDE_SPLIT = re.compile(r'\n(?=\{\s*\n|sectionSlide\(|titleSlide\()')
+JS_CONTENT_CALL = re.compile(r'content\(([^\n]*)\)')
+JS_LADDER_TITLE = re.compile(r'难度梯度|难度台阶')
+
+
+def js_ladder_lines(js_text):
+    """JS 课件里标题（content() 的参数）带"难度梯度 / 难度台阶"的那几页，逐行产出。"""
+    for chunk in JS_SLIDE_SPLIT.split(js_text):
+        m = JS_CONTENT_CALL.search(chunk)
+        if m and JS_LADDER_TITLE.search(m.group(1)):
+            for ln in chunk.splitlines():
+                if not ln.lstrip().startswith('//'):
+                    yield ln
+
+
+def exam_ladders(md_text, py_path, js_path=None):
     """逐行产出讲义与课件里的难度梯度表：(是讲义吗, 行)。
 
     ⚠️ 课件侧**不能只认 `ascii` 那一种**：T-017 把梯度表改成了 `table`，
@@ -759,11 +787,17 @@ def exam_ladders(md_text, py_path):
             if is_ladder or '难度梯度' in text:
                 for ln in text.splitlines():
                     yield False, ln
+    if js_path is not None:
+        for ln in js_ladder_lines(read(js_path)):
+            yield False, ln
 
 
 def check_exam_spec(files):
+    # ⚠️ 第 03–16 周课件侧的源是 JS，不是只剩 META 的 content/wNN.py。
+    #    以前只查 py，W14 课件里的「112 分钟 6 题」改成「2 小时」也不会报。
+    js = js_deck_sources()
     for wk, (md, _pptx, py) in sorted(files.items()):
-        for path in (md, py):
+        for path in (md, py, js.get(wk)):
             if path is None:
                 continue
             for m in STALE_DURATION.finditer(read(path)):
@@ -798,14 +832,15 @@ def check_exam_spec(files):
         if SCORE_ALLOCATION.search(text):
             fail('9 机考规格',
                  f'{md.name}: {label}不应出现「分值分配」；固定分值另有核算办法')
-        if py is not None and f'{EXAM_MINUTES} 分钟' not in read(py):
+        deck_src = js.get(wk) or py
+        if deck_src is not None and f'{EXAM_MINUTES} 分钟' not in read(deck_src):
             fail('9 机考规格',
-                 f'{py.name}: 课件没有写明「{EXAM_MINUTES} 分钟」')
+                 f'{deck_src.name}: 课件没有写明「{EXAM_MINUTES} 分钟」')
 
-        for is_md, ln in exam_ladders(text, py):
+        for is_md, ln in exam_ladders(text, py, js.get(wk)):
             if LADDER_SCORE.search(ln):
                 fail('9 机考规格',
-                     f'{(md if is_md else py).name}: {label}的难度梯度里出现分数'
+                     f'{(md if is_md else deck_src).name}: {label}的难度梯度里出现分数'
                      f'{ln.strip()!r}；固定分值另有核算办法，'
                      f'机考成绩另有核算办法')
 
