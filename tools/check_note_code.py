@@ -290,101 +290,37 @@ def t_w05_exam_solutions(ns):
                 f'得到 {got!r}，讲义承诺 {want!r}')
 
 
-@case('W05', '补码计算器 vs 手工除二取余 / 取反加一（讲义原文驱动）')
-def t_w05_twos_complement(ns):
-    """T6 是全卷唯一考补码的题，讲义承诺的三件事逐条对照独立模型验证：
-    `TO` 的越界判定、`FROM` 的符号位减 2^n、`ADD` 的**有符号溢出**
-    （讲义特别强调"无符号进位 ≠ 有符号溢出"）。
+@case('W05', '月考 T6 警察招募：批次队列 vs 逐个警员按定义模拟')
+def t_w05_police_brute(ns):
+    """讲义解答把同一分钟入伍的警员压成一个 (过期时刻, 人数) 批次，
+    过期判定是 `q[0][0] < i`、减到 0 才出队 —— 这几处差一就错。
 
-    参照模型不用任何位运算 —— 手工除二取余、按位取反再加一，
-    与讲义解答的 `x & ((1 << n) - 1)` 走的是两条完全不同的路。
+    参照模型不分批、不用队列：每名警员单独记入伍时刻，
+    遇到犯罪就照题面"派仍在服役期内、最早入伍的空闲警员"逐个挑。
     """
-    src = stdin_solutions('W05')[1]          # [0] 是 T5 电梯，[1] 是 T6
+    src = visible_stdin_blocks('W05')[6]
 
-    def to_naive(n, x):
-        lo, hi = -(2 ** (n - 1)), 2 ** (n - 1) - 1
-        if not lo <= x <= hi:
-            return 'OVERFLOW'
-        if x >= 0:
-            bits = ''
-            v = x
-            while v:
-                bits = str(v % 2) + bits
-                v //= 2
-            return bits.rjust(n, '0')
-        pos = bin(-x)[2:].rjust(n, '0')      # 原码
-        inv = ''.join('1' if c == '0' else '0' for c in pos)   # 取反
-        carry, out = 1, []
-        for c in reversed(inv):              # 加一
-            t = int(c) + carry
-            out.append(str(t % 2))
-            carry = t // 2
-        return ''.join(reversed(out))
+    def brute(k, a):
+        free = []                       # 每名空闲警员的入伍时刻
+        bad = 0
+        for t, x in enumerate(a, 1):
+            if x > 0:
+                free.extend([t] * x)
+                continue
+            ok = [j for j, s in enumerate(free) if s <= t <= s + k - 1]
+            if ok:
+                free.pop(min(ok, key=lambda j: free[j]))
+            else:
+                bad += 1
+        return bad
 
-    def from_naive(n, b):
-        v = sum(int(c) * 2 ** (n - 1 - i) for i, c in enumerate(b))
-        return str(v - 2 ** n if b[0] == '1' else v)
-
-    def add_naive(n, a, b):
-        lo, hi = -(2 ** (n - 1)), 2 ** (n - 1) - 1
-        s, r = a + b, a + b
-        while r > hi:
-            r -= 2 ** n
-        while r < lo:
-            r += 2 ** n
-        return str(r) if r == s else f'{r} OVERFLOW'
-
-    rnd = random.Random(0x5C6)
-    lines, want = [], []
-    for _ in range(1200):
-        n = rnd.randint(2, 64)
-        lo, hi = -(2 ** (n - 1)), 2 ** (n - 1) - 1
-        op = rnd.choice(['TO', 'FROM', 'ADD'])
-        if op == 'TO':
-            x = rnd.randint(lo - 2, hi + 2)          # 故意覆盖恰好越界的两侧
-            lines.append(f'TO {n} {x}')
-            want.append(to_naive(n, x))
-        elif op == 'FROM':
-            b = ''.join(rnd.choice('01') for _ in range(n))
-            lines.append(f'FROM {n} {b}')
-            want.append(from_naive(n, b))
-        else:
-            a, b = rnd.randint(lo, hi), rnd.randint(lo, hi)
-            lines.append(f'ADD {n} {a} {b}')
-            want.append(add_naive(n, a, b))
-    got = run_stdin_solution(src, f'{len(lines)}\n' + '\n'.join(lines) + '\n')
-    got = got.split('\n')
-    assert len(got) == len(want), (len(got), len(want))
-    for line, g, w in zip(lines, got, want):
-        assert g == w, f'W05 T6 补码计算器：{line} -> 得到 {g!r}，参照模型 {w!r}'
-
-
-@case('W05', 'T6「常见失分」点名的两种错法，逐条给出反例')
-def t_w05_twos_complement_wrong_ways(ns):
-    """讲义写着"用 `bin(x)` 处理负数会错"、"无符号进位不是有符号溢出"。
-    这两句是**断言**，不是证据 —— 这里各给一个反例，让它们变成可复核的事实。
-
-    正确的一侧永远取自讲义原文（`run_stdin_solution`），
-    只有错误的一侧才由本用例复现。
-    """
-    src = stdin_solutions('W05')[1]
-
-    # ① 负数不能用 bin()：讲义承诺 TO 8 -5 -> 11111011
-    right = run_stdin_solution(src, '1\nTO 8 -5\n')
-    assert right == '11111011', right
-    wrong_bin = bin(-5)[2:].rjust(8, '0')
-    assert wrong_bin != right, (
-        f'bin(-5) 的写法竟然也给出 {right}：讲义"不能用 bin()"这句就站不住了')
-
-    # ② 无符号进位 ≠ 有符号溢出：-1 + 1 在 8 位下有进位，但结果 0 完全正确
-    right = run_stdin_solution(src, '1\nADD 8 -1 1\n')
-    assert right == '0', f'讲义数据构造建议点名的 ADD 8 -1 1 应输出 0，实际 {right!r}'
-    a, b, n = -1, 1, 8
-    mask = (1 << n) - 1
-    carry_out = (a & mask) + (b & mask) > mask          # 把进位当溢出的写法
-    assert carry_out, '这组 fixture 本该产生无符号进位，否则它证明不了任何事'
-    assert 'OVERFLOW' not in right, (
-        '按进位判溢出会在这里误报，而讲义解答没有 —— 两者必须不同')
+    rnd = random.Random(31298)
+    for _ in range(300):
+        n, k = rnd.randint(1, 14), rnd.randint(1, 6)
+        a = [-1 if rnd.random() < 0.55 else rnd.randint(1, 3) for _ in range(n)]
+        text = f'{n} {k}\n' + ' '.join(map(str, a)) + '\n'
+        got = int(run_stdin_solution(src, text))
+        assert got == brute(k, a), (n, k, a, got, brute(k, a))
 
 
 # ------------------------------------------------------------------- W06
@@ -674,7 +610,9 @@ def t_recursion_walls(ns):
         thru_c = ns['probe'](ns['cached'])
     finally:
         sys.setrecursionlimit(keep)
-    # 纯 Python 那一路应接近探测上界，穿过 C 的应显著更低（通常差五倍以上）
+    # 纯 Python 那一路应顶到探测上界（100000），穿过 C 的明显更低。
+    # 比值随平台 / 版本差异很大：Linux CPython 3.12.3 上约 30 倍（3331 层），
+    # 协作方另一台机器上约 8.5 倍 —— 阈值取 5 倍，只守"两道墙确实拉开"这一相对关系
     assert pure >= 5 * thru_c, f'纯 Python {pure} 层 vs 经 C {thru_c} 层，两道墙没拉开'
 
 

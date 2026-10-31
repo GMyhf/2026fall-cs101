@@ -1,88 +1,89 @@
 # AGENTS.md
 
-This file provides guidance to the AI agent when working with code in this repository.
+本文件给在本仓库中工作的 AI 智能体提供指引。
 
-## What this repo is
+## 仓库是什么
 
-A **courseware repository** for Peking University 《计算概论（B）》. Deliverables are weekly lecture notes (`.md`), slide decks (`.pptx`), and videos (`.mp4`) in `courseware/`. It is not a software project: no CI, no standard build system, and no root-level `requirements.txt`/`package.json`.
+北京大学《计算概论（B）》的**课件仓库**。交付物是 `courseware/` 下每周的讲义（`.md`）、课件（`.pptx`）和视频（`.mp4`）。这不是软件项目：没有 CI、没有标准构建系统，根目录也没有 `requirements.txt` / `package.json`。
 
-## Build / test / lint commands
+## 构建 / 测试 / 检查命令
 
-Always run the two main gates before declaring work done:
-
-```bash
-python3 tools/verify_courseware.py            # structural/regeneration checks (≈10s)
-python3 tools/verify_courseware.py --render   # plus render check; needs libreoffice + pdftotext
-python3 tools/check_note_code.py              # semantic correctness of lecture code
-```
-
-Useful content commands:
+宣布完成之前，必须跑过两道主闸门：
 
 ```bash
-cd courseware && python3 build_all.py 07 12   # regenerate selected weeks' .pptx
-cd courseware && python3 make_video.py 01 --check   # check video is up to date
+python3 tools/verify_courseware.py            # 结构 / 可重生成检查（约 10 秒）
+python3 tools/verify_courseware.py --render   # 另加渲染检查；需要 libreoffice + pdftotext
+python3 tools/check_note_code.py              # 讲义代码的语义正确性
 ```
 
-If you modify `courseware/deck.py` (layout engine), you **must** run `--render`.
+常用内容命令：
 
-## Generated artifacts: never edit directly
+```bash
+cd courseware && python3 build_all.py 07 12         # 重新生成指定周的 .pptx
+cd courseware && python3 make_video.py 01 --check   # 检查视频是否最新
+```
 
-- **`.pptx` files are generated artifacts.** Never hand-edit them. Regenerate through `build_all.py` (it calls Node for the JS decks).
-- Weeks 01–02: source is `courseware/content/wNN.py` (full `META` + `SLIDES`), rendered by `courseware/deck.py`.
-- Weeks 03–16: source is `courseware/pptx_builder/decks/wNN_*.js` (Node + pptxgenjs), registered in `build_all.JS_DECKS`. The matching `content/wNN.py` only keeps `META` for syllabus verification; `SLIDES` is empty.
-- `content/wNN_narration.md` is handwritten, but its trailing "时间控制表" is rewritten by `make_video.py`; do not hand-edit that section. Each `## P<N>｜...` section maps one-to-one to a slide page.
+改了 `courseware/deck.py`（版面引擎）就**必须**跑 `--render`。
 
-## Environment setup
+## 生成物：绝不直接编辑
 
-Python dependencies used by gates/scripts (no lockfile at root). On externally-managed systems, use a venv:
+- **`.pptx` 是生成物**，绝不手改，一律经 `build_all.py` 重新生成（JS 课件由它调用 Node）。
+- 第 01–02 周：源文件是 `courseware/content/wNN.py`（完整的 `META` + `SLIDES`），由 `courseware/deck.py` 渲染。
+- 第 03–16 周：源文件是 `courseware/pptx_builder/decks/wNN_*.js`（Node + pptxgenjs），登记在 `build_all.JS_DECKS`。对应的 `content/wNN.py` 只保留 `META` 供教学大纲校验，`SLIDES` 为空。
+- `content/wNN_narration.md` 手写，但文末的"时间控制表"由 `make_video.py` 重写，不要手改那一节。每个 `## P<N>｜...` 小节与课件的一页一一对应。
+
+## 环境配置
+
+闸门 / 脚本用到的 Python 依赖（根目录无锁文件）。系统 Python 受外部管理时，用 venv：
 
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install python-pptx edge-tts
 ```
 
-For weeks 03–16 slide generation and for `--render`:
+第 03–16 周的课件生成以及 `--render` 还需要：
 
 ```bash
 cd courseware/pptx_builder && npm install
-# libreoffice, poppler-utils (pdftotext/pdffonts/pdftoppm), ffmpeg must be on PATH
+# libreoffice、poppler-utils（pdftotext/pdffonts/pdftoppm）、ffmpeg 必须在 PATH 上
 ```
 
-`python-pptx` is required for gate checks 6 and 10; without it those checks are silently skipped. If you created a venv, run gates as `.venv/bin/python3 tools/verify_courseware.py`.
+第 6、10 项检查依赖 `python-pptx`：缺了它，第 6 项整项跳过、第 10 项只做源侧检查，闸门仍会显示"通过"，只在输出里打一行 ⚠️ 提示，容易看漏。建了 venv 的话，用 `.venv/bin/python3 tools/verify_courseware.py` 跑闸门。
 
-## Content conventions that differ from defaults
+## 与常规不同的内容约定
 
-- File naming: `YYYYMM_ADS_W<week>_<topic>.md/.pptx/.mp4` in `courseware/`.
-- Each weekly `META['info']` must contain the exact line `主题与学习重点：<课程指南表格原文>`; gate 3 compares it character-by-character against `Introduction_to_Computing_B_Course_Guide.md`.
-- Narration scripts (`content/wNN_narration.md`) are fed directly to TTS. Write symbols/formulas as spoken Chinese (e.g. "E 零二七五零", not `E02750`).
-- Fonts in slides: CJK uses `微软雅黑` / `Microsoft YaHei`; code uses `Consolas`.
-- Markdown emphasis (`**bold**`, `` `code` ``) is rendered into slides; it must not leak into non-monospace text on the final deck (gate 10 enforces this).
-- `ascii` diagrams cannot rely on spaces to align columns across Chinese characters, because CJK width ≠ Latin monospaced width. Use `table` slides instead (gate 11 enforces this).
+- 文件命名：`courseware/` 下为 `YYYYMM_ADS_W<周>_<主题>.md/.pptx/.mp4`。
+- 每周 `META['info']` 必须含一行 `主题与学习重点：<课程指南表格原文>`；第 3 项检查会与 `Introduction_to_Computing_B_Course_Guide.md` 逐字比对。
+- 旁白稿（`content/wNN_narration.md`）直接送 TTS。符号 / 公式要写成口语中文（如"E 零二七五零"，而不是 `E02750`）。
+- 课件字体：中文用 `微软雅黑` / `Microsoft YaHei`，代码用 `Consolas`。
+- Markdown 强调（`**粗体**`、`` `代码` ``）会被渲染进课件，最终课件的非等宽文字里不能残留这些标记（第 10 项检查）。
+- `ascii` 图不能靠空格跨中文字符对齐列：中文宽度 ≠ 拉丁等宽字符宽度。改用 `table` 页（第 11 项检查）。
 
-## Exam-paper rules (gate 9)
+## 样卷规则（第 9 项检查）
 
-Three exam papers (W05, W14, W16) share one fixed spec:
+三份样卷（W05、W14、W16）共用同一套固定规格：
 
-- 6 problems, labeled `T1`..`T6`.
-- Duration: `112 分钟`.
-- Do **not** write fixed score allocation in the body or difficulty ladder; actual scoring is handled separately.
-- Do not leave stale wording such as "约 120 分钟" or "2 小时".
+- 6 道题，编号 `T1`..`T6`。
+- 时长：`112 分钟`。
+- 正文和难度梯度里**不要**写固定分值，实际计分另行处理。
+- 不要残留"约 120 分钟""2 小时"之类的旧说法。
+- 换题时旧题挪进 `<!-- 历史草稿 ... -->` 注释。语义测试取当前正文要用 `visible_stdin_blocks()`；仍针对历史草稿的旧用例标为 `ARCHIVE`，或者删掉。
 
-## Problem title verification (gate 7)
+## 题名核实（第 7 项检查）
 
-Problem IDs referenced in lectures are checked against the existing corpus in `2025fall-cs101/*.md`, `ADS_problem_list_at_*.md`, and `ADS_matrices.md`. If you add a new OpenJudge problem, verify the title online and register it in `VERIFIED_TITLES` inside `tools/verify_courseware.py`; the offline corpus can be wrong or outdated.
+讲义中引用的题号会与 `2025fall-cs101/*.md`、`ADS_problem_list_at_*.md`、`ADS_matrices.md` 中的已有语料比对。新增 OpenJudge 题目时，要联网核实题名并登记到 `tools/verify_courseware.py` 的 `VERIFIED_TITLES`：离线语料可能有误或过时。
 
-## Repository etiquette
+## 仓库规矩
 
-- Work on `main` or in isolated branches/worktrees. Do not have two agents edit the same week's materials at the same time.
-- Use small, descriptive Chinese commit messages (e.g. `W09 回溯：开头接上第 8 周的调用树`).
-- Do not commit full 1080p `.mp4` files; only 720p `video/wNN-preview.mp4` previews and source files (`.md`, `.srt`, `.timeline.json`) are tracked.
-- Office lock files (`~$*.pptx`) and `.DS_Store` are ignored; do not add them.
-- The `collab/` scaffolding is active: record tasks in `collab/PLAN.md`, handoffs in `collab/HANDOFF.md`, and run `python3 tools/handoff.py --verify` before handing off.
+- 在 `main` 或独立分支 / worktree 上工作。不要让两个智能体同时改同一周的材料。
+- 提交说明用简短、具体的中文（如 `W09 回溯：开头接上第 8 周的调用树`）。
+- 不要提交 1080p 完整 `.mp4`（`courseware/.gitignore` 已忽略）；只入库 720p 预览 `video/wNN-preview.mp4` 和源文件（`.md`、`.srt`、`.timeline.json`）。
+- Office 锁文件（`~$*.pptx`）和 `.DS_Store` 已忽略，不要加进来。
+- `collab/` 协作脚手架在用：任务记在 `collab/PLAN.md`，交接记在 `collab/HANDOFF.md`，交接前跑 `python3 tools/handoff.py --verify`。
 
-## Common gotchas
+## 常见坑
 
-- `verify_courseware.py` check 6 compares *visible text* of regenerated slides against committed `.pptx`, not bytes or XML, because `python-pptx` output is not byte-reproducible.
-- `check_note_code.py` strips `input()`/`print()` from lecture code blocks and runs the rest. For exam-style blocks written as `def solve(): ... solve()`, use `stdin_solutions()` / `visible_stdin_blocks()` instead of `load_week()`.
-- `make_video.py --check` verifies structural freshness (slide/narration hashes), not whether the TTS sounds correct.
-- `2025fall-cs101/` is intentionally preserved as an offline title corpus; do not delete or rename its problem references without updating the verification logic.
+- `verify_courseware.py` 第 6 项比较的是重新生成的课件与已提交 `.pptx` 的**可见文字**，不是字节或 XML，因为 `python-pptx` 的输出不可逐字节复现。
+- `check_note_code.py` 会剥掉讲义代码块里的 `input()` / `print()` 再运行其余部分。样卷形式的代码块（`def solve(): ... solve()`，或直接读 stdin 的脚本）不能用 `load_week()`，要用 `stdin_solutions()` / `visible_stdin_blocks()`。
+- `make_video.py --check` 校验的是结构新鲜度（课件 / 旁白哈希），不管 TTS 念得对不对。
+- `2025fall-cs101/` 是有意保留的离线题名语料；删改其中的题目引用前，先同步更新校验逻辑。
