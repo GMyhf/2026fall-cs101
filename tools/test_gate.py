@@ -234,6 +234,25 @@ class GateFailureTests(unittest.TestCase):
         finally:
             sys.path.remove(str(ROOT / 'tools'))
 
+    def test_page_number_overlap_predicate(self):
+        """JS 课件的第 8 项判据：只认右下角页码，正文贴近底边但没碰到页码不算溢出。"""
+        sys.path.insert(0, str(ROOT / 'tools'))
+        try:
+            import verify_courseware as V
+            pw, ph = 720.0, 405.0                  # 10 x 5.625 in
+            num = (695.0, 381.0, 705.0, 390.0)     # lib.js 页码 (9.3in, 5.28in) 附近
+            self.assertTrue(V.is_page_number_word('47', *num[:2], pw, ph))
+            self.assertFalse(V.is_page_number_word('47', 300.0, 381.0, pw, ph))
+            self.assertFalse(V.is_page_number_word('T6', *num[:2], pw, ph))
+            # W06 第 47 页那种：离底边近，但在页码左边 —— 不算
+            self.assertFalse(V.overlaps_page_number((40.0, 372.0, 600.0, 377.0), num))
+            # 正文一直写到右下角、压住页码 —— 必须报
+            self.assertTrue(V.overlaps_page_number((650.0, 380.0, 700.0, 389.0), num))
+            # 正文底边恰在页码上方余量之外 —— 不算
+            self.assertFalse(V.overlaps_page_number((690.0, 370.0, 705.0, 379.0), num))
+        finally:
+            sys.path.remove(str(ROOT / 'tools'))
+
 
     # ---------------------------------------------------------- 第 9 项：机考规格
     # 三次月考与期末机考同为 6 题 / 112 分钟；固定分值另有核算办法。

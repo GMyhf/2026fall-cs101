@@ -607,6 +607,26 @@ def intrudes_into_footer(y_min_pt, y_max_pt):
             and y_max_pt > BODY_BOTTOM_PT + BODY_TOL_PT)
 
 
+# 第 03–16 周的 JS 课件（pptx_builder/lib.js 的 content()）页脚**只有右下角一个页码**，
+# 没有 deck.py 那条整宽页脚带。拿 deck.py 的版心底线去卡它会大量误报：
+# 正文离底边近一点、但离页码还远（W05 样卷各题第二页、W06 第 47 页）也被判溢出。
+# 所以 JS 课件改为从 PDF 里**定位页码本身**，只在正文与页码真正重叠时报错。
+PAGENO_PAD_PT = 1.5                           # 页码四周留的余量（PDF 点）
+
+
+def is_page_number_word(text, x_min, y_min, pw, ph):
+    """右下角的纯数字就是 lib.js 画的页码（x≈9.3in/10in，y≈5.28in/5.625in）。"""
+    return text.isdigit() and x_min > 0.85 * pw and y_min > 0.9 * ph
+
+
+def overlaps_page_number(word, num, pad=PAGENO_PAD_PT):
+    """两个 (xMin, yMin, xMax, yMax) 框是否相交（页码框四周外扩 pad）。"""
+    x, y, x2, y2 = word
+    nx, ny, nx2, ny2 = num
+    return (x < nx2 + pad and x2 > nx - pad
+            and y < ny2 + pad and y2 > ny - pad)
+
+
 def check_render(files):
     soffice = None
     for cand in ('soffice', 'libreoffice'):
@@ -626,6 +646,9 @@ def check_render(files):
         return
 
     pptxs = [files[wk][1] for wk in WEEKS if files[wk][1]]
+    import build_all
+    js_stems = {files[wk][1].stem for wk in WEEKS
+                if files[wk][1] and wk in build_all.JS_DECKS}
     with tempfile.TemporaryDirectory() as tmp:
         proc = subprocess.run(
             [soffice, '--headless', '--convert-to', 'pdf', '--outdir', tmp]
@@ -655,10 +678,14 @@ def check_render(files):
                 pw, ph = float(pw), float(ph)
                 # pdftotext 的坐标按 PDF 点数给出，换算到 deck.py 的 720x540 版面
                 sy = 540.0 / ph
-                for x, y, x2, y2 in re.findall(
-                        r'<word xMin="([\d.]+)" yMin="([\d.]+)" '
-                        r'xMax="([\d.]+)" yMax="([\d.]+)"', body):
-                    x, y, x2, y2 = float(x), float(y), float(x2), float(y2)
+                words = [(float(x), float(y), float(x2), float(y2), t)
+                         for x, y, x2, y2, t in re.findall(
+                             r'<word xMin="([\d.]+)" yMin="([\d.]+)" '
+                             r'xMax="([\d.]+)" yMax="([\d.]+)">(.*?)</word>', body)]
+                is_js = pdf.stem in js_stems
+                nums = [w for w in words
+                        if is_page_number_word(w[4], w[0], w[1], pw, ph)]
+                for x, y, x2, y2, t in words:
                     if x2 > pw + 0.5 or y2 > ph + 0.5 or x < -0.5 or y < -0.5:
                         fail('8 渲染',
                              f'{pdf.name} 第 {pno} 页：文字越出页面 '
@@ -667,6 +694,16 @@ def check_render(files):
                     # ⚠️ 只比对页面边界是不够的：正文压到页脚上仍然在页内。
                     #    W16 曾有 3 页代码压住页脚而这里报"0 处越界"，
                     #    直到把判据改成**版心**底部才暴露。
+                    if is_js:
+                        hit = next((n for n in nums if n[:4] != (x, y, x2, y2)
+                                    and overlaps_page_number((x, y, x2, y2), n[:4])),
+                                   None)
+                        if hit:
+                            fail('8 渲染',
+                                 f'{pdf.name} 第 {pno} 页：正文「{t}」压住右下角页码 {hit[4]}'
+                                 f'（文字底 {y2 * sy:.1f}pt，页码顶 {hit[1] * sy:.1f}pt）')
+                            break
+                        continue
                     if intrudes_into_footer(y * sy, y2 * sy):
                         fail('8 渲染',
                              f'{pdf.name} 第 {pno} 页：正文越出版心底部并侵入页脚区'
