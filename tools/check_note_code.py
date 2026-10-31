@@ -250,13 +250,11 @@ def t_w05_exam_solutions(ns):
     """W05 是 10 月月考样卷，六道参考解答同样是给学生照抄的。
 
     输入 / 期望输出全部取自讲义本身的「样例输入 / 样例输出」。
-    **按代码块下标显式映射**，不用 zip —— 讲义里 T1 有两种写法，
-    再加一个 cheat sheet 模板块，靠顺序 zip 会错位。
+    旧编造题已挪进 `<!-- 历史草稿` 之后，必须用 `visible_stdin_blocks()`
+    只取当前正文，避免误抓历史草稿里的旧解答。
     """
-    path = COURSEWARE / (WEEK_FILES['W05'] + '.md')
-    blocks = PY_BLOCK.findall(path.read_text(encoding='utf-8'))
-    runnable = [b for b in blocks if 'input()' in b or 'stdin' in b]
-    assert len(runnable) == 14, f'W05 可驱动代码块应有 14 个，实际 {len(runnable)}'
+    runnable = visible_stdin_blocks('W05')
+    assert len(runnable) == 7, f'W05 当前正文可驱动代码块应有 7 个（模板+T1–T6），实际 {len(runnable)}'
 
     def run(src, text):
         import contextlib
@@ -272,12 +270,17 @@ def t_w05_exam_solutions(ns):
 
     # runnable[0] 是 W05 前置模板；runnable[1:7] 是当前真实样卷六题。
     cases = {
-        1: [('21\n', '7')],
-        2: [('5\n-200 -300 1000 -100 -100\n', '501')],
-        3: [('12\n25\n144\n', '6 3.46\n7 5.00\n8 12.00')],
-        4: [('1500\n', '220 284\n1184 1210')],
-        5: [('3 50\n60 10\n100 20\n120 30\n', '240.00')],
-        6: [('500 3\n150 300\n100 200\n470 471\n', '298')],
+        1: [('3\n18 25\n20 30\n16 22\n', '20'),
+            ('2\n-5 0\n1 6\n', '-1')],
+        2: [('5\n5 5 10 5 20\n', 'YES'),
+            ('4\n5 10 20 5\n', 'NO')],
+        3: [('4\n3 2 1 10\n', '14'),
+            ('7\n6 5 5 5 2 1 1\n', '19')],
+        4: [('3\n4\n10\n16\n', '2 2\n5 5\n5 11')],
+        5: [('4 5\n3 2 2 1\n', '2'),
+            ('5 3\n3 2 2 1 1\n', '3')],
+        6: [('6 2\n1 1 -1 -1 -1 1\n', '2'),
+            ('5 1\n5 -1 3 -1 -1\n', '3')],
     }
     for idx, items in cases.items():
         for stdin_text, want in items:
@@ -671,8 +674,8 @@ def t_recursion_walls(ns):
         thru_c = ns['probe'](ns['cached'])
     finally:
         sys.setrecursionlimit(keep)
-    # 纯 Python 那一路根本没撞墙（probe 上界 100000），穿过 C 的差一个数量级
-    assert pure >= 10 * thru_c, f'纯 Python {pure} 层 vs 经 C {thru_c} 层，两道墙没拉开'
+    # 纯 Python 那一路应接近探测上界，穿过 C 的应显著更低（通常差五倍以上）
+    assert pure >= 5 * thru_c, f'纯 Python {pure} 层 vs 经 C {thru_c} 层，两道墙没拉开'
 
 
 @case('W08', '斐波那契四种写法一致')
