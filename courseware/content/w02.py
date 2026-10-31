@@ -58,7 +58,7 @@ ssh-keygen -t ed25519 -C "you@pku.edu.cn"   # 2) 生成并上传公钥（本机�
 ssh-copy-id user@ip
 
 scp local_file.py user@ip:~/       # 3) 传文件：本机 -> 云主机
-scp user@ip:~/result.txt ./        #          云主机 -> 本机
+scp user@ip:~/result.txt ./        #    反向：云主机 -> 本机
 ''', '学校云计算实验平台：clab.pku.edu.cn；本课程的实验环境是 xLab（第 2 节）'),
 
     ('code', '交换分区：内存不够时的救命稻草', '''sudo fallocate -l 4G /swapfile        # 建 4GB 文件
@@ -111,7 +111,8 @@ cat ~/.ssh/id_ed25519.pub    # 读取公钥，复制输出的一整行
     ('image', '节点卡片：本地连接入口', 'assets/w02/xlab-node-card.png', (),
      '复制卡片上的 SSH 命令到本机终端；装好 Remote-SSH 后，点「打开 VS Code」'),
 
-    ('code', '从本机终端 SSH 登录节点', '''ssh -p <端口> <用户名>@<课程IP>   # 直接复制节点卡片上自己的完整命令
+    ('code', '从本机终端 SSH 登录节点', '''# 直接复制节点卡片上自己的完整命令
+ssh -p <端口> <用户名>@<课程IP>
 # Are you sure ...?  输入 yes 回车；出现远程提示符 = 连接成功
 
 whoami                            # 当前用户

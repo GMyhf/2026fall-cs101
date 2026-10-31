@@ -73,7 +73,7 @@ titleSlide({
 print(bin(233))            # 整数：机器里只有 0 和 1
 print(-5 & 0xFF)           # 负数：-5 的低 8 位怎么变成了 251？
 print(ord('A'), ord('a'))  # 字符：其实是编号
-print("中".encode())       # 汉字：一个字 3 个字节`, 0.5, 1.1, 5.6, 1.75, { fontSize: 10.5, lang: "py" });
+print("中".encode())      # 汉字：一个字 3 个字节`, 0.5, 1.1, 5.6, 1.75, { fontSize: 10.5, lang: "py" });
   consoleBlock(s, "0.30000000000000004\n0b11101001\n251\n65 97\nb'\\xe4\\xb8\\xad'", 6.35, 1.1, 3.15, 1.75);
   const qs = [
     ["0.1 + 0.2", "十进制 0.1 在二进制里是无限循环小数", "4.4"],
@@ -889,7 +889,7 @@ print(len(s))            # 2  —— 按字符计数
 b = s.encode('utf-8')
 print(b, len(b))         # b'\\xe4\\xb8\\xadA' 4
 print(b.decode('utf-8'))         # 中A
-print(hex(ord('中')))            # 0x4e2d`, 0.5, 1.1, 6.2, 2.1, { fontSize: 11, lang: "py" });
+print(hex(ord(s[0])))            # 0x4e2d`, 0.5, 1.1, 6.2, 2.1, { fontSize: 11, lang: "py" });
   card(s, 6.95, 1.1, 2.55, 2.1, C.code);
   pill(s, "str  \"中A\"", 7.1, 1.25, 2.25, 0.4, C.green, C.white, 11);
   text(s, "encode ↓      ↑ decode", 7.1, 1.75, 2.25, 0.35, { fontSize: 10.5, bold: true, color: C.dark, align: "center", margin: 0 });
@@ -905,9 +905,9 @@ print(hex(ord('中')))            # 0x4e2d`, 0.5, 1.1, 6.2, 2.1, { fontSize: 11,
 // 5.2 mojibake
 {
   const s = content("5.2", "5 字符编码 · 乱码", "乱码的本质：用 A 编码存的字节，拿 B 编码去解");
-  codeBlock(s, `b = "你好".encode('utf-8')      # 6 个字节：e4 bd a0 e5 a5 bd
-print(b.decode('gbk'))          # 浣犲ソ  —— 按 GBK 每 2 字节一个字去解
-print(b.decode('utf-8'))        # 你好    —— 用对的编码就恢复了`, 0.5, 1.1, 9.0, 1.1, { fontSize: 11, lang: "py" });
+  codeBlock(s, `b = "你好".encode('utf-8')    # 6 个字节：e4 bd a0 e5 a5 bd
+print(b.decode('gbk'))          # 浣犲ソ：按 GBK 每 2 字节一个字去解
+print(b.decode('utf-8'))        # 你好：用对的编码就恢复了`, 0.5, 1.1, 9.0, 1.1, { fontSize: 11, lang: "py" });
   const flow = [["你好", C.green], ["UTF-8 编码", C.dark], ["e4 bd a0 e5 a5 bd", C.muted], ["GBK 解码", C.bad], ["浣犲ソ", C.bad]];
   flow.forEach((f, i) => {
     const x = 0.5 + i * 1.84;

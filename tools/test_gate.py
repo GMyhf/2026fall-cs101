@@ -244,6 +244,30 @@ class GateFailureTests(unittest.TestCase):
         finally:
             sys.path.remove(str(ROOT / 'tools'))
 
+    def test_mono_box_alignment_predicate(self):
+        """第 11 项产物侧：代码框里补空格对齐的注释列跨了中文要红，碰巧同列的 `++` 不算。"""
+        sys.path.insert(0, str(ROOT / 'tools'))
+        try:
+            import verify_courseware as V
+            # W03 p48 修之前的样子：`#` 列前面一行夹了 1 个汉字
+            self.assertEqual(V._misaligned([
+                "print(b.decode('utf-8'))         # 中A",
+                "print(hex(ord('中')))            # 0x4e2d"], need_space_before=True), 1)
+            # 修之后：前缀只剩 ASCII
+            self.assertEqual(V._misaligned([
+                "print(b.decode('utf-8'))         # 中A",
+                "print(hex(ord(s[0])))            # 0x4e2d"], need_space_before=True), 0)
+            # W05 p18 那种：`c10++` 与注释里的 `10+5` 碰巧同列，不是对齐 —— 不许误报
+            self.assertEqual(V._misaligned([
+                "            if (c5 > 0) c5--, c10++;",
+                "        } else {  // 20：优先找 10+5"], need_space_before=True), 0)
+            # 同样两行在 ascii 图的判据下（不要求前面是空白）照旧会被看到
+            self.assertGreater(V._misaligned([
+                "            if (c5 > 0) c5--, c10++;",
+                "        } else {  // 20：优先找 10+5"]), 0)
+        finally:
+            sys.path.remove(str(ROOT / 'tools'))
+
     def test_page_number_overlap_predicate(self):
         """JS 课件的第 8 项判据：只认右下角页码，正文贴近底边但没碰到页码不算溢出。"""
         sys.path.insert(0, str(ROOT / 'tools'))
@@ -455,7 +479,7 @@ class GateFailureTests(unittest.TestCase):
             proc = subprocess.run(
                 [sys.executable, 'tools/verify_courseware.py'], cwd=clone,
                 capture_output=True, text=True, timeout=300, env=gate_env())
-            self.assertIn('列对齐：5 张等宽图', proc.stdout, proc.stdout)
+            self.assertIn('列对齐：5 张 deck.py 等宽图', proc.stdout, proc.stdout)
             self.assertNotIn('[11 列对齐]', proc.stdout, proc.stdout)
 
     def test_semantic_suite_survives_an_open_stdin(self):

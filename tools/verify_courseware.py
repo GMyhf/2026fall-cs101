@@ -875,6 +875,16 @@ def deck_slides(py_path):
     return None
 
 
+def _text_frames(slide):
+    for shape in slide.shapes:
+        if shape.has_text_frame:
+            yield shape.text_frame
+        if getattr(shape, 'has_table', False) and shape.has_table:
+            for row in shape.table.rows:
+                for cell in row.cells:
+                    yield cell.text_frame
+
+
 def check_markup(files):
     # --- A 层：源里的 bullet / 表格单元格不得以空白（含全角空格）开头。
     #     用全角空格伪造"续行"会渲成一个只有项目符号、没有内容的空 bullet。
@@ -916,6 +926,16 @@ def check_markup(files):
         if pptx is None:
             continue
         for n, slide in enumerate(Presentation(str(pptx)).slides, 1):
+            # A 层只看得到 deck.py 的源（W01–02）；JS 课件的伪造续行只能在产物里抓：
+            # 非等宽段落以空白（含全角空格）开头，就是一个空项目符号 / 错位的单元格。
+            for tf in _text_frames(slide):
+                for para in tf.paragraphs:
+                    runs = [r for r in para.runs if r.text]
+                    if (runs and runs[0].font.name != MONO_FONT_NAME
+                            and LEADING_BLANK.search(para.text) and para.text.strip()):
+                        fail('10 版面标记',
+                             f'{pptx.name} 第 {n} 页：段落以空白开头 {para.text[:24]!r}'
+                             f' —— 伪造的续行会渲成空项目符号 / 错位，请拆成完整的两段')
             for shape in slide.shapes:
                 frames = []
                 if shape.has_text_frame:
@@ -986,6 +1006,36 @@ def _wide_count(text):
     return sum(1 for c in text if unicodedata.east_asian_width(c) in 'WF')
 
 
+def _misaligned(lines, need_space_before=False):
+    """各"显示列"上同一记号跨过的中文字数差的最大值；0 表示没有跨中文的对齐列。
+
+    need_space_before：代码里 `c10++`、`10+5` 这类记号会碰巧落在同一列，
+    并不是在对齐。真正"补空格对齐"的列，记号前面一定是空白 —— 代码框只认这种。
+    """
+    cols = {}
+    for line in lines:
+        for tok in ALIGN_TOKENS:
+            for m in re.finditer(re.escape(tok), line):
+                if m.start() == 0:
+                    continue          # 行首，前缀是空的，天然对齐
+                prefix = line[:m.start()]
+                if need_space_before and not prefix[-1].isspace():
+                    continue
+                cols.setdefault((tok, _display_width(prefix)), set()).add(
+                    _wide_count(prefix))
+    return max((max(v) - min(v) for v in cols.values() if len(v) > 1), default=0)
+
+
+def _mono_blocks(slide):
+    """一页里所有"整段都是等宽字体"的多行文本框，按行产出 list[str]。"""
+    for tf in _text_frames(slide):
+        runs = [r for p in tf.paragraphs for r in p.runs if r.text.strip()]
+        if runs and all(r.font.name == MONO_FONT_NAME for r in runs):
+            lines = [''.join(r.text for r in p.runs) for p in tf.paragraphs]
+            if len(lines) > 1:
+                yield lines
+
+
 def check_alignment(files):
     checked = ragged = 0
     for wk, (_md, _pptx, py) in sorted(files.items()):
@@ -998,17 +1048,7 @@ def check_alignment(files):
             if slide[0] != 'ascii' or len(slide) < 3:
                 continue
             checked += 1
-            cols = {}
-            for line in str(slide[2]).splitlines():
-                for tok in ALIGN_TOKENS:
-                    for m in re.finditer(re.escape(tok), line):
-                        if m.start() == 0:
-                            continue          # 行首，前缀是空的，天然对齐
-                        prefix = line[:m.start()]
-                        cols.setdefault((tok, _display_width(prefix)), set()).add(
-                            _wide_count(prefix))
-            worst = max((max(v) - min(v) for v in cols.values() if len(v) > 1),
-                        default=0)
+            worst = _misaligned(str(slide[2]).splitlines())
             if not worst:
                 continue
             if (py.stem, str(slide[1])) in KNOWN_RAGGED:
@@ -1019,7 +1059,37 @@ def check_alignment(files):
                  f'跨过了不同的中文字数（最多相差 {worst} 个汉字），'
                  f'真实渲染必然对不齐。改用表格，或把要对齐的那一列'
                  f'挪到中文**前面**（前缀只剩 ASCII 就能对准）')
-    note(f'列对齐：{checked} 张等宽图，'
+    # --- 产物侧：所有课件里的多行等宽框（代码、ascii 图、控制台输出）。
+    #     W03–16 的源是 JS、SLIDES 为空，上面那段对它们一张图都看不到；
+    #     W01–02 的 `code` 页也不在上面的检查范围里。
+    #     deck.py 的 ascii 页在两边都会被看到，挂账名单两边共用（按页面上的标题文字匹配）。
+    try:
+        from pptx import Presentation
+    except ImportError:
+        note('⚠️ 未安装 python-pptx，第 11 项**只查了 deck.py 的 ascii 源**；'
+             '课件里的代码框 / JS 课件本次未验')
+        note(f'列对齐：{checked} 张等宽图，'
+             f'{ragged} 张为 T-018 挂账的历史遗留，其余无跨中文的对齐列')
+        return
+    boxes = 0
+    for wk, (_md, pptx, _py) in sorted(files.items()):
+        if pptx is None:
+            continue
+        mod = f'w{wk}'
+        for n, slide in enumerate(Presentation(str(pptx)).slides, 1):
+            texts = {tf.text.strip() for tf in _text_frames(slide)}
+            for lines in _mono_blocks(slide):
+                boxes += 1
+                worst = _misaligned(lines, need_space_before=True)
+                if not worst:
+                    continue
+                if any((mod, t) in KNOWN_RAGGED for t in texts):
+                    continue
+                fail('11 列对齐',
+                     f'{pptx.name} 第 {n} 页：等宽框里有一列补空格对齐、'
+                     f'却跨过了不同的中文字数（最多相差 {worst} 个汉字），'
+                     f'真实渲染对不齐。把注释挪到单独一行，或让对齐列前面只剩 ASCII')
+    note(f'列对齐：{checked} 张 deck.py 等宽图 + 课件里 {boxes} 个多行等宽框，'
          f'{ragged} 张为 T-018 挂账的历史遗留，其余无跨中文的对齐列')
 
 

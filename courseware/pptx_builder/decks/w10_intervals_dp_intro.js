@@ -351,9 +351,9 @@ def fixed_odd(tri):
     return best
 
 
-print('暴力枚举 :', brute_odd(TRI))     # 17
+print('暴力枚举 :', brute_odd(TRI))
 print('朴素 DP  :', naive_odd(TRI))     # -1  —— 说「无解」，可是明明有
-print('补一维后 :', fixed_odd(TRI))     # 17`, 0.5, 1.05, 6.3, 3.0, { fontSize: 9.6, lang: "py" });
+print('补一维后 :', fixed_odd(TRI))`, 0.5, 1.05, 6.3, 3.0, { fontSize: 9.6, lang: "py" });
   consoleBlock(s, "暴力枚举 : 17\n朴素 DP  : -1\n补一维后 : 17\n\n2000 组随机三角形：\n补一维后的 DP == 暴力枚举", 7.0, 1.05, 2.5, 2.4, 10.5);
   text(s, "再对 2000 组随机三角形做断言 `assert fixed_odd(t) == brute_odd(t)`，全部通过——**补一维后的 DP 与暴力枚举完全一致**。", 0.5, 4.2, 9.0, 0.85, { fontSize: 11.5, lsm: 1.2 });
 }
