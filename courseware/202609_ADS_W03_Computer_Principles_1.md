@@ -345,7 +345,7 @@ print(len(s))                    # 2  —— Python 字符串按字符计数
 b = s.encode('utf-8')
 print(b, len(b))                 # b'\xe4\xb8\xadA' 4  —— 字节数不同
 print(b.decode('utf-8'))         # 中A
-print(hex(ord('中')))            # 0x4e2d
+print(hex(ord(s[0])))            # 0x4e2d
 ```
 
 **乱码的本质**：用 A 编码存的字节，拿 B 编码去解。文件读写时显式指定编码：
