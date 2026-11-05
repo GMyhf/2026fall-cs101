@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-10-29 17:38 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-11-05 13:33 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -17,6 +17,12 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 | 11 |       |       | - |          |
+| 11 | T01661:帮助 Jimmy   | dfs      | Tough | http://cs101.openjudge.cn/pctbook/T01661/          |
+| 1107 | 200.岛屿数量      | dfs      | Medium | https://leetcode.cn/problems/number-of-islands/          |
+| 1106 | 02748: 全排列      | dfs, backtracking       | Medium | http://cs101.openjudge.cn/pctbook/M02748/          |
+| 1105 | 02760: 数字三角形     | dp, dfs      | Medium | http://cs101.openjudge.cn/pctbook/M02760/          |
+| 1104 | 1829D. Gold Rush      | brute force, dfs and similar, dp, implementation       | 1000 | https://codeforces.com/problemset/problem/1829/D          |
+| 1103 | sy115: 斐波拉契数列       | recursion       | Easy | https://sunnywhy.com/sfbj/4/3/115          |
 | 1102 | 78.子集      | backtracking       | Medium | https://leetcode.cn/problems/subsets/          |
 | 1101 | 04110: 圣诞老人的礼物 | greedy     | Medium | http://cs101.openjudge.cn/pctbook/M04110/          |
 | 1030 | 1852: Ants  | physics, greedy      | Medium | http://cs101.openjudge.cn/pctbook/M01852          |
