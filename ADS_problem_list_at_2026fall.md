@@ -17,7 +17,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 | 11 |       |       | - |          |
-| 11 | T01661:帮助 Jimmy   | dfs      | Tough | http://cs101.openjudge.cn/pctbook/T01661/          |
+| 1108 | T01661:帮助 Jimmy   | dfs      | Tough | http://cs101.openjudge.cn/pctbook/T01661/          |
 | 1107 | 200.岛屿数量      | dfs      | Medium | https://leetcode.cn/problems/number-of-islands/          |
 | 1106 | 02748: 全排列      | dfs, backtracking       | Medium | http://cs101.openjudge.cn/pctbook/M02748/          |
 | 1105 | 02760: 数字三角形     | dp, dfs      | Medium | http://cs101.openjudge.cn/pctbook/M02760/          |
