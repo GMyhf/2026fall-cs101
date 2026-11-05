@@ -23,8 +23,9 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 1105 | 02760: 数字三角形     | dp, dfs      | Medium | http://cs101.openjudge.cn/pctbook/M02760/          |
 | 1104 | 1829D. Gold Rush      | brute force, dfs and similar, dp, implementation       | 1000 | https://codeforces.com/problemset/problem/1829/D          |
 | 1103 | sy115: 斐波拉契数列       | recursion       | Easy | https://sunnywhy.com/sfbj/4/3/115          |
-| 1102 | 78.子集      | backtracking       | Medium | https://leetcode.cn/problems/subsets/          |
-| 1101 | 04110: 圣诞老人的礼物 | greedy     | Medium | http://cs101.openjudge.cn/pctbook/M04110/          |
+| 1102 | 02811:熄灯问题 | brute force      | Tough | http://cs101.openjudge.cn/pctbook/T02811/          |
+| 1101 | 78.子集      | backtracking       | Medium | https://leetcode.cn/problems/subsets/          |
+| 1131 | 04110: 圣诞老人的礼物 | greedy     | Medium | http://cs101.openjudge.cn/pctbook/M04110/          |
 | 1030 | 1852: Ants  | physics, greedy      | Medium | http://cs101.openjudge.cn/pctbook/M01852          |
 | 1029 | 189A.Cut Ribbon  | brute force, dp   | 1300 | https://codeforces.com/problemset/problem/189/A          |
 | 1028 | M3882.网格图中最小异或路径 | dfs | Medium | https://leetcode.cn/problems/minimum-xor-path-in-a-grid/          |
