@@ -843,6 +843,32 @@ def t_dsu(ns):
             assert d.count == len(groups)
 
 
+@case('W09', 'DSA 期中题：负 size 数组的 find / union 与手算一致，且与朴素连通性一致')
+def t_dsu_neg_size(ns):
+    find, union = ns['find'], ns['union']
+    p = [-4, 0, 1, 0, -3, 4, 5, -2, 7, -1]
+    union(p, 2, 6)
+    assert p == [-7, 0, 0, 0, 0, 4, 4, -2, 7, -1], p
+    find(p, 6)
+    assert p == [-7, 0, 0, 0, 0, 4, 0, -2, 7, -1], p
+    rnd = random.Random(31)
+    for _ in range(200):
+        n = rnd.randint(1, 12)
+        p = [-1] * n
+        groups = [{i} for i in range(n)]
+        for _ in range(rnd.randint(0, 20)):
+            a, b = rnd.randrange(n), rnd.randrange(n)
+            union(p, a, b)
+            ga = next(g for g in groups if a in g)
+            gb = next(g for g in groups if b in g)
+            if ga is not gb:
+                ga |= gb
+                groups.remove(gb)
+            for g in groups:                         # 根上存 -size，且同组同根
+                r = find(p, next(iter(g)))
+                assert p[r] == -len(g) and all(find(p, x) == r for x in g)
+
+
 @case('W09', '食物链：与朴素约束求解一致')
 def t_food_chain(ns):
     f = ns['food_chain']
