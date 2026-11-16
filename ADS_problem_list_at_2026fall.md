@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-11-11 13:33 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-11-16 20:59 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -17,6 +17,10 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 | 11 |       |       | - |          |
+| 1118 | 131.分割回文串   | dp, backtracking  | Medium | https://leetcode.cn/problems/palindrome-partitioning/          |
+| 1117 | 04123:马走日   | backtracking    | Medium | http://cs101.openjudge.cn/pctbook/M04123/          |
+| 1116 | 27104:世界杯只因      | intervals   | Tough | http://cs101.openjudge.cn/pctbook/T27104/          |
+| 1115 | M1024. 视频拼接      | intervals   | Medium | https://leetcode.cn/problems/video-stitching/          |
 | 1114 | 85.最大矩形      | monotonic stack, dp    | Tough | https://leetcode.cn/problems/maximal-rectangle/description/          |
 | 1113 | 84.柱状图中最大的矩形  | monotonic stack  | Tough | https://leetcode.cn/problems/largest-rectangle-in-histogram/description/          |
 | 1112 | 02787: 算24   | recursion       | Tough | http://cs101.openjudge.cn/practice/02787          |
