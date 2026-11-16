@@ -24,6 +24,7 @@ https://github.com/GMyhf/2026fall-cs101/
 同名成对，内容依据 [《计算概论（B）》课程指南](Introduction_to_Computing_B_Course_Guide.md)
 的「课程安排」表编写。第 16 周含**期末上机考试的命题方案与建议样卷**。
 
+- **知识点动画短片**（3B1B 风格，按周次排列，页面内直接播放）：https://infomall.zhengmao.ltd/cs101-anim/ ；两门课总入口 https://infomall.zhengmao.ltd/anim/
 - 文件清单与页数：[courseware/README.md](courseware/README.md)
 - 课件由脚本生成（`courseware/content/wNN.py` → `courseware/build_all.py`），
   **请勿手工编辑 `.pptx`**
