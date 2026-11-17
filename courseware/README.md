@@ -46,6 +46,12 @@ https://github.com/GMyhf/2026fall-cs101
 第 3–16 周已改用 `pptx_builder` 重排、页数普遍增加；旁白讲稿已按新页数重写，视频已重新合成。
 16 周视频共 620 节（一节对应一页），`make_video.py NN --check` 全部通过。
 
+**附加课件**（不对应课程指南的某一周，登记在 `build_all.EXTRA_DECKS`，`python3 build_all.py nov` 生成；不计入上面的合计，暂无视频）：
+
+| 键 | 文件名（`.md` / `.pptx` 同名） | 课件页数 | 主题 |
+| ---- | ---- | ---- | ---- |
+| nov | `202611_ADS_November_Exam_Review` | 28 页 | 11 月月考讲评（6 题，C++ / Python 双解）、第 6–10 周知识清单、常见失分点 |
+
 ---
 
 ## 2 源码与再生成

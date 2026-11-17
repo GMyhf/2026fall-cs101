@@ -93,6 +93,12 @@ VERIFIED_TITLES = {
     '31297': ('恒星共振裂变', '联网核实（2026-10-31，2026 寒露月考 / W05 样卷）'),
     '31296': ('“淹园”救援', '联网核实（2026-10-31，2026 寒露月考 / W05 样卷）'),
     '31298': ('警察招募又来了', '联网核实（2026-10-31，2026 寒露月考 / W05 样卷）'),
+    '31529': ('双重回文', '联网核实（2026-11-16，2026 11 月月考讲评）'),
+    '31530': ('图书馆选座', '联网核实（2026-11-16，2026 11 月月考讲评）'),
+    '31531': ('箭头迷阵', '联网核实（2026-11-16，2026 11 月月考讲评）'),
+    '31532': ('牌堆魔术', '联网核实（2026-11-16，2026 11 月月考讲评）'),
+    '31533': ('渗透实验', '联网核实（2026-11-16，2026 11 月月考讲评）'),
+    '31534': ('括号区间审计', '联网核实（2026-11-16，2026 11 月月考讲评）'),
 }
 
 failures = []
@@ -117,6 +123,21 @@ def js_deck_sources():
         sys.path.insert(0, str(COURSEWARE))
     import build_all
     return {wk: COURSEWARE / rel for wk, rel in build_all.JS_DECKS.items()}
+
+
+def extra_files():
+    """不按周编号的附加课件（`build_all.EXTRA_DECKS`，如 11 月月考讲评）：
+    {键: (md, pptx, None)}。没有 content/wNN.py、不对应课程指南某一行，
+    所以不进第 2 / 3 项；第 1、6、7、9、10、11 项照常检查。"""
+    if str(COURSEWARE) not in sys.path:
+        sys.path.insert(0, str(COURSEWARE))
+    import build_all
+    out = {}
+    for key, (stem, _js) in getattr(build_all, 'EXTRA_DECKS', {}).items():
+        md, pptx = COURSEWARE / f'{stem}.md', COURSEWARE / f'{stem}.pptx'
+        out[key] = (md if md.exists() else None,
+                    pptx if pptx.exists() else None, None)
+    return out
 
 
 def read(path):
@@ -189,9 +210,17 @@ def check_pairing(files):
             fail('1 配对', f'第 {wk} 周缺少课件 .pptx')
         if py is None:
             fail('1 配对', f'第 {wk} 周缺少内容模块 content/w{wk}.py')
+    if str(COURSEWARE) not in sys.path:
+        sys.path.insert(0, str(COURSEWARE))
+    import build_all
+    for key, (stem, _js) in getattr(build_all, 'EXTRA_DECKS', {}).items():
+        for ext in ('.md', '.pptx'):
+            if not (COURSEWARE / f'{stem}{ext}').exists():
+                fail('1 配对', f'附加课件 {key} 缺少 {stem}{ext}')
     # 反向：courseware 下不应有孤儿 md / pptx
-    known_md = {f.name for f, _, _ in files.values() if f}
-    known_pptx = {f.name for _, f, _ in files.values() if f}
+    every = list(files.values()) + list(extra_files().values())
+    known_md = {f.name for f, _, _ in every if f}
+    known_pptx = {f.name for _, f, _ in every if f}
     for f in COURSEWARE.glob('*.md'):
         if f.name != 'README.md' and f.name not in known_md:
             fail('1 配对', f'孤儿讲义（不在 build_all.WEEKS 中）：{f.name}')
@@ -423,6 +452,20 @@ def check_regenerate(files):
                      f'第 {wk} 周课件与 {src} 不一致 —— '
                      f'源改过但 .pptx 没重建？\n        {diff}\n'
                      f'        修法：cd courseware && python3 build_all.py {wk}')
+        for key, (_md, committed, _py) in extra_files().items():
+            if committed is None:
+                continue
+            out = Path(tmp) / f'{key}.pptx'
+            try:
+                build_all.build_js(key, out)
+            except (OSError, subprocess.CalledProcessError) as e:
+                fail('6 可重生成', f'附加课件 {key} node 生成失败：{e}')
+                continue
+            if pptx_texts(out) != pptx_texts(committed):
+                fail('6 可重生成',
+                     f'附加课件 {committed.name} 与 {build_all.EXTRA_DECKS[key][1]} 不一致 —— '
+                     f'源改过但 .pptx 没重建？\n'
+                     f'        修法：cd courseware && python3 build_all.py {key}')
 
 
 # ---------------------------------------------------------------- 检查 7
@@ -524,13 +567,13 @@ def check_problem_titles(files):
         fail('7 题号题名', '未能从仓库既有材料中抽取到任何题号↔题名语料')
         return
     checked = unknown = 0
+    mds = ([files.get(wk, (None,))[0] for wk in WEEKS]
+           + [md for md, _p, _y in extra_files().values()])
     verified = sum(
-        1 for wk in WEEKS if files.get(wk, (None,))[0]
-        for num, _t in (REF.findall(read(files[wk][0]))
-                        + table_refs(read(files[wk][0])))
+        1 for md in mds if md
+        for num, _t in (REF.findall(read(md)) + table_refs(read(md)))
         if num in VERIFIED_TITLES)
-    for wk in WEEKS:
-        md = files.get(wk, (None,))[0]
+    for md in mds:
         if md is None:
             continue
         refs = REF.findall(read(md)) + table_refs(read(md))
@@ -955,7 +998,8 @@ def check_markup(files):
                                      f'{pptx.name} 第 {n} 页：非等宽文字里印出了 '
                                      f'Markdown 记号 {run.text[:40]!r}')
     if not leaked:
-        note('版面标记：16 份课件的非等宽文字里没有 `**` / 反引号泄漏')
+        n_decks = sum(1 for _m, p, _y in files.values() if p)
+        note(f'版面标记：{n_decks} 份课件的非等宽文字里没有 `**` / 反引号泄漏')
 
 
 # ---------------------------------------------------------------- 检查 11
@@ -1112,9 +1156,10 @@ def main():
     check_problem_titles(files)
     if opts.render:
         check_render(files)
-    check_exam_spec(files)
-    check_markup(files)
-    check_alignment(files)
+    with_extra = {**files, **extra_files()}
+    check_exam_spec(with_extra)
+    check_markup(with_extra)
+    check_alignment(with_extra)
 
     print('=' * 68)
     for n in notes:

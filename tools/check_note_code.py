@@ -43,6 +43,8 @@ WEEK_FILES = {
     'W14': '202612_ADS_W14_AI_Literacy_Exam_Recap',
     'W15': '202612_ADS_W15_Knowledge_Graph_Neural_Network',
     'W16': '202612_ADS_W16_Review_Final_Machine_Exam',
+    # 不按周编号的附加讲义（build_all.EXTRA_DECKS）
+    'NOV': '202611_ADS_November_Exam_Review',
 }
 
 import re
@@ -321,6 +323,127 @@ def t_w05_police_brute(ns):
         text = f'{n} {k}\n' + ' '.join(map(str, a)) + '\n'
         got = int(run_stdin_solution(src, text))
         assert got == brute(k, a), (n, k, a, got, brute(k, a))
+
+
+# ------------------------------------------------------------------- NOV
+@case('NOV', '11 月月考 T1–T6 参考解答 vs 讲义样例')
+def t_nov_samples(ns):
+    """六道 Python 参考解答都是直接读 stdin 的脚本，原样喂样例。"""
+    blocks = visible_stdin_blocks('NOV')
+    assert len(blocks) == 6, f'NOV 可驱动代码块应有 6 个（T1–T6），实际 {len(blocks)}'
+    cases = [
+        [('5\n', '3 5'), ('100\n', '7 99')],
+        [('5 2\n00000\n', '2\n10100'), ('4 2\n0100\n', '1\n0101')],
+        [('2 2\nUD\nDU\n', '2'), ('3 3\nURD\nLDR\nRUL\n', '5')],
+        [('4\n', '4 1 3 2'), ('5\n', '3 1 5 2 4')],
+        [('3 3 3\n1 1\n2 1\n3 1\n', '3'),
+         ('3 3 4\n1 1\n1 2\n1 3\n2 2\n', '-1')],
+        [('(()())\n5\n1 6\n2 5\n1 5\n3 4\n4 4\n', 'YES\nYES\nNO\nNO\nNO'),
+         ('())(()\n4\n1 2\n2 5\n1 6\n3 6\n', 'YES\nNO\nNO\nNO')],
+    ]
+    for k, (src, items) in enumerate(zip(blocks, cases), 1):
+        for stdin_text, want in items:
+            got = run_stdin_solution(src, stdin_text)
+            assert got == want, f'T{k}: 输入 {stdin_text!r} -> {got!r}，讲义承诺 {want!r}'
+
+
+@case('NOV', '11 月月考 T2–T6 参考解答 vs 按题面暴力（随机对拍）')
+def t_nov_brute(ns):
+    """参照模型都按题面最直白的意思写，与讲义里的优化做法互相独立：
+    T2 每人从头扫、T3 逐格走 nm+1 步、T4 正着模拟位置、
+    T5 每步从第 1 行 BFS、T6 逐个子串数括号。"""
+    from collections import deque
+    b = visible_stdin_blocks('NOV')
+    rnd = random.Random(31529)
+
+    def seats(n, m, s):
+        s, c = list(s), 0
+        for _ in range(m):
+            for i in range(n):
+                if (s[i] == '0' and (i == 0 or s[i - 1] == '0')
+                        and (i == n - 1 or s[i + 1] == '0')):
+                    s[i], c = '1', c + 1
+                    break
+        return f"{c}\n{''.join(s)}"
+
+    def arrows(n, m, g):
+        mv = {'U': (-1, 0), 'D': (1, 0), 'L': (0, -1), 'R': (0, 1)}
+        c = 0
+        for a in range(n):
+            for bb in range(m):
+                i, j = a, bb
+                for _ in range(n * m + 1):
+                    if not (0 <= i < n and 0 <= j < m):
+                        c += 1
+                        break
+                    di, dj = mv[g[i][j]]
+                    i, j = i + di, j + dj
+        return str(c)
+
+    def cards(n):
+        pos, res = deque(range(n)), [0] * n
+        for k in range(1, n + 1):
+            pos.append(pos.popleft())
+            res[pos.popleft()] = k
+        return ' '.join(map(str, res))
+
+    def perc(n, m, ops):
+        op = set()
+        for k, cell in enumerate(ops, 1):
+            op.add(cell)
+            seen = {x for x in op if x[0] == 1}
+            dq = deque(seen)
+            while dq:
+                r, c = dq.popleft()
+                if r == n:
+                    return str(k)
+                for p in ((r + 1, c), (r - 1, c), (r, c + 1), (r, c - 1)):
+                    if p in op and p not in seen:
+                        seen.add(p)
+                        dq.append(p)
+        return '-1'
+
+    def brackets(s, qs):
+        out = []
+        for l, r in qs:
+            bal, ok = 0, True
+            for ch in s[l - 1:r]:
+                bal += 1 if ch == '(' else -1
+                ok = ok and bal >= 0
+            out.append('YES' if ok and bal == 0 else 'NO')
+        return '\n'.join(out)
+
+    for _ in range(120):
+        n, m = rnd.randint(1, 12), rnd.randint(1, 8)
+        s = ''.join(rnd.choice('0001') for _ in range(n))
+        assert run_stdin_solution(b[1], f'{n} {m}\n{s}\n') == seats(n, m, s), (n, m, s)
+
+        n, m = rnd.randint(1, 5), rnd.randint(1, 5)
+        g = [''.join(rnd.choice('UDLR') for _ in range(m)) for _ in range(n)]
+        text = f'{n} {m}\n' + '\n'.join(g) + '\n'
+        assert run_stdin_solution(b[2], text) == arrows(n, m, g), g
+
+        n = rnd.randint(1, 40)
+        assert run_stdin_solution(b[3], f'{n}\n') == cards(n), n
+
+        n, m = rnd.randint(1, 5), rnd.randint(1, 5)
+        cells = [(r, c) for r in range(1, n + 1) for c in range(1, m + 1)]
+        rnd.shuffle(cells)
+        ops = cells[:rnd.randint(1, n * m)]
+        text = f'{n} {m} {len(ops)}\n' + ''.join(f'{r} {c}\n' for r, c in ops)
+        assert run_stdin_solution(b[4], text) == perc(n, m, ops), (n, m, ops)
+
+        n = rnd.randint(1, 12)
+        s = ''.join(rnd.choice('()') for _ in range(n))
+        qs = [(l, rnd.randint(l, n)) for l in (rnd.randint(1, n) for _ in range(15))]
+        text = f'{s}\n{len(qs)}\n' + ''.join(f'{l} {r}\n' for l, r in qs)
+        assert run_stdin_solution(b[5], text) == brackets(s, qs), (s, qs)
+
+    # T1：n 较小时与逐个判定的暴力比
+    for n in (1, 2, 3, 9, 33, 585, 2000):
+        xs = [i for i in range(1, n + 1)
+              if str(i) == str(i)[::-1] and bin(i)[2:] == bin(i)[:1:-1]]
+        assert run_stdin_solution(b[0], f'{n}\n') == f'{len(xs)} {xs[-1]}', n
 
 
 # ------------------------------------------------------------------- W06

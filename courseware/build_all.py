@@ -4,6 +4,7 @@
 用法：
     python3 build_all.py           # 生成全部
     python3 build_all.py 01 07     # 只生成指定周次
+    python3 build_all.py nov       # 只生成不按周编号的附加课件（见 EXTRA_DECKS）
 """
 
 import importlib
@@ -56,10 +57,19 @@ JS_DECKS = {
     '16': 'pptx_builder/decks/w16_review_final_machine_exam.js',
 }
 
+# 不对应课程指南某一周的附加课件：键 -> (输出文件名, deck 脚本)。
+# 例如 11 月月考讲评（课程指南只写「10 月、11 月和 12 月初设阶段性月考」，
+# 10 月、12 月的讲评分别并在第 5、14 周，11 月的没有专属周次）。
+# 闸门第 1 项把这些文件当作已登记，不报孤儿；第 7 项也会核对其中的题号题名。
+EXTRA_DECKS = {
+    'nov': ('202611_ADS_November_Exam_Review',
+            'pptx_builder/decks/november_exam_review.js'),
+}
+
 
 def build_js(wk, out):
     """用 node 跑 pptx_builder 的 deck 脚本，返回页数。"""
-    script = HERE / JS_DECKS[wk]
+    script = HERE / (EXTRA_DECKS[wk][1] if wk in EXTRA_DECKS else JS_DECKS[wk])
     subprocess.run(['node', str(script), str(out)], check=True,
                    cwd=script.parent.parent, stdout=subprocess.DEVNULL)
     from pptx import Presentation
@@ -67,12 +77,16 @@ def build_js(wk, out):
 
 
 def main(argv):
-    wanted = argv or sorted(WEEKS)
+    wanted = argv or sorted(WEEKS) + sorted(EXTRA_DECKS)
     for wk in wanted:
-        out = HERE / (WEEKS[wk] + '.pptx')
-        if wk in JS_DECKS:
+        if wk in EXTRA_DECKS:
+            out = HERE / (EXTRA_DECKS[wk][0] + '.pptx')
+            pages = build_js(wk, out)
+        elif wk in JS_DECKS:
+            out = HERE / (WEEKS[wk] + '.pptx')
             pages = build_js(wk, out)
         else:
+            out = HERE / (WEEKS[wk] + '.pptx')
             mod = importlib.import_module(f'w{wk}')
             pages = deck.build(mod.META, mod.SLIDES, str(out))
         print(f"{out.name}  ({pages} slides)")
