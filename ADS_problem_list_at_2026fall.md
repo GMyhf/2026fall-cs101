@@ -1,5 +1,5 @@
 ## 2026fall 计概（Algo DS）每日选作
-*Updated 2026-11-16 20:59 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
+*Updated 2026-11-20 20:59 GMT+8 Compiled by Hongfei Yan (2026 Summer)*  
 https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.md
 
 题解，https://fuynaloft.github.io/sol101/ ✅
@@ -17,6 +17,20 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
 | 11 |       |       | - |          |
+| 1201 | 02456: Aggressive cows     | binary search    | Medium | http://cs101.openjudge.cn/practice/02456         |
+| 1130 | 1760.袋子里最少数目的球    | binary search    | Medium | https://leetcode.cn/problems/minimum-limit-of-balls-in-a-bag/          |
+| 1129 | 455A. Boredom | dp | 1500  | https://codeforces.com/problemset/problem/455/A    |
+| 1128 | 1195C. Basketball Exercise | dp | 1400  | https://codeforces.com/problemset/problem/1195/C    |
+| 1127 |698A. Vacations | dp | 1400  | https://codeforces.com/problemset/problem/698/A    |
+| 1126 | 20744:土豪购物  | dp      | Medium | http://cs101.openjudge.cn/pctbook/M20744/          |
+| 1125 | 152.乘积最大子数组| dp     | Medium | https://leetcode.cn/problems/maximum-product-subarray/         |
+| 1124 | 139.单词拆分      | dp     | Medium | https://leetcode.cn/problems/word-break/         |
+| 1123 | 279.完全平方数    | dp     | Medium | https://leetcode.cn/problems/perfect-squares/          |
+| 1122 | 198.打家劫舍      | dp     | Medium | https://leetcode.cn/problems/house-robber/           |
+| 1121 | 02945:拦截导弹    | dp      | Medium | http://cs101.openjudge.cn/pctbook/M02945         |
+| 1120 | 433B. Kuriyama Mirai's Stones  | dp, implementation, sorting | 1200  | https://codeforces.com/contest/433/problem/B
+  |
+| 1119 | 118.杨辉三角      | dp       | Easy | https://leetcode.cn/problems/pascals-triangle/          |
 | 1118 | 131.分割回文串   | dp, backtracking  | Medium | https://leetcode.cn/problems/palindrome-partitioning/          |
 | 1117 | 04123:马走日   | backtracking    | Medium | http://cs101.openjudge.cn/pctbook/M04123/          |
 | 1116 | 27104:世界杯只因      | intervals   | Tough | http://cs101.openjudge.cn/pctbook/T27104/          |
