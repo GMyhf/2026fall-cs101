@@ -28,8 +28,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 | 1123 | 279.完全平方数    | dp     | Medium | https://leetcode.cn/problems/perfect-squares/          |
 | 1122 | 198.打家劫舍      | dp     | Medium | https://leetcode.cn/problems/house-robber/           |
 | 1121 | 02945:拦截导弹    | dp      | Medium | http://cs101.openjudge.cn/pctbook/M02945         |
-| 1120 | 433B. Kuriyama Mirai's Stones  | dp, implementation, sorting | 1200  | https://codeforces.com/contest/433/problem/B
-  |
+| 1120 | 433B. Kuriyama Mirai's Stones  | dp, implementation, sorting | 1200  | https://codeforces.com/contest/433/problem/B |
 | 1119 | 118.杨辉三角      | dp       | Easy | https://leetcode.cn/problems/pascals-triangle/          |
 | 1118 | 131.分割回文串   | dp, backtracking  | Medium | https://leetcode.cn/problems/palindrome-partitioning/          |
 | 1117 | 04123:马走日   | backtracking    | Medium | http://cs101.openjudge.cn/pctbook/M04123/          |
