@@ -16,7 +16,7 @@ https://github.com/GMyhf/2026fall-cs101/blob/main/ADS_problem_list_at_2026fall.m
 
 | 日期       | 问题编号与名称                 | 标签                                 | 难度 | 链接                                             |
 | ---------- | ------------------------------ | ------------------------------------ | ---- | ------------------------------------------------ |
-| 11 |       |       | - |          |
+| 12 |       |       | - |          |
 | 1201 | 02456: Aggressive cows     | binary search    | Medium | http://cs101.openjudge.cn/practice/02456         |
 | 1130 | 1760.袋子里最少数目的球    | binary search    | Medium | https://leetcode.cn/problems/minimum-limit-of-balls-in-a-bag/          |
 | 1129 | 455A. Boredom | dp | 1500  | https://codeforces.com/problemset/problem/455/A    |
