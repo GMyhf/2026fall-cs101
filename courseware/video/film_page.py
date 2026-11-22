@@ -27,7 +27,8 @@ RELEASE = 'https://github.com/GMyhf/2026fall-cs101/releases/tag/slides-film-2026
 # 播放顺序：附加课件插在它所讲评的那几周之后
 ORDER = [f'w{w}' for w in sorted(build_all.WEEKS)]
 ORDER.insert(ORDER.index('w10') + 1, 'nov')
-EXTRA_TITLES = {'nov': '11 月月考讲评与阶段复习'}
+ORDER.append('talk')
+EXTRA_TITLES = {'nov': '11 月月考讲评与阶段复习', 'talk': '课堂分享：用 Agent 快速做科研'}
 
 
 def title_of(key):

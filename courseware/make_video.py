@@ -8,6 +8,7 @@
     python3 make_video.py 01 --check        # 只校验产物是否最新（闸门用）
     python3 make_video.py 01 --preview      # 从成品转一份 720p 轻量版，便于传阅
     python3 make_video.py nov               # 附加课件（build_all.EXTRA_DECKS 的键）
+    python3 make_video.py talk              # 手工课件（build_all.STATIC_DECKS 的键）
 
 画面**从当前 .pptx 现导**（LibreOffice → PDF → PNG），不依赖任何预先存在的图片，
 所以视频永远和课件同版。旁白来自 content/wNN_narration.md，一节对应一页。
@@ -378,8 +379,13 @@ def main():
     elif args.week in extra:                 # 附加课件，如 nov（11 月月考讲评）
         ch = args.week
         stem, tag, label = extra[ch][0], ch, extra[ch][0]
+    elif args.week in getattr(build_all, 'STATIC_DECKS', {}):   # 手工课件，如 talk
+        ch = args.week
+        stem = build_all.STATIC_DECKS[ch]
+        tag, label = ch, stem
     else:
-        sys.exit(f'未知周次：{args.week}（附加课件可用：{"、".join(extra)}）')
+        keys = list(extra) + list(getattr(build_all, 'STATIC_DECKS', {}))
+        sys.exit(f'未知周次：{args.week}（附加课件可用：{"、".join(keys)}）')
     pptx = HERE / (stem + '.pptx')
     script = HERE / 'content' / f'{tag}_narration.md'
     mp4 = HERE / (stem + '.mp4')

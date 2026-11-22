@@ -221,6 +221,8 @@ def check_pairing(files):
     every = list(files.values()) + list(extra_files().values())
     known_md = {f.name for f, _, _ in every if f}
     known_pptx = {f.name for _, f, _ in every if f}
+    known_pptx |= {f'{stem}.pptx'
+                   for stem in getattr(build_all, 'STATIC_DECKS', {}).values()}
     for f in COURSEWARE.glob('*.md'):
         if f.name != 'README.md' and f.name not in known_md:
             fail('1 配对', f'孤儿讲义（不在 build_all.WEEKS 中）：{f.name}')

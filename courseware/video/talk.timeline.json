@@ -1,0 +1,217 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "18:15",
+  "source_pptx_sha256": "0f2e07b322ba28562ff5f9ef95f29661ec475d1cacfc7eb7ef80bdd4224c2184",
+  "source_script_sha256": "9ba3405e8a8689425bbc191feb085166ddefd50fe633d7253ebdfe0a9e86fca1",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:46",
+      "seconds": 46.4,
+      "chars": 282
+    },
+    {
+      "page": 2,
+      "title": "开场：这一讲回答三个问题",
+      "start": "00:46",
+      "end": "01:34",
+      "seconds": 47.3,
+      "chars": 242
+    },
+    {
+      "page": 3,
+      "title": "为什么讲这个：现在是「许愿式编程」",
+      "start": "01:34",
+      "end": "02:20",
+      "seconds": 46.4,
+      "chars": 236
+    },
+    {
+      "page": 4,
+      "title": "PART 1　找题目",
+      "start": "02:20",
+      "end": "02:27",
+      "seconds": 7.3,
+      "chars": 34
+    },
+    {
+      "page": 5,
+      "title": "第一步 · 积累：有想法就在 GitHub 开一个仓库",
+      "start": "02:27",
+      "end": "03:25",
+      "seconds": 57.7,
+      "chars": 343
+    },
+    {
+      "page": 6,
+      "title": "第二步 · 匹配：选会议，看 CCF 推荐列表",
+      "start": "03:25",
+      "end": "04:09",
+      "seconds": 43.9,
+      "chars": 211
+    },
+    {
+      "page": 7,
+      "title": "第二步 · 匹配：把 GitHub 权限交给 Agent",
+      "start": "04:09",
+      "end": "05:05",
+      "seconds": 55.7,
+      "chars": 314
+    },
+    {
+      "page": 8,
+      "title": "第三步 · 工具：选 Agent，能用第一档就用第一档",
+      "start": "05:05",
+      "end": "06:08",
+      "seconds": 62.8,
+      "chars": 390
+    },
+    {
+      "page": 9,
+      "title": "PART 2　跑实验",
+      "start": "06:08",
+      "end": "06:16",
+      "seconds": 8.8,
+      "chars": 40
+    },
+    {
+      "page": 10,
+      "title": "第四步 · 资源：顶会实验，两类模型都要跑",
+      "start": "06:16",
+      "end": "07:02",
+      "seconds": 45.8,
+      "chars": 253
+    },
+    {
+      "page": 11,
+      "title": "第四步 · 资源：GPU 是怎么来的",
+      "start": "07:02",
+      "end": "07:54",
+      "seconds": 51.8,
+      "chars": 275
+    },
+    {
+      "page": 12,
+      "title": "第四步 · 资源：共享 GPU 的分寸",
+      "start": "07:54",
+      "end": "08:33",
+      "seconds": 39.2,
+      "chars": 200
+    },
+    {
+      "page": 13,
+      "title": "第五步 · 基础设施：用 Tailscale 把机器连成一张网",
+      "start": "08:33",
+      "end": "09:10",
+      "seconds": 37.0,
+      "chars": 239
+    },
+    {
+      "page": 14,
+      "title": "第五步 · 基础设施：免费的校内云，北大 CLab",
+      "start": "09:10",
+      "end": "10:05",
+      "seconds": 55.4,
+      "chars": 296
+    },
+    {
+      "page": 15,
+      "title": "第五步 · 基础设施：Canvas 为什么慢，一个图上的路径问题",
+      "start": "10:05",
+      "end": "10:51",
+      "seconds": 45.3,
+      "chars": 236
+    },
+    {
+      "page": 16,
+      "title": "第五步 · 基础设施：让 Agent 二十四小时跑",
+      "start": "10:51",
+      "end": "11:44",
+      "seconds": 53.3,
+      "chars": 315
+    },
+    {
+      "page": 17,
+      "title": "PART 3　人做什么",
+      "start": "11:44",
+      "end": "11:51",
+      "seconds": 7.3,
+      "chars": 31
+    },
+    {
+      "page": 18,
+      "title": "第六步 · 指导：并行任务一多，要常去敲一句 status",
+      "start": "11:51",
+      "end": "12:48",
+      "seconds": 56.9,
+      "chars": 294
+    },
+    {
+      "page": 19,
+      "title": "第六步 · 指导：内存放不下，就放外存",
+      "start": "12:48",
+      "end": "13:35",
+      "seconds": 46.9,
+      "chars": 257
+    },
+    {
+      "page": 20,
+      "title": "第六步 · 指导：看 thinking，在它犯蠢时点拨一下",
+      "start": "13:35",
+      "end": "14:10",
+      "seconds": 34.6,
+      "chars": 178
+    },
+    {
+      "page": 21,
+      "title": "第七步 · 合作：找发过 A 类的人一起做",
+      "start": "14:10",
+      "end": "15:02",
+      "seconds": 51.9,
+      "chars": 286
+    },
+    {
+      "page": 22,
+      "title": "第八步 · 落地：至少落地一篇 arXiv 预印本",
+      "start": "15:02",
+      "end": "15:45",
+      "seconds": 42.8,
+      "chars": 241
+    },
+    {
+      "page": 23,
+      "title": "PART 4　平时",
+      "start": "15:45",
+      "end": "15:51",
+      "seconds": 6.8,
+      "chars": 27
+    },
+    {
+      "page": 24,
+      "title": "平时：维护圈子、积累简历",
+      "start": "15:51",
+      "end": "16:44",
+      "seconds": 52.5,
+      "chars": 259
+    },
+    {
+      "page": 25,
+      "title": "回到这门课：为什么还要学数据结构",
+      "start": "16:44",
+      "end": "17:31",
+      "seconds": 47.2,
+      "chars": 246
+    },
+    {
+      "page": 26,
+      "title": "小结",
+      "start": "17:31",
+      "end": "18:15",
+      "seconds": 44.3,
+      "chars": 251
+    }
+  ]
+}

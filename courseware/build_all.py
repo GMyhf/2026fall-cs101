@@ -66,6 +66,13 @@ EXTRA_DECKS = {
             'pptx_builder/decks/november_exam_review.js'),
 }
 
+# 手工制作、不由脚本生成的课件：键 -> 文件名（不含扩展名）。
+# build_all 不生成也不覆盖它们，只供 make_video.py 合成讲解视频；
+# 闸门第 1 项把它们当作已登记的课件，不报孤儿。
+STATIC_DECKS = {
+    'talk': '202609_DSA_Talk_Research_with_Agents',   # 课堂分享：用 Agent 快速做科研
+}
+
 
 def build_js(wk, out):
     """用 node 跑 pptx_builder 的 deck 脚本，返回页数。"""
