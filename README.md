@@ -25,6 +25,7 @@ https://github.com/GMyhf/2026fall-cs101/
 的「课程安排」表编写。第 16 周含**期末上机考试的命题方案与建议样卷**。
 
 - **知识点动画短片**（3B1B 风格，按周次排列，页面内直接播放）：https://infomall.zhengmao.ltd/cs101-anim/ ；两门课总入口 https://infomall.zhengmao.ltd/anim/
+- **课件讲解视频**（课件逐页配音讲解，带逐句字幕，可按页跳转、倍速、下载）：各讲入口 https://infomall.zhengmao.ltd/cs101-anim/slides/ ；第 1–16 周共 16 讲，另有 11 月月考讲评（18:27），合计约 7 小时 5 分。720p 在 [courseware/video/](courseware/video/)（`wNN-preview.mp4`，另有字幕 `wNN.srt`；讲稿在 `courseware/content/wNN_narration.md`），1080p 在 [Releases](https://github.com/GMyhf/2026fall-cs101/releases/tag/slides-film-2026fall)；合成脚本 `courseware/make_video.py`，播放页 `courseware/video/film_page.py`
 - 文件清单与页数：[courseware/README.md](courseware/README.md)
 - 课件由脚本生成（`courseware/content/wNN.py` → `courseware/build_all.py`），
   **请勿手工编辑 `.pptx`**

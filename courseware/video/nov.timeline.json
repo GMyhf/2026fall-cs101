@@ -1,0 +1,233 @@
+{
+  "voice": "zh-CN-YunyangNeural",
+  "rate": "+0%",
+  "total": "18:27",
+  "source_pptx_sha256": "5b1b64db484cff444176a2700163a78b23d62c08c408e8940b4d895f95e0c465",
+  "source_script_sha256": "761f7cc57cb107fb32d7797552bd941461837e965762a562b3584ad8b27f2a74",
+  "sections": [
+    {
+      "page": 1,
+      "title": "封面",
+      "start": "00:00",
+      "end": "00:26",
+      "seconds": 26.4,
+      "chars": 133
+    },
+    {
+      "page": 2,
+      "title": "这次月考考什么：从语法关到建模关",
+      "start": "00:26",
+      "end": "01:20",
+      "seconds": 53.1,
+      "chars": 260
+    },
+    {
+      "page": 3,
+      "title": "考试形式",
+      "start": "01:20",
+      "end": "01:54",
+      "seconds": 34.4,
+      "chars": 190
+    },
+    {
+      "page": 4,
+      "title": "第 6–10 周知识清单",
+      "start": "01:54",
+      "end": "02:57",
+      "seconds": 62.6,
+      "chars": 357
+    },
+    {
+      "page": 5,
+      "title": "Part 2　月考讲评",
+      "start": "02:57",
+      "end": "03:07",
+      "seconds": 10.5,
+      "chars": 50
+    },
+    {
+      "page": 6,
+      "title": "难度梯度：从签到到综合",
+      "start": "03:07",
+      "end": "03:47",
+      "seconds": 39.7,
+      "chars": 185
+    },
+    {
+      "page": 7,
+      "title": "T1 双重回文",
+      "start": "03:47",
+      "end": "04:45",
+      "seconds": 58.4,
+      "chars": 296
+    },
+    {
+      "page": 8,
+      "title": "T1 参考代码",
+      "start": "04:45",
+      "end": "05:20",
+      "seconds": 35.0,
+      "chars": 207
+    },
+    {
+      "page": 9,
+      "title": "T2 图书馆选座",
+      "start": "05:20",
+      "end": "06:20",
+      "seconds": 59.6,
+      "chars": 311
+    },
+    {
+      "page": 10,
+      "title": "T2 参考代码",
+      "start": "06:20",
+      "end": "06:52",
+      "seconds": 32.4,
+      "chars": 182
+    },
+    {
+      "page": 11,
+      "title": "T3 箭头迷阵",
+      "start": "06:52",
+      "end": "07:44",
+      "seconds": 51.3,
+      "chars": 254
+    },
+    {
+      "page": 12,
+      "title": "T3 四种状态 + 显式路径",
+      "start": "07:44",
+      "end": "08:34",
+      "seconds": 50.8,
+      "chars": 268
+    },
+    {
+      "page": 13,
+      "title": "T3 参考代码 · C++",
+      "start": "08:34",
+      "end": "09:10",
+      "seconds": 35.3,
+      "chars": 177
+    },
+    {
+      "page": 14,
+      "title": "T3 参考代码 · Python",
+      "start": "09:10",
+      "end": "09:38",
+      "seconds": 28.5,
+      "chars": 153
+    },
+    {
+      "page": 15,
+      "title": "T4 牌堆魔术",
+      "start": "09:38",
+      "end": "10:38",
+      "seconds": 59.4,
+      "chars": 299
+    },
+    {
+      "page": 16,
+      "title": "T4 参考代码",
+      "start": "10:38",
+      "end": "11:01",
+      "seconds": 23.1,
+      "chars": 167
+    },
+    {
+      "page": 17,
+      "title": "T5 渗透实验",
+      "start": "11:01",
+      "end": "11:55",
+      "seconds": 53.9,
+      "chars": 293
+    },
+    {
+      "page": 18,
+      "title": "T5 参考代码 · C++",
+      "start": "11:55",
+      "end": "12:35",
+      "seconds": 40.8,
+      "chars": 218
+    },
+    {
+      "page": 19,
+      "title": "T5 参考代码 · Python",
+      "start": "12:35",
+      "end": "13:05",
+      "seconds": 29.2,
+      "chars": 169
+    },
+    {
+      "page": 20,
+      "title": "T5 边界：n = 1",
+      "start": "13:05",
+      "end": "13:42",
+      "seconds": 37.7,
+      "chars": 195
+    },
+    {
+      "page": 21,
+      "title": "T6 括号区间审计",
+      "start": "13:42",
+      "end": "14:18",
+      "seconds": 35.9,
+      "chars": 192
+    },
+    {
+      "page": 22,
+      "title": "T6 两个条件 + 单调栈",
+      "start": "14:18",
+      "end": "15:13",
+      "seconds": 54.6,
+      "chars": 317
+    },
+    {
+      "page": 23,
+      "title": "T6 参考代码 · C++",
+      "start": "15:13",
+      "end": "15:50",
+      "seconds": 37.0,
+      "chars": 209
+    },
+    {
+      "page": 24,
+      "title": "T6 参考代码 · Python",
+      "start": "15:50",
+      "end": "16:12",
+      "seconds": 22.3,
+      "chars": 131
+    },
+    {
+      "page": 25,
+      "title": "Part 3　失分点与订正",
+      "start": "16:12",
+      "end": "16:20",
+      "seconds": 7.6,
+      "chars": 30
+    },
+    {
+      "page": 26,
+      "title": "常见失分点归类",
+      "start": "16:20",
+      "end": "17:15",
+      "seconds": 55.3,
+      "chars": 299
+    },
+    {
+      "page": 27,
+      "title": "本次作业",
+      "start": "17:15",
+      "end": "17:42",
+      "seconds": 27.2,
+      "chars": 135
+    },
+    {
+      "page": 28,
+      "title": "小结",
+      "start": "17:42",
+      "end": "18:27",
+      "seconds": 44.6,
+      "chars": 204
+    }
+  ]
+}

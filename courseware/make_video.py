@@ -7,6 +7,7 @@
     python3 make_video.py 01 --audio-only   # 只跑 TTS，看看总时长够不够一节课
     python3 make_video.py 01 --check        # 只校验产物是否最新（闸门用）
     python3 make_video.py 01 --preview      # 从成品转一份 720p 轻量版，便于传阅
+    python3 make_video.py nov               # 附加课件（build_all.EXTRA_DECKS 的键）
 
 画面**从当前 .pptx 现导**（LibreOffice → PDF → PNG），不依赖任何预先存在的图片，
 所以视频永远和课件同版。旁白来自 content/wNN_narration.md，一节对应一页。
@@ -325,7 +326,7 @@ def write_timetable(script_path, meta, total):
 
 
 # ---------------------------------------------------------------- --check
-def check(week, pptx, script, mp4, timeline):
+def check(week, pptx, script, mp4, timeline, key=None):
     """校验时间轴记录的来源摘要是否仍等于当前的课件与讲稿。
 
     成品 mp4 不入库（一周约 40MB），所以它缺席**不判红**，只提示可重建 ——
@@ -340,17 +341,17 @@ def check(week, pptx, script, mp4, timeline):
         return problems, hints
     tl = json.loads(timeline.read_text(encoding='utf-8'))
     if tl.get('source_pptx_sha256') != pptx_digest(pptx):
-        problems.append(f'第{week}周视频过期：课件改过而视频没重建')
+        problems.append(f'{week}视频过期：课件改过而视频没重建')
     if tl.get('source_script_sha256') != script_digest(script):
-        problems.append(f'第{week}周视频过期：讲稿改过而视频没重建')
+        problems.append(f'{week}视频过期：讲稿改过而视频没重建')
     pages_in_script = len(SECTION.findall(
         script.read_text(encoding='utf-8').split(TIMETABLE_HEAD)[0]))
     if len(tl.get('sections', [])) != pages_in_script:
-        problems.append(f'第{week}周时间轴 {len(tl.get("sections", []))} 页，'
+        problems.append(f'{week}时间轴 {len(tl.get("sections", []))} 页，'
                         f'讲稿 {pages_in_script} 页 —— 对不上')
     if not mp4.exists():
-        hints.append(f'第{week}周成品视频不在本地（按设计不入库）：'
-                     f'`python3 make_video.py {week}` 可重建')
+        hints.append(f'{week}成品视频不在本地（按设计不入库）：'
+                     f'`python3 make_video.py {key or week}` 可重建')
     return problems, hints
 
 
@@ -363,7 +364,7 @@ def script_digest(path):
 # ---------------------------------------------------------------- 入口
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('week', help='周次，如 01')
+    ap.add_argument('week', help='周次，如 01；或附加课件键，如 nov')
     ap.add_argument('--audio-only', action='store_true', help='只跑 TTS 看总时长')
     ap.add_argument('--check', action='store_true', help='只校验产物是否最新')
     ap.add_argument('--preview', action='store_true',
@@ -371,19 +372,24 @@ def main():
     args = ap.parse_args()
 
     ch = args.week.zfill(2)
-    if ch not in build_all.WEEKS:
-        sys.exit(f'未知周次：{args.week}')
-    stem = build_all.WEEKS[ch]
+    extra = getattr(build_all, 'EXTRA_DECKS', {})
+    if ch in build_all.WEEKS:
+        stem, tag, label = build_all.WEEKS[ch], f'w{ch}', f'第{ch}周'
+    elif args.week in extra:                 # 附加课件，如 nov（11 月月考讲评）
+        ch = args.week
+        stem, tag, label = extra[ch][0], ch, extra[ch][0]
+    else:
+        sys.exit(f'未知周次：{args.week}（附加课件可用：{"、".join(extra)}）')
     pptx = HERE / (stem + '.pptx')
-    script = HERE / 'content' / f'w{ch}_narration.md'
+    script = HERE / 'content' / f'{tag}_narration.md'
     mp4 = HERE / (stem + '.mp4')
-    srt = HERE / 'video' / f'w{ch}.srt'
-    timeline = HERE / 'video' / f'w{ch}.timeline.json'
+    srt = HERE / 'video' / f'{tag}.srt'
+    timeline = HERE / 'video' / f'{tag}.timeline.json'
 
     if args.preview:
         if not mp4.exists():
             sys.exit(f'成品不存在：{mp4.name}。先跑 python3 make_video.py {ch}')
-        preview = HERE / 'video' / f'w{ch}-preview.mp4'
+        preview = HERE / 'video' / f'{tag}-preview.mp4'
         make_preview(mp4, preview)
         print('输出：%s　%.1f MB（成品 %.1f MB）'
               % (preview.name, preview.stat().st_size / 1e6,
@@ -391,15 +397,15 @@ def main():
         return 0
 
     if args.check:
-        problems, hints = check(ch, pptx, script, mp4, timeline)
+        problems, hints = check(label, pptx, script, mp4, timeline, ch)
         for p in problems:
             print('❌', p)
         for h in hints:
             print('·', h)
         if not problems:
             tl = json.loads(timeline.read_text(encoding='utf-8'))
-            print('✅ 第%s周视频与课件、讲稿同版：%d 页，总时长 %s'
-                  % (ch, len(tl['sections']), tl['total']))
+            print('✅ %s视频与课件、讲稿同版：%d 页，总时长 %s'
+                  % (label, len(tl['sections']), tl['total']))
         return 1 if problems else 0
 
     if not pptx.exists():
@@ -412,7 +418,7 @@ def main():
     sections = parse_narration(script, pages)
 
     global WORK
-    WORK = WORK / f'w{ch}'
+    WORK = WORK / f'{tag}'
     meta = synth(sections, WORK / 'audio')
     total = sum(m['clip'] for m in meta)
     print('\n合计 %s（%.1f 秒），%d 页，共 %d 字，voice=%s rate=%s'
