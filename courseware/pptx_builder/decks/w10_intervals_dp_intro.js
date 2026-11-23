@@ -228,6 +228,47 @@ print(min_groups([(1, 4), (2, 5), (6, 8), (3, 7)]))   # 3`, 0.5, 1.95, 4.35, 2.7
 print(min_groups_diff([(1, 4), (2, 5), (6, 8), (3, 7)]))   # 3`, 5.15, 1.95, 4.35, 2.75, { fontSize: 9.3, lang: "py" });
 }
 
+// 1.5 variant: endpoints touching is NOT overlap (NC147)
+{
+  const s = content("1.5", "1 区间问题", "区间分组 · 变体：端点相接不算重叠");
+  text(s, "**牛客 NC147 主持人调度**（同 LeetCode 253 会议室 II）：主持人在 `(start, end)` 这段**开区间**内不能参加别的活动。样例 `[[1,2],[2,3]]` 答案是 **1**——2 点整结束、2 点整开始，可以无缝衔接。上一页的闭区间写法会给 2，各改**一处**即可：", 0.5, 0.98, 9.0, 0.62, { fontSize: 11.5, lsm: 1.15 });
+  codeBlock(s, `import heapq
+
+
+def min_hosts(intervals):
+    intervals = sorted(intervals, key=lambda x: x[0])
+    heap = []
+    for lo, hi in intervals:
+        if heap and heap[0] <= lo:   # 原为 <
+            heapq.heapreplace(heap, hi)
+        else:
+            heapq.heappush(heap, hi)
+    return len(heap)
+
+
+print(min_hosts([(1, 2), (2, 3)]))   # 1`, 0.5, 1.65, 4.35, 2.45, { fontSize: 9, lang: "py" });
+  codeBlock(s, `def min_hosts_diff(intervals):
+    events = []
+    for lo, hi in intervals:
+        events.append((lo, 1))
+        events.append((hi, -1))      # 原为 hi + 1
+    # 同一时刻 -1 排在 +1 前：先释放再占用
+    events.sort()
+    cur = best = 0
+    for _, delta in events:
+        cur += delta
+        best = max(best, cur)
+    return best
+
+
+print(min_hosts_diff([(1, 2), (2, 3)]))   # 1`, 5.15, 1.65, 4.35, 2.45, { fontSize: 9, lang: "py" });
+  table(s, [
+    ["样例 [1,2]、[2,3] 算不算重叠？", "堆", "差分", "典型题"],
+    ["算（闭区间）", { t: "heap[0] < lo", mono: true }, { t: "hi + 1", mono: true }, "上一页 min_groups"],
+    ["不算（开 / 半开区间）", { t: "heap[0] <= lo", mono: true }, { t: "hi", mono: true }, "NC147 · LC 253 日程类"],
+  ], 0.5, 4.2, 9.0, [2.9, 1.7, 1.1, 3.3], { fontSize: 10.5, rowH: 0.27 });
+}
+
 // 1.6 diff array
 {
   const s = content("1.6", "1 区间问题", "差分数组：区间加、单点查");
@@ -364,6 +405,49 @@ print('补一维后 :', fixed_odd(TRI))`, 0.5, 1.05, 6.3, 3.0, { fontSize: 9.6, 
   callout(s, "写完状态定义，先问自己一句", "**把某个子问题的最优解换成一个次优解，父问题的答案有没有可能反而更好？** 能构造出这种情况，这个状态就没有最优子结构——而且几乎总是同一个病因：**状态少了一维**。", 0.5, 1.1, 9.0, 1.3, { fontSize: 13.5, fill: C.mint, tcolor: C.dark, lsm: 1.25 });
   text(s, "那一维正是「父问题还需要知道、但你没记住」的信息，常见的有：**剩余容量、已用次数、上一步选了什么、当前是第几段**。", 0.5, 2.55, 9.0, 0.7, { fontSize: 12.5, lsm: 1.2 });
   callout(s, "预告", "**第 12 周讲义 §1.1** 有一个**真的**没有最优子结构的例子（一般图上的最长简单路径）——那时你已经有图的语言，才好说清楚它为什么补多少维都救不回来。", 0.5, 3.5, 9.0, 1.4, { fontSize: 11.5, lsm: 1.15 });
+}
+
+// 2.2 replacement test: two examples
+{
+  const s = content("2.2", "2 动态规划入门", "替换测试：两个「少一维」的例子");
+  callout(s, "例 1 · 0-1 背包：少了「剩余容量」", [
+    "错误状态：`dp[i]` = 只看前 i 件物品的最大价值（背包容量 10 斤）",
+    "前 i−1 件：**最优解**价值 100、占 9 斤；**次优解**价值 80、只占 2 斤",
+    "第 i 件重 5 斤、值 50：接最优解装不下，还是 **100**；接次优解装得下，**80 + 50 = 130**",
+    "次优反而更好 ⇒ 补上容量这一维：`dp[i][w]`",
+  ], 0.5, 1.05, 4.4, 2.85, { fontSize: 11, fill: C.code, tcolor: C.dark, gap: 6 });
+  callout(s, "例 2 · 打家劫舍：少了「上一步选了什么」", [
+    "错误状态：`dp[i]` = 前 i 间房最多偷多少（相邻两间不能都偷），只从 `dp[i-1]` 转移",
+    "前 i−1 间：**最优解** 100（偷了第 i−1 间）；**次优解** 80（没偷第 i−1 间）",
+    "第 i 间有 500：接最优解不能偷，还是 **100**；接次优解能偷，**80 + 500 = 580**",
+    "次优反而更好 ⇒ 补一维「第 i 间偷没偷」：`dp[i][0/1]`",
+  ], 5.1, 1.05, 4.4, 2.85, { fontSize: 11, fill: C.code, tcolor: C.dark, gap: 6 });
+  callout(s, "另外两种也一样", "**已用次数**：限制交易次数的股票题、最多走 k 步的最短路；**当前是第几段**：把数组分成 m 段的划分型 DP。打家劫舍的常见写法 `dp[i] = max(dp[i-1], dp[i-2] + a[i])` 也是同一个修法——`dp[i-2]` 就是那个「第 i−1 间没偷」的子问题。", 0.5, 4.05, 9.0, 0.95, { fontSize: 11, fill: C.mint, tcolor: C.dark, lsm: 1.15 });
+}
+
+// 2.2 preview: longest simple path cannot be rescued
+{
+  const s = content("2.2", "2 动态规划入门", "预告：补多少维都救不回来的例子");
+  bullets(s, [
+    "求 S 到 T 的最长**简单路径**（不能重复经过顶点）。",
+    "子问题「S 到 C 的最长路」：**S→B→C = 10**，比 S→D→C = 8 长。",
+    "可是 C 去 T 必须经过 B：接最优的 S→B→C 就要再走一次 B；只能接**次优**的 S→D→C，得到 S→D→C→B→T = **16**。",
+    "子问题的最优解在父问题里**不可用**——替换测试又亮了红灯。",
+  ], 0.5, 1.05, 5.0, 2.75, { fontSize: 12, gap: 8 });
+  const N = { S: [5.95, 2.35], B: [7.45, 1.35], D: [7.45, 3.35], C: [8.95, 2.35], T: [8.95, 1.15] };
+  const edges = [["S", "B", "5"], ["B", "C", "5"], ["S", "D", "4"], ["D", "C", "4"], ["B", "T", "3"]];
+  const r = 0.21;
+  edges.forEach(([a, b, w]) => {
+    const [x1, y1] = N[a], [x2, y2] = N[b];
+    s.addShape(pres.shapes.LINE, { x: Math.min(x1, x2), y: Math.min(y1, y2), w: Math.abs(x2 - x1), h: Math.abs(y2 - y1), flipV: (x2 - x1) * (y2 - y1) < 0, line: { color: C.muted, width: 1.5 } });
+    text(s, w, (x1 + x2) / 2 - 0.15, (y1 + y2) / 2 - 0.32, 0.3, 0.24, { fontSize: 11, bold: true, color: C.goldText, align: "center", margin: 0 });
+  });
+  Object.entries(N).forEach(([k, [x, y]]) => {
+    s.addShape(pres.shapes.OVAL, { x: x - r, y: y - r, w: 2 * r, h: 2 * r, fill: { color: k === "B" ? C.bad : C.dark }, line: { type: "none" } });
+    text(s, k, x - r, y - r, 2 * r, 2 * r, { fontSize: 12, bold: true, color: C.white, align: "center", valign: "middle", margin: 0 });
+  });
+  text(s, "边上的数是长度（无向图）", 5.7, 3.7, 3.8, 0.25, { fontSize: 9.5, color: C.muted, align: "center", margin: 0 });
+  callout(s, "为什么补维救不回来", "前几页补的都是**一个数**（奇偶、容量、次数）。这里父问题要知道的是「**之前走过哪些顶点**」——整个已访问集合，状态数是 **2 的 V 次方**。一般图上的最长简单路径是 NP 困难问题，至今没有已知的多项式算法。**第 12 周讲义 §1.1** 用图的语言细讲。", 0.5, 4.0, 9.0, 1.0, { fontSize: 11, fill: "FDF0EE", tcolor: C.bad, lsm: 1.15 });
 }
 
 // 2.3 recursion to dp part 1

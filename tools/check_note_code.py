@@ -1113,6 +1113,28 @@ def t_groups(ns):
         assert h(iv) == d(iv) == peak, iv
 
 
+@case('W10', 'NC147 开区间分组：堆 <= / 差分 hi vs 逐半点峰值')
+def t_hosts(ns):
+    """端点相接不算重叠：在每个半整数时刻 t+0.5 数开区间 (lo, hi) 的覆盖数，取峰值。
+
+    讲义还写了两句边界话，这里一并钉死：
+      · 样例 [1,2],[2,3] 开区间答 1，而闭区间写法答 2（否则"各改一处"的对比不成立）；
+      · 长度为 0 的 [a,a]：堆写法占 1 名，差分写法算 0 名。
+    """
+    h, d = ns['min_hosts'], ns['min_hosts_diff']
+    assert h([(1, 2), (2, 3)]) == d([(1, 2), (2, 3)]) == 1
+    assert ns['min_groups']([(1, 2), (2, 3)]) == ns['min_groups_diff']([(1, 2), (2, 3)]) == 2
+    assert h([(5, 5)]) == 1 and d([(5, 5)]) == 0
+    rnd = random.Random(147)
+    for _ in range(500):
+        iv = []
+        for _ in range(rnd.randint(1, 8)):
+            a = rnd.randint(-6, 12)
+            iv.append((a, a + rnd.randint(1, 5)))
+        peak = max(sum(1 for a, b in iv if a < t + 0.5 < b) for t in range(-6, 18))
+        assert h(list(iv)) == d(list(iv)) == peak, iv
+
+
 @case('W10', '差分数组 vs 朴素区间加')
 def t_diff(ns):
     f = ns['trees_left']
